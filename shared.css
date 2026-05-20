@@ -316,18 +316,20 @@ h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
 
 /* ── STEPS ── */
 .steps-row {
-  display: grid; gap: 16px; align-items: start;
+  display: grid; gap: 16px;
   grid-template-columns: 1fr;
 }
 @media(min-width:768px){
   .steps-row {
     grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
-    align-items: center;
+    align-items: stretch;
   }
 }
 .step-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 24px 20px; text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 160px; height: 100%;
 }
 .step-num {
   width: 36px; height: 36px; background: var(--gold); color: #0C0A07;
@@ -338,9 +340,9 @@ h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
 .step-card p { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.55; }
 .step-arrow {
   display: none; font-size: 20px; color: var(--dim);
-  text-align: center; padding: 0 4px;
+  padding: 0 4px; align-self: center;
 }
-@media(min-width:768px){ .step-arrow { display: block; } }
+@media(min-width:768px){ .step-arrow { display: flex; align-items: center; } }
 
 /* ── CTA BAND ── */
 .cta-band {
@@ -502,3 +504,81 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 .fade-in-delay-2 { transition-delay: 0.2s; }
 .fade-in-delay-3 { transition-delay: 0.3s; }
 .fade-in-delay-4 { transition-delay: 0.4s; }
+
+/* ── FOUNDER SECTION ── */
+.founder-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: 48px 36px;
+  display: grid; gap: 48px;
+}
+@media(min-width:900px){ .founder-card { grid-template-columns: 1fr 1fr; align-items: center; padding: 60px 56px; } }
+.founder-text p { font-size: 15px; color: var(--muted); line-height: 1.75; font-weight: 300; margin-bottom: 16px; }
+.founder-text p:last-of-type { margin-bottom: 24px; }
+.founder-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.f-tag {
+  font-size: 12px; font-weight: 500; color: var(--gold);
+  background: var(--gold-dim); border: 1px solid rgba(212,180,131,0.2);
+  border-radius: 100px; padding: 5px 12px;
+}
+.founder-quote {
+  background: linear-gradient(135deg, rgba(212,180,131,0.08), rgba(126,203,161,0.04));
+  border: 1px solid rgba(212,180,131,0.15);
+  border-radius: var(--radius-lg); padding: 36px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+.quote-mark { font-family: var(--ff-d); font-size: 64px; color: var(--gold); line-height: 0.7; opacity: 0.6; }
+blockquote {
+  font-family: var(--ff-d); font-size: clamp(20px,2.5vw,26px);
+  font-weight: 400; line-height: 1.35; color: var(--text); font-style: italic;
+}
+.qa-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.qa-title { font-size: 12px; color: var(--dim); margin-top: 2px; }
+
+/* ── FINAL CTA ── */
+.final-cta-section { padding-bottom: 60px; }
+.final-cta {
+  text-align: center; max-width: 640px; margin: 0 auto;
+  padding: 60px 24px;
+}
+.final-cta h2 { margin-bottom: 14px; }
+.final-cta p { font-size: 17px; color: var(--muted); font-weight: 300; line-height: 1.65; margin-bottom: 32px; }
+.final-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+/* ── MOBILE POLISH ── */
+@media(max-width:600px){
+  .hero { padding: 48px 0 40px; }
+  h1 { font-size: 38px; letter-spacing: -0.5px; }
+  .hero-sub { font-size: 16px; }
+  .hero-actions { gap: 10px; }
+  .btn-primary, .btn-ghost { padding: 13px 20px; font-size: 14px; }
+  .proof-inner { gap: 24px; }
+  .proof-num { font-size: 20px; }
+  .section { padding: 60px 0; }
+  h2 { font-size: 28px; }
+  .section-sub { font-size: 15px; }
+  .compare-grid { gap: 12px; }
+  .compare-card { padding: 24px 20px; }
+  .features-grid { gap: 10px; }
+  .feature-card { padding: 22px 18px; }
+  .use-grid { gap: 10px; }
+  .use-card { padding: 22px 18px; }
+  .steps-row { gap: 10px; }
+  .step-card { min-height: unset; padding: 20px 16px; }
+  .pricing-grid { gap: 12px; }
+  .price-card { padding: 26px 22px; }
+  .price-amount { font-size: 42px; }
+  .waitlist-card { padding: 36px 20px; border-radius: var(--radius-lg); }
+  .cta-band { padding: 36px 24px; border-radius: var(--radius-lg); }
+  .founder-card { padding: 32px 24px; gap: 32px; }
+  .founder-quote { padding: 24px; }
+  .footer-inner { gap: 28px; }
+  .footer-links { gap: 24px; flex-wrap: wrap; }
+  .final-cta { padding: 40px 0; }
+}
+
+/* ── HERO TYPOGRAPHY — tighten for professional tech feel ── */
+h1 {
+  font-size: clamp(38px, 6vw, 76px);
+  letter-spacing: -0.6px;
+}
+.hero-sub { font-size: clamp(15px, 1.7vw, 17px); }
