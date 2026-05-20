@@ -271,9 +271,11 @@ h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
   border-radius: var(--radius-lg); padding: 32px;
 }
 .compare-card.good { border-color: rgba(126,203,161,0.2); background: rgba(126,203,161,0.04); }
-.compare-label { font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+.compare-label { font-size: 13px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 7px; }
 .bad-label { color: var(--red); }
+.bad-label svg { color: var(--red); }
 .good-label { color: var(--green); }
+.good-label svg { color: var(--green); }
 .compare-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .compare-list li { font-size: 14px; color: var(--muted); padding-left: 4px; }
 
@@ -306,7 +308,14 @@ h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
   transition: transform var(--trans), border-color var(--trans);
 }
 .use-card:hover { transform: translateY(-3px); border-color: rgba(212,180,131,0.2); }
-.use-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+.use-icon-wrap {
+  width: 44px; height: 44px;
+  background: var(--gold-dim); border: 1px solid rgba(212,180,131,0.18);
+  border-radius: 12px; display: grid; place-items: center; margin-bottom: 16px;
+  transition: background var(--trans), border-color var(--trans);
+}
+.use-card:hover .use-icon-wrap { background: rgba(212,180,131,0.18); border-color: rgba(212,180,131,0.3); }
+.use-icon-wrap svg { color: var(--gold); }
 .use-card p { font-size: 14px; color: var(--muted); line-height: 1.6; font-weight: 300; margin-bottom: 14px; }
 .use-example {
   font-size: 12px; color: var(--dim); font-style: italic;
@@ -315,13 +324,16 @@ h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
 }
 
 /* ── STEPS ── */
+/* ── STEPS ── */
 .steps-row {
-  display: grid; gap: 16px;
+  display: grid;
+  gap: 12px;
   grid-template-columns: 1fr;
 }
 @media(min-width:768px){
   .steps-row {
-    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+    display: flex;
+    gap: 0;
     align-items: stretch;
   }
 }
@@ -329,18 +341,26 @@ h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 24px 20px; text-align: center;
   display: flex; flex-direction: column; align-items: center;
-  min-height: 160px; height: 100%;
+  box-sizing: border-box;
+}
+@media(min-width:768px){
+  .step-card {
+    flex: 1 1 0;
+    min-width: 0;
+  }
 }
 .step-num {
   width: 36px; height: 36px; background: var(--gold); color: #0C0A07;
   border-radius: 50%; display: grid; place-items: center;
   font-size: 14px; font-weight: 700; margin: 0 auto 14px;
+  flex-shrink: 0;
 }
 .step-card h3 { font-size: 15px; margin-bottom: 6px; }
 .step-card p { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.55; }
 .step-arrow {
-  display: none; font-size: 20px; color: var(--dim);
-  padding: 0 4px; align-self: center;
+  display: none;
+  font-size: 18px; color: var(--dim);
+  padding: 0 6px; flex-shrink: 0; align-self: center;
 }
 @media(min-width:768px){ .step-arrow { display: flex; align-items: center; } }
 
@@ -562,8 +582,8 @@ blockquote {
   .feature-card { padding: 22px 18px; }
   .use-grid { gap: 10px; }
   .use-card { padding: 22px 18px; }
-  .steps-row { gap: 10px; }
-  .step-card { min-height: unset; padding: 20px 16px; }
+  .steps-row { gap: 10px; flex-direction: column; }
+  .step-card { padding: 20px 16px; }
   .pricing-grid { gap: 12px; }
   .price-card { padding: 26px 22px; }
   .price-amount { font-size: 42px; }
