@@ -1,1007 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ScopeSnap — AI Site Capture for Builders</title>
-
-  <!-- SEO -->
-  <meta name="description" content="ScopeSnap turns messy site walkthroughs into clean, professional scope reports. AI-powered capture for builders, renovators and property teams." />
-  <meta name="keywords" content="site inspection app, builder scope report, AI construction tool, building inspection software, scope capture, renovation inspection" />
-  <meta name="author" content="ScopeSnap" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://scopesnap.com.au" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="ScopeSnap — AI Site Capture for Builders" />
-  <meta property="og:description" content="Turn site walkthroughs into polished scope reports before you leave the driveway. AI-powered mobile capture for builders and property teams." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://scopesnap.com.au" />
-  <meta property="og:image" content="https://scopesnap.com.au/og-image.png" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ScopeSnap — AI Site Capture for Builders" />
-  <meta name="twitter:description" content="Turn messy site walkthroughs into polished scope reports. AI-powered capture for builders." />
-
-  <!-- PWA / App Icons -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <meta name="theme-color" content="#070A0F" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- Fonts: Instrument Serif (display) + DM Sans (body) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:        #070A0F;
-      --bg2:       #0C1118;
-      --surface:   rgba(255,255,255,0.055);
-      --border:    rgba(255,255,255,0.1);
-      --text:      #F2F0EB;
-      --muted:     rgba(242,240,235,0.55);
-      --dim:       rgba(242,240,235,0.35);
-      --gold:      #D4B483;
-      --gold-dim:  rgba(212,180,131,0.15);
-      --gold-glow: rgba(212,180,131,0.25);
-      --green:     #7ECBA1;
-      --green-dim: rgba(126,203,161,0.12);
-      --radius-sm: 14px;
-      --radius:    22px;
-      --radius-lg: 32px;
-      --radius-xl: 44px;
-      --ff-display: 'Instrument Serif', Georgia, serif;
-      --ff-body:    'DM Sans', system-ui, sans-serif;
-      --max:        1200px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--ff-body);
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    /* ── NOISE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 1000;
-    }
-
-    /* ── AMBIENT GLOWS ── */
-    .glow-layer {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-    .glow-layer span {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-    }
-    .g1 { width: 600px; height: 600px; top: -200px; left: -150px; background: rgba(212,180,131,0.08); }
-    .g2 { width: 500px; height: 500px; top: 10%; right: -100px; background: rgba(126,203,161,0.07); }
-    .g3 { width: 700px; height: 400px; bottom: 20%; left: 20%; background: rgba(212,180,131,0.05); }
-
-    /* ── LAYOUT ── */
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-    @media (min-width: 768px) { .wrap { padding: 0 40px; } }
-    @media (min-width: 1200px) { .wrap { padding: 0 48px; } }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 16px 0;
-      border-bottom: 1px solid transparent;
-      transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
-    }
-    nav.scrolled {
-      background: rgba(7,10,15,0.85);
-      border-color: var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: var(--text);
-    }
-    .logo-icon {
-      width: 42px;
-      height: 42px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-    }
-    .logo-icon svg { width: 22px; height: 22px; }
-    .logo-name { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
-    .logo-sub { font-size: 11px; color: var(--dim); margin-top: -2px; }
-
-    .nav-links {
-      display: none;
-      list-style: none;
-      gap: 32px;
-    }
-    @media (min-width: 768px) { .nav-links { display: flex; } }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 400;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-cta {
-      display: none;
-      background: var(--gold);
-      color: #0C0A07;
-      border: none;
-      border-radius: 100px;
-      padding: 10px 22px;
-      font-size: 14px;
-      font-weight: 600;
-      font-family: var(--ff-body);
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    @media (min-width: 768px) { .nav-cta { display: inline-flex; align-items: center; gap: 6px; } }
-    .nav-cta:hover { background: #E8C990; transform: translateY(-1px); }
-
-    .menu-btn {
-      display: flex;
-      width: 40px; height: 40px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-    }
-    @media (min-width: 768px) { .menu-btn { display: none; } }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 73px;
-      left: 16px;
-      right: 16px;
-      background: rgba(12,17,24,0.97);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      z-index: 99;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-    }
-    .mobile-menu.open { display: block; }
-    .mobile-menu a {
-      display: block;
-      padding: 12px 0;
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 15px;
-      border-bottom: 1px solid var(--border);
-    }
-    .mobile-menu a:last-child { border-bottom: none; }
-    .mobile-menu a:hover { color: var(--text); }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      z-index: 1;
-      padding: 80px 0 60px;
-    }
-    @media (min-width: 768px) { .hero { padding: 100px 0 80px; } }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--gold-dim);
-      border: 1px solid rgba(212,180,131,0.25);
-      border-radius: 100px;
-      padding: 6px 14px 6px 10px;
-      font-size: 12px;
-      color: var(--gold);
-      font-weight: 500;
-      letter-spacing: 0.3px;
-      margin-bottom: 28px;
-    }
-    .hero-badge svg { width: 14px; height: 14px; }
-
-    h1 {
-      font-family: var(--ff-display);
-      font-size: clamp(42px, 7vw, 84px);
-      font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: -1px;
-      color: var(--text);
-      max-width: 820px;
-      margin-bottom: 24px;
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    .hero-sub {
-      font-size: clamp(16px, 2vw, 19px);
-      color: var(--muted);
-      max-width: 560px;
-      line-height: 1.65;
-      font-weight: 300;
-      margin-bottom: 40px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 64px;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--gold);
-      color: #0C0A07;
-      border: none;
-      border-radius: 100px;
-      padding: 14px 28px;
-      font-size: 15px;
-      font-weight: 600;
-      font-family: var(--ff-body);
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 0 40px var(--gold-glow);
-    }
-    .btn-primary:hover { background: #E8C990; transform: translateY(-2px); box-shadow: 0 0 60px var(--gold-glow); }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 14px 28px;
-      font-size: 15px;
-      font-weight: 500;
-      font-family: var(--ff-body);
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,0.09); transform: translateY(-1px); }
-
-    /* ── HERO PHONE MOCK ── */
-    .hero-grid {
-      display: grid;
-      gap: 48px;
-      align-items: center;
-    }
-    @media (min-width: 900px) {
-      .hero-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    .phone-mock {
-      position: relative;
-      max-width: 320px;
-      margin: 0 auto;
-    }
-    .phone-mock::before {
-      content: '';
-      position: absolute;
-      inset: -40px;
-      background: radial-gradient(ellipse at center, var(--gold-glow) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .phone-frame {
-      background: #0C1118;
-      border: 1px solid var(--border);
-      border-radius: 36px;
-      padding: 20px;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06) inset;
-    }
-    .phone-screen {
-      background: var(--bg);
-      border-radius: 24px;
-      padding: 16px;
-      overflow: hidden;
-    }
-    .phone-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-    .phone-room-label {
-      font-size: 11px;
-      color: var(--dim);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 500;
-    }
-    .phone-room-name {
-      font-family: var(--ff-display);
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--text);
-      margin-top: 2px;
-    }
-    .live-badge {
-      background: var(--green-dim);
-      border: 1px solid rgba(126,203,161,0.2);
-      color: var(--green);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      padding: 4px 10px;
-      border-radius: 100px;
-      text-transform: uppercase;
-    }
-
-    .action-tiles {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .action-tile {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 8px;
-      text-align: center;
-    }
-    .action-tile-icon {
-      width: 32px;
-      height: 32px;
-      background: rgba(255,255,255,0.07);
-      border-radius: 9px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 6px;
-    }
-    .action-tile-icon svg { width: 16px; height: 16px; }
-    .action-tile-label { font-size: 10px; color: var(--dim); font-weight: 500; }
-
-    .note-items { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-    .note-item {
-      display: flex;
-      gap: 8px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.4;
-      align-items: flex-start;
-    }
-    .note-item svg { width: 13px; height: 13px; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
-
-    .ai-preview {
-      background: linear-gradient(135deg, rgba(212,180,131,0.12), rgba(126,203,161,0.08));
-      border: 1px solid rgba(212,180,131,0.2);
-      border-radius: 14px;
-      padding: 12px;
-    }
-    .ai-preview-label {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 5px;
-    }
-    .ai-preview-text { font-size: 10px; color: var(--muted); line-height: 1.5; }
-
-    /* ── SOCIAL PROOF ── */
-    .proof-bar {
-      position: relative;
-      z-index: 1;
-      padding: 32px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 100px;
-    }
-    .proof-inner {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      align-items: center;
-      justify-content: center;
-    }
-    @media (min-width: 768px) { .proof-inner { justify-content: space-between; } }
-    .proof-stat { text-align: center; }
-    .proof-num {
-      font-family: var(--ff-display);
-      font-size: 32px;
-      color: var(--gold);
-      font-weight: 400;
-      display: block;
-    }
-    .proof-label { font-size: 12px; color: var(--dim); font-weight: 400; margin-top: 2px; }
-    .proof-divider {
-      width: 1px;
-      height: 40px;
-      background: var(--border);
-      display: none;
-    }
-    @media (min-width: 768px) { .proof-divider { display: block; } }
-
-    /* ── SECTION LABELS ── */
-    .section-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-    }
-    .section-eyebrow::before {
-      content: '';
-      width: 20px;
-      height: 1px;
-      background: var(--gold);
-    }
-
-    h2 {
-      font-family: var(--ff-display);
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 400;
-      line-height: 1.1;
-      letter-spacing: -0.5px;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-    h2 em { font-style: italic; color: var(--gold); }
-
-    .section-sub {
-      font-size: 17px;
-      color: var(--muted);
-      font-weight: 300;
-      max-width: 540px;
-      line-height: 1.65;
-      margin-bottom: 52px;
-    }
-
-    /* ── FEATURES ── */
-    .features-section {
-      position: relative;
-      z-index: 1;
-      padding: 0 0 100px;
-    }
-    .features-grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: 1fr;
-    }
-    @media (min-width: 600px) { .features-grid { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 1000px) { .features-grid { grid-template-columns: repeat(4, 1fr); } }
-
-    .feature-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: transform 0.25s, border-color 0.25s, background 0.25s;
-      cursor: default;
-    }
-    .feature-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(212,180,131,0.3);
-      background: rgba(255,255,255,0.07);
-    }
-    .feature-icon {
-      width: 44px; height: 44px;
-      background: var(--gold-dim);
-      border: 1px solid rgba(212,180,131,0.2);
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 20px;
-    }
-    .feature-icon svg { width: 20px; height: 20px; color: var(--gold); }
-    .feature-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
-    .feature-text { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 300; }
-
-    /* ── WORKFLOW ── */
-    .workflow-section {
-      position: relative;
-      z-index: 1;
-      padding: 0 0 100px;
-    }
-    .workflow-grid {
-      display: grid;
-      gap: 20px;
-    }
-    @media (min-width: 900px) { .workflow-grid { grid-template-columns: 1fr 1fr; } }
-
-    .workflow-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 40px;
-    }
-    .workflow-card h3 {
-      font-family: var(--ff-display);
-      font-size: 28px;
-      font-weight: 400;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-    .workflow-card p { font-size: 15px; color: var(--muted); margin-bottom: 32px; font-weight: 300; }
-
-    .steps-list { display: flex; flex-direction: column; gap: 10px; }
-    .step-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: rgba(0,0,0,0.25);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px 18px;
-      transition: border-color 0.2s;
-    }
-    .step-item:hover { border-color: rgba(212,180,131,0.3); }
-    .step-num {
-      width: 32px; height: 32px;
-      background: var(--gold);
-      color: #0C0A07;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 13px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .step-text { font-size: 14px; color: var(--muted); font-weight: 400; }
-
-    .modes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .mode-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(0,0,0,0.2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .mode-item:hover { border-color: rgba(126,203,161,0.3); background: rgba(126,203,161,0.04); }
-    .mode-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
-    .mode-text { font-size: 13px; color: var(--muted); font-weight: 400; }
-
-    /* ── CTA BAND ── */
-    .cta-band {
-      position: relative;
-      z-index: 1;
-      padding: 0 0 100px;
-    }
-    .cta-card {
-      background: linear-gradient(135deg, #1A1508 0%, #0F1A12 100%);
-      border: 1px solid rgba(212,180,131,0.2);
-      border-radius: var(--radius-xl);
-      padding: 56px 40px;
-      display: grid;
-      gap: 40px;
-      overflow: hidden;
-      position: relative;
-    }
-    @media (min-width: 900px) {
-      .cta-card { grid-template-columns: 1fr auto; align-items: center; padding: 64px 56px; }
-    }
-    .cta-card::before {
-      content: '';
-      position: absolute;
-      top: -100px; right: -100px;
-      width: 400px; height: 400px;
-      background: radial-gradient(ellipse, rgba(212,180,131,0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .cta-title {
-      font-family: var(--ff-display);
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-    .cta-title em { font-style: italic; color: var(--gold); }
-    .cta-sub { font-size: 16px; color: var(--muted); font-weight: 300; max-width: 480px; line-height: 1.6; }
-    .cta-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-    .pill {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 7px 14px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .pill svg { width: 14px; height: 14px; color: var(--green); }
-
-    /* ── PRICING ── */
-    .pricing-section {
-      position: relative;
-      z-index: 1;
-      padding: 0 0 100px;
-    }
-    .pricing-grid {
-      display: grid;
-      gap: 16px;
-    }
-    @media (min-width: 768px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
-
-    .price-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.25s, border-color 0.25s;
-    }
-    .price-card:hover { transform: translateY(-4px); }
-    .price-card.featured {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: #0C0A07;
-    }
-    .price-name {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: var(--dim);
-      margin-bottom: 20px;
-    }
-    .price-card.featured .price-name { color: rgba(12,10,7,0.6); }
-    .price-amount {
-      font-family: var(--ff-display);
-      font-size: 54px;
-      font-weight: 400;
-      line-height: 1;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .price-card.featured .price-amount { color: #0C0A07; }
-    .price-period { font-size: 13px; color: var(--dim); margin-bottom: 12px; }
-    .price-card.featured .price-period { color: rgba(12,10,7,0.5); }
-    .price-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 28px; font-weight: 300; flex: 1; }
-    .price-card.featured .price-desc { color: rgba(12,10,7,0.7); }
-
-    .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
-    .price-features li {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .price-card.featured .price-features li { color: rgba(12,10,7,0.75); }
-    .price-features li svg { width: 15px; height: 15px; color: var(--green); flex-shrink: 0; }
-    .price-card.featured .price-features li svg { color: rgba(12,10,7,0.6); }
-
-    .price-btn {
-      width: 100%;
-      padding: 14px;
-      border-radius: 100px;
-      font-size: 14px;
-      font-weight: 600;
-      font-family: var(--ff-body);
-      cursor: pointer;
-      border: none;
-      transition: transform 0.15s, background 0.2s;
-    }
-    .price-btn:hover { transform: translateY(-1px); }
-    .price-btn-dark { background: #0C0A07; color: var(--gold); }
-    .price-btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .price-btn-outline:hover { background: rgba(255,255,255,0.07); }
-
-    /* ── WAITLIST FORM ── */
-    .waitlist-section {
-      position: relative;
-      z-index: 1;
-      padding: 0 0 100px;
-    }
-    .waitlist-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 56px 40px;
-      text-align: center;
-      max-width: 680px;
-      margin: 0 auto;
-    }
-    @media (min-width: 768px) { .waitlist-card { padding: 72px 64px; } }
-
-    .waitlist-card h2 { margin-bottom: 12px; }
-    .waitlist-card .section-sub { margin: 0 auto 36px; text-align: center; }
-
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-    @media (min-width: 540px) { .form-row { flex-direction: row; } }
-
-    .form-input {
-      flex: 1;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 14px 22px;
-      font-size: 15px;
-      font-family: var(--ff-body);
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-input::placeholder { color: var(--dim); }
-    .form-input:focus { border-color: rgba(212,180,131,0.5); }
-
-    .form-note {
-      margin-top: 14px;
-      font-size: 12px;
-      color: var(--dim);
-    }
-
-    .success-msg {
-      display: none;
-      color: var(--green);
-      font-size: 15px;
-      margin-top: 16px;
-      font-weight: 500;
-    }
-    .success-msg.show { display: block; }
-
-    /* ── FOOTER ── */
-    footer {
-      position: relative;
-      z-index: 1;
-      border-top: 1px solid var(--border);
-      padding: 32px 0;
-    }
-    .footer-inner {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      align-items: center;
-      text-align: center;
-    }
-    @media (min-width: 768px) {
-      .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; }
-    }
-    .footer-copy { font-size: 13px; color: var(--dim); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: 13px; color: var(--dim); text-decoration: none; }
-    .footer-links a:hover { color: var(--muted); }
-
-    /* ── ANIMATIONS ── */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .fade-in-delay-1 { transition-delay: 0.1s; }
-    .fade-in-delay-2 { transition-delay: 0.2s; }
-    .fade-in-delay-3 { transition-delay: 0.3s; }
-    .fade-in-delay-4 { transition-delay: 0.4s; }
-
-    /* ── ICONS (inline SVG helpers) ── */
-    .icon-gold { color: var(--gold); }
-    .icon-green { color: var(--green); }
-
-    /* Hero animation */
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
-    }
-    .phone-mock { animation: float 6s ease-in-out infinite; }
-
-    /* Shimmer on badge */
-    @keyframes shimmer {
-      0% { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
-    .hero-badge {
-      background: linear-gradient(90deg, var(--gold-dim), rgba(212,180,131,0.25), var(--gold-dim));
-      background-size: 200% auto;
-      animation: shimmer 3s linear infinite;
-    }
-
-  </style>
+  <meta name="description" content="Turn messy site walkthroughs into clean, professional scope reports. AI-powered capture for builders, renovators and property teams. Photo, voice and AI — all in one mobile app."/>
+  <meta name="keywords" content="site inspection app, builder scope report, AI construction tool, building inspection software, scope capture, renovation inspection, extension scope, defect inspection app"/>
+  <meta name="author" content="ScopeSnap"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://scopesnap.com.au/"/>
+  <meta property="og:title" content="ScopeSnap — AI Site Capture for Builders"/>
+  <meta property="og:description" content="Turn messy site walkthroughs into clean, professional scope reports. Photo, voice and AI — all in one mobile app."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://scopesnap.com.au/"/>
+  <meta property="og:image" content="https://scopesnap.com.au/og.png"/>
+  <meta property="og:site_name" content="ScopeSnap"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="ScopeSnap — AI Site Capture for Builders"/>
+  <meta name="twitter:description" content="Turn messy site walkthroughs into clean, professional scope reports."/>
+  <meta name="twitter:image" content="https://scopesnap.com.au/og.png"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#080B10"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/shared.css"/>
 </head>
 <body>
 
-<!-- Ambient glows -->
-<div class="glow-layer">
-  <span class="g1"></span>
-  <span class="g2"></span>
-  <span class="g3"></span>
+<div class="glow-layer" aria-hidden="true">
+  <span class="g1"></span><span class="g2"></span><span class="g3"></span>
 </div>
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <nav id="nav">
-  <div class="wrap">
-    <div class="nav-inner">
-      <a href="/" class="logo">
-        <div class="logo-icon" style="overflow:hidden; padding:0; background:transparent; border:none;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" style="width:42px;height:42px;display:block;">
-            <circle cx="80" cy="80" r="66" fill="none"/>
-            <path d="M80,14 A66,66 0 0,1 137.2,47 Q125,68 94,95 L100,73 Q93,31 80,14 Z" fill="none" stroke="#D4B483" stroke-width="3" stroke-linejoin="round"/>
-            <path d="M137.2,47 A66,66 0 0,1 137.2,113 Q112,112 72,98 L94,95 Q125,68 137.2,47 Z" fill="none" stroke="#D4B483" stroke-width="3" stroke-linejoin="round"/>
-            <path d="M137.2,113 A66,66 0 0,1 80,146 Q67,125 58,84 L72,98 Q112,112 137.2,113 Z" fill="none" stroke="#D4B483" stroke-width="3" stroke-linejoin="round"/>
-            <path d="M80,146 A66,66 0 0,1 22.8,113 Q35,92 66,65 L58,84 Q67,125 80,146 Z" fill="none" stroke="#D4B483" stroke-width="3" stroke-linejoin="round"/>
-            <path d="M22.8,113 A66,66 0 0,1 22.8,47 Q48,48 84,62 L66,65 Q35,92 22.8,113 Z" fill="none" stroke="#D4B483" stroke-width="3" stroke-linejoin="round"/>
-            <path d="M22.8,47 A66,66 0 0,1 80,14 Q93,35 100,73 L84,62 Q48,48 22.8,47 Z" fill="none" stroke="#D4B483" stroke-width="3" stroke-linejoin="round"/>
-            <circle cx="80" cy="80" r="66" fill="none" stroke="#D4B483" stroke-width="3"/>
-          </svg>
-        </div>
-        <div>
-          <div class="logo-name">ScopeSnap</div>
-          <div class="logo-sub">AI site capture</div>
-        </div>
-      </a>
-
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#workflow">Workflow</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#waitlist">Early access</a></li>
-      </ul>
-
-      <a href="#waitlist" class="nav-cta">
-        Get access
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-
-      <button class="menu-btn" id="menuBtn" aria-label="Menu">
-        <svg id="menuIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
+  <div class="wrap nav-inner">
+    <a href="/" class="logo" aria-label="ScopeSnap home">
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="36" height="36">
+          <path d="M80,14 A66,66 0 0,1 137.2,47 Q125,68 94,95 L100,73 Q93,31 80,14 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M137.2,47 A66,66 0 0,1 137.2,113 Q112,112 72,98 L94,95 Q125,68 137.2,47 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M137.2,113 A66,66 0 0,1 80,146 Q67,125 58,84 L72,98 Q112,112 137.2,113 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M80,146 A66,66 0 0,1 22.8,113 Q35,92 66,65 L58,84 Q67,125 80,146 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M22.8,113 A66,66 0 0,1 22.8,47 Q48,48 84,62 L66,65 Q35,92 22.8,113 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M22.8,47 A66,66 0 0,1 80,14 Q93,35 100,73 L84,62 Q48,48 22.8,47 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="80" cy="80" r="66" fill="none" stroke="#D4B483" stroke-width="4"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-name">ScopeSnap</div>
+        <div class="logo-sub">AI site capture</div>
+      </div>
+    </a>
+    <ul class="nav-links" role="navigation">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+    <a href="#waitlist" class="btn-primary nav-cta">Get early access <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <svg id="menuIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </nav>
-
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="navigation">
   <a href="#features">Features</a>
   <a href="#workflow">How it works</a>
   <a href="#pricing">Pricing</a>
-  <a href="#waitlist">Get early access →</a>
+  <a href="/contact.html">Contact</a>
+  <a href="#waitlist" class="mobile-cta">Get early access →</a>
 </div>
 
-<!-- ── HERO ── -->
+<main>
+<!-- HERO -->
 <section class="hero">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <div class="hero-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
-          Built for builders, inspectors &amp; property teams
-        </div>
-
-        <h1>Site inspections that turn into <em>scopes</em> before you leave the driveway.</h1>
-
-        <p class="hero-sub">ScopeSnap is a mobile-first capture platform. Record rooms, photos and voice notes on-site, then generate clean AI-powered scope reports in seconds — no more notebooks and camera roll sorting.</p>
-
-        <div class="hero-actions">
-          <a href="#waitlist" class="btn-primary">
-            Get early access
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <a href="#workflow" class="btn-ghost">
-            See how it works
-          </a>
-        </div>
+  <div class="wrap hero-grid">
+    <div class="hero-text fade-in">
+      <div class="badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        Built for builders &amp; property professionals
       </div>
+      <h1>Site inspections that turn into <em>scopes</em> before you leave the driveway.</h1>
+      <p class="hero-sub">Stop losing job details between the site visit and the quote. ScopeSnap captures photos, voice notes and observations on-site — then generates clean, professional scope reports in seconds.</p>
+      <div class="hero-actions">
+        <a href="#waitlist" class="btn-primary">Request early access <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="#workflow" class="btn-ghost">See how it works</a>
+      </div>
+      <p class="hero-note">Currently in beta with builders in South Australia. <a href="#waitlist">Join the waitlist →</a></p>
+    </div>
 
-      <!-- Phone mockup -->
-      <div class="phone-mock">
-        <div class="phone-frame">
-          <div class="phone-screen">
-            <div class="phone-header">
-              <div>
-                <div class="phone-room-label">Current room</div>
-                <div class="phone-room-name">Kitchen</div>
-              </div>
-              <div class="live-badge">Live</div>
+    <div class="phone-wrap fade-in fade-in-delay-1">
+      <div class="phone-glow" aria-hidden="true"></div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="ps-header">
+            <div>
+              <div class="ps-label">Current room</div>
+              <div class="ps-room">Master Ensuite</div>
             </div>
-
-            <div class="action-tiles">
-              <div class="action-tile">
-                <div class="action-tile-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                </div>
-                <div class="action-tile-label">Photo</div>
+            <div class="ps-live">● Live</div>
+          </div>
+          <div class="ps-tiles">
+            <div class="ps-tile">
+              <div class="ps-tile-icon gold">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
               </div>
-              <div class="action-tile">
-                <div class="action-tile-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
-                </div>
-                <div class="action-tile-label">Voice</div>
-              </div>
-              <div class="action-tile">
-                <div class="action-tile-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                </div>
-                <div class="action-tile-label">Note</div>
-              </div>
+              <span>Photo</span>
             </div>
-
-            <div class="note-items">
-              <div class="note-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Benchtop to be replaced with stone
+            <div class="ps-tile">
+              <div class="ps-tile-icon green">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
               </div>
-              <div class="note-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Allow new island power &amp; pendants
-              </div>
-              <div class="note-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                Check wall removal with engineer
-              </div>
+              <span>Voice</span>
             </div>
-
-            <div class="ai-preview">
-              <div class="ai-preview-label">✦ AI scope preview</div>
-              <div class="ai-preview-text">Kitchen renovation includes demolition, cabinetry, stone benchtop, electrical changes and wall investigation...</div>
+            <div class="ps-tile">
+              <div class="ps-tile-icon muted">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <span>Note</span>
             </div>
+          </div>
+          <div class="ps-notes">
+            <div class="ps-note"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Replace shower screen — frame corroded</div>
+            <div class="ps-note"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Re-tile floor, allow waterproofing</div>
+            <div class="ps-note"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Vanity to be replaced with freestanding</div>
+          </div>
+          <div class="ps-ai">
+            <div class="ps-ai-label">✦ AI scope preview</div>
+            <div class="ps-ai-text">Ensuite scope includes shower screen replacement, full re-tile with new waterproofing membrane, and vanity replacement with freestanding unit and tapware...</div>
           </div>
         </div>
       </div>
@@ -1009,288 +140,426 @@
   </div>
 </section>
 
-<!-- ── PROOF BAR ── -->
+<!-- PROOF -->
 <div class="proof-bar">
-  <div class="wrap">
-    <div class="proof-inner">
-      <div class="proof-stat">
-        <span class="proof-num">60+</span>
-        <span class="proof-label">Jobs captured in beta</span>
-      </div>
-      <div class="proof-divider"></div>
-      <div class="proof-stat">
-        <span class="proof-num">5 min</span>
-        <span class="proof-label">Average scope generation</span>
-      </div>
-      <div class="proof-divider"></div>
-      <div class="proof-stat">
-        <span class="proof-num">iOS &amp; Android</span>
-        <span class="proof-label">Mobile-first PWA</span>
-      </div>
-      <div class="proof-divider"></div>
-      <div class="proof-stat">
-        <span class="proof-num">Built by builders</span>
-        <span class="proof-label">For real-world workflows</span>
-      </div>
-    </div>
+  <div class="wrap proof-inner">
+    <div class="proof-item"><span class="proof-num">Mobile-first</span><span class="proof-label">Works on iPhone &amp; Android</span></div>
+    <div class="proof-div" aria-hidden="true"></div>
+    <div class="proof-item"><span class="proof-num">Under 5 mins</span><span class="proof-label">Room to polished scope report</span></div>
+    <div class="proof-div" aria-hidden="true"></div>
+    <div class="proof-item"><span class="proof-num">AI-powered</span><span class="proof-label">Voice, captions &amp; scope summaries</span></div>
+    <div class="proof-div" aria-hidden="true"></div>
+    <div class="proof-item"><span class="proof-num">Built by builders</span><span class="proof-label">Designed for real site conditions</span></div>
   </div>
 </div>
 
-<!-- ── FEATURES ── -->
-<section id="features" class="features-section">
+<!-- WHY SECTION -->
+<section class="section" id="why">
   <div class="wrap">
-    <div class="section-eyebrow">Features</div>
-    <h2>Built for fast, messy, <em>real</em> site inspections.</h2>
-    <p class="section-sub">Not a generic checklist app. ScopeSnap is designed around how builders actually walk through jobs.</p>
+    <div class="eyebrow">The problem</div>
+    <h2>Your current system is <em>costing you jobs.</em></h2>
+    <p class="section-sub">Most builders leave a site with a phone full of unorganised photos, scattered voice memos, and notes that mean nothing three days later. By the time you write the scope or quote, you're missing details — and so is your price.</p>
+
+    <div class="compare-grid">
+      <div class="compare-card bad fade-in">
+        <div class="compare-label bad-label">❌ Without ScopeSnap</div>
+        <ul class="compare-list">
+          <li>250 unorganised photos across 8 jobs</li>
+          <li>Voice memos you can't remember recording</li>
+          <li>Scope written from memory 3 days later</li>
+          <li>Missing items discovered mid-construction</li>
+          <li>Variations that should have been in the quote</li>
+          <li>Client disputes about what was agreed</li>
+        </ul>
+      </div>
+      <div class="compare-card good fade-in fade-in-delay-1">
+        <div class="compare-label good-label">✓ With ScopeSnap</div>
+        <ul class="compare-list">
+          <li>Photos tagged to the right room automatically</li>
+          <li>Voice notes cleaned up by AI on the spot</li>
+          <li>Scope generated room-by-room before you leave</li>
+          <li>Nothing missed — questions guide the walkthrough</li>
+          <li>Client-ready report in minutes, not hours</li>
+          <li>Clear record of what was inspected and agreed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="eyebrow">Features</div>
+    <h2>Everything you need on site, <em>nothing you don't.</em></h2>
+    <p class="section-sub">Designed around how builders actually work — fast, messy, on a phone, in the middle of a job.</p>
 
     <div class="features-grid">
       <div class="feature-card fade-in">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <div class="f-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
         </div>
-        <div class="feature-title">Walkthrough photo capture</div>
-        <div class="feature-text">Capture rooms, issues, finishes and site details as you move — all tied to the right space automatically.</div>
+        <h3>Room-by-room photo capture</h3>
+        <p>Take photos room by room and they stay organised — no more scrolling through 300 shots trying to remember which bathroom that was.</p>
       </div>
       <div class="feature-card fade-in fade-in-delay-1">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+        <div class="f-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
         </div>
-        <div class="feature-title">Voice to structured notes</div>
-        <div class="feature-text">Talk naturally on site and ScopeSnap turns messy voice notes into clean, builder-ready observations.</div>
+        <h3>Voice notes, cleaned up by AI</h3>
+        <p>Talk through what you see on site. ScopeSnap transcribes it, removes the filler words, and turns it into clean professional observations.</p>
       </div>
       <div class="feature-card fade-in fade-in-delay-2">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        <div class="f-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
         </div>
-        <div class="feature-title">AI scope summaries</div>
-        <div class="feature-text">Generate clear scope notes, client summaries, trade breakdowns and inspection outputs in seconds.</div>
+        <h3>AI scope report generation</h3>
+        <p>When you're done walking the site, generate a professional scope report. Client version, trade breakdown, or internal notes — all from the same capture.</p>
       </div>
       <div class="feature-card fade-in fade-in-delay-3">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><path d="M9 12h6M9 16h4"/></svg>
+        <div class="f-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><path d="M9 12h6M9 16h4"/></svg>
         </div>
-        <div class="feature-title">Room-by-room workflows</div>
-        <div class="feature-text">Renovations, extensions, new builds, defects, maintenance and property inspections — with tailored flows.</div>
+        <h3>Guided inspection workflows</h3>
+        <p>Select the job type first — renovation, extension, defect, maintenance, new build — and ScopeSnap shapes the questions and flow around that project.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="f-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Team access &amp; job sharing</h3>
+        <p>Your whole team sees the same jobs. Sales reps, site supervisors, estimators — everyone works from the same captured information.</p>
+      </div>
+      <div class="feature-card fade-in fade-in-delay-1">
+        <div class="f-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>PDF scope reports</h3>
+        <p>Export clean PDF reports for clients, trades, or your own records. Professional enough to hand to a homeowner, detailed enough for your estimator.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── WORKFLOW ── -->
-<section id="workflow" class="workflow-section">
+<!-- USE CASES -->
+<section class="section" id="usecases">
   <div class="wrap">
-    <div class="section-eyebrow">Workflow</div>
-    <h2>From walkthrough to report <em>in five steps.</em></h2>
-    <p class="section-sub">A simple, repeatable process built around how you already work on site.</p>
+    <div class="eyebrow">Use cases</div>
+    <h2>Works for every type of <em>inspection.</em></h2>
+    <p class="section-sub">Whether you're scoping a full renovation or logging a defect, ScopeSnap adapts to the job type.</p>
 
-    <div class="workflow-grid">
-      <div class="workflow-card fade-in">
-        <h3>The capture flow</h3>
-        <p>Five steps, every job, every time.</p>
-        <div class="steps-list">
-          <div class="step-item"><div class="step-num">1</div><div class="step-text">Create a job</div></div>
-          <div class="step-item"><div class="step-num">2</div><div class="step-text">Select inspection type</div></div>
-          <div class="step-item"><div class="step-num">3</div><div class="step-text">Walk room-by-room</div></div>
-          <div class="step-item"><div class="step-num">4</div><div class="step-text">Add photos, voice notes &amp; observations</div></div>
-          <div class="step-item"><div class="step-num">5</div><div class="step-text">Generate a polished scope report</div></div>
-        </div>
+    <div class="use-grid">
+      <div class="use-card fade-in">
+        <div class="use-icon">🏠</div>
+        <h3>Renovations</h3>
+        <p>Full home renovation scopes — room by room, trade by trade. Capture every detail from structural to finishes.</p>
+        <div class="use-example">"3BR renovation — kitchen, 2 bathrooms, laundry, repaint throughout, new flooring"</div>
       </div>
-
-      <div class="workflow-card fade-in fade-in-delay-1">
-        <h3>Inspection modes</h3>
-        <p>Choose the job type first, then let ScopeSnap shape the capture flow around that project.</p>
-        <div class="modes-grid">
-          <div class="mode-item"><div class="mode-dot"></div><div class="mode-text">Renovation inspections</div></div>
-          <div class="mode-item"><div class="mode-dot"></div><div class="mode-text">Extensions &amp; additions</div></div>
-          <div class="mode-item"><div class="mode-dot"></div><div class="mode-text">New build walkthroughs</div></div>
-          <div class="mode-item"><div class="mode-dot"></div><div class="mode-text">Defect inspections</div></div>
-          <div class="mode-item"><div class="mode-dot"></div><div class="mode-text">Maintenance reports</div></div>
-          <div class="mode-item"><div class="mode-dot"></div><div class="mode-text">Real estate &amp; PM capture</div></div>
-        </div>
+      <div class="use-card fade-in fade-in-delay-1">
+        <div class="use-icon">🏗️</div>
+        <h3>Extensions &amp; additions</h3>
+        <p>Scope new additions, second storeys, granny flats and outbuildings. Document existing conditions and new works clearly.</p>
+        <div class="use-example">"Rear extension — new slab, framing, roof, windows, tie-in to existing structure"</div>
+      </div>
+      <div class="use-card fade-in fade-in-delay-2">
+        <div class="use-icon">🔍</div>
+        <h3>Defect inspections</h3>
+        <p>Log defects with photos, descriptions and priority levels. Generate clear defect schedules for builders and clients.</p>
+        <div class="use-example">"Settlement cracking to render, garage door alignment, missing roof flashing at valley"</div>
+      </div>
+      <div class="use-card fade-in fade-in-delay-3">
+        <div class="use-icon">🔧</div>
+        <h3>Maintenance &amp; repairs</h3>
+        <p>Capture maintenance issues across a property. Create itemised schedules for approval and trade allocation.</p>
+        <div class="use-example">"Annual maintenance — gutters, silicone, touch-up paint, gate latch, tap washer replacement"</div>
+      </div>
+      <div class="use-card fade-in">
+        <div class="use-icon">🏢</div>
+        <h3>Real estate &amp; property management</h3>
+        <p>Condition reports, ingoing/outgoing inspections, and maintenance schedules for property managers and buyers agents.</p>
+        <div class="use-example">"Pre-purchase inspection — roof, subfloor, electrical, plumbing, structural overview"</div>
+      </div>
+      <div class="use-card fade-in fade-in-delay-1">
+        <div class="use-icon">🏠</div>
+        <h3>New builds</h3>
+        <p>Practical completion inspections, stage inspections and handover walkthroughs for new construction projects.</p>
+        <div class="use-example">"Practical completion — defect list, missing items, final fixtures, landscaping sign-off"</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── CTA BAND ── -->
-<section class="cta-band">
+<!-- WORKFLOW -->
+<section class="section" id="workflow">
   <div class="wrap">
-    <div class="cta-card fade-in">
-      <div>
-        <h2 class="cta-title">Stop losing job details <em>between the site and the quote.</em></h2>
-        <p class="cta-sub">ScopeSnap gives every photo, note and observation a proper home — so your office, estimator and client reports all start from the same clean information.</p>
+    <div class="eyebrow">How it works</div>
+    <h2>Five steps, every job, <em>every time.</em></h2>
+    <p class="section-sub">A repeatable process that gets faster the more you use it.</p>
+
+    <div class="steps-row">
+      <div class="step-card fade-in">
+        <div class="step-num">1</div>
+        <h3>Create a job</h3>
+        <p>Add the client, site address and appointment details. Takes 30 seconds.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step-card fade-in fade-in-delay-1">
+        <div class="step-num">2</div>
+        <h3>Select job type</h3>
+        <p>Renovation, extension, defect, maintenance — ScopeSnap adapts the workflow to match.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step-card fade-in fade-in-delay-2">
+        <div class="step-num">3</div>
+        <h3>Walk room by room</h3>
+        <p>Add each space as you go. Guided questions keep the inspection consistent.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step-card fade-in fade-in-delay-3">
+        <div class="step-num">4</div>
+        <h3>Capture as you go</h3>
+        <p>Photos, voice notes and written observations — all tied to the right room instantly.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true">→</div>
+      <div class="step-card fade-in fade-in-delay-4">
+        <div class="step-num">5</div>
+        <h3>Generate the scope</h3>
+        <p>AI turns your capture into a clean, professional report — client version or trade breakdown.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="section">
+  <div class="wrap">
+    <div class="cta-band fade-in">
+      <div class="cta-band-text">
+        <h2 class="cta-h">Stop losing job details between the site and the quote.</h2>
+        <p class="cta-sub">Every missed item is a variation. Every missed variation is money out of your pocket. ScopeSnap gives your capture a proper home — so nothing gets lost between the site visit and the scope.</p>
         <div class="cta-pills">
-          <div class="pill">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-            For building companies
-          </div>
-          <div class="pill">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            For property teams
-          </div>
-          <div class="pill">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            For faster quoting
-          </div>
+          <div class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> No missed scope items</div>
+          <div class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Professional client reports</div>
+          <div class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Works on iPhone &amp; Android</div>
+          <div class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Installs to your home screen</div>
         </div>
       </div>
-      <a href="#waitlist" class="btn-primary" style="white-space:nowrap; align-self: flex-start;">
-        Join the beta
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+      <a href="#waitlist" class="btn-primary cta-btn">Join the beta →</a>
     </div>
   </div>
 </section>
 
-<!-- ── PRICING ── -->
-<section id="pricing" class="pricing-section">
+<!-- PRICING -->
+<section class="section" id="pricing">
   <div class="wrap">
-    <div style="text-align:center; margin-bottom: 52px;">
-      <div class="section-eyebrow" style="justify-content:center;">Pricing</div>
-      <h2>Simple early access pricing</h2>
-      <p class="section-sub" style="margin: 0 auto;">Start lean, validate the workflow, then scale your team.</p>
-    </div>
+    <div class="eyebrow" style="text-align:center; justify-content:center;">Pricing</div>
+    <h2 style="text-align:center;">Simple, honest pricing.</h2>
+    <p class="section-sub" style="margin:0 auto 52px; text-align:center;">Beta pricing while we build with early users. Lock in now before it goes up.</p>
 
     <div class="pricing-grid">
-      <!-- Starter -->
       <div class="price-card fade-in">
-        <div class="price-name">Starter</div>
-        <div class="price-amount">$49</div>
-        <div class="price-period">per month</div>
-        <div class="price-desc">Solo builders and inspectors testing the workflow.</div>
-        <ul class="price-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Up to 10 active jobs</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Photo &amp; voice capture</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> AI scope generation</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> PDF reports</li>
+        <div class="price-tier">Starter</div>
+        <div class="price-amount">$49<span class="price-per">/mo</span></div>
+        <p class="price-desc">Solo builders and inspectors who want to try a better way to capture site visits.</p>
+        <ul class="price-list">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Up to 10 active jobs</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Photo &amp; voice capture</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>AI scope generation</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>PDF reports</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>1 user</li>
         </ul>
-        <button class="price-btn price-btn-outline" onclick="document.getElementById('waitlistEmail').focus()">Join beta</button>
+        <button class="price-btn price-btn-outline" onclick="scrollToWaitlist()">Join beta</button>
       </div>
 
-      <!-- Builder (featured) -->
-      <div class="price-card featured fade-in fade-in-delay-1">
-        <div class="price-name">Builder</div>
-        <div class="price-amount">$149</div>
-        <div class="price-period">per month</div>
-        <div class="price-desc">Small teams capturing multiple jobs simultaneously.</div>
-        <ul class="price-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited jobs</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Up to 5 team members</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> All capture modes</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Client &amp; trade reports</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Priority support</li>
+      <div class="price-card price-featured fade-in fade-in-delay-1">
+        <div class="price-popular">Most popular</div>
+        <div class="price-tier" style="color:rgba(12,10,7,0.6)">Builder</div>
+        <div class="price-amount" style="color:#0C0A07">$149<span class="price-per" style="color:rgba(12,10,7,0.5)">/mo</span></div>
+        <p class="price-desc" style="color:rgba(12,10,7,0.7)">For small building companies capturing multiple jobs and sharing with the team.</p>
+        <ul class="price-list" style="color:rgba(12,10,7,0.75)">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited active jobs</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Up to 5 team members</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All inspection types</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Client &amp; trade reports</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
         </ul>
-        <button class="price-btn price-btn-dark" onclick="document.getElementById('waitlistEmail').focus()">Join beta</button>
+        <button class="price-btn price-btn-dark" onclick="scrollToWaitlist()">Join beta</button>
       </div>
 
-      <!-- Pro -->
       <div class="price-card fade-in fade-in-delay-2">
-        <div class="price-name">Pro</div>
-        <div class="price-amount">$299</div>
-        <div class="price-period">per month</div>
-        <div class="price-desc">Growing teams needing full reporting and admin controls.</div>
-        <ul class="price-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Builder</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited team members</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Custom report branding</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> API access</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Dedicated onboarding</li>
+        <div class="price-tier">Pro</div>
+        <div class="price-amount">$299<span class="price-per">/mo</span></div>
+        <p class="price-desc">Growing teams with multiple users, custom branding and full admin controls.</p>
+        <ul class="price-list">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Builder</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited team members</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Custom report branding</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Advanced AI outputs</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Dedicated onboarding</li>
         </ul>
-        <button class="price-btn price-btn-outline" onclick="document.getElementById('waitlistEmail').focus()">Join beta</button>
+        <button class="price-btn price-btn-outline" onclick="scrollToWaitlist()">Join beta</button>
       </div>
     </div>
+
+    <p class="pricing-note">All plans are beta pricing. No credit card required to join the waitlist. Billing starts when your account is activated.</p>
   </div>
 </section>
 
-<!-- ── WAITLIST ── -->
-<section id="waitlist" class="waitlist-section">
+<!-- WAITLIST -->
+<section class="section" id="waitlist">
   <div class="wrap">
     <div class="waitlist-card fade-in">
-      <div class="section-eyebrow" style="justify-content:center;">Early access</div>
-      <h2>Want early access?</h2>
-      <p class="section-sub">ScopeSnap is being built with real builders and property teams. Join the beta and help shape the inspection tool you actually want to use.</p>
+      <div class="eyebrow" style="justify-content:center;">Early access</div>
+      <h2>Join the beta.</h2>
+      <p class="section-sub" style="margin:0 auto 36px; text-align:center; max-width:500px;">ScopeSnap is live and being used by builders right now. We're opening access to a small group of early users. Join the list and we'll be in touch.</p>
 
-      <form id="waitlistForm" class="form-row" onsubmit="handleWaitlist(event)">
-        <input
-          type="email"
-          id="waitlistEmail"
-          class="form-input"
-          placeholder="your@email.com"
-          required
-          autocomplete="email"
-        />
-        <button type="submit" class="btn-primary" style="white-space:nowrap; flex-shrink:0;">
-          Get access
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <form id="waitlistForm" class="waitlist-form" novalidate>
+        <div class="form-row-2">
+          <div class="form-field">
+            <label for="wlName">Your name</label>
+            <input type="text" id="wlName" name="name" placeholder="Jace Wildman" autocomplete="name"/>
+          </div>
+          <div class="form-field">
+            <label for="wlEmail">Email address <span class="req">*</span></label>
+            <input type="email" id="wlEmail" name="email" placeholder="jace@company.com.au" required autocomplete="email"/>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-field">
+            <label for="wlCompany">Company name</label>
+            <input type="text" id="wlCompany" name="company" placeholder="Wildman Construct" autocomplete="organization"/>
+          </div>
+          <div class="form-field">
+            <label for="wlRole">Your role</label>
+            <select id="wlRole" name="role">
+              <option value="">Select a role...</option>
+              <option value="builder">Builder / Contractor</option>
+              <option value="renovator">Renovator</option>
+              <option value="inspector">Building Inspector</option>
+              <option value="real_estate">Real Estate / Property Manager</option>
+              <option value="estimator">Estimator</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-honeypot" aria-hidden="true">
+          <input type="text" name="website" tabindex="-1" autocomplete="off"/>
+        </div>
+        <button type="submit" class="btn-primary form-submit" id="submitBtn">
+          <span id="submitText">Request early access</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
+        <div id="formError" class="form-error" role="alert" aria-live="polite"></div>
       </form>
 
-      <div class="form-note">No spam. Unsubscribe any time. Beta spots are limited.</div>
-      <div class="success-msg" id="successMsg">✓ You're on the list — we'll be in touch soon.</div>
+      <div id="formSuccess" class="form-success" aria-live="polite" style="display:none">
+        <div class="success-icon">✓</div>
+        <h3>You're on the list.</h3>
+        <p>We'll be in touch soon. In the meantime, feel free to reach out at <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a>.</p>
+      </div>
+
+      <p class="form-note">No spam. Unsubscribe any time. We'll only email you about ScopeSnap.</p>
     </div>
   </div>
 </section>
+</main>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
-  <div class="wrap">
-    <div class="footer-inner">
-      <div class="footer-copy">© <span id="year"></span> ScopeSnap. AI-powered site capture for builders.</div>
-      <div class="footer-links">
-        <a href="mailto:hello@scopesnap.com.au">Contact</a>
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
+  <div class="wrap footer-inner">
+    <div class="footer-left">
+      <a href="/" class="footer-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="28" height="28">
+          <path d="M80,14 A66,66 0 0,1 137.2,47 Q125,68 94,95 L100,73 Q93,31 80,14 Z" fill="none" stroke="#D4B483" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M137.2,47 A66,66 0 0,1 137.2,113 Q112,112 72,98 L94,95 Q125,68 137.2,47 Z" fill="none" stroke="#D4B483" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M137.2,113 A66,66 0 0,1 80,146 Q67,125 58,84 L72,98 Q112,112 137.2,113 Z" fill="none" stroke="#D4B483" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M80,146 A66,66 0 0,1 22.8,113 Q35,92 66,65 L58,84 Q67,125 80,146 Z" fill="none" stroke="#D4B483" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M22.8,113 A66,66 0 0,1 22.8,47 Q48,48 84,62 L66,65 Q35,92 22.8,113 Z" fill="none" stroke="#D4B483" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M22.8,47 A66,66 0 0,1 80,14 Q93,35 100,73 L84,62 Q48,48 22.8,47 Z" fill="none" stroke="#D4B483" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="80" cy="80" r="66" fill="none" stroke="#D4B483" stroke-width="5"/>
+        </svg>
+        <span>ScopeSnap</span>
+      </a>
+      <p class="footer-tagline">AI-powered site capture for builders.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">Product</div>
+        <a href="#features">Features</a>
+        <a href="#workflow">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#waitlist">Early access</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy policy</a>
+        <a href="/terms.html">Terms of service</a>
       </div>
     </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© <span id="year"></span> ScopeSnap. All rights reserved.</span>
+    <span>Made in South Australia 🇦🇺</span>
   </div>
 </footer>
 
+<script src="/shared.js"></script>
 <script>
-  // Year
-  document.getElementById('year').textContent = new Date().getFullYear();
+const SUPABASE_URL = 'https://zshyarkcfttqgrjsjfyt.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzaHlhcmtjZnR0cWdyanNqZnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMjgxNTMsImV4cCI6MjA2MTYwNDE1M30.2E7bIBGr5hgR0BbUoNBl1CniBAnRCFsW37m7jRbQSzo';
 
-  // Nav scroll
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-  });
+document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
 
-  // Mobile menu
-  const menuBtn = document.getElementById('menuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-  });
-  mobileMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
-  });
+  // Honeypot check
+  if (document.querySelector('[name="website"]').value) return;
 
-  // Scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+  const email = document.getElementById('wlEmail').value.trim();
+  const name = document.getElementById('wlName').value.trim();
+  const company = document.getElementById('wlCompany').value.trim();
+  const role = document.getElementById('wlRole').value;
+  const errorEl = document.getElementById('formError');
+  const submitBtn = document.getElementById('submitBtn');
+  const submitText = document.getElementById('submitText');
+
+  if (!email) { errorEl.textContent = 'Please enter your email address.'; return; }
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRe.test(email)) { errorEl.textContent = 'Please enter a valid email address.'; return; }
+
+  errorEl.textContent = '';
+  submitBtn.disabled = true;
+  submitText.textContent = 'Submitting...';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ email, name, company, role, source: 'landing' })
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  // Waitlist form
-  function handleWaitlist(e) {
-    e.preventDefault();
-    const email = document.getElementById('waitlistEmail').value;
-
-    // Send to mailto as fallback (replace with your actual endpoint)
-    const form = document.getElementById('waitlistForm');
-    form.style.display = 'none';
-    document.getElementById('successMsg').classList.add('show');
-
-    // You can replace this with a fetch() call to your own API or a service like ConvertKit/Mailchimp
-    console.log('Waitlist signup:', email);
-    // Example: fetch('/api/waitlist', { method: 'POST', body: JSON.stringify({ email }), headers: {'Content-Type':'application/json'} });
+    if (res.ok || res.status === 409) {
+      // 409 = already on list — still show success
+      document.getElementById('waitlistForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      throw new Error('Submission failed');
+    }
+  } catch(err) {
+    submitBtn.disabled = false;
+    submitText.textContent = 'Request early access';
+    errorEl.textContent = 'Something went wrong. Please email us directly at hello@scopesnap.com.au';
   }
-</script>
+});
 
+function scrollToWaitlist() {
+  document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
 </body>
 </html>
