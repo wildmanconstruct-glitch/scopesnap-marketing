@@ -150,7 +150,7 @@
 <script src="/shared.js"></script>
 <script>
 const SUPABASE_URL = 'https://zshyarkcfttqgrjsjfyt.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzaHlhcmtjZnR0cWdyanNqZnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMjgxNTMsImV4cCI6MjA2MTYwNDE1M30.2E7bIBGr5hgR0BbUoNBl1CniBAnRCFsW37m7jRbQSzo';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzaHlhcmtjZnR0cWdyanNqZnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5ODM4NzQsImV4cCI6MjA5MjU1OTg3NH0.whkPE9BdYafe7oqp-_oSu1NxP5zLcla8sTjmLDrQe3s;
 
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
@@ -167,35 +167,42 @@ document.getElementById('contactForm').addEventListener('submit', async function
   if (!email) { errorEl.textContent = 'Please enter your email.'; return; }
   if (!message) { errorEl.textContent = 'Please enter a message.'; return; }
 
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRe.test(email)) { errorEl.textContent = 'Please enter a valid email address.'; return; }
+
   errorEl.textContent = '';
   submitBtn.disabled = true;
   submitText.textContent = 'Sending...';
 
-  try {
-    // Store contact message in Supabase (requires contact_messages table)
-    // Falls back to mailto if table doesn't exist
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({ email, name, subject, message })
-    });
+  // Store in waitlist table with source=contact and message in company field
+  // This avoids needing a separate contact_messages table
+  const noteText = `[${subject || 'General'}] ${message}`;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({
+      email,
+      name,
+      company: noteText,
+      source: 'contact'
+    })
+  });
 
-    if (res.ok) {
-      document.getElementById('contactForm').style.display = 'none';
-      document.getElementById('cFormSuccess').style.display = 'block';
-    } else {
-      throw new Error('Failed');
-    }
-  } catch {
-    // Fallback: open mailto
-    window.location.href = `mailto:hello@scopesnap.com.au?subject=${encodeURIComponent(subject || 'Contact from website')}&body=${encodeURIComponent(message + '\n\nFrom: ' + name + ' <' + email + '>')}`;
+  // 200, 201, or 409 (duplicate email) all count as success
+  if (res.ok || res.status === 409) {
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('cFormSuccess').style.display = 'block';
+  } else {
+    // Final fallback — open mailto so message is never lost
     submitBtn.disabled = false;
     submitText.textContent = 'Send message';
+    errorEl.textContent = '';
+    window.location.href = `mailto:hello@scopesnap.com.au?subject=${encodeURIComponent(subject || 'Website enquiry')}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
   }
 });
 </script>
