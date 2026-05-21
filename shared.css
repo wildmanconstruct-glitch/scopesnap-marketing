@@ -736,7 +736,9 @@ h1 {
 .report-flow-wrap {
   margin-top: 48px;
   padding-top: 48px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(255,255,255,0.09);
+  position: relative;
+  z-index: 1;
 }
 .rf-intro {
   font-size: 15px; color: var(--muted); font-weight: 300;
@@ -753,21 +755,23 @@ h1 {
 .rf-card {
   flex: 1 1 0;
   min-width: 0;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: rgba(255,255,255,0.055);
+  background-color: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 20px;
   padding: 24px 20px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  transition: border-color var(--trans);
+  transition: border-color 0.22s ease, background 0.22s ease;
 }
-.rf-card:hover { border-color: rgba(212,180,131,0.2); }
+.rf-card:hover { border-color: rgba(212,180,131,0.2); background: rgba(255,255,255,0.07); }
 .rf-card-final {
   border-color: rgba(212,180,131,0.25);
-  background: var(--gold-dim);
+  background: rgba(212,180,131,0.12);
+  background-color: rgba(212,180,131,0.12);
 }
 .rf-card-final:hover { border-color: rgba(212,180,131,0.4); }
 .rf-card-icon {
@@ -793,6 +797,29 @@ h1 {
 }
 @media(min-width:768px){ .rf-arrow { display: flex; align-items: center; } }
 @media(max-width:767px){
-  .rf-row { flex-direction: column; gap: 8px; }
-  .rf-card { flex: none; }
+  .rf-row {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .rf-card {
+    flex: none;
+    width: 100%;
+    background: rgba(255,255,255,0.055);
+    background-color: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 20px;
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .rf-card-final {
+    background: rgba(212,180,131,0.12);
+    background-color: rgba(212,180,131,0.12);
+    border-color: rgba(212,180,131,0.25);
+  }
+  .rf-arrow { display: none; }
 }
