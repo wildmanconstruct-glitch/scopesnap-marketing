@@ -379,7 +379,7 @@
         <div class="price-tier">Solo</div>
         <div class="beta-price-row">
           <div class="price-amount">$19<span class="price-per">/mo</span></div>
-          <div class="price-was"><span class="price-strike">$49</span></div>
+          <div class="price-was">Beta — <span class="price-strike">$49</span> full price</div>
         </div>
         <p class="price-desc">Individual builders, inspectors and property professionals getting started.</p>
         <ul class="price-list">
@@ -397,7 +397,7 @@
         <div class="price-tier" style="color:rgba(12,10,7,0.6)">Professional</div>
         <div class="beta-price-row">
           <div class="price-amount" style="color:#0C0A07">$59<span class="price-per" style="color:rgba(12,10,7,0.5)">/mo</span></div>
-          <div class="price-was" style="color:rgba(12,10,7,0.45)"><span class="price-strike">$149</span></div>
+          <div class="price-was" style="color:rgba(12,10,7,0.45)">Beta — <span class="price-strike">$149</span> full price</div>
         </div>
         <p class="price-desc" style="color:rgba(12,10,7,0.7)">For building companies, renovation firms, property teams and inspection professionals.</p>
         <ul class="price-list" style="color:rgba(12,10,7,0.75)">
@@ -414,7 +414,7 @@
         <div class="price-tier">Team</div>
         <div class="beta-price-row">
           <div class="price-amount">$129<span class="price-per">/mo</span></div>
-          <div class="price-was"><span class="price-strike">$299</span></div>
+          <div class="price-was">Beta — <span class="price-strike">$299</span> full price</div>
         </div>
         <p class="price-desc">Larger teams, multiple projects simultaneously, with full reporting and admin controls.</p>
         <ul class="price-list">
@@ -614,13 +614,18 @@ document.getElementById('waitlistForm').addEventListener('submit', async functio
     });
 
     if (res.ok || res.status === 409) {
-      // 409 = already on list — still show success
       document.getElementById('waitlistForm').style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
     } else {
-      throw new Error('Submission failed');
+      const errBody = await res.json().catch(() => ({}));
+      const msg = errBody?.message || errBody?.hint || errBody?.details || `Error ${res.status}`;
+      console.error('Waitlist error:', res.status, errBody);
+      errorEl.textContent = `Error: ${msg}. Please email hello@scopesnap.com.au`;
+      submitBtn.disabled = false;
+      submitText.textContent = 'Request early access';
     }
   } catch(err) {
+    console.error('Waitlist fetch error:', err);
     submitBtn.disabled = false;
     submitText.textContent = 'Request early access';
     errorEl.textContent = 'Something went wrong. Please email us directly at hello@scopesnap.com.au';
