@@ -606,3 +606,36 @@ h1 {
   letter-spacing: -0.6px;
 }
 .hero-sub { font-size: clamp(15px, 1.7vw, 17px); }
+
+/* ── BETA PRICING ── */
+.beta-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.price-was {
+  font-size: 11px;
+  color: var(--dim);
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+.price-featured .price-was {
+  color: rgba(12,10,7,0.38);
+}
+.price-strike {
+  text-decoration: line-through;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 1px;
+  opacity: 0.55;
+}
+/* Equal card heights on mobile */
+@media(max-width:767px){
+  .pricing-grid {
+    display: flex;
+    flex-direction: column;
+  }
+  .price-card {
+    width: 100%;
+  }
+}
