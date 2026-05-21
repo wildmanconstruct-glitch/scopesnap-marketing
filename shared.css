@@ -639,3 +639,64 @@ h1 {
     width: 100%;
   }
 }
+
+/* ── REPORT FLOW ── */
+.report-flow {
+  margin-top: 48px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+}
+.rf-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 24px;
+}
+.rf-steps {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.rf-step {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 18px;
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  min-width: 80px; text-align: center;
+}
+.rf-step-final {
+  border-color: rgba(212,180,131,0.3);
+  background: var(--gold-dim);
+}
+.rf-icon { color: var(--dim); }
+.rf-icon-final { color: var(--gold); }
+.rf-arrow {
+  font-size: 16px; color: var(--dim);
+  flex-shrink: 0;
+}
+.rf-note {
+  font-size: 13px; color: var(--dim); font-weight: 300;
+  line-height: 1.6; border-top: 1px solid var(--border);
+  padding-top: 16px; margin-top: 4px;
+}
+@media(max-width:600px){
+  .rf-steps { gap: 6px; }
+  .rf-step { padding: 10px 12px; min-width: 60px; font-size: 11px; }
+  .rf-arrow { font-size: 12px; }
+  .report-flow { padding: 24px 20px; }
+}
+
+/* Equal height feature cards */
+.features-grid {
+  align-items: stretch;
+}
+.feature-card {
+  display: flex;
+  flex-direction: column;
+}
+.feature-card p {
+  flex: 1;
+}
