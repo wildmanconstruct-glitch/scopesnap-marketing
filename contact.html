@@ -150,7 +150,8 @@
 <script src="/shared.js"></script>
 <script>
 const SUPABASE_URL = 'https://zshyarkcfttqgrjsjfyt.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzaHlhcmtjZnR0cWdyanNqZnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5ODM4NzQsImV4cCI6MjA5MjU1OTg3NH0.whkPE9BdYafe7oqp-_oSu1NxP5zLcla8sTjmLDrQe3s';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzaHlhcmtjZnR0cWdyanNqZnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwMjgxNTMsImV4cCI6MjA2MTYwNDE1M30.2E7bIBGr5hgR0BbUoNBl1CniBAnRCFsW37m7jRbQSzo';
+
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   if (document.querySelector('[name="website"]').value) return;
@@ -194,6 +195,12 @@ document.getElementById('contactForm').addEventListener('submit', async function
 
   // 200, 201, or 409 (duplicate email) all count as success
   if (res.ok || res.status === 409) {
+    // Also notify via Formspree so you get an email
+    fetch('https://formspree.io/f/xkoejezy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email, name, subject, message, source: 'contact' })
+    }).catch(() => {});
     document.getElementById('contactForm').style.display = 'none';
     document.getElementById('cFormSuccess').style.display = 'block';
   } else {
