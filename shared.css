@@ -731,3 +731,68 @@ h1 {
 .feature-card p {
   flex: 1;
 }
+
+/* ── REPORT FLOW (five-step card style) ── */
+.report-flow-wrap {
+  margin-top: 48px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+.rf-intro {
+  font-size: 15px; color: var(--muted); font-weight: 300;
+  margin-bottom: 32px; max-width: 480px; line-height: 1.6;
+}
+.rf-row {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+@media(min-width:768px){ .rf-row { flex-wrap: nowrap; } }
+
+.rf-card {
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  transition: border-color var(--trans);
+}
+.rf-card:hover { border-color: rgba(212,180,131,0.2); }
+.rf-card-final {
+  border-color: rgba(212,180,131,0.25);
+  background: var(--gold-dim);
+}
+.rf-card-final:hover { border-color: rgba(212,180,131,0.4); }
+.rf-card-icon {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: grid; place-items: center;
+  margin: 12px auto 14px;
+}
+.rf-card-icon svg { color: var(--dim); }
+.rf-card-final .rf-card-icon {
+  background: var(--gold-dim);
+  border-color: rgba(212,180,131,0.25);
+}
+.rf-card-final .rf-card-icon svg { color: var(--gold); }
+.rf-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.rf-card p { font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.55; }
+.rf-arrow {
+  display: none;
+  font-size: 18px; color: var(--dim);
+  padding: 0 6px; flex-shrink: 0; align-self: center;
+}
+@media(min-width:768px){ .rf-arrow { display: flex; align-items: center; } }
+@media(max-width:767px){
+  .rf-row { flex-direction: column; gap: 8px; }
+  .rf-card { flex: none; }
+}
