@@ -27,7 +27,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/shared.css"/>
 </head>
 <body>
@@ -53,7 +53,7 @@
       </div>
       <div>
         <div class="logo-name">ScopeSnap</div>
-        <div class="logo-sub">AI site capture</div>
+        
       </div>
     </a>
     <ul class="nav-links" role="navigation">
@@ -79,78 +79,69 @@
 <main>
 <!-- HERO -->
 <section class="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-text fade-in">
-
-      <div class="hero-eyebrow">
-        <span class="hero-brand-tag">AI Site Capture</span>
-        <div class="hero-beta-pill"><span class="hero-beta-dot"></span>Beta · Australian builders</div>
-      </div>
-      <h1><span class="hero-wordmark-inline">ScopeSnap.</span><br><em>Scope faster.</em></h1>
-      <p class="hero-sub">Walk the site. Take photos. Talk through the job. ScopeSnap keeps it organised by room and turns it into a clear scope — before you leave.</p>
-
-      <div class="hero-actions">
-        <a href="#waitlist" class="btn-primary">Get early access <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        <a href="#workflow" class="btn-ghost">See how it works</a>
-      </div>
-
-
-
+  <div class="hero-left">
+    <div class="hero-label">
+      <span class="hero-label-dot"></span>
+      For Australian builders
     </div>
+    <h1>Scope jobs<br><em>faster.</em></h1>
+    <p class="hero-sub">Walk the site. Take photos. Talk through the job.<br>ScopeSnap keeps it organised by room and turns it into a clear scope — before you leave.</p>
+    <div class="hero-actions">
+      <a href="#waitlist" class="btn-primary">Get early access <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#workflow" class="btn-ghost">See how it works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="stat-num">Under 5 min</div><div class="stat-label">Site to scope report</div></div>
+      <div class="hero-stat"><div class="stat-num">No typing</div><div class="stat-label">Voice does the work</div></div>
+      <div class="hero-stat"><div class="stat-num">Miss less</div><div class="stat-label">Every room captured</div></div>
+    </div>
+  </div>
 
-    <!-- PHONE MOCKUP -->
+  <div class="hero-right">
     <div class="phone-wrap">
       <div class="phone-frame">
-        <div class="phone-screen">
-          <div class="ps-header">
-            <div>
-              <div class="ps-label">Current room</div>
-              <div class="ps-room">Master Ensuite</div>
-            </div>
-            <div class="ps-live">&#9679; Live</div>
+        <div class="ph-bar">
+          <span class="ph-bar-title">Job #247 — Greenfield Reno</span>
+          <span class="ph-live"><span class="ph-dot"></span> Live</span>
+        </div>
+        <div class="ph-room">
+          <div class="ph-room-label">Current room</div>
+          <div class="ph-room-name">Master Ensuite</div>
+        </div>
+        <div class="ph-actions">
+          <div class="ph-action active">
+            <div class="ph-action-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+            Photo
           </div>
-          <div class="ps-tiles">
-            <div class="ps-tile">
-              <div class="ps-tile-icon gold">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-              </div>
-              <span>Photo</span>
-            </div>
-            <div class="ps-tile">
-              <div class="ps-tile-icon green">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
-              </div>
-              <span>Voice</span>
-            </div>
-            <div class="ps-tile">
-              <div class="ps-tile-icon muted">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              </div>
-              <span>Note</span>
-            </div>
+          <div class="ph-action">
+            <div class="ph-action-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg></div>
+            Voice
           </div>
-          <div class="ps-notes">
-            <div class="ps-note"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Replace shower screen — frame corroded</div>
-            <div class="ps-note"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Re-tile floor, allow waterproofing</div>
-            <div class="ps-note"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Vanity — replace with freestanding</div>
+          <div class="ph-action">
+            <div class="ph-action-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            Note
           </div>
-          <div class="ps-ai">
-            <div class="ps-ai-label">&#10022; AI scope preview</div>
-            <div class="ps-ai-text">Ensuite: shower screen replacement, full re-tile with waterproofing, vanity replacement with freestanding unit...</div>
-          </div>
+        </div>
+        <div class="ph-items">
+          <div class="ph-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Replace shower screen — frame corroded</div>
+          <div class="ph-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Re-tile floor, allow waterproofing</div>
+          <div class="ph-item"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Vanity — replace with freestanding 900mm</div>
+        </div>
+        <div class="ph-ai">
+          <div class="ph-ai-label">&#10022; Scope preview</div>
+          <div class="ph-ai-text">Ensuite: shower screen, re-tile with membrane, vanity replacement. 3 items.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 <!-- PROOF -->
 <div class="proof-bar">
   <div class="wrap proof-inner">
-    <div class="proof-item"><span class="proof-num">Under 5 min</span><span class="proof-label">Site walkthrough to scope report</span></div>
-    <div class="proof-item"><span class="proof-num">No typing</span><span class="proof-label">Photos and voice do the work</span></div>
-    <div class="proof-item"><span class="proof-num">Miss less</span><span class="proof-label">Every room captured as you walk</span></div>
-    <div class="proof-item"><span class="proof-num">Quote cleaner</span><span class="proof-label">Clear scope record before you leave</span></div>
+    <div class="proof-item"><span class="proof-num">Under 5 min</span><span class="proof-label">Site to scope report</span></div>
+    <div class="proof-item"><span class="proof-num">No typing</span><span class="proof-label">Voice does the work</span></div>
+    <div class="proof-item"><span class="proof-num">Miss less</span><span class="proof-label">Every room captured</span></div>
+    <div class="proof-item"><span class="proof-num">Quote cleaner</span><span class="proof-label">Clear record before you leave</span></div>
   </div>
 </div>
 
@@ -158,8 +149,8 @@
 <section class="section" id="why">
   <div class="wrap">
     <div class="eyebrow">The problem</div>
-    <h2>Scopes written from memory <em>miss things.</em></h2>
-    <p class="section-sub">You leave the site with 200 photos and a few voice memos. Three days later you're writing a scope from memory. Items get missed. Variations follow. Clients push back.</p>
+    <h2>Scopes from memory <em>miss things.</em></h2>
+    <p class="section-sub">You leave the site with 200 photos and a few voice memos. Three days later you're writing a scope from memory. Items get missed. Variations follow.</p>
 
     <div class="compare-grid">
       <div class="compare-card bad fade-in">
@@ -198,7 +189,7 @@
 <section class="section" id="features">
   <div class="wrap">
     <div class="eyebrow">Features</div>
-    <h2>Built for the site, <em>not the office.</em></h2>
+    <h2>Built for the site, <em>not a desk.</em></h2>
 
     <div class="features-grid">
       <div class="feature-card fade-in">
@@ -206,7 +197,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
         </div>
         <h3>Photos sorted as you go</h3>
-        <p>Take photos room by room. Each one tags to the right location automatically. No sorting later.</p>
+        <p>Take photos room by room. Each one tags to the right room automatically. No sorting after the fact.</p>
       </div>
       <div class="feature-card fade-in fade-in-delay-1">
         <div class="f-icon">
@@ -220,21 +211,21 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         </div>
         <h3>Scope done on site</h3>
-        <p>Hit generate before you leave. Get a clean, structured scope report — client version, trade breakdown, or internal record.</p>
+        <p>Hit generate before you drive off. Clean, structured report — client version, trade breakdown or internal record.</p>
       </div>
       <div class="feature-card fade-in fade-in-delay-3">
         <div class="f-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
         </div>
         <h3>Works across job types</h3>
-        <p>Renovation, defect, maintenance, new build. ScopeSnap adjusts the structure to suit the job.</p>
+        <p>Renovation, defect, maintenance, new build. The report structure adjusts to suit the job.</p>
       </div>
       <div class="feature-card fade-in">
         <div class="f-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
         </div>
-        <h3>Your whole team, same job</h3>
-        <p>Estimators, supers and PMs all work from the same captured walkthrough. No chasing notes or rewriting scopes.</p>
+        <h3>Whole team, same record</h3>
+        <p>Estimators, supers and PMs all work from the same walkthrough. No chasing notes or rewriting scopes.</p>
       </div>
       <div class="feature-card fade-in fade-in-delay-1">
         <div class="f-icon">
@@ -248,12 +239,12 @@
     <!-- VIDEO PLACEHOLDER — swap src with your screen recording tomorrow -->
     <div class="fade-in" style="margin-top:72px; border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.02); aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; color:rgba(255,255,255,0.25);">
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
-      <p style="margin:0; font-size:0.85rem; letter-spacing:0.05em; text-transform:uppercase;">Product walkthrough — coming soon</p>
+      <p style="margin:0; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:700;">Product walkthrough — coming soon</p>
     </div>
 
     <!-- WORKFLOW STEPS -->
     <div class="report-flow-wrap fade-in" id="workflow">
-      <div class="eyebrow" id="workflow">How it works</div>
+      <div class="eyebrow" style="margin-bottom:20px;" id="workflow">How it works</div>
       <div class="rf-row">
         <div class="rf-step">
           <div class="rf-step-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
@@ -289,8 +280,8 @@
   <div class="wrap">
     <div class="cta-band fade-in">
       <div class="cta-band-text">
-        <h2 class="cta-h">Missed scope items <em>cost you money.</em></h2>
-        <p class="cta-sub">Every item you miss on site ends up as a variation, a dispute, or money out of your own pocket. ScopeSnap keeps the record straight from the first walkthrough.</p>
+        <h2 class="cta-h">Missed items <em>cost money.</em></h2>
+        <p class="cta-sub">Every item you miss on site ends up as a variation, a dispute, or money out of your pocket. ScopeSnap captures the whole walkthrough so the record is straight from day one.</p>
         <div class="cta-pills">
           <div class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Scope done on site</div>
           <div class="pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Clear record, fewer disputes</div>
@@ -307,8 +298,8 @@
 <section class="section" id="pricing">
   <div class="wrap">
     <div class="eyebrow" style="text-align:center; justify-content:center;">Pricing</div>
-    <h2 style="text-align:center;">Straightforward pricing.</h2>
-    <p class="section-sub" style="margin:0 auto 52px; text-align:center;">Beta rates while we build with early users. Lock in now — price goes up when we launch.</p>
+    <h2 style="text-align:center;">Straight up pricing.</h2>
+    <p class="section-sub" style="margin:0 auto 52px; text-align:center;">Beta rates while we build with early users. Lock in now — price goes up at launch.</p>
 
     <div class="pricing-grid">
       <div class="price-card fade-in">
@@ -373,8 +364,8 @@
   <div class="wrap">
     <div class="waitlist-card fade-in">
       <div class="eyebrow" style="justify-content:center;">Early access</div>
-      <h2>Get early access.</h2>
-      <p class="section-sub" style="margin:0 auto 36px; text-align:center; max-width:460px;">ScopeSnap is live and being used on real jobs. We're opening access to a small group of builders — join the list and we'll be in touch within 24 hours.</p>
+      <h2>Get on the list.</h2>
+      <p class="section-sub" style="margin:0 auto 36px; text-align:center; max-width:460px;">ScopeSnap is live on real jobs. We're opening access to a small group of builders — sign up and we'll be in touch within 24 hours.</p>
 
       <form id="waitlistForm" class="waitlist-form" novalidate>
         <div class="form-row-2">
@@ -433,9 +424,9 @@
     <div class="founder-card fade-in">
       <div class="founder-text">
         <div class="eyebrow">Why we built this</div>
-        <h2>From the site, <em>not the office.</em></h2>
-        <p>ScopeSnap came from leaving sites with 200 unorganised photos, voice memos already forgotten, and scopes written from memory days later. Items got missed. Variations followed.</p>
-        <p>Every feature in ScopeSnap came from a real job that made it obvious. Built on site, not in a boardroom.</p>
+        <h2>From the site, <em>not a boardroom.</em></h2>
+        <p>ScopeSnap came from leaving jobs with 200 unorganised photos, voice memos already forgotten, and scopes written from memory days later. Items got missed. Variations followed.</p>
+        <p>Every feature came from a real job that made it obvious it was needed.</p>
         <div class="founder-tags">
           <span class="f-tag">Built on real projects</span>
           <span class="f-tag">Tested on active jobs</span>
@@ -444,7 +435,7 @@
       </div>
       <div class="founder-quote">
         <div class="quote-mark">"</div>
-        <blockquote>The scope should be done before you get back in the ute.</blockquote>
+        <blockquote>Scope done before you get back in the ute.</blockquote>
         <div class="quote-author">
           <div class="qa-name">ScopeSnap</div>
           <div class="qa-title">Built by builders, for builders</div>
