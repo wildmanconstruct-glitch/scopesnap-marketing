@@ -197,6 +197,26 @@ h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
 .hero-note a { color: var(--gold); text-decoration: none; }
 .hero-note a:hover { text-decoration: underline; }
 
+/* hero brand lockup */
+.hero-brand {
+  display: flex; align-items: center; gap: 16px;
+  flex-wrap: wrap; margin-bottom: 32px;
+}
+.hero-brand-logo {
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-brand-name {
+  font-family: var(--ff-b);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: var(--text);
+}
+.hero-brand .badge {
+  margin-bottom: 0;
+  animation: badgeShimmer 4s ease-in-out infinite;
+}
+
 /* phone */
 .phone-wrap {
   position: relative; max-width: 300px; margin: 0 auto;
@@ -578,7 +598,7 @@ blockquote {
 /* ── MOBILE POLISH ── */
 @media(max-width:600px){
   .hero { padding: 64px 0 48px; }
-  h1 { font-size: 40px; letter-spacing: -0.5px; }
+  h1 { font-size: 46px; letter-spacing: -1.5px; line-height: 1.0; }
   .hero-sub { font-size: 16px; }
   .hero-actions { gap: 10px; }
   .btn-primary, .btn-ghost { padding: 13px 20px; font-size: 14px; }
@@ -609,10 +629,11 @@ blockquote {
 
 /* ── HERO TYPOGRAPHY — tighten for professional tech feel ── */
 h1 {
-  font-size: clamp(44px, 7vw, 88px);
-  letter-spacing: -1px;
+  font-size: clamp(52px, 8vw, 96px);
+  letter-spacing: -2px;
+  line-height: 1.0;
 }
-.hero-sub { font-size: clamp(16px, 1.9vw, 20px); max-width: 440px; }
+.hero-sub { font-size: clamp(16px, 1.9vw, 19px); max-width: 400px; }
 
 /* ── BETA PRICING ── */
 .beta-price-row {
