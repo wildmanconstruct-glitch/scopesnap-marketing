@@ -38,19 +38,7 @@ body {
   overflow-x: hidden;
 }
 
-/* subtle grid texture — structure not mood */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* noise grain */
+/* grain only — no grid */
 body::after {
   content: '';
   position: fixed; inset: 0;
@@ -176,7 +164,7 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
 }
 
 /* ── HERO ── */
-.hero { position: relative; z-index: 1; padding: 80px 0 72px; }
+.hero { position: relative; z-index: 2; padding: 80px 0 72px; }
 @media(min-width:768px){ .hero { padding: 100px 0 88px; } }
 .hero-grid { display: grid; gap: 52px; align-items: center; }
 @media(min-width:900px){ .hero-grid { grid-template-columns: 1fr 1fr; gap: 64px; } }
@@ -246,13 +234,14 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
 
 /* ── APP PANEL (right side) ── */
 .app-panel-wrap {
-  position: relative;
+  position: relative; z-index: 1;
 }
 .app-panel {
   background: var(--bg2);
   border: 1px solid var(--border2);
   border-radius: var(--r-lg);
   overflow: hidden;
+  position: relative; z-index: 1;
   box-shadow: 0 32px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset;
 }
 
