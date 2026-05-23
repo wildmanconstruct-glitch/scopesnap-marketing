@@ -195,16 +195,20 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
 }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
-/* ScopeSnap hero wordmark */
-.hero-wordmark {
+/* ScopeSnap as part of h1 */
+.hero-wordmark-inline {
+  display: block;
   font-family: var(--ff-b);
-  font-size: clamp(36px, 5vw, 56px);
+  font-size: clamp(28px, 3.5vw, 42px);
   font-weight: 800;
-  letter-spacing: -1.5px;
+  letter-spacing: -1px;
   color: var(--text);
-  line-height: 1;
-  margin-bottom: 16px;
+  line-height: 1.1;
+  margin-bottom: 4px;
 }
+
+/* standalone wordmark - kept for fallback */
+.hero-wordmark { display: none; }
 
 /* phone mockup */
 .phone-wrap {
