@@ -69,7 +69,7 @@ nav.scrolled {
 .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); flex-shrink: 0; }
 .logo-icon { width: 36px; height: 36px; display: grid; place-items: center; }
-.logo-name { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
+.logo-name { font-size: 17px; font-weight: 700; letter-spacing: -0.4px; }
 .logo-sub { font-size: 10px; color: var(--dim); margin-top: -1px; letter-spacing: 0.3px; }
 .nav-links { display: none; list-style: none; gap: 28px; }
 @media(min-width:768px){ .nav-links { display: flex; } }
@@ -169,29 +169,19 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; 
 .hero-grid { display: grid; gap: 52px; align-items: center; }
 @media(min-width:900px){ .hero-grid { grid-template-columns: 1fr 1fr; gap: 64px; } }
 
-/* Hero brand — dominant wordmark */
+/* Hero eyebrow row */
 .hero-brand {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 32px; padding-bottom: 24px;
-  border-bottom: 1px solid var(--border);
-}
-.hero-brand-left { display: flex; align-items: center; gap: 12px; }
-.hero-brand-wordmark {
-  font-family: var(--ff-b);
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: -1px;
-  color: var(--text);
-  line-height: 1;
+  display: flex; align-items: center; gap: 12px;
+  flex-wrap: wrap; margin-bottom: 28px;
 }
 .hero-brand-tag {
-  font-size: 9px; font-weight: 700;
+  font-size: 10px; font-weight: 700;
   letter-spacing: 2.5px; text-transform: uppercase;
   color: var(--gold);
   background: rgba(184,150,78,0.08);
   border: 1px solid rgba(184,150,78,0.22);
   border-radius: 3px;
-  padding: 4px 8px;
+  padding: 4px 9px;
 }
 .hero-beta-pill {
   display: inline-flex; align-items: center; gap: 6px;
