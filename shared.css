@@ -648,6 +648,8 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 .ss-col-right {
   transform: translateY(28px);
   margin-left: -4%;
+  z-index: 3;
+  position: relative;
 }
 .ss-col-front {
   flex: 1;
@@ -658,28 +660,31 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 
 .ss-phone {
   background: #111214;
-  border: 1.5px solid rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.18);
   border-radius: 26px;
   padding: 10px 8px;
   width: 100%;
+  overflow: hidden;
 }
 .ss-phone-sm { border-radius: 22px; }
 .ss-phone-lg {
-  box-shadow: 0 28px 56px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04) inset;
+  border: 2px solid rgba(255,255,255,0.22);
+  box-shadow: 0 28px 56px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.06) inset;
+  overflow: hidden;
 }
 .ss-img {
-  width: 100%; border-radius: 18px; display: block;
-  border: 1px solid rgba(255,255,255,0.05);
+  width: 100%; border-radius: 20px; display: block;
+  border: none;
 }
 .ss-phone-sm .ss-img { border-radius: 14px; }
 
 .ss-report-wrap {
   background: #f0ede8;
-  border-radius: 5px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.45);
   width: 100%;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 .ss-report-img { width: 100%; display: block; }
 
