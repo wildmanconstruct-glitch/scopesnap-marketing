@@ -612,49 +612,69 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
   margin-top: 4px;
 }
 
-/* ── SCREENSHOT STRIP ── */
+/* ── SCREENSHOT STRIP — depth composition ── */
 .screenshots-strip {
-  display: flex; gap: 24px; align-items: flex-start;
-  margin-top: 88px; padding-top: 64px;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: 88px;
+  padding-top: 64px;
   border-top: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-.ss-item {
-  display: flex; flex-direction: column; align-items: center; gap: 14px;
-  flex: 1; min-width: 140px;
-}
-.ss-wide { flex: 1.8; }
-.ss-phone {
-  background: #111214;
-  border: 1.5px solid rgba(255,255,255,0.13);
-  border-radius: 24px;
-  padding: 10px 8px;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.45);
-  width: 100%;
-}
-.ss-img {
-  width: 100%; border-radius: 16px; display: block;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-.ss-report-frame {
-  background: #fff;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  width: 100%;
-}
-.ss-report-img {
-  width: 100%; display: block; border-radius: 0;
-  border: none;
-}
-.ss-label {
-  font-size: 12px; font-weight: 600; color: var(--dim);
-  text-transform: uppercase; letter-spacing: 1.5px;
-  text-align: center;
+  position: relative;
 }
 
+.ss-col {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 20px;
+}
+.ss-col-back {
+  flex: 0.75;
+  transform: translateY(28px);
+  opacity: 0.65;
+}
+.ss-col-front {
+  flex: 1;
+  transform: translateY(0);
+  opacity: 1;
+  z-index: 2; position: relative;
+}
+
+.ss-phone {
+  background: #111214;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 26px;
+  padding: 10px 8px;
+  width: 100%;
+}
+.ss-phone-sm { border-radius: 22px; }
+.ss-phone-lg {
+  box-shadow: 0 28px 56px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04) inset;
+}
+.ss-img {
+  width: 100%; border-radius: 18px; display: block;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.ss-phone-sm .ss-img { border-radius: 14px; }
+
+.ss-report-wrap {
+  background: #f0ede8;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  width: 100%;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+.ss-report-img { width: 100%; display: block; }
+
+.ss-label {
+  font-size: 10px; font-weight: 700; color: var(--dim);
+  text-transform: uppercase; letter-spacing: 2.5px;
+  text-align: center;
+}
+.ss-col-front .ss-label { color: rgba(232,230,225,0.45); }
+
 @media(max-width:767px){
-  .screenshots-strip { flex-direction: column; align-items: center; }
-  .ss-item, .ss-wide { min-width: 240px; max-width: 280px; flex: none; }
+  .screenshots-strip { flex-direction: column; align-items: center; gap: 32px; }
+  .ss-col, .ss-col-back, .ss-col-front { transform: none; opacity: 1; flex: none; width: 100%; max-width: 280px; }
   .phone-mockup { width: 220px; }
 }
