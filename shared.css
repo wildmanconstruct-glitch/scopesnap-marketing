@@ -151,15 +151,15 @@ h3 {
   display: grid; grid-template-columns: 1fr;
   min-height: auto;
 }
-@media(min-width:900px){ .hero { grid-template-columns: 1fr 1fr; min-height: calc(100vh - 60px); } }
+@media(min-width:900px){ .hero { grid-template-columns: 1fr 1fr; min-height: calc(100vh - 60px); align-items: center; } }
 
 .hero-left {
   padding: 60px 24px 60px 24px;
   display: flex; flex-direction: column; justify-content: center;
 }
 @media(min-width:768px){ .hero-left { padding: 60px 40px 60px 40px; } }
-@media(min-width:900px){ .hero-left { padding: 60px 40px 60px 60px; } }
-@media(min-width:1200px){ .hero-left { padding: 60px 48px 60px 80px; } }
+@media(min-width:900px){ .hero-left { padding: 40px 40px 40px 60px; } }
+@media(min-width:1200px){ .hero-left { padding: 40px 48px 40px 80px; } }
 
 /* Hero eyebrow — simple, no dot */
 .hero-eyebrow {
