@@ -151,13 +151,14 @@ h3 {
   display: grid; grid-template-columns: 1fr;
   min-height: auto;
 }
-@media(min-width:900px){ .hero { grid-template-columns: 1fr 1fr; min-height: calc(100vh - 60px); } }
+@media(min-width:900px){ .hero { grid-template-columns: 55fr 45fr; min-height: calc(100vh - 60px); } }
 
 .hero-left {
-  padding: 80px 52px 80px 24px;
+  padding: 72px 48px 80px 40px;
   display: flex; flex-direction: column; justify-content: center;
 }
-@media(min-width:768px){ .hero-left { padding: 96px 72px 96px 48px; } }
+@media(min-width:768px){ .hero-left { padding: 80px 56px 80px 56px; } }
+@media(min-width:1200px){ .hero-left { padding: 80px 64px 80px 64px; } }
 
 /* Hero eyebrow — simple, no dot */
 .hero-eyebrow {
@@ -570,8 +571,8 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 
 /* ── HERO PHONE MOCKUP (real screenshot) ── */
 .hero-right {
-  display: flex; align-items: center; justify-content: center;
-  padding: 40px 32px 40px 20px; position: relative;
+  display: flex; align-items: center; justify-content: flex-start;
+  padding: 40px 20px 40px 32px; position: relative;
   background: transparent;
 }
 .hero-right::before { display: none; }
@@ -613,6 +614,10 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
   display: block;
   border: 1px solid rgba(255,255,255,0.06);
 }
+
+/* tighter spacing within hero content block */
+.hero-left h1 { margin-bottom: 18px; }
+.hero-eyebrow { margin-bottom: 18px; }
 
 /* hero badge line */
 .hero-badge {
