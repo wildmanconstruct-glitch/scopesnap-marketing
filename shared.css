@@ -644,12 +644,9 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 .ss-col-left {
   transform: translateY(18px);
 }
-/* Right: nudged inward ~4% toward centre */
+/* Right: same offset as base back, no margin hack */
 .ss-col-right {
   transform: translateY(28px);
-  margin-left: -4%;
-  z-index: 3;
-  position: relative;
 }
 .ss-col-front {
   flex: 1;
@@ -679,12 +676,13 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 .ss-phone-sm .ss-img { border-radius: 14px; }
 
 .ss-report-wrap {
-  background: #f0ede8;
-  border-radius: 8px;
+  background: #ffffff;
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
   width: 100%;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  opacity: 1;
 }
 .ss-report-img { width: 100%; display: block; }
 
