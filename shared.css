@@ -637,29 +637,27 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 }
 .ss-col-back {
   flex: 0.75;
-  transform: translateY(28px);
   opacity: 0.82;
 }
 /* Left: raised slightly */
 .ss-col-left {
   transform: translateY(18px);
 }
-/* Right: larger and raised */
+/* Centre: focal point — NO transform so it doesn't create stacking context */
+.ss-col-front {
+  flex: 1;
+  opacity: 1;
+}
+/* Right: larger, raised, always in front */
 .ss-col-right {
   flex: 0.88;
   transform: translateY(16px);
   position: relative;
-  z-index: 3;
+  z-index: 10;
 }
 .ss-col-right .ss-report-wrap {
   transform: scale(1.12);
   transform-origin: top center;
-}
-.ss-col-front {
-  flex: 1;
-  transform: translateY(0);
-  opacity: 1;
-  z-index: 2; position: relative;
 }
 
 .ss-phone {
