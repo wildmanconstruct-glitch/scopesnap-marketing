@@ -624,7 +624,7 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 .screenshots-strip {
   display: flex;
   align-items: flex-end;
-  gap: 28px;
+  gap: 16px;
   margin-top: 72px;
   padding-top: 52px;
   border-top: 1px solid var(--border);
@@ -648,6 +648,7 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 .ss-col-right {
   flex: 0.88;
   margin-bottom: 18px;
+  margin-left: 16px;
   z-index: 3;
 }
 .ss-col-right .ss-report-wrap {
