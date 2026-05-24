@@ -423,7 +423,7 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 
   /* screenshot strip: single column, phone centred and sized properly */
   .screenshots-strip { flex-direction: column; align-items: center; gap: 36px; padding-top: 40px; margin-top: 48px; }
-  .ss-col, .ss-col-back, .ss-col-front { transform: none !important; opacity: 1 !important; flex: none; width: 260px; }
+  .ss-col, .ss-col-back, .ss-col-front, .ss-col-left, .ss-col-right { transform: none !important; opacity: 1 !important; flex: none; width: 260px; margin-left: 0 !important; }
   .ss-phone { width: 260px; }
   .ss-report-wrap { width: 260px; }
 
@@ -640,6 +640,15 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
   transform: translateY(28px);
   opacity: 0.82;
 }
+/* Left: raised slightly — feels connected to centre */
+.ss-col-left {
+  transform: translateY(18px);
+}
+/* Right: nudged inward ~4% toward centre */
+.ss-col-right {
+  transform: translateY(28px);
+  margin-left: -4%;
+}
 .ss-col-front {
   flex: 1;
   transform: translateY(0);
@@ -688,10 +697,11 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
     gap: 32px;
     padding-top: 36px;
   }
-  .ss-col, .ss-col-back, .ss-col-front {
+  .ss-col, .ss-col-back, .ss-col-front, .ss-col-left, .ss-col-right {
     transform: none !important;
     opacity: 1 !important;
     flex: none;
     width: 260px;
+    margin-left: 0 !important;
   }
 }
