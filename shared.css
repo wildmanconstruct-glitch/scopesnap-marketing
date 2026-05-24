@@ -105,8 +105,8 @@ nav.scrolled { background: rgba(10,10,11,0.96); backdrop-filter: blur(12px); -we
 .btn-ghost:hover { background: rgba(255,255,255,0.05); color: var(--text); }
 
 /* ── SECTION ── */
-.section { position: relative; z-index: 1; padding: 88px 0; }
-@media(min-width:768px){ .section { padding: 108px 0; } }
+.section { position: relative; z-index: 1; padding: 100px 0; }
+@media(min-width:768px){ .section { padding: 128px 0; } }
 
 .eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
@@ -154,20 +154,17 @@ h3 {
 @media(min-width:900px){ .hero { grid-template-columns: 1fr 1fr; } }
 
 .hero-left {
-  padding: 64px 48px 64px 24px;
+  padding: 80px 52px 80px 24px;
   display: flex; flex-direction: column; justify-content: center;
 }
-@media(min-width:768px){ .hero-left { padding: 80px 64px 80px 48px; } }
+@media(min-width:768px){ .hero-left { padding: 96px 72px 96px 48px; } }
 
-.hero-label {
-  display: inline-flex; align-items: center; gap: 10px;
+/* Hero eyebrow — simple, no dot */
+.hero-eyebrow {
   font-size: 11px; font-weight: 700; letter-spacing: 3px;
   text-transform: uppercase; color: var(--gold);
-  margin-bottom: 28px;
+  margin-bottom: 24px; display: block;
 }
-.hero-label::before { content: ''; width: 20px; height: 2px; background: var(--gold); }
-.hero-label-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px rgba(78,168,122,0.5); animation: blink 2s ease-in-out infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
 .hero-sub {
   font-size: 17px; font-weight: 400; line-height: 1.65;
@@ -177,17 +174,7 @@ h3 {
   padding-left: 18px;
 }
 
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
-
-.hero-stats {
-  display: flex; gap: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--r); overflow: hidden;
-}
-.hero-stat { flex: 1; padding: 14px 18px; border-right: 1px solid var(--border); }
-.hero-stat:last-child { border-right: none; }
-.stat-num { font-family: var(--ff-h); font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; line-height: 1; }
-.stat-label { font-size: 11px; color: var(--dim); font-weight: 500; margin-top: 3px; letter-spacing: 0.2px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* ── PHONE (hero right) ── */
 .hero-right {
@@ -287,16 +274,13 @@ h3 {
 .cta-band {
   background: var(--bg2); border: 1px solid var(--border2);
   border-top: 2px solid var(--gold);
-  border-radius: var(--r); padding: 48px 40px;
+  border-radius: var(--r); padding: 52px 44px;
   display: grid; gap: 32px; position: relative; overflow: hidden;
 }
-@media(min-width:900px){ .cta-band { grid-template-columns: 1fr auto; align-items: center; padding: 52px 48px; } }
-.cta-h { font-family: var(--ff-h); font-size: clamp(26px,3.5vw,40px); font-weight: 800; line-height: 1; text-transform: uppercase; letter-spacing: -0.3px; color: var(--text); margin-bottom: 12px; }
+@media(min-width:900px){ .cta-band { grid-template-columns: 1fr auto; align-items: center; padding: 56px 52px; } }
+.cta-h { font-family: var(--ff-h); font-size: clamp(26px,3.5vw,40px); font-weight: 800; line-height: 1; text-transform: uppercase; letter-spacing: -0.3px; color: var(--text); margin-bottom: 10px; }
 .cta-h em { font-style: normal; color: var(--gold); }
-.cta-sub { font-size: 15px; color: var(--muted); max-width: 460px; line-height: 1.65; }
-.cta-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.pill { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: var(--r); padding: 5px 10px; font-size: 12px; color: var(--muted); font-weight: 500; }
-.pill svg { color: var(--green); }
+.cta-sub { font-size: 15px; color: var(--muted); max-width: 500px; line-height: 1.65; }
 .cta-btn { align-self: flex-start; white-space: nowrap; }
 
 /* ── PRICING ── */
@@ -631,7 +615,7 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 /* ── SCREENSHOT STRIP ── */
 .screenshots-strip {
   display: flex; gap: 24px; align-items: flex-start;
-  margin-top: 72px; padding-top: 52px;
+  margin-top: 88px; padding-top: 64px;
   border-top: 1px solid var(--border);
   flex-wrap: wrap;
 }
