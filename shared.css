@@ -154,11 +154,10 @@ h3 {
 @media(min-width:900px){ .hero { grid-template-columns: 1fr 1fr; min-height: calc(100vh - 60px); } }
 
 .hero-left {
-  padding: 80px 24px 80px 24px;
+  padding: 80px 52px 80px 24px;
   display: flex; flex-direction: column; justify-content: center;
 }
-@media(min-width:768px){ .hero-left { padding: 96px 40px 96px 40px; } }
-@media(min-width:1200px){ .hero-left { padding: 96px 72px 96px 48px; } }
+@media(min-width:768px){ .hero-left { padding: 96px 72px 96px 48px; } }
 
 /* Hero eyebrow — simple, no dot */
 .hero-eyebrow {
@@ -376,8 +375,9 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 /* ── FOUNDER ── */
 .founder-card { background: transparent; border: 1px solid var(--border); border-radius: var(--r); padding: 44px 32px; display: grid; gap: 44px; }
 @media(min-width:900px){ .founder-card { grid-template-columns: 1fr 1fr; align-items: center; padding: 56px 52px; } }
-.founder-text p { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+.founder-text p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 16px; max-width: 420px; }
 .founder-text p:last-of-type { margin-bottom: 22px; }
+.founder-close { color: var(--text) !important; font-weight: 600; font-size: 14px !important; letter-spacing: 0.2px; }
 .founder-tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .f-tag { font-size: 11px; font-weight: 700; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(196,154,60,0.2); border-radius: var(--r); padding: 4px 10px; letter-spacing: 0.5px; text-transform: uppercase; }
 .founder-quote { background: rgba(255,255,255,0.025); border: 1px solid var(--border2); border-left: 3px solid var(--gold); border-radius: var(--r); padding: 32px; display: flex; flex-direction: column; gap: 18px; }
