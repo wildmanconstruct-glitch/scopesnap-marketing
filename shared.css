@@ -712,20 +712,28 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 
 @media(max-width:767px){
   .screenshots-strip {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
     padding-top: 36px;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-  /* On mobile only show the centre (main capture) screenshot */
-  .ss-col-back, .ss-col-right { display: none; }
-  .ss-col-front {
+  .screenshots-strip::-webkit-scrollbar { display: none; }
+  .ss-col-back, .ss-col-front, .ss-col-right {
     transform: none !important;
     opacity: 1 !important;
-    flex: none;
-    width: min(280px, 85vw);
-    margin: 0 auto;
+    flex: 0 0 85vw;
+    width: 85vw;
+    max-width: 300px;
+    margin: 0 12px !important;
+    scroll-snap-align: center;
   }
   .ss-col-right .ss-report-wrap { transform: none; }
+  .ss-col-back { margin-left: calc((100vw - 85vw) / 2) !important; }
+  .ss-col-right { margin-right: calc((100vw - 85vw) / 2) !important; }
 }
