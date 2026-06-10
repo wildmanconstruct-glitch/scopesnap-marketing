@@ -414,6 +414,45 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 .contact-item a:hover { text-decoration: underline; }
 .contact-form-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 32px; }
 
+/* ── FORMS ── */
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.form-field .req { color: var(--gold); }
+.form-field input,
+.form-field textarea,
+.form-field select {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 11px 14px;
+  font-size: 14px; font-family: var(--ff-b);
+  color: var(--text);
+  outline: none; width: 100%;
+  transition: border-color 0.22s;
+  appearance: none; -webkit-appearance: none;
+}
+.form-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.5' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+.form-field select option { background: var(--bg2); color: var(--text); }
+.form-field textarea { resize: vertical; min-height: 120px; }
+.form-field input::placeholder,
+.form-field textarea::placeholder { color: var(--dim); }
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus { border-color: rgba(196,154,60,0.5); }
+.form-error { font-size: 13px; color: var(--red); margin-top: 10px; min-height: 18px; }
+.success-icon {
+  width: 44px; height: 44px; margin: 0 auto;
+  background: var(--green-dim); border: 1px solid rgba(78,168,122,0.3);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: var(--green);
+}
+
 /* ── FOUNDER ── */
 .founder-card { background: transparent; border: 1px solid var(--border); border-radius: var(--r); padding: 44px 32px; display: grid; gap: 44px; }
 @media(min-width:900px){ .founder-card { grid-template-columns: 1fr 1fr; align-items: center; padding: 56px 52px; } }

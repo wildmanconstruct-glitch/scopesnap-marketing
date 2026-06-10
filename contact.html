@@ -11,10 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css"/>
+  <link rel="stylesheet" href="/shared.css?v=2"/>
 </head>
 <body>
-<div class="glow-layer" aria-hidden="true"><span class="g1"></span><span class="g2"></span></div>
 <nav id="nav">
   <div class="wrap nav-inner">
     <a href="/" class="logo">
@@ -45,6 +44,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="/#features">Features</a>
   <a href="/#pricing">Pricing</a>
+  <a href="/contact.html">Contact</a>
   <a href="https://app.scopesnap.com.au" class="mobile-cta">Start free trial →</a>
 </div>
 
@@ -110,9 +110,7 @@
             </div>
             <div class="form-field" style="margin-bottom:20px;">
               <label for="cMessage">Message <span class="req">*</span></label>
-              <textarea id="cMessage" name="message" placeholder="Tell us what's on your mind..." required
-                style="background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:12px; padding:11px 16px; font-size:14px; font-family:var(--ff-b); color:var(--text); outline:none; resize:vertical; min-height:120px; width:100%; transition:border-color 0.22s;"
-              ></textarea>
+              <textarea id="cMessage" name="message" placeholder="Tell us what's on your mind..." required></textarea>
             </div>
             <div class="form-honeypot" aria-hidden="true" style="display:none;">
               <input type="text" name="website" tabindex="-1" autocomplete="off"/>
@@ -149,6 +147,14 @@
 
 <script src="/shared.js"></script>
 <script>
+// Preselect subject from URL (e.g. /contact.html?subject=demo)
+(function() {
+  var s = new URLSearchParams(window.location.search).get('subject');
+  if (s && document.querySelector('#cSubject option[value="' + s + '"]')) {
+    document.getElementById('cSubject').value = s;
+  }
+})();
+
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   if (document.querySelector('[name="website"]').value) return;
