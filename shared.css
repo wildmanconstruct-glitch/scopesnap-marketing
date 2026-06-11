@@ -414,6 +414,31 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 .contact-item a:hover { text-decoration: underline; }
 .contact-form-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 32px; }
 
+/* ── VOICE TO SCOPE DEMO ── */
+.vd-grid { display: grid; grid-template-columns: 1fr; gap: 14px; align-items: stretch; }
+@media(min-width:768px){ .vd-grid { grid-template-columns: 1fr 44px 1fr; } }
+.vd-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; }
+.vd-scope { background: rgba(196,154,60,0.05); border-color: rgba(196,154,60,0.25); }
+.vd-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.vd-label-gold { color: var(--gold); }
+.vd-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); animation: blink 1.4s ease-in-out infinite; flex-shrink: 0; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+.vd-text { font-size: 14px; color: rgba(232,230,225,0.65); line-height: 1.7; min-height: 124px; }
+.vd-lines { display: flex; flex-direction: column; gap: 8px; min-height: 124px; }
+.vd-line { display: flex; align-items: flex-start; gap: 9px; font-size: 14px; color: var(--text); line-height: 1.5; opacity: 0; transform: translateY(5px); transition: opacity 0.45s ease, transform 0.45s ease; }
+.vd-line.show { opacity: 1; transform: none; }
+.vd-line svg { color: var(--gold); flex-shrink: 0; margin-top: 3px; }
+.vd-arrow { display: flex; align-items: center; justify-content: center; color: var(--gold); }
+@media(max-width:767px){ .vd-arrow { transform: rotate(90deg); padding: 2px 0; } }
+.vd-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ── TESTIMONIALS ── */
+.testi-grid { display: grid; gap: 12px; margin-top: 12px; }
+@media(min-width:768px){ .testi-grid { grid-template-columns: repeat(3,1fr); } }
+.testi-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-top: 2px solid var(--gold); border-radius: 0 0 var(--r) var(--r); padding: 28px 24px; display: flex; flex-direction: column; }
+.testi-quote { font-size: 14px; color: var(--muted); line-height: 1.75; flex: 1; }
+.testi-author { margin-top: 20px; font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
+
 /* ── FORMS ── */
 .form-field { display: flex; flex-direction: column; gap: 6px; }
 .form-field label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
