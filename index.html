@@ -574,11 +574,11 @@ function setBilling(mode) {
   document.getElementById('toggleAnnual').classList.toggle('active', isAnnual);
 
   if (isAnnual) {
-    document.getElementById('solo-price').innerHTML = '$590<span class="price-per">/yr</span>';
+    document.getElementById('solo-price').innerHTML = '$590<span class="price-per">/yr + GST</span>';
     document.getElementById('solo-sub').textContent = 'Billed annually';
-    document.getElementById('pro-price').innerHTML = '$1,190<span class="price-per">/yr</span>';
+    document.getElementById('pro-price').innerHTML = '$1,190<span class="price-per">/yr + GST</span>';
     document.getElementById('pro-sub').textContent = 'Billed annually';
-    document.getElementById('biz-price').innerHTML = '$2,490<span class="price-per">/yr</span>';
+    document.getElementById('biz-price').innerHTML = '$2,490<span class="price-per">/yr + GST</span>';
     document.getElementById('biz-sub').textContent = 'Billed annually';
     document.getElementById('pro-seat-price').textContent = 'Additional seats $29/month';
     document.getElementById('biz-seat-price').textContent = 'Additional seats $25/month';
