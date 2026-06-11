@@ -33,6 +33,8 @@
         "@type": "Organization",
         "@id": "https://scopesnap.com.au/#organization",
         "name": "ScopeSnap",
+        "legalName": "ScopeSnap Pty Ltd",
+        "taxID": "84 698 607 868",
         "url": "https://scopesnap.com.au",
         "logo": "https://scopesnap.com.au/favicon.svg",
         "contactPoint": {
@@ -392,7 +394,7 @@
       <div class="price-card fade-in">
         <div class="price-tier">Solo</div>
         <div class="price-amount-row">
-          <div class="price-amount" id="solo-price">$59<span class="price-per">/mo</span></div>
+          <div class="price-amount" id="solo-price">$59<span class="price-per">/mo + GST</span></div>
           <div class="price-annual-note" id="solo-sub">$590/year &mdash; save 2 months</div>
         </div>
         <p class="price-desc">For individual builders. Up to 10 jobs per month.</p>
@@ -413,7 +415,7 @@
         <div class="price-popular">Most popular</div>
         <div class="price-tier">Professional</div>
         <div class="price-amount-row">
-          <div class="price-amount" id="pro-price">$119<span class="price-per">/mo</span></div>
+          <div class="price-amount" id="pro-price">$119<span class="price-per">/mo + GST</span></div>
           <div class="price-annual-note" id="pro-sub">$1,190/year &mdash; save 2 months</div>
         </div>
         <p class="price-desc">For builders and teams running multiple site walks and projects.</p>
@@ -435,7 +437,7 @@
       <div class="price-card fade-in fade-in-delay-2">
         <div class="price-tier">Business</div>
         <div class="price-amount-row">
-          <div class="price-amount" id="biz-price">$249<span class="price-per">/mo</span></div>
+          <div class="price-amount" id="biz-price">$249<span class="price-per">/mo + GST</span></div>
           <div class="price-annual-note" id="biz-sub">$2,490/year &mdash; save 2 months</div>
         </div>
         <p class="price-desc">For larger operations and growing teams.</p>
@@ -453,7 +455,7 @@
       </div>
 
     </div>
-    <p class="pricing-note">All plans start with a 14-day free trial on the Professional plan &#8212; no credit card required. After your trial, choose the plan that fits your team.<br>Annual billing locks in 2 months free on your base plan. Seat add-ons are billed monthly and are not included in the annual discount.</p>
+    <p class="pricing-note">All prices are in Australian dollars and exclude GST. All plans start with a 14-day free trial on the Professional plan &#8212; no credit card required. After your trial, choose the plan that fits your team.<br>Annual billing locks in 2 months free on your base plan. Seat add-ons are billed monthly and are not included in the annual discount.</p>
 
     <!-- ENTERPRISE BAND -->
     <div class="enterprise-band fade-in">
@@ -559,7 +561,7 @@
     </div>
   </div>
   <div class="wrap footer-bottom">
-    <span>&#169; <span id="year"></span> ScopeSnap. All rights reserved.</span>
+    <span>&#169; <span id="year"></span> ScopeSnap Pty Ltd. All rights reserved.</span>
     <span>Built for Australian builders.</span>
   </div>
 </footer>
@@ -581,11 +583,11 @@ function setBilling(mode) {
     document.getElementById('pro-seat-price').textContent = 'Additional seats $29/month';
     document.getElementById('biz-seat-price').textContent = 'Additional seats $25/month';
   } else {
-    document.getElementById('solo-price').innerHTML = '$59<span class="price-per">/mo</span>';
+    document.getElementById('solo-price').innerHTML = '$59<span class="price-per">/mo + GST</span>';
     document.getElementById('solo-sub').innerHTML = '$590/year &mdash; save 2 months';
-    document.getElementById('pro-price').innerHTML = '$119<span class="price-per">/mo</span>';
+    document.getElementById('pro-price').innerHTML = '$119<span class="price-per">/mo + GST</span>';
     document.getElementById('pro-sub').innerHTML = '$1,190/year &mdash; save 2 months';
-    document.getElementById('biz-price').innerHTML = '$249<span class="price-per">/mo</span>';
+    document.getElementById('biz-price').innerHTML = '$249<span class="price-per">/mo + GST</span>';
     document.getElementById('biz-sub').innerHTML = '$2,490/year &mdash; save 2 months';
     document.getElementById('pro-seat-price').textContent = 'Additional seats $29/month';
     document.getElementById('biz-seat-price').textContent = 'Additional seats $25/month';
