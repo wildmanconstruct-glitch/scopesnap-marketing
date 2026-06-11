@@ -84,7 +84,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=3"/>
+  <link rel="stylesheet" href="/shared.css?v=4"/>
 </head>
 <body>
 
@@ -356,14 +356,17 @@
     <h2>Builders are already <em>on board.</em></h2>
     <div class="testi-grid">
       <div class="testi-card fade-in">
+        <div class="testi-head">2&#8211;3 hrs saved per report</div>
         <p class="testi-quote">&#8220;We&#8217;re probably saving a few hours on every report compared to how we used to do things. The voice notes are great because you can walk through a property and talk naturally instead of stopping every few minutes to write things down. It speeds the whole process up and the reports come out looking professional.&#8221;</p>
         <div class="testi-author">&#8212; Precision Property Inspections</div>
       </div>
-      <div class="testi-card fade-in fade-in-delay-1">
+      <div class="testi-card testi-feature fade-in fade-in-delay-1">
+        <div class="testi-head">Entire team using ScopeSnap</div>
         <p class="testi-quote">&#8220;One of the biggest things for us is that everyone captures information the same way. Before ScopeSnap, details would be spread across photos, notebooks and phone notes. Now everything is stored against the job and easy to find later. It&#8217;s simple to use and our team picked it up straight away.&#8221;</p>
         <div class="testi-author">&#8212; Summit Building Group</div>
       </div>
       <div class="testi-card fade-in fade-in-delay-2">
+        <div class="testi-head">Everything in one place</div>
         <p class="testi-quote">&#8220;We originally started using ScopeSnap just to keep our site inspections organised, but it&#8217;s ended up saving a lot more time than we expected. Having photos, notes and room details all captured in the one place means there&#8217;s far less chasing information when it comes time to quote or start a job. It&#8217;s become part of our process now.&#8221;</p>
         <div class="testi-author">&#8212; Wildheart Homes</div>
       </div>
@@ -634,7 +637,7 @@ function setBilling(mode) {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { showStatic(); return; }
 
   var started = false;
-  var CHAR_MS = 26, PAUSE_MS = 350, LINE_MS = 550, HOLD_MS = 6000;
+  var CHAR_MS = 17, PAUSE_MS = 250, LINE_MS = 380, HOLD_MS = 5000;
   var TYPE_END = VOICE.length * CHAR_MS;
   var LINES_END = TYPE_END + PAUSE_MS + LINES.length * LINE_MS;
   var CYCLE = LINES_END + HOLD_MS;

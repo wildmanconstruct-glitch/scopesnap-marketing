@@ -434,10 +434,15 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 
 /* ── TESTIMONIALS ── */
 .testi-grid { display: grid; gap: 12px; margin-top: 12px; }
-@media(min-width:768px){ .testi-grid { grid-template-columns: repeat(3,1fr); } }
-.testi-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-top: 2px solid var(--gold); border-radius: 0 0 var(--r) var(--r); padding: 28px 24px; display: flex; flex-direction: column; }
-.testi-quote { font-size: 14px; color: var(--muted); line-height: 1.75; flex: 1; }
-.testi-author { margin-top: 20px; font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
+@media(min-width:768px){ .testi-grid { grid-template-columns: repeat(3,1fr); align-items: center; } }
+.testi-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-top: 2px solid rgba(196,154,60,0.45); border-radius: 0 0 var(--r) var(--r); padding: 28px 24px; display: flex; flex-direction: column; }
+.testi-head { font-family: var(--ff-h); font-size: 19px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text); line-height: 1.1; margin-bottom: 12px; }
+.testi-quote { font-size: 13px; color: var(--muted); line-height: 1.7; flex: 1; }
+.testi-author { margin-top: 18px; font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
+.testi-feature { background: rgba(196,154,60,0.05); border-color: rgba(196,154,60,0.3); border-top: 3px solid var(--gold); padding: 36px 28px; }
+.testi-feature .testi-head { font-size: 23px; color: var(--gold); }
+.testi-feature .testi-quote { font-size: 14px; color: rgba(232,230,225,0.65); }
+@media(min-width:768px){ .testi-feature { transform: scale(1.045); z-index: 1; box-shadow: 0 18px 44px rgba(0,0,0,0.45); } }
 
 /* ── FORMS ── */
 .form-field { display: flex; flex-direction: column; gap: 6px; }
