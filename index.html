@@ -470,7 +470,7 @@
         </div>
         <div class="roi-out-card roi-plan-card">
           <div class="roi-out-num roi-plan-name" id="roiPlan">Solo</div>
-          <div class="roi-out-label">Suggested plan</div>
+          <div class="roi-out-label" id="roiPlanLabel">Suggested plan</div>
         </div>
       </div>
     </div>
@@ -642,12 +642,20 @@ function toggleFaq(btn) {
     var high = jobs * 2;
     document.getElementById('roiHrs').textContent = low + '–' + high + ' hrs';
     var plan = 'Solo';
-    if (seats >= 4 || jobs > 50) {
+    if (seats >= 9) {
+      plan = 'Enterprise';
+    } else if (seats >= 4 || jobs > 50) {
       plan = 'Business';
     } else if (seats >= 2 || jobs > 10) {
       plan = 'Professional';
     }
-    document.getElementById('roiPlan').textContent = plan;
+    var planEl = document.getElementById('roiPlan');
+    var labelEl = document.getElementById('roiPlanLabel');
+    planEl.textContent = plan;
+    planEl.style.color = plan === 'Enterprise' ? 'var(--text)' : '';
+    labelEl.innerHTML = plan === 'Enterprise'
+      ? 'Suggested plan &mdash; <a href="#enterprise" style="color:var(--gold)">talk to us</a>'
+      : 'Suggested plan';
   }
   window.setRoiTeam = function(btn) {
     document.querySelectorAll('.roi-team-btn').forEach(function(b) { b.classList.remove('active'); });
