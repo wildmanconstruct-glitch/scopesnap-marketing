@@ -669,9 +669,10 @@ function toggleFaq(btn) {
     var jobs = parseInt(slider.value);
     document.getElementById('roiJobCount').textContent = jobs;
     var totalJobs = jobs * seats;
-    var low = Math.round(totalJobs * 1.5);
+    var low = totalJobs * 1.5;
     var high = totalJobs * 2;
-    document.getElementById('roiHrs').textContent = low + '–' + high + ' hrs';
+    function fmtHrs(n) { return n % 1 === 0 ? n : n.toFixed(1); }
+    document.getElementById('roiHrs').textContent = fmtHrs(low) + '–' + fmtHrs(high) + ' hrs';
     document.getElementById('roiMoney').textContent = fmt(low * rate) + '–' + fmt(high * rate);
     var plan = 'Solo';
     if (seats >= 9) {
