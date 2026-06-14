@@ -464,7 +464,7 @@
         <p class="roi-sub">Based on 1.5–2 hrs saved per scope. Actual savings vary.</p>
       </div>
       <div class="roi-slider-row">
-        <label for="roiSlider" class="roi-slider-label">Jobs scoped per month: <span id="roiJobCount" class="roi-job-val">10</span></label>
+        <label for="roiSlider" class="roi-slider-label">Jobs scoped per person per month: <span id="roiJobCount" class="roi-job-val">10</span></label>
         <input type="range" class="roi-slider" id="roiSlider" min="1" max="60" value="10" aria-label="Jobs per month">
       </div>
       <div class="roi-team-row">
@@ -668,16 +668,17 @@ function toggleFaq(btn) {
   function updateRoi() {
     var jobs = parseInt(slider.value);
     document.getElementById('roiJobCount').textContent = jobs;
-    var low = Math.round(jobs * 1.5);
-    var high = jobs * 2;
+    var totalJobs = jobs * seats;
+    var low = Math.round(totalJobs * 1.5);
+    var high = totalJobs * 2;
     document.getElementById('roiHrs').textContent = low + '–' + high + ' hrs';
     document.getElementById('roiMoney').textContent = fmt(low * rate) + '–' + fmt(high * rate);
     var plan = 'Solo';
     if (seats >= 9) {
       plan = 'Enterprise';
-    } else if (seats >= 4 || jobs > 50) {
+    } else if (seats >= 4 || totalJobs > 50) {
       plan = 'Business';
-    } else if (seats >= 2 || jobs > 10) {
+    } else if (seats >= 2 || totalJobs > 10) {
       plan = 'Professional';
     }
     var planEl = document.getElementById('roiPlan');
