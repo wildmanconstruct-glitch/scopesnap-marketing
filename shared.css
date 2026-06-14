@@ -898,7 +898,7 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
   background: var(--gold); cursor: pointer;
   border: 2px solid var(--bg2); box-shadow: none;
 }
-.roi-output { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.roi-output { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .roi-out-card {
   background: var(--bg); border: 1px solid var(--border);
   border-radius: var(--r); padding: 20px 24px;
@@ -912,14 +912,16 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 .roi-team-row { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
 .roi-team-label { font-size: 13px; font-weight: 600; color: var(--dim); white-space: nowrap; }
 .roi-team-btns { display: flex; gap: 8px; flex-wrap: wrap; }
-.roi-team-btn {
+.roi-team-btn, .roi-rate-btn {
   background: transparent; border: 1px solid var(--border);
   color: var(--dim); font-size: 13px; font-weight: 600;
   padding: 6px 14px; border-radius: 6px; cursor: pointer;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
-.roi-team-btn:hover { border-color: var(--gold); color: var(--text); }
-.roi-team-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(196,154,60,0.08); }
+.roi-team-btn:hover, .roi-rate-btn:hover { border-color: var(--gold); color: var(--text); }
+.roi-team-btn.active, .roi-rate-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(196,154,60,0.08); }
+.roi-money-num { color: var(--green); }
+.roi-breakeven { margin-top: 14px; font-size: 13px; color: var(--muted); text-align: center; line-height: 1.5; }
 @media(max-width:600px) {
   .roi-calc { padding: 24px 20px; }
   .roi-output { grid-template-columns: 1fr; }

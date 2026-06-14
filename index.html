@@ -476,16 +476,30 @@
           <button class="roi-team-btn" data-seats="9" onclick="setRoiTeam(this)">9+ people</button>
         </div>
       </div>
+      <div class="roi-team-row">
+        <span class="roi-team-label">Your hourly rate:</span>
+        <div class="roi-team-btns" role="group" aria-label="Hourly rate">
+          <button class="roi-rate-btn" data-rate="50" onclick="setRoiRate(this)">$50/hr</button>
+          <button class="roi-rate-btn active" data-rate="75" onclick="setRoiRate(this)">$75/hr</button>
+          <button class="roi-rate-btn" data-rate="100" onclick="setRoiRate(this)">$100/hr</button>
+          <button class="roi-rate-btn" data-rate="130" onclick="setRoiRate(this)">$130/hr</button>
+        </div>
+      </div>
       <div class="roi-output">
         <div class="roi-out-card">
           <div class="roi-out-num" id="roiHrs">15–20 hrs</div>
           <div class="roi-out-label">Hours back per month</div>
+        </div>
+        <div class="roi-out-card">
+          <div class="roi-out-num roi-money-num" id="roiMoney">$1,125–$1,500</div>
+          <div class="roi-out-label">Value of time saved</div>
         </div>
         <div class="roi-out-card roi-plan-card">
           <div class="roi-out-num roi-plan-name" id="roiPlan">Solo</div>
           <div class="roi-out-label" id="roiPlanLabel">Suggested plan</div>
         </div>
       </div>
+      <div class="roi-breakeven" id="roiBreakeven"></div>
     </div>
 
     <!-- ENTERPRISE BAND -->
@@ -648,12 +662,16 @@ function toggleFaq(btn) {
   var slider = document.getElementById('roiSlider');
   if (!slider) return;
   var seats = 1;
+  var rate = 75;
+  var planCosts = { Solo: 59, Professional: 119, Business: 249 };
+  function fmt(n) { return '$' + Math.round(n).toLocaleString('en-AU'); }
   function updateRoi() {
     var jobs = parseInt(slider.value);
     document.getElementById('roiJobCount').textContent = jobs;
     var low = Math.round(jobs * 1.5);
     var high = jobs * 2;
     document.getElementById('roiHrs').textContent = low + '–' + high + ' hrs';
+    document.getElementById('roiMoney').textContent = fmt(low * rate) + '–' + fmt(high * rate);
     var plan = 'Solo';
     if (seats >= 9) {
       plan = 'Enterprise';
@@ -664,16 +682,32 @@ function toggleFaq(btn) {
     }
     var planEl = document.getElementById('roiPlan');
     var labelEl = document.getElementById('roiPlanLabel');
+    var breakevenEl = document.getElementById('roiBreakeven');
     planEl.textContent = plan;
     planEl.style.color = plan === 'Enterprise' ? 'var(--text)' : '';
     labelEl.innerHTML = plan === 'Enterprise'
       ? 'Suggested plan &mdash; <a href="#enterprise" style="color:var(--gold)">talk to us</a>'
       : 'Suggested plan';
+    if (breakevenEl && planCosts[plan]) {
+      var cost = planCosts[plan];
+      var jobsNeeded = Math.ceil(cost / (rate * 1.75));
+      var jobWord = jobsNeeded === 1 ? 'job' : 'jobs';
+      breakevenEl.textContent = 'ScopeSnap ' + plan + ' costs $' + cost + '/mo — your time savings cover it after just ' + jobsNeeded + ' ' + jobWord + '.';
+      breakevenEl.style.display = '';
+    } else if (breakevenEl) {
+      breakevenEl.style.display = 'none';
+    }
   }
   window.setRoiTeam = function(btn) {
     document.querySelectorAll('.roi-team-btn').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
     seats = parseInt(btn.dataset.seats);
+    updateRoi();
+  };
+  window.setRoiRate = function(btn) {
+    document.querySelectorAll('.roi-rate-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    rate = parseInt(btn.dataset.rate);
     updateRoi();
   };
   slider.addEventListener('input', updateRoi);
