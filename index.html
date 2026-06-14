@@ -86,7 +86,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=9"/>
+  <link rel="stylesheet" href="/shared.css?v=10"/>
 </head>
 <body>
 
@@ -405,11 +405,11 @@
           <div class="price-amount" id="pro-price">$119<span class="price-per">/mo + GST</span></div>
           <div class="price-annual-note" id="pro-sub">$1,190/year &mdash; save 2 months</div>
         </div>
-        <p class="price-desc">For builders and teams running multiple site walks and projects.</p>
+        <p class="price-desc">For builders and teams running up to 50 jobs per month.</p>
         <ul class="price-list">
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>3 seats included</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span id="pro-seat-price">Additional seats $29/month</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited jobs</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>50 jobs/month</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>75 photos/job</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>50 AI reports/month</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>6-month photo storage</li>
@@ -452,7 +452,16 @@
       </div>
       <div class="roi-slider-row">
         <label for="roiSlider" class="roi-slider-label">Jobs scoped per month: <span id="roiJobCount" class="roi-job-val">10</span></label>
-        <input type="range" class="roi-slider" id="roiSlider" min="1" max="30" value="10" aria-label="Jobs per month">
+        <input type="range" class="roi-slider" id="roiSlider" min="1" max="60" value="10" aria-label="Jobs per month">
+      </div>
+      <div class="roi-team-row">
+        <span class="roi-team-label">Team size:</span>
+        <div class="roi-team-btns" role="group" aria-label="Team size">
+          <button class="roi-team-btn active" data-seats="1" onclick="setRoiTeam(this)">Just me</button>
+          <button class="roi-team-btn" data-seats="3" onclick="setRoiTeam(this)">2–3 people</button>
+          <button class="roi-team-btn" data-seats="8" onclick="setRoiTeam(this)">4–8 people</button>
+          <button class="roi-team-btn" data-seats="9" onclick="setRoiTeam(this)">9+ people</button>
+        </div>
       </div>
       <div class="roi-output">
         <div class="roi-out-card">
@@ -625,14 +634,27 @@ function toggleFaq(btn) {
 (function() {
   var slider = document.getElementById('roiSlider');
   if (!slider) return;
+  var seats = 1;
   function updateRoi() {
     var jobs = parseInt(slider.value);
     document.getElementById('roiJobCount').textContent = jobs;
     var low = Math.round(jobs * 1.5);
     var high = jobs * 2;
     document.getElementById('roiHrs').textContent = low + '–' + high + ' hrs';
-    document.getElementById('roiPlan').textContent = jobs <= 10 ? 'Solo' : 'Professional';
+    var plan = 'Solo';
+    if (seats >= 4 || jobs > 50) {
+      plan = 'Business';
+    } else if (seats >= 2 || jobs > 10) {
+      plan = 'Professional';
+    }
+    document.getElementById('roiPlan').textContent = plan;
   }
+  window.setRoiTeam = function(btn) {
+    document.querySelectorAll('.roi-team-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    seats = parseInt(btn.dataset.seats);
+    updateRoi();
+  };
   slider.addEventListener('input', updateRoi);
   updateRoi();
 })();
