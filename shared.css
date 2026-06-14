@@ -823,6 +823,101 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 }
 .ss-col-front .ss-label { color: rgba(232,230,225,0.45); }
 
+/* ── WILDHEART PROOF STATS ── */
+.wh-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--r);
+  background: rgba(196,154,60,0.03);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.wh-stat {
+  flex: 1;
+  padding: 32px 28px;
+  border-right: 1px solid var(--border);
+}
+.wh-stat:last-child { border-right: none; }
+.wh-num {
+  font-family: var(--ff-h);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.wh-label {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.wh-divider { display: none; }
+.wh-caveat {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+@media(max-width:600px) {
+  .wh-stats { flex-direction: column; }
+  .wh-stat { border-right: none; border-bottom: 1px solid var(--border); padding: 22px 20px; }
+  .wh-stat:last-child { border-bottom: none; }
+}
+
+/* ── VOICE SECTION TAB TOGGLE (mobile) ── */
+.vd-tabs { display: none; margin-bottom: 16px; }
+@media(max-width:767px) {
+  .vd-tabs {
+    display: flex;
+    gap: 2px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 3px;
+  }
+  .vd-tab {
+    flex: 1; padding: 9px 8px;
+    font-size: 12px; font-weight: 700; font-family: var(--ff-b);
+    color: var(--muted); background: transparent;
+    border: none; border-radius: 2px; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    transition: background var(--trans), color var(--trans);
+  }
+  .vd-tab.active { background: var(--bg3); color: var(--text); }
+  /* hide the inactive panel + arrow on mobile */
+  #vdGrid[data-tab="voice"] .vd-scope,
+  #vdGrid[data-tab="voice"] .vd-arrow { display: none; }
+  #vdGrid[data-tab="scope"] .vd-card:not(.vd-scope),
+  #vdGrid[data-tab="scope"] .vd-arrow { display: none; }
+}
+
+/* ── STICKY MOBILE CTA BAR ── */
+.sticky-cta {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  padding: 12px 16px 18px;
+  background: linear-gradient(to top, var(--bg) 75%, transparent);
+  z-index: 89;
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+}
+.sticky-cta.show { transform: translateY(0); }
+.sticky-cta-btn {
+  width: 100%;
+  justify-content: center;
+  font-size: 15px;
+  padding: 14px 24px;
+}
+@media(max-width:767px) {
+  .sticky-cta { display: block; }
+  body { padding-bottom: 88px; }
+}
+
 @media(max-width:767px){
   .screenshots-strip {
     display: flex;

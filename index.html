@@ -86,7 +86,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=6"/>
+  <link rel="stylesheet" href="/shared.css?v=7"/>
 </head>
 <body>
 
@@ -112,7 +112,7 @@
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="/contact.html">Contact</a></li>
     </ul>
-    <a href="https://app.scopesnap.com.au" class="btn-primary nav-cta">Start free trial <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <a href="https://app.scopesnap.com.au" class="btn-primary nav-cta" data-track="cta-start-trial">Start free trial <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
       <svg id="menuIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
@@ -122,7 +122,7 @@
   <a href="#features">Features</a>
   <a href="#pricing">Pricing</a>
   <a href="/contact.html">Contact</a>
-  <a href="https://app.scopesnap.com.au" class="mobile-cta">Start free trial &#8594;</a>
+  <a href="https://app.scopesnap.com.au" class="mobile-cta" data-track="cta-start-trial">Start free trial &#8594;</a>
 </div>
 
 <main>
@@ -132,9 +132,9 @@
   <div class="hero-left">
     <div class="hero-eyebrow">For Australian builders</div>
     <h1>Scope jobs<br><em>faster.</em></h1>
-    <p class="hero-sub">Capture photos, notes and voice while you walk the site.</p>
+    <p class="hero-sub">Walk out with the scope already written.</p>
     <div class="hero-actions">
-      <a href="https://app.scopesnap.com.au" class="btn-primary">Start free trial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="https://app.scopesnap.com.au" class="btn-primary" data-track="cta-start-trial">Start free trial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       <a href="#pricing" class="btn-ghost">View pricing</a>
     </div>
   </div>
@@ -240,33 +240,14 @@
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
         </div>
         <h3>Talk it through. ScopeSnap writes it up.</h3>
-        <p>Talk through what you see. ScopeSnap strips the filler and writes clean scope notes.</p>
+        <p>Talk through the room. ScopeSnap writes it up.</p>
       </div>
       <div class="feature-card fade-in fade-in-delay-3">
         <div class="f-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         </div>
         <h3>Clear scope reports</h3>
-        <p>Generate a structured scope report before you leave. Quote from it or send it straight to the client.</p>
-      </div>
-    </div>
-
-    <!-- PRODUCT SCREENSHOTS STRIP -->
-    <div class="screenshots-strip fade-in">
-      <div class="ss-col ss-col-back ss-col-left">
-        <div class="ss-phone ss-phone-sm">
-          <img loading="lazy" src="/images/ss-overview.jpg" alt="ScopeSnap job overview" class="ss-img"/>
-        </div>
-      </div>
-      <div class="ss-col ss-col-front">
-        <div class="ss-phone ss-phone-lg">
-          <img loading="lazy" src="/images/ss-rooms.jpg" alt="ScopeSnap room capture grid" class="ss-img"/>
-        </div>
-      </div>
-      <div class="ss-col ss-col-back ss-col-right">
-        <div class="ss-report-wrap">
-          <img loading="lazy" src="/images/ss-report.jpg" alt="ScopeSnap scope report" class="ss-report-img"/>
-        </div>
+        <p>Scope report ready before you leave site.</p>
       </div>
     </div>
   </div>
@@ -279,7 +260,11 @@
     <div class="eyebrow">Voice to scope</div>
     <h2>You talk. <em>It writes.</em></h2>
     <p class="section-sub">Talk through the room the way you already do. ScopeSnap strips the rambling and writes clean, client-ready scope lines on the spot.</p>
-    <div class="vd-grid fade-in">
+    <div class="vd-tabs" role="tablist" aria-label="Voice demo view">
+      <button class="vd-tab active" id="vdTabVoice" role="tab" aria-selected="true" onclick="setVdTab('voice')">What you said</button>
+      <button class="vd-tab" id="vdTabScope" role="tab" aria-selected="false" onclick="setVdTab('scope')">What ScopeSnap wrote</button>
+    </div>
+    <div class="vd-grid fade-in" id="vdGrid" data-tab="voice">
       <div class="vd-card">
         <div class="vd-label"><span class="vd-dot" aria-hidden="true"></span>You, on site &#8212; Ensuite</div>
         <div class="vd-text" id="vdVoice" aria-hidden="true"></div>
@@ -346,33 +331,34 @@
         <h2 class="cta-h">Every missed item is a <em>variation you won&#8217;t recover.</em></h2>
         <p class="cta-sub">ScopeSnap captures the walkthrough so the record is straight from day one.</p>
       </div>
-      <a href="https://app.scopesnap.com.au" class="btn-primary cta-btn">Start free trial &#8594;</a>
+      <a href="https://app.scopesnap.com.au" class="btn-primary cta-btn" data-track="cta-start-trial">Start free trial &#8594;</a>
     </div>
   </div>
 </section>
 
-<!-- ── TESTIMONIALS ── -->
-<section class="section" id="testimonials">
+<!-- ── PROOF SECTION ── -->
+<section class="section" id="proof">
   <div class="wrap">
-    <div class="eyebrow">From the field</div>
-    <h2>Builders are already <em>on board.</em></h2>
-    <div class="testi-grid">
-      <div class="testi-card fade-in">
-        <div class="testi-head">Around 2 hrs saved per report</div>
-        <p class="testi-quote">&#8220;We&#8217;re saving about 2 hours on every report compared to how we used to do things. The voice notes are great because you can walk through a property and talk naturally instead of stopping every few minutes to write things down. It speeds the whole process up and the reports come out looking professional.&#8221;</p>
-        <div class="testi-author">&#8212; Precision Property Inspections</div>
+    <div class="eyebrow">Proven on real jobs</div>
+    <h2>Built on site,<br><em>not in an office.</em></h2>
+    <p class="section-sub">ScopeSnap was built inside Wildheart Homes — an Adelaide Hills builder — to fix our own scoping bottleneck. Every feature has been tested on real jobs, not prototypes.</p>
+    <div class="wh-stats fade-in">
+      <div class="wh-stat">
+        <div class="wh-num">30+</div>
+        <div class="wh-label">Jobs scoped</div>
       </div>
-      <div class="testi-card testi-feature fade-in fade-in-delay-1">
-        <div class="testi-head">Entire team using ScopeSnap</div>
-        <p class="testi-quote">&#8220;One of the biggest things for us is that everyone captures information the same way. Before ScopeSnap, details would be spread across photos, notebooks and phone notes. Now everything is stored against the job and easy to find later. It&#8217;s simple to use and our team picked it up straight away.&#8221;</p>
-        <div class="testi-author">&#8212; Summit Building Group</div>
+      <div class="wh-divider" aria-hidden="true"></div>
+      <div class="wh-stat">
+        <div class="wh-num">1.5–2 hrs</div>
+        <div class="wh-label">Saved per scope</div>
       </div>
-      <div class="testi-card fade-in fade-in-delay-2">
-        <div class="testi-head">Everything in one place</div>
-        <p class="testi-quote">&#8220;We originally started using ScopeSnap just to keep our site inspections organised, but it&#8217;s ended up saving a lot more time than we expected. Having photos, notes and room details all captured in the one place means there&#8217;s far less chasing information when it comes time to quote or start a job. It&#8217;s become part of our process now.&#8221;</p>
-        <div class="testi-author">&#8212; Wildheart Homes</div>
+      <div class="wh-divider" aria-hidden="true"></div>
+      <div class="wh-stat">
+        <div class="wh-num">45+</div>
+        <div class="wh-label">Hours back</div>
       </div>
     </div>
+    <p class="wh-caveat">Based on Wildheart Homes internal use. 45+ hrs reflects 30 jobs &times; ~1.5 hrs saved per scope.</p>
   </div>
 </section>
 
@@ -407,7 +393,7 @@
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Photo &amp; voice capture</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>AI scope notes &amp; room reports</li>
         </ul>
-        <a href="https://app.scopesnap.com.au" class="price-btn price-btn-outline">Start free trial</a>
+        <a href="https://app.scopesnap.com.au" class="price-btn price-btn-outline" data-track="cta-start-trial">Start free trial</a>
       </div>
 
       <!-- PROFESSIONAL -->
@@ -430,7 +416,7 @@
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Client &amp; trade reports</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>14-day free trial included</li>
         </ul>
-        <a href="https://app.scopesnap.com.au" class="price-btn price-btn-dark">Start free trial</a>
+        <a href="https://app.scopesnap.com.au" class="price-btn price-btn-dark" data-track="cta-start-trial">Start free trial</a>
       </div>
 
       <!-- BUSINESS -->
@@ -451,7 +437,7 @@
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Professional</li>
         </ul>
-        <a href="https://app.scopesnap.com.au" class="price-btn price-btn-outline">Start free trial</a>
+        <a href="https://app.scopesnap.com.au" class="price-btn price-btn-outline" data-track="cta-start-trial">Start free trial</a>
       </div>
 
     </div>
@@ -480,34 +466,6 @@
   </div>
 </section>
 
-<!-- &#9472;&#9472; WHY WE BUILT THIS &#9472;&#9472; -->
-<section class="section" id="story">
-  <div class="wrap">
-    <div class="founder-card fade-in">
-      <div class="founder-text">
-        <div class="eyebrow">Why we built this</div>
-        <h2>Scoping was slowing<br><em>jobs down.</em></h2>
-        <p>Photos got lost. Notes stayed in phones. Scopes were written from memory days later &#8212; or sat waiting on one person to get through them all.</p>
-        <p>But builders already talk through the job while they walk site.</p>
-        <p>ScopeSnap captures it, organises it by room, and turns it into a clear scope before you leave site.</p>
-        <p class="founder-close">No bottlenecks. No chasing people. No missed details.</p>
-        <div class="founder-tags">
-          <span class="f-tag">Built on real projects</span>
-          <span class="f-tag">Tested on active jobs</span>
-          <span class="f-tag">Made for Australian builders</span>
-        </div>
-      </div>
-      <div class="founder-quote">
-        <div class="quote-mark">&#8220;</div>
-        <blockquote>Stop waiting on one person to scope the whole job.</blockquote>
-        <div class="quote-author">
-          <div class="qa-name">ScopeSnap</div>
-          <div class="qa-title">Built by builders, for builders</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ── GET STARTED ── -->
 <section class="section" id="get-started">
@@ -517,7 +475,7 @@
       <h2 style="text-align:center;">Ready to scope jobs<br><em>faster?</em></h2>
       <p class="section-sub" style="margin:0 auto 32px; text-align:center; max-width:460px;">Start your 14-day free trial on the Professional plan. No credit card required.</p>
       <div class="signup-actions">
-        <a href="https://app.scopesnap.com.au" class="btn-primary">Start free trial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="https://app.scopesnap.com.au" class="btn-primary" data-track="cta-start-trial">Start free trial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         <a href="/contact.html" class="btn-ghost">Talk to us</a>
       </div>
       <p class="signup-note">No credit card required &middot; 14-day free trial &middot; Cancel any time</p>
@@ -566,8 +524,48 @@
   </div>
 </footer>
 
+<!-- Sticky mobile CTA bar -->
+<div class="sticky-cta" id="stickyCta" aria-hidden="true">
+  <a href="https://app.scopesnap.com.au" class="btn-primary sticky-cta-btn" data-track="cta-start-trial">Start free trial &#8594;</a>
+</div>
+
+<!-- Vercel Web Analytics — enable in Vercel dashboard first -->
+<script defer src="/_vercel/insights/script.js"></script>
+
 <script src="/shared.js"></script>
 <script>
+// Voice section tab toggle (mobile)
+function setVdTab(tab) {
+  document.getElementById('vdTabVoice').classList.toggle('active', tab === 'voice');
+  document.getElementById('vdTabVoice').setAttribute('aria-selected', tab === 'voice');
+  document.getElementById('vdTabScope').classList.toggle('active', tab === 'scope');
+  document.getElementById('vdTabScope').setAttribute('aria-selected', tab === 'scope');
+  var grid = document.getElementById('vdGrid');
+  if (grid) grid.setAttribute('data-tab', tab);
+}
+
+// Sticky mobile CTA bar
+(function() {
+  var bar = document.getElementById('stickyCta');
+  if (!bar) return;
+  var shown = false;
+  window.addEventListener('scroll', function() {
+    var shouldShow = window.scrollY > 400;
+    if (shouldShow !== shown) {
+      shown = shouldShow;
+      bar.classList.toggle('show', shown);
+      bar.setAttribute('aria-hidden', !shown);
+    }
+  }, { passive: true });
+})();
+
+// CTA click tracking
+document.querySelectorAll('[data-track]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    if (window.va) window.va('event', { name: el.getAttribute('data-track') });
+  });
+});
+
 function setBilling(mode) {
   var isAnnual = mode === 'annual';
   document.getElementById('toggleMonthly').classList.toggle('active', !isAnnual);
