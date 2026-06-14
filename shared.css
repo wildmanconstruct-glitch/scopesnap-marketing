@@ -1048,3 +1048,52 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
   .ss-col-back { margin-left: calc((100vw - 85vw) / 2) !important; }
   .ss-col-right { margin-right: calc((100vw - 85vw) / 2) !important; }
 }
+
+/* ── SAMPLE REPORT STRIP ── */
+.sample-strip {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 0;
+}
+.sample-strip-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.sample-strip-label {
+  font-family: var(--ff-h);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.sample-strip-desc {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 520px;
+}
+.sample-strip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: #000;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: var(--r);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity var(--trans);
+}
+.sample-strip-btn:hover { opacity: 0.88; }
+@media(max-width:767px) {
+  .sample-strip-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .sample-strip-btn { width: 100%; justify-content: center; }
+}
