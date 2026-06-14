@@ -823,6 +823,95 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 }
 .ss-col-front .ss-label { color: rgba(232,230,225,0.45); }
 
+/* ── FAQ ACCORDION ── */
+.faq-list {
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-top: 12px;
+}
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  width: 100%; text-align: left;
+  background: transparent; border: none;
+  padding: 20px 24px;
+  font-size: 15px; font-weight: 600; font-family: var(--ff-b);
+  color: var(--text); cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  transition: background var(--trans), color var(--trans);
+}
+.faq-q:hover { background: rgba(255,255,255,0.025); }
+.faq-q[aria-expanded="true"] { color: var(--gold); background: rgba(196,154,60,0.04); }
+.faq-icon {
+  width: 18px; height: 18px; flex-shrink: 0;
+  transition: transform 0.25s ease; color: var(--dim);
+}
+.faq-q[aria-expanded="true"] .faq-icon { transform: rotate(45deg); color: var(--gold); }
+.faq-a {
+  font-size: 14px; color: var(--muted); line-height: 1.75;
+  padding: 0 24px;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+.faq-a.open { max-height: 400px; padding: 0 24px 22px; }
+.faq-a a { color: var(--gold); text-decoration: none; }
+.faq-a a:hover { text-decoration: underline; }
+@media(max-width:600px) {
+  .faq-q { padding: 16px 18px; font-size: 14px; }
+  .faq-a { padding: 0 18px; }
+  .faq-a.open { padding: 0 18px 18px; }
+}
+
+/* ── ROI CALCULATOR ── */
+.roi-calc {
+  margin-top: 40px; margin-bottom: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--r);
+  padding: 32px 36px;
+}
+.roi-head { margin-bottom: 24px; }
+.roi-head h3 { font-size: 17px; margin-bottom: 6px; }
+.roi-sub { font-size: 13px; color: var(--dim); }
+.roi-slider-row { margin-bottom: 24px; }
+.roi-slider-label {
+  display: block; font-size: 13px; font-weight: 600;
+  color: var(--muted); margin-bottom: 12px;
+}
+.roi-job-val { color: var(--gold); font-weight: 800; }
+.roi-slider {
+  width: 100%; -webkit-appearance: none; appearance: none;
+  height: 4px; background: var(--border2); border-radius: 2px; outline: none; cursor: pointer;
+}
+.roi-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px;
+  border-radius: 50%; background: var(--gold); cursor: pointer;
+  border: 2px solid var(--bg2);
+  box-shadow: 0 0 0 3px rgba(196,154,60,0.2);
+}
+.roi-slider::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--gold); cursor: pointer;
+  border: 2px solid var(--bg2); box-shadow: none;
+}
+.roi-output { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.roi-out-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 20px 24px;
+}
+.roi-out-num {
+  font-family: var(--ff-h); font-size: 32px; font-weight: 900;
+  color: var(--text); line-height: 1; margin-bottom: 6px; letter-spacing: -0.5px;
+}
+.roi-plan-card .roi-out-num { color: var(--gold); }
+.roi-out-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+@media(max-width:600px) {
+  .roi-calc { padding: 24px 20px; }
+  .roi-output { grid-template-columns: 1fr; }
+}
+
 /* ── WILDHEART PROOF STATS ── */
 .wh-stats {
   display: flex;

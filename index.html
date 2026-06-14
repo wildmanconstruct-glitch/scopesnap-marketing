@@ -86,7 +86,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=7"/>
+  <link rel="stylesheet" href="/shared.css?v=8"/>
 </head>
 <body>
 
@@ -389,7 +389,7 @@
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>10 jobs/month</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>30 photos/job</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>10 AI reports/month</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>6 month photo retention</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>6-month photo storage</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Photo &amp; voice capture</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>AI scope notes &amp; room reports</li>
         </ul>
@@ -411,7 +411,7 @@
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited jobs</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>75 photos/job</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>50 AI reports/month</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>6 month photo retention</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>6-month photo storage</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All job types</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Client &amp; trade reports</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>14-day free trial included</li>
@@ -443,6 +443,28 @@
     </div>
     <p class="pricing-note">All prices are in Australian dollars and exclude GST. All plans start with a 14-day free trial on the Professional plan &#8212; no credit card required. After your trial, choose the plan that fits your team.<br>Annual billing locks in 2 months free on your base plan. Seat add-ons are billed monthly and are not included in the annual discount.</p>
 
+    <!-- ROI CALCULATOR -->
+    <div class="roi-calc fade-in">
+      <div class="roi-head">
+        <h3>How much time are you losing per month?</h3>
+        <p class="roi-sub">Based on 1.5–2 hrs saved per scope. Actual savings vary.</p>
+      </div>
+      <div class="roi-slider-row">
+        <label for="roiSlider" class="roi-slider-label">Jobs scoped per month: <span id="roiJobCount" class="roi-job-val">10</span></label>
+        <input type="range" class="roi-slider" id="roiSlider" min="1" max="30" value="10" aria-label="Jobs per month">
+      </div>
+      <div class="roi-output">
+        <div class="roi-out-card">
+          <div class="roi-out-num" id="roiHrs">15–20 hrs</div>
+          <div class="roi-out-label">Hours back per month</div>
+        </div>
+        <div class="roi-out-card roi-plan-card">
+          <div class="roi-out-num roi-plan-name" id="roiPlan">Solo</div>
+          <div class="roi-out-label">Suggested plan</div>
+        </div>
+      </div>
+    </div>
+
     <!-- ENTERPRISE BAND -->
     <div class="enterprise-band fade-in">
       <div class="ent-left">
@@ -466,6 +488,57 @@
   </div>
 </section>
 
+
+<!-- ── FAQ ── -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="eyebrow">FAQ</div>
+    <h2>Common <em>questions.</em></h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Does it work with no signal on site?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">ScopeSnap is built for site walks where signal can be patchy. You can capture photos and voice notes without a consistent connection &#8212; AI scope generation requires internet to process your notes, so generate the scope once you&#8217;re back in range.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Does it work on both iPhone and Android?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Yes. ScopeSnap works on iPhone and Android, plus any modern web browser on desktop.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Who owns the photos and data?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">You do. Your photos, notes and scope reports belong to you. ScopeSnap doesn&#8217;t use your job data for any purpose beyond running the service.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          What happens to photos after the storage period?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Photos are stored for 6 months on Solo and Professional plans, and 24 months on Business. If you need longer storage, upgrade to Business or <a href="/contact.html">contact us</a>.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          Can I get my data out if I cancel?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a">Yes. Email <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a> before cancelling and we&#8217;ll make sure you have everything you need.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- ── GET STARTED ── -->
 <section class="section" id="get-started">
@@ -534,6 +607,35 @@
 
 <script src="/shared.js"></script>
 <script>
+// FAQ accordion
+function toggleFaq(btn) {
+  var isOpen = btn.getAttribute('aria-expanded') === 'true';
+  document.querySelectorAll('.faq-q').forEach(function(b) {
+    b.setAttribute('aria-expanded', 'false');
+    b.nextElementSibling.classList.remove('open');
+  });
+  if (!isOpen) {
+    btn.setAttribute('aria-expanded', 'true');
+    btn.nextElementSibling.classList.add('open');
+  }
+}
+
+// ROI calculator
+(function() {
+  var slider = document.getElementById('roiSlider');
+  if (!slider) return;
+  function updateRoi() {
+    var jobs = parseInt(slider.value);
+    document.getElementById('roiJobCount').textContent = jobs;
+    var low = Math.round(jobs * 1.5);
+    var high = jobs * 2;
+    document.getElementById('roiHrs').textContent = low + '–' + high + ' hrs';
+    document.getElementById('roiPlan').textContent = jobs <= 10 ? 'Solo' : 'Professional';
+  }
+  slider.addEventListener('input', updateRoi);
+  updateRoi();
+})();
+
 // Voice section tab toggle (mobile)
 function setVdTab(tab) {
   document.getElementById('vdTabVoice').classList.toggle('active', tab === 'voice');
