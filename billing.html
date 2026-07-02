@@ -209,6 +209,9 @@
   <section class="section" style="padding-top:0;">
     <div class="wrap">
 
+      <!-- Post-checkout banner -->
+      <div id="checkoutBanner" style="display:none; max-width:720px; margin:0 auto 24px; padding:16px 20px; border-radius:var(--r); text-align:center; font-size:14px;"></div>
+
       <!-- STATE: loading -->
       <div id="stateLoading" class="billing-state active">
         <div class="spinner-wrap">Loading…</div>
@@ -333,7 +336,7 @@
             <button class="price-btn price-btn-outline" data-plan="business">Choose Business</button>
           </div>
         </div>
-        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>. Seat add-ons for Professional and Business are managed after subscribing.</p>
+        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>.<br>Need more seats than your plan includes? Subscribe first — you'll land back on this page, where you can add extra seats instantly ($29/mo each on Professional, $25/mo each on Business, + GST).</p>
         <div class="billing-error" id="checkoutError"></div>
       </div>
 
@@ -513,7 +516,7 @@
         var res = await fetch(API_BASE + '/api/billing/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + accessToken },
-          body: JSON.stringify({ plan: plan, interval: currentInterval })
+          body: JSON.stringify({ plan: plan, interval: currentInterval, returnTo: 'billing' })
         });
         var data = await res.json();
         if (res.ok && data.url) {
@@ -643,7 +646,31 @@
   });
 
   // ---- Init ----
-  loadAccount();
+  var billingParam = new URLSearchParams(window.location.search).get('billing');
+  if (billingParam === 'success' || billingParam === 'cancel') {
+    var banner = document.getElementById('checkoutBanner');
+    if (billingParam === 'success') {
+      banner.style.background = 'var(--green-dim)';
+      banner.style.border = '1px solid var(--green)';
+      banner.style.color = 'var(--green)';
+      banner.textContent = 'Payment successful. Your new plan can take a few seconds to appear — need extra seats? Add them below once your plan shows.';
+    } else {
+      banner.style.background = 'var(--bg2)';
+      banner.style.border = '1px solid var(--border2)';
+      banner.style.color = 'var(--muted)';
+      banner.textContent = 'Checkout cancelled — no payment was taken. Choose a plan below whenever you’re ready.';
+    }
+    banner.style.display = 'block';
+    history.replaceState(null, '', window.location.pathname);
+  }
+
+  loadAccount().then(function() {
+    // After a successful payment the webhook may lag a few seconds —
+    // if we still look unsubscribed, re-check once.
+    if (billingParam === 'success' && document.getElementById('stateChoose').classList.contains('active')) {
+      setTimeout(loadAccount, 5000);
+    }
+  });
 })();
 </script>
 </body>
