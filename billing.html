@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Billing — ScopeSnap</title>
+  <meta name="description" content="Manage your ScopeSnap subscription — upgrade your plan or update billing details."/>
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#080B10"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/shared.css?v=11"/>
+  <style>
+    .billing-state { display: none; }
+    .billing-state.active { display: block; }
+
+    .login-card {
+      max-width: 420px;
+      margin: 0 auto;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+    }
+    .login-card h3 {
+      font-family: var(--ff-h);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .account-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      max-width: 720px;
+      margin: 0 auto 28px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 14px 20px;
+      font-size: 14px;
+    }
+    .account-bar .acct-email { color: var(--muted); }
+    .account-bar button {
+      background: none;
+      border: none;
+      color: var(--dim);
+      font-family: var(--ff-b);
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .account-bar button:hover { color: var(--text); }
+
+    .plan-banner {
+      max-width: 720px;
+      margin: 0 auto 36px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold);
+      border-radius: var(--r);
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .plan-banner .plan-label {
+      font-family: var(--ff-h);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .plan-banner .plan-current {
+      font-family: var(--ff-h);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .plan-banner .plan-meta { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+    .billing-error {
+      max-width: 560px;
+      margin: 16px auto 0;
+      color: var(--red);
+      font-size: 14px;
+      text-align: center;
+      min-height: 20px;
+    }
+    .billing-notice {
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+      text-align: center;
+      font-size: 15px;
+      color: var(--muted);
+    }
+    .price-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+    .spinner-wrap { text-align: center; padding: 60px 0; color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="36" height="36">
+          <path d="M80,14 A66,66 0 0,1 137.2,47 Q125,68 94,95 L100,73 Q93,31 80,14 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M137.2,47 A66,66 0 0,1 137.2,113 Q112,112 72,98 L94,95 Q125,68 137.2,47 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M137.2,113 A66,66 0 0,1 80,146 Q67,125 58,84 L72,98 Q112,112 137.2,113 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M80,146 A66,66 0 0,1 22.8,113 Q35,92 66,65 L58,84 Q67,125 80,146 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M22.8,113 A66,66 0 0,1 22.8,47 Q48,48 84,62 L66,65 Q35,92 22.8,113 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M22.8,47 A66,66 0 0,1 80,14 Q93,35 100,73 L84,62 Q48,48 22.8,47 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="80" cy="80" r="66" fill="none" stroke="#D4B483" stroke-width="4"/>
+        </svg>
+      </div>
+      <div><div class="logo-name">ScopeSnap</div><div class="logo-sub">AI site capture</div></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#features">Features</a></li>
+      <li><a href="/#pricing">Pricing</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+    <a href="https://app.scopesnap.com.au" class="btn-primary nav-cta">Open app <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#features">Features</a>
+  <a href="/#pricing">Pricing</a>
+  <a href="/contact.html">Contact</a>
+  <a href="https://app.scopesnap.com.au" class="mobile-cta">Open app →</a>
+</div>
+
+<main>
+  <section class="inner-hero">
+    <div class="wrap">
+      <div class="eyebrow">Your account</div>
+      <h1>Billing.</h1>
+      <p class="hero-sub" style="margin-bottom:0;">Sign in with your ScopeSnap account to upgrade your plan or manage your subscription.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+
+      <!-- STATE: loading -->
+      <div id="stateLoading" class="billing-state active">
+        <div class="spinner-wrap">Loading…</div>
+      </div>
+
+      <!-- STATE: logged out -->
+      <div id="stateLogin" class="billing-state">
+        <div class="login-card">
+          <h3>Sign in</h3>
+          <form id="loginForm" novalidate>
+            <div class="form-field" style="margin-bottom:14px;">
+              <label for="lEmail">Email</label>
+              <input type="email" id="lEmail" name="email" placeholder="you@company.com.au" required autocomplete="email"/>
+            </div>
+            <div class="form-field" style="margin-bottom:20px;">
+              <label for="lPassword">Password</label>
+              <input type="password" id="lPassword" name="password" placeholder="Your password" required autocomplete="current-password"/>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%; justify-content:center;" id="loginBtn">
+              <span id="loginBtnText">Sign in</span>
+            </button>
+            <div id="loginError" class="form-error"></div>
+          </form>
+          <p style="font-size:13px; color:var(--muted); margin-top:18px; text-align:center;">
+            Forgot your password? <a href="https://app.scopesnap.com.au" style="color:var(--gold);">Reset it in the app</a><br>
+            No account yet? <a href="https://app.scopesnap.com.au" style="color:var(--gold);">Start a free trial</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- STATE: not an administrator -->
+      <div id="stateNoAccess" class="billing-state">
+        <div class="billing-notice">
+          <p>Only account administrators can manage billing.<br>Ask the administrator on your ScopeSnap account to upgrade the plan.</p>
+          <p style="margin-top:14px;"><button id="signOutNoAccess" style="background:none;border:none;color:var(--dim);font-size:13px;cursor:pointer;text-decoration:underline;">Sign out</button></p>
+        </div>
+      </div>
+
+      <!-- STATE: has active subscription -->
+      <div id="stateSubscribed" class="billing-state">
+        <div class="account-bar">
+          <span class="acct-email" id="acctEmailSub"></span>
+          <button data-signout>Sign out</button>
+        </div>
+        <div class="plan-banner">
+          <div class="plan-label">Current plan</div>
+          <div class="plan-current" id="subPlanName"></div>
+          <div class="plan-meta" id="subPlanMeta"></div>
+        </div>
+        <div class="billing-notice" style="border:none; background:none; padding:0;">
+          <p style="margin-bottom:20px;">Change your plan, add seats, update your card, or download invoices in the secure Stripe billing portal.</p>
+          <button class="btn-primary" id="portalBtn" style="justify-content:center;">
+            <span id="portalBtnText">Manage billing</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <div class="billing-error" id="portalError"></div>
+      </div>
+
+      <!-- STATE: trial / no subscription — choose a plan -->
+      <div id="stateChoose" class="billing-state">
+        <div class="account-bar">
+          <span class="acct-email" id="acctEmailChoose"></span>
+          <button data-signout>Sign out</button>
+        </div>
+        <div class="plan-banner">
+          <div class="plan-label">Current plan</div>
+          <div class="plan-current" id="choosePlanName"></div>
+          <div class="plan-meta" id="choosePlanMeta"></div>
+        </div>
+
+        <div class="billing-toggle-wrap">
+          <div class="billing-toggle">
+            <button class="billing-opt active" id="toggleMonthly">Monthly</button>
+            <button class="billing-opt" id="toggleAnnual">Annual <span class="billing-save">Save 2 months</span></button>
+          </div>
+        </div>
+
+        <div class="pricing-grid">
+          <!-- SOLO -->
+          <div class="price-card">
+            <div class="price-tier">Solo</div>
+            <div class="price-amount-row">
+              <div class="price-amount" data-price-monthly="$59" data-price-annual="$590" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$59<span class="price-per">/mo + GST</span></div>
+              <div class="price-annual-note">$590/year &mdash; save 2 months</div>
+            </div>
+            <p class="price-desc">For individual builders. 1 seat, 10 jobs per month.</p>
+            <button class="price-btn price-btn-outline" data-plan="solo">Choose Solo</button>
+          </div>
+          <!-- PROFESSIONAL -->
+          <div class="price-card price-featured">
+            <div class="price-popular">Most popular</div>
+            <div class="price-tier">Professional</div>
+            <div class="price-amount-row">
+              <div class="price-amount" data-price-monthly="$119" data-price-annual="$1,190" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$119<span class="price-per">/mo + GST</span></div>
+              <div class="price-annual-note">$1,190/year &mdash; save 2 months</div>
+            </div>
+            <p class="price-desc">For teams. 3 seats included, 50 jobs per month.</p>
+            <button class="price-btn price-btn-dark" data-plan="professional">Choose Professional</button>
+          </div>
+          <!-- BUSINESS -->
+          <div class="price-card">
+            <div class="price-tier">Business</div>
+            <div class="price-amount-row">
+              <div class="price-amount" data-price-monthly="$249" data-price-annual="$2,490" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$249<span class="price-per">/mo + GST</span></div>
+              <div class="price-annual-note">$2,490/year &mdash; save 2 months</div>
+            </div>
+            <p class="price-desc">For larger operations. 8 seats included, unlimited jobs.</p>
+            <button class="price-btn price-btn-outline" data-plan="business">Choose Business</button>
+          </div>
+        </div>
+        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>. Seat add-ons for Professional and Business are managed after subscribing.</p>
+        <div class="billing-error" id="checkoutError"></div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-bottom">
+    <span>© <span id="year"></span> ScopeSnap Pty Ltd. All rights reserved.</span>
+    <div style="display:flex;gap:20px;">
+      <a href="/privacy.html" style="color:var(--dim);text-decoration:none;font-size:12px;">Privacy</a>
+      <a href="/terms.html" style="color:var(--dim);text-decoration:none;font-size:12px;">Terms</a>
+      <a href="/contact.html" style="color:var(--dim);text-decoration:none;font-size:12px;">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/shared.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  var SUPABASE_URL = 'https://zshyarkcfttqgrjsjfyt.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzaHlhcmtjZnR0cWdyanNqZnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5ODM4NzQsImV4cCI6MjA5MjU1OTg3NH0.whkPE9BdYafe7oqp-_oSu1NxP5zLcla8sTjmLDrQe3s';
+  var API_BASE = 'https://app.scopesnap.com.au';
+
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  var currentInterval = 'month';
+  var accessToken = null;
+
+  var PLAN_NAMES = { solo: 'Solo', professional: 'Professional', business: 'Business', enterprise: 'Enterprise' };
+
+  function show(stateId) {
+    document.querySelectorAll('.billing-state').forEach(function(el) { el.classList.remove('active'); });
+    document.getElementById(stateId).classList.add('active');
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return null;
+    try {
+      return new Date(iso).toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+    } catch (_) { return null; }
+  }
+
+  async function signOut() {
+    await sb.auth.signOut();
+    accessToken = null;
+    show('stateLogin');
+  }
+  document.querySelectorAll('[data-signout]').forEach(function(btn) { btn.addEventListener('click', signOut); });
+  document.getElementById('signOutNoAccess').addEventListener('click', signOut);
+
+  // ---- Login ----
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var email = document.getElementById('lEmail').value.trim();
+    var password = document.getElementById('lPassword').value;
+    var errEl = document.getElementById('loginError');
+    var btn = document.getElementById('loginBtn');
+    var btnText = document.getElementById('loginBtnText');
+
+    if (!email || !password) { errEl.textContent = 'Enter your email and password.'; return; }
+    errEl.textContent = '';
+    btn.disabled = true;
+    btnText.textContent = 'Signing in…';
+
+    var result = await sb.auth.signInWithPassword({ email: email, password: password });
+    btn.disabled = false;
+    btnText.textContent = 'Sign in';
+
+    if (result.error) {
+      errEl.textContent = result.error.message === 'Invalid login credentials'
+        ? 'Wrong email or password.'
+        : (result.error.message || 'Sign in failed. Try again.');
+      return;
+    }
+    loadAccount();
+  });
+
+  // ---- Load account + subscription state ----
+  async function loadAccount() {
+    show('stateLoading');
+    var sessionRes = await sb.auth.getSession();
+    var session = sessionRes.data ? sessionRes.data.session : null;
+    if (!session) { show('stateLogin'); return; }
+    accessToken = session.access_token;
+    var userEmail = session.user && session.user.email ? session.user.email : '';
+
+    // Profile: role + company
+    var profileRes = await sb.from('profiles').select('company_id, role').eq('id', session.user.id).maybeSingle();
+    if (profileRes.error || !profileRes.data || !profileRes.data.company_id) {
+      show('stateNoAccess');
+      return;
+    }
+    if (String(profileRes.data.role || '').toLowerCase() !== 'administrator') {
+      show('stateNoAccess');
+      return;
+    }
+
+    // Company: subscription state
+    var companyRes = await sb.from('companies')
+      .select('subscription_plan, subscription_status, billing_interval, trial_ends_at, stripe_subscription_id, current_period_end, cancel_at_period_end')
+      .eq('id', profileRes.data.company_id)
+      .maybeSingle();
+
+    if (companyRes.error || !companyRes.data) {
+      // Can't read company — show plan chooser anyway; API enforces the real rules.
+      document.getElementById('acctEmailChoose').textContent = userEmail;
+      document.getElementById('choosePlanName').textContent = '—';
+      document.getElementById('choosePlanMeta').textContent = '';
+      show('stateChoose');
+      return;
+    }
+
+    var c = companyRes.data;
+    var planName = PLAN_NAMES[String(c.subscription_plan || '').toLowerCase()] || (c.subscription_plan || 'Trial');
+    var status = String(c.subscription_status || '').toLowerCase();
+
+    if (c.stripe_subscription_id) {
+      // Existing subscriber → portal
+      document.getElementById('acctEmailSub').textContent = userEmail;
+      document.getElementById('subPlanName').textContent = planName;
+      var meta = [];
+      if (status) meta.push(status.charAt(0).toUpperCase() + status.slice(1));
+      if (c.billing_interval) meta.push(c.billing_interval === 'year' ? 'Annual billing' : 'Monthly billing');
+      var renews = fmtDate(c.current_period_end);
+      if (renews) meta.push((c.cancel_at_period_end ? 'Ends ' : 'Renews ') + renews);
+      document.getElementById('subPlanMeta').textContent = meta.join(' · ');
+      show('stateSubscribed');
+    } else {
+      // Trial or expired → choose a plan
+      document.getElementById('acctEmailChoose').textContent = userEmail;
+      var trialEnds = fmtDate(c.trial_ends_at);
+      if (status === 'trialing') {
+        document.getElementById('choosePlanName').textContent = planName + ' (trial)';
+        document.getElementById('choosePlanMeta').textContent = trialEnds ? 'Trial ends ' + trialEnds : '';
+      } else {
+        document.getElementById('choosePlanName').textContent = planName;
+        document.getElementById('choosePlanMeta').textContent = status ? 'Status: ' + status : '';
+      }
+      show('stateChoose');
+    }
+  }
+
+  // ---- Billing interval toggle ----
+  function setBilling(interval) {
+    currentInterval = interval;
+    document.getElementById('toggleMonthly').classList.toggle('active', interval === 'month');
+    document.getElementById('toggleAnnual').classList.toggle('active', interval === 'year');
+    document.querySelectorAll('#stateChoose .price-amount').forEach(function(el) {
+      var price = interval === 'year' ? el.getAttribute('data-price-annual') : el.getAttribute('data-price-monthly');
+      var per = interval === 'year' ? el.getAttribute('data-per-annual') : el.getAttribute('data-per-monthly');
+      el.innerHTML = price + '<span class="price-per">' + per + '</span>';
+    });
+    document.querySelectorAll('#stateChoose .price-annual-note').forEach(function(el) {
+      el.style.visibility = interval === 'year' ? 'hidden' : 'visible';
+    });
+  }
+  document.getElementById('toggleMonthly').addEventListener('click', function() { setBilling('month'); });
+  document.getElementById('toggleAnnual').addEventListener('click', function() { setBilling('year'); });
+
+  // ---- Checkout ----
+  document.querySelectorAll('#stateChoose .price-btn[data-plan]').forEach(function(btn) {
+    btn.addEventListener('click', async function() {
+      var plan = btn.getAttribute('data-plan');
+      var errEl = document.getElementById('checkoutError');
+      errEl.textContent = '';
+      var originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Opening checkout…';
+
+      try {
+        var res = await fetch(API_BASE + '/api/billing/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + accessToken },
+          body: JSON.stringify({ plan: plan, interval: currentInterval })
+        });
+        var data = await res.json();
+        if (res.ok && data.url) {
+          window.location.href = data.url;
+          return;
+        }
+        if (res.status === 401) {
+          errEl.textContent = 'Your session has expired. Please sign in again.';
+          show('stateLogin');
+        } else if (data && data.error && data.error.code === 'subscription_exists') {
+          // Already subscribed — reload state so they see the portal button
+          loadAccount();
+        } else {
+          errEl.textContent = (data && data.error && data.error.message) || 'Could not start checkout. Try again.';
+        }
+      } catch (_) {
+        errEl.textContent = 'Network error. Check your connection and try again.';
+      }
+      btn.disabled = false;
+      btn.textContent = originalText;
+    });
+  });
+
+  // ---- Billing portal ----
+  document.getElementById('portalBtn').addEventListener('click', async function() {
+    var btn = document.getElementById('portalBtn');
+    var btnText = document.getElementById('portalBtnText');
+    var errEl = document.getElementById('portalError');
+    errEl.textContent = '';
+    btn.disabled = true;
+    btnText.textContent = 'Opening…';
+
+    try {
+      var res = await fetch(API_BASE + '/api/billing/portal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + accessToken },
+        body: JSON.stringify({})
+      });
+      var data = await res.json();
+      if (res.ok && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      if (res.status === 401) {
+        errEl.textContent = 'Your session has expired. Please sign in again.';
+        show('stateLogin');
+      } else {
+        errEl.textContent = (data && data.error && data.error.message) || 'Could not open billing portal. Try again.';
+      }
+    } catch (_) {
+      errEl.textContent = 'Network error. Check your connection and try again.';
+    }
+    btn.disabled = false;
+    btnText.textContent = 'Manage billing';
+  });
+
+  // ---- Init ----
+  loadAccount();
+})();
+</script>
+</body>
+</html>
