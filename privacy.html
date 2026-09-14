@@ -46,90 +46,79 @@
   <section class="section" style="padding-top:0;">
     <div class="wrap">
       <div class="inner-content">
-        <p class="inner-updated">Last updated: 14 September 2026</p>
+        <p class="inner-updated">Last updated: 14 September 2026 · Version 2026-09-14.2</p>
 
         <h2>Overview</h2>
-        <p>ScopeSnap ("we", "us", "our") is committed to protecting your privacy. This policy explains how we collect, use, store and protect your personal information when you use our website and application.</p>
-        <p>ScopeSnap is operated by ScopeSnap Pty Ltd (ABN 84 698 607 868), based in South Australia. We handle personal information in accordance with the Privacy Act 1988 (Cth) and the Australian Privacy Principles (APPs). By using our services, you agree to the collection and use of information in accordance with this policy.</p>
+        <p>ScopeSnap Pty Ltd (ABN 84 698 607 868), based in South Australia, operates ScopeSnap ("we", "us", "our"). This policy explains how we handle personal information through our website at www.scopesnap.com.au, our web application and our mobile apps.</p>
+        <p>Contact <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a> with privacy questions or requests. Permission for AI processing is requested separately in the app; this policy does not replace that choice.</p>
 
         <h2>Information we collect</h2>
-        <p>We collect information you provide directly to us:</p>
         <ul>
-          <li><strong>Account information:</strong> name, email address, company name and role when you sign up or contact us.</li>
-          <li><strong>Job data:</strong> site addresses, client details, photos, voice recordings, notes and scope documents you create within the app.</li>
-          <li><strong>Payment information:</strong> payments are processed by Stripe. We do not collect or store your full card number — card details are provided directly to Stripe and handled under <a href="https://stripe.com/au/privacy" target="_blank" rel="noopener">Stripe's privacy policy</a>. We retain billing records such as your plan, billing history and receipts.</li>
-          <li><strong>Usage data:</strong> how you interact with the app, features used and general usage patterns to help us improve the product.</li>
+          <li><strong>Accounts and teams:</strong> your name, email, password used for authentication, company name, role, avatar initials, account identifiers, team membership and records of legal acceptance and AI consent.</li>
+          <li><strong>Jobs and files:</strong> client names and contact details, site addresses, job notes, measurements, answers, appointments, photos, plans and PDFs, other attachments, transcripts and generated reports. Files can contain personal information and embedded metadata; do not assume location metadata is removed from every upload.</li>
+          <li><strong>Voice features:</strong> audio you choose to record for transcription and the resulting text. Other audio or video files you attach to a job can also be stored as job files.</li>
+          <li><strong>Billing:</strong> subscription and trial status, plan, billing identifiers and payment event records. Stripe handles payment card details directly; ScopeSnap does not store full card numbers. An account may be created with Stripe during signup before any purchase.</li>
+          <li><strong>Security and operation:</strong> IP addresses, browser or device information, login sessions, last activity, job change records, feature usage counters, request limits and technical error logs. We use these to operate the service, investigate failures and detect abuse or account sharing.</li>
+          <li><strong>Communications:</strong> your name, email, enquiry or support message and delivery records when you contact us or we send account, trial or service emails.</li>
         </ul>
+        <p>Account information is needed to register and operate your account. You choose which optional capture features and files to use. Camera, photo access and microphone permissions can be managed in your device settings. The app uses addresses you type for address suggestions; it does not request GPS location through a device location permission.</p>
 
         <h2>Your clients' information</h2>
-        <p>When you create jobs in ScopeSnap, you may upload personal information about your own clients — such as names, contact details, site addresses and photos of their properties. You are responsible for ensuring you are entitled to collect and upload that information and for telling your clients how it will be used. We process this information only to provide the Service to you, and we do not use it for any other purpose.</p>
+        <p>Only upload information you are entitled to use, and tell clients and other people whose information appears in a job how it will be handled. Avoid including unrelated sensitive information in photos, recordings or documents. Job content is available to authorised users of your company workspace and to providers needed to store or process it.</p>
 
-        <h2>How we use your information</h2>
-        <p>We use the information we collect to:</p>
+        <h2>How we use and disclose information</h2>
+        <p>We use information to manage accounts and teams, save and synchronise jobs, create reports, provide AI features you approve, manage subscriptions and trials, deliver communications, respond to requests, maintain security and improve reliability. Trial emails may include reminders and invitations to choose a plan. To request that promotional emails stop, contact <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a>; essential account and security messages may still be needed.</p>
+        <p>We do not sell your personal information. We disclose relevant information to the providers described below, to recipients you choose when sharing or exporting, and where required or permitted by law. If you enable a calendar subscription or share a report, the receiving service or person can receive the job details included in it. Keep calendar subscription links private because possession of a valid link allows access to its feed.</p>
+
+        <h2>AI processing and your choice</h2>
+        <p>With your AI consent, <strong>OpenAI</strong> receives recorded audio for transcription. <strong>Anthropic</strong> receives the relevant text, notes, photos or plan content for features such as scope generation, photo descriptions, transcript cleanup and plan extraction. Content can include client information that you put in the job. Results are returned to ScopeSnap and may be saved with the job.</p>
+        <p>You can withdraw consent in <strong>Profile Settings</strong> to stop future AI requests through the app. Withdrawal does not itself delete existing job content or undo requests already processed. You can continue using non-AI features and request deletion separately.</p>
+        <p>ScopeSnap does not train its own AI models on your job content. Requests use the providers' commercial APIs and are subject to their applicable terms and data controls. Providers may retain information for service operation, security or legal obligations; AI processing is not a promise of zero retention. See <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noopener">OpenAI's privacy policy</a> and <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic's privacy policy</a>.</p>
+
+        <h2>Storage, security and local copies</h2>
+        <p>Our current Supabase project, used for the database, authentication and job file storage, is in <strong>Tokyo, Japan</strong>. Job files use a private storage bucket with access controls. Vercel hosts the website and application services. Connections to our cloud services use HTTPS/TLS; this is not end-to-end encryption that prevents the service or its processing providers from accessing content.</p>
+        <p>The app also keeps local copies of jobs and account data, login information and queued changes or uploads on your device so it can recover work and synchronise it. These copies are subject to your device and browser security. Do not clear app storage or uninstall while work is waiting to upload. Signing out attempts to clear local account caches, but files you export or save elsewhere remain under your control.</p>
+        <p>Voice-note recordings are held temporarily by the app for transcription and retry, rather than stored as a permanent ScopeSnap voice archive. Saved transcripts and audio files you deliberately attach to jobs are separate stored content. We take reasonable steps to protect information, but no service can guarantee absolute security.</p>
+
+        <h2>Providers and overseas processing</h2>
+        <p>ScopeSnap is Australian operated, but its services are not exclusively hosted in Australia. Our primary Supabase project is in Japan. Other providers may process information in the United States and other countries in which they or their subprocessors operate. Their processing locations and retention rules can differ from our database region.</p>
         <ul>
-          <li>Provide, operate and improve the ScopeSnap service</li>
-          <li>Process AI-powered transcription and scope generation on your behalf</li>
-          <li>Send you product updates and relevant communications (you can opt out at any time)</li>
-          <li>Respond to your questions and support requests</li>
-          <li>Detect and prevent fraud or misuse</li>
+          <li><strong>Supabase:</strong> database, authentication, login sessions and file storage.</li>
+          <li><strong>Vercel:</strong> website and application hosting, requests and technical logs; website usage analytics on the marketing homepage.</li>
+          <li><strong>Anthropic and OpenAI:</strong> the AI processing described above.</li>
+          <li><strong>Stripe:</strong> customer and subscription administration and payment processing. See <a href="https://stripe.com/au/privacy" target="_blank" rel="noopener">Stripe's privacy policy</a>.</li>
+          <li><strong>Resend:</strong> account, invitation, trial, support and operational emails, including recipients, relevant message content and delivery information.</li>
+          <li><strong>Google Places:</strong> typed address searches and session tokens to provide site address suggestions. Google Fonts also serves fonts on our website and may receive ordinary web request information.</li>
+          <li><strong>Cloudflare Turnstile:</strong> signup security checks using challenge information, IP and browser signals.</li>
+          <li><strong>Upstash:</strong> where configured, request and signup rate limiting using account identifiers, email addresses, IP addresses and short-lived counters.</li>
+          <li><strong>Formspree:</strong> the public website contact form, including your name, email, subject and message.</li>
         </ul>
-        <p>We do not sell your personal information to third parties.</p>
-
-        <h2>AI processing</h2>
-        <p>ScopeSnap uses AI to transcribe your voice recordings, analyse photos and generate written scope reports. When you use these features, the relevant content (voice audio, photo data and room notes) is transmitted to third-party AI service providers for processing. This transmission is encrypted in transit. AI providers process your data only to return results to us and are bound by data processing agreements that prohibit them from using your content for any other purpose.</p>
-        <p>We do not use your job data to train AI models, and we do not permit our AI providers to do so either.</p>
-
-        <h2>Data storage and security</h2>
-        <p>Your data is stored using Supabase, a cloud database and authentication provider. All data is encrypted in transit (HTTPS/TLS) and at rest. Photos and files are stored in secure cloud object storage. Our application is hosted on Vercel.</p>
-        <p>We take reasonable steps to protect your information from unauthorised access, but no method of transmission over the internet is 100% secure.</p>
-
-        <h2>Overseas disclosure</h2>
-        <p>Some of the cloud infrastructure, AI and payment providers we use may store or process data outside Australia (including in the United States). Where this occurs, we take reasonable steps to ensure those providers handle your information consistently with the Australian Privacy Principles and their own published privacy and security commitments.</p>
-
-        <h2>Data breaches</h2>
-        <p>If a data breach occurs that is likely to result in serious harm, we will notify affected users and the Office of the Australian Information Commissioner (OAIC) in accordance with the Notifiable Data Breaches scheme under the Privacy Act 1988 (Cth).</p>
+        <p>We consider provider privacy and security arrangements when handling information overseas and comply with applicable Australian privacy obligations. Contact us for questions about a particular provider or disclosure.</p>
 
         <h2>Data retention</h2>
-        <p>We retain your account data for as long as your account is active. Job data, photos and recordings are retained according to your plan's photo retention period, or until you delete them or close your account.</p>
+        <p>We retain account and job information to provide the service, handle requests and meet applicable obligations. Deleting content or an account follows the applicable deletion process; provider backups, security logs and legally required records may have separate retention schedules. A plan's stated photo retention allowance should not be relied on as an automatic deletion deadline. Contact us if you need particular information removed.</p>
+        <p>Retention varies by record type. Trial-prevention hashes and redacted billing events currently have no automatic expiry, as explained below. We do not promise that every copy held by every provider disappears immediately when you delete a job or withdraw AI consent.</p>
 
         <h2 id="account-deletion">Account and data deletion</h2>
         <p>You can request deletion in the app under <strong>Profile Settings → Delete account</strong>, or by emailing <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a> without signing in or reinstalling the app. See our <a href="/delete-account">account-deletion page</a> for the request steps and full details.</p>
         <p>Administrator deletion removes the whole company workspace and all its members; other team members delete only their own account and profile, while company content remains. Once a request is processed, affected accounts are locked immediately and data is scheduled for deletion after 30 days, unless immediate deletion is requested.</p>
         <p>Deletion has limited retention exceptions: the hashed trial email and claim date used to prevent repeat free trials, and remaining redacted billing event records, currently have no automatic expiry. Payment and accounting records may be retained where required by law; provider-held records and backups may follow separate schedules. The <a href="/delete-account">account-deletion page</a> explains what remains and how to contact us about specific personal information.</p>
 
-        <h2>Your rights</h2>
-        <p>You have the right to:</p>
-        <ul>
-          <li>Access the personal information we hold about you</li>
-          <li>Request correction of inaccurate information</li>
-          <li>Request deletion of your data</li>
-          <li>Opt out of marketing communications</li>
-          <li>Export your data in a portable format</li>
-        </ul>
-        <p>To exercise any of these rights, contact us at <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a>.</p>
+        <h2>Website cookies and similar technology</h2>
+        <p>The app uses browser storage for authentication, settings, cached work and pending uploads. The marketing homepage uses Vercel Analytics to understand visits. Website fonts, forms and security services receive information needed to answer requests or perform their functions and may use their own storage or security mechanisms. Blocking storage or security services can prevent signup, login or recovery of unsynchronised work.</p>
 
-        <h2>Complaints</h2>
-        <p>If you believe we have mishandled your personal information, contact us first at <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a> and we will respond within a reasonable period. If you are not satisfied with our response, you can lodge a complaint with the Office of the Australian Information Commissioner (OAIC) at <a href="https://www.oaic.gov.au" target="_blank" rel="noopener">oaic.gov.au</a> or by calling 1300 363 992.</p>
+        <h2>Access, correction and complaints</h2>
+        <p>You can ask us to access, correct or delete personal information, obtain a copy of your information, or stop promotional communications. We may need to verify your identity and consider other people's information and legal retention requirements before completing a request.</p>
+        <p>Send requests and complaints to <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a>. We will respond within a reasonable period. If you are dissatisfied with our handling of a privacy complaint, you can contact the <a href="https://www.oaic.gov.au" target="_blank" rel="noopener">Office of the Australian Information Commissioner</a> or call 1300 363 992.</p>
 
-        <h2>Cookies</h2>
-        <p>Our website uses minimal cookies necessary for the site to function and to collect anonymous usage analytics via Vercel Analytics. We do not use advertising or third-party tracking cookies. No personally identifiable information is collected by our analytics.</p>
-
-        <h2>Third-party services</h2>
-        <p>We use the following key third-party providers to operate ScopeSnap. Each is bound by their own privacy policy and, where applicable, a data processing agreement with us:</p>
-        <ul>
-          <li><strong>Supabase</strong> (supabase.com) — database, authentication and file storage. Data may be stored on servers in the United States.</li>
-          <li><strong>Stripe</strong> (stripe.com) — payment processing. Card data is handled directly by Stripe and is never stored by us. See <a href="https://stripe.com/au/privacy" target="_blank" rel="noopener">Stripe's privacy policy</a>.</li>
-          <li><strong>Resend</strong> (resend.com) — transactional email delivery (account notifications, trial emails). Your email address is shared with Resend for this purpose only.</li>
-          <li><strong>Vercel</strong> (vercel.com) — website and application hosting, and anonymous usage analytics.</li>
-          <li><strong>AI service providers</strong> — third-party AI services used to process voice recordings and generate scope content. Providers are selected for their security practices and are contractually prohibited from using your data for model training.</li>
-        </ul>
+        <h2>Data breaches</h2>
+        <p>We investigate suspected breaches and take steps to contain them. Where notification is required under the applicable Notifiable Data Breaches scheme, we will notify affected people and the OAIC.</p>
 
         <h2>Changes to this policy</h2>
-        <p>We may update this privacy policy from time to time. We will notify active users of significant changes by email or through the app. The date at the top of this policy reflects when it was last updated.</p>
+        <p>We may update this policy as the service changes. We will notify active users of significant changes by email or through the app. The date and version above identify this policy.</p>
 
         <h2>Contact</h2>
-        <p>For privacy questions or concerns, contact us at:<br/>
-        <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a></p>
+        <p>ScopeSnap Pty Ltd · ABN 84 698 607 868 · South Australia<br/><a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a></p>
       </div>
     </div>
   </section>
@@ -150,3 +139,4 @@
 <script src="/shared.js"></script>
 </body>
 </html>
+
