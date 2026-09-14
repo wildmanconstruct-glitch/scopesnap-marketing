@@ -46,7 +46,7 @@
   <section class="section" style="padding-top:0;">
     <div class="wrap">
       <div class="inner-content">
-        <p class="inner-updated">Last updated: 14 September 2026 · Version 2026-09-14.3</p>
+        <p class="inner-updated">Last updated: 14 September 2026 · Version 2026-09-14.4</p>
 
         <h2>Overview</h2>
         <p>ScopeSnap Pty Ltd (ABN 84 698 607 868), based in South Australia, operates ScopeSnap ("we", "us", "our"). This policy explains how we handle personal information through our website at www.scopesnap.com.au, our web application and our mobile apps.</p>
@@ -73,7 +73,10 @@
         <h2>AI processing and your choice</h2>
         <p>With your AI consent, <strong>OpenAI</strong> receives recorded audio for transcription. <strong>Anthropic</strong> receives the relevant text, notes, photos or plan content for features such as scope generation, photo descriptions, transcript cleanup and plan extraction. Content can include client information that you put in the job. Results are returned to ScopeSnap and may be saved with the job.</p>
         <p>You can withdraw consent in <strong>Profile Settings</strong> to stop future AI requests through the app. Withdrawal does not itself delete existing job content or undo requests already processed. You can continue using non-AI features and request deletion separately.</p>
-        <p>ScopeSnap does not train its own AI models on your job content. Requests use the providers' commercial APIs and are subject to their applicable terms and data controls. Providers may retain information for service operation, security or legal obligations; AI processing is not a promise of zero retention. See <a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noopener">OpenAI's privacy policy</a> and <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic's privacy policy</a>.</p>
+        <p>ScopeSnap does not train its own AI models on your job content. We use commercial APIs. Both providers state that API inputs and outputs are not used to train their models by default; voluntary data-sharing, feedback or separate agreements can change that treatment. See <a href="https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training" target="_blank" rel="noopener noreferrer">Anthropic's commercial training rules</a> and <a href="https://developers.openai.com/api/docs/guides/your-data" target="_blank" rel="noopener noreferrer">OpenAI's API data controls</a>.</p>
+        <p><strong>Photos, plans and scope text:</strong> Anthropic's published standard API policy provides for deletion of inputs and outputs within 30 days, with exceptions including safety enforcement, legal requirements and separately agreed arrangements. Flagged content can be retained longer. See <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener noreferrer">Anthropic's commercial retention policy</a>. We do not promise that ScopeSnap has an approved zero-data-retention arrangement.</p>
+        <p><strong>Voice transcription:</strong> OpenAI's published controls list no abuse-monitoring retention or application-state retention for the audio transcription endpoint used by ScopeSnap. This describes that endpoint's content handling, not all provider account, billing or security records. Transcripts subsequently processed by Anthropic and results saved in ScopeSnap have their own retention rules.</p>
+        <p>ScopeSnap sends audio with a neutral filename and processes photos and plans within individual AI requests, without creating a separate provider file library. Uploaded content may still contain personal information or embedded metadata. Deleting a job or withdrawing consent does not recall requests already processed by providers.</p>
 
         <h2>Storage, security and local copies</h2>
         <p>Our current Supabase project, used for the database, authentication and job file storage, is in <strong>Tokyo, Japan</strong>. Job files use a private storage bucket with access controls. Vercel hosts the website and application services. Connections to our cloud services use HTTPS/TLS; this is not end-to-end encryption that prevents the service or its processing providers from accessing content.</p>
@@ -89,7 +92,7 @@
           <li><strong>Stripe:</strong> customer and subscription administration and payment processing. See <a href="https://stripe.com/au/privacy" target="_blank" rel="noopener">Stripe's privacy policy</a>.</li>
           <li><strong>Resend:</strong> account, invitation, trial, support and operational emails, including recipients, relevant message content and delivery information.</li>
           <li><strong>Google Places:</strong> typed address searches and session tokens to provide site address suggestions. Google Fonts also serves fonts on our website and may receive ordinary web request information.</li>
-          <li><strong>Cloudflare Turnstile:</strong> signup security checks using challenge information, IP and browser signals.</li>
+          <li><strong>Cloudflare Turnstile:</strong> signup security checks using IP addresses, connection fingerprints, browser information and website signals. Cloudflare processes these to protect our service and also to improve its own bot detection. See the <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer">Turnstile Privacy Addendum</a>.</li>
           <li><strong>Upstash:</strong> where configured, request and signup rate limiting using account identifiers, email addresses, IP addresses and short-lived counters.</li>
           <li><strong>Formspree:</strong> the public website contact form, including your name, email, subject and message.</li>
         </ul>
