@@ -2,4 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://scopesnap.com.au/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://scopesnap.com.au/contact.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url>
+    <loc>https://scopesnap.com.au/delete-account</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
