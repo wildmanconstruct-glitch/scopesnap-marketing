@@ -96,6 +96,7 @@
         <h2>Information that may remain</h2>
         <ul>
           <li><strong>Free-trial prevention:</strong> a hashed version of the trial account's email address and the date it claimed a trial are retained to prevent repeat free trials. This record currently has no automatic expiry and is not removed by account deletion.</li>
+          <li><strong>Email preferences:</strong> a hashed email identifier, unsubscribe token and preference timestamps are retained to honour promotional-email opt-outs. These records have no automatic expiry and survive account deletion so a new account does not silently restart promotional emails.</li>
           <li><strong>Billing records:</strong> company-linked billing event payloads are redacted and the company link is removed. Remaining billing event records currently have no automatic expiry. Payment and accounting records may also be retained where required by law; payment-provider records follow the provider's own retention requirements.</li>
           <li><strong>Company content:</strong> when only a team member's account is deleted, shared jobs and content remain for the company as explained above.</li>
         </ul>
@@ -121,3 +122,4 @@
 <script src="/shared.js"></script>
 </body>
 </html>
+
