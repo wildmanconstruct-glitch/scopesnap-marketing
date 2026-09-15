@@ -93,11 +93,11 @@
           <form id="contactForm" novalidate>
             <div class="form-field" style="margin-bottom:14px;">
               <label for="cName">Your name</label>
-              <input type="text" id="cName" name="name" placeholder="Your full name" autocomplete="name"/>
+              <input type="text" id="cName" name="name" maxlength="120" placeholder="Your full name" autocomplete="name"/>
             </div>
             <div class="form-field" style="margin-bottom:14px;">
               <label for="cEmail">Email <span class="req">*</span></label>
-              <input type="email" id="cEmail" name="email" placeholder="you@company.com.au" required autocomplete="email"/>
+              <input type="email" id="cEmail" name="email" maxlength="254" placeholder="you@company.com.au" required autocomplete="email"/>
             </div>
             <div class="form-field" style="margin-bottom:14px;">
               <label for="cSubject">Subject</label>
@@ -113,7 +113,7 @@
             </div>
             <div class="form-field" style="margin-bottom:20px;">
               <label for="cMessage">Message <span class="req">*</span></label>
-              <textarea id="cMessage" name="message" placeholder="Tell us what's on your mind..." required></textarea>
+              <textarea id="cMessage" name="message" maxlength="5000" placeholder="Tell us what's on your mind..." required></textarea>
             </div>
             <div class="form-honeypot" aria-hidden="true" style="display:none;">
               <input type="text" name="website" tabindex="-1" autocomplete="off"/>
@@ -160,6 +160,9 @@
   }
 })();
 
+let contactRequestId = null;
+let contactRequestBody = null;
+
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   if (document.querySelector('[name="website"]').value) return;
@@ -174,6 +177,10 @@ document.getElementById('contactForm').addEventListener('submit', async function
 
   if (!email) { errorEl.textContent = 'Please enter your email.'; return; }
   if (!message) { errorEl.textContent = 'Please enter a message.'; return; }
+  if (name.length > 120 || email.length > 254 || message.length > 5000) {
+    errorEl.textContent = 'Please shorten your message to 5,000 characters or fewer.';
+    return;
+  }
 
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRe.test(email)) { errorEl.textContent = 'Please enter a valid email address.'; return; }
@@ -184,16 +191,30 @@ document.getElementById('contactForm').addEventListener('submit', async function
   submitText.textContent = 'Sending...';
 
   try {
-    const res = await fetch('https://formspree.io/f/xkoejezy', {
+    const content = JSON.stringify({ email, name, subject, message, website: '' });
+    if (content !== contactRequestBody) {
+      contactRequestId = crypto.randomUUID();
+      contactRequestBody = content;
+    }
+    const res = await fetch('https://app.scopesnap.com.au/api/website-contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ email, name, subject, message })
+      body: JSON.stringify({ ...JSON.parse(content), requestId: contactRequestId }),
+      credentials: 'omit',
+      signal: AbortSignal.timeout(20000)
     });
 
-    if (res.ok) {
+    const result = await res.json();
+    if (res.ok && result.ok === true) {
       document.getElementById('contactForm').style.display = 'none';
       document.getElementById('cFormSuccess').style.display = 'block';
     } else {
+      if (res.status === 429) {
+        errorEl.textContent = 'Too many messages. Please try later or email hello@scopesnap.com.au.';
+        submitBtn.disabled = false;
+        submitText.textContent = 'Send message';
+        return;
+      }
       throw new Error('submission failed');
     }
   } catch (_) {
