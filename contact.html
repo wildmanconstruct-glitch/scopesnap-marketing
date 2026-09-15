@@ -122,7 +122,7 @@
               <span id="cSubmitText">Send message</span>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
-            <div id="cFormError" class="form-error"></div>
+            <div id="cFormError" class="form-error" role="alert"></div>
           </form>
           <div id="cFormSuccess" style="display:none; padding:32px 0; text-align:center;">
             <div class="success-icon" style="margin-bottom:14px;">
@@ -155,7 +155,7 @@
 // Preselect subject from URL (e.g. /contact.html?subject=demo)
 (function() {
   var s = new URLSearchParams(window.location.search).get('subject');
-  if (s && document.querySelector('#cSubject option[value="' + s + '"]')) {
+  if (s && Array.from(document.getElementById('cSubject').options).some(option => option.value === s)) {
     document.getElementById('cSubject').value = s;
   }
 })();
@@ -178,6 +178,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRe.test(email)) { errorEl.textContent = 'Please enter a valid email address.'; return; }
 
+  if (submitBtn.disabled) return;
   errorEl.textContent = '';
   submitBtn.disabled = true;
   submitText.textContent = 'Sending...';
@@ -196,11 +197,9 @@ document.getElementById('contactForm').addEventListener('submit', async function
       throw new Error('submission failed');
     }
   } catch (_) {
-    // Fallback — open mailto so the message is never lost
     submitBtn.disabled = false;
     submitText.textContent = 'Send message';
-    errorEl.textContent = '';
-    window.location.href = `mailto:hello@scopesnap.com.au?subject=${encodeURIComponent(subject || 'Website enquiry')}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
+    errorEl.textContent = 'We could not confirm your message was sent. Your text is still here. You can try again or email hello@scopesnap.com.au using the link on this page.';
   }
 });
 </script>
