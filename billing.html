@@ -385,6 +385,11 @@
   var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   var currentInterval = 'month';
   var accessToken = null;
+  // Keep long-open billing pages in step with automatic token refresh.
+  sb.auth.onAuthStateChange(function(event, session) {
+    accessToken = session ? session.access_token : null;
+    if (event === 'SIGNED_OUT') show('stateLogin');
+  });
 
   var PLAN_NAMES = { solo: 'Solo', professional: 'Professional', business: 'Business', enterprise: 'Enterprise' };
 
@@ -424,9 +429,16 @@
     btn.disabled = true;
     btnText.textContent = 'Signing in…';
 
-    var result = await sb.auth.signInWithPassword({ email: email, password: password });
-    btn.disabled = false;
-    btnText.textContent = 'Sign in';
+    var result;
+    try {
+      result = await sb.auth.signInWithPassword({ email: email, password: password });
+    } catch (_) {
+      errEl.textContent = 'Could not sign in. Check your connection and try again.';
+      return;
+    } finally {
+      btn.disabled = false;
+      btnText.textContent = 'Sign in';
+    }
 
     if (result.error) {
       errEl.textContent = result.error.message === 'Invalid login credentials'
@@ -710,7 +722,6 @@
       else if (data.limitBytes > 0 && data.usedBytes / data.limitBytes >= 0.95) usage += '. At least 95% used.';
       else if (data.limitBytes > 0 && data.usedBytes / data.limitBytes >= 0.8) usage += '. At least 80% used.';
       if (data.extraPacks) usage += ' · ' + data.extraPacks * 100 + ' GB add-on included.';
-      document.getElementById('storageUsage').textContent = usage;
       if (data.addonCancelAtPeriodEnd) usage += ' Extra storage ends at the end of its current billing period.';
       document.getElementById('storageUsage').textContent = usage;
       var cancelBtn = document.getElementById('storageCancelBtn');
