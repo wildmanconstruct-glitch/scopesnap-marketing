@@ -106,7 +106,7 @@
       font-size: 15px;
       color: var(--muted);
     }
-    .price-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+    .price-btn[disabled], .btn-primary[disabled] { opacity: 0.5; cursor: not-allowed; }
     .spinner-wrap { text-align: center; padding: 60px 0; color: var(--muted); font-size: 14px; }
 
     .seats-card {
@@ -270,15 +270,6 @@
         </div>
         <div class="billing-error" id="portalError"></div>
 
-        <div class="seats-card" id="storageCard">
-          <div class="seats-head">Company storage</div>
-          <p class="seats-desc" id="storageUsage" aria-live="polite">Loading storage…</p>
-          <p class="seats-desc">Add 100 GB for A$10/month + GST. Billed separately every month, including on an annual main plan. Renews until cancelled using Cancel extra storage below. Existing files are not automatically deleted when you reach your allowance.</p>
-          <button class="btn-primary" id="storageBuyBtn" disabled>Continue to storage checkout</button>
-          <button class="btn-primary" id="storageCancelBtn" style="display:none;" disabled>Cancel extra storage</button>
-          <div class="billing-error" id="storageError" role="status" style="margin-top:10px;"></div>
-        </div>
-
         <div class="seats-card" id="seatsCard" style="display:none;">
           <div class="seats-head">Additional seats</div>
           <p class="seats-desc" id="seatsDesc"></p>
@@ -349,6 +340,19 @@
         <div class="billing-error" id="checkoutError"></div>
       </div>
 
+        <div class="seats-card" id="storageCard" style="display:none;">
+          <div class="seats-head">Company storage</div>
+          <p class="seats-desc" id="storageUsage" aria-live="polite">Loading storage…</p>
+          <div style="font-size:22px;font-weight:700;color:var(--gold);margin-bottom:8px;">Extra 100 GB</div>
+          <p style="font-size:26px;font-weight:700;margin-bottom:20px;">A$10<span style="font-size:14px;font-weight:400;color:var(--muted);"> / month + GST</span></p>
+          <p class="seats-desc">Billed separately every month, including on an annual main plan. Renews until cancelled using Cancel extra storage below. Existing files are not automatically deleted when you reach your allowance.</p>
+          <p class="seats-desc" id="storageEligibility" role="status"></p>
+          <button class="btn-primary" id="storageBuyBtn" disabled>Continue to storage checkout</button>
+          <button class="btn-primary" id="storageCancelBtn" style="display:none;" disabled>Cancel extra storage</button>
+          <div class="billing-error" id="storageError" role="status" style="margin-top:10px;"></div>
+        </div>
+
+
     </div>
   </section>
 </main>
@@ -383,6 +387,7 @@
   var PLAN_NAMES = { solo: 'Solo', professional: 'Professional', business: 'Business', enterprise: 'Enterprise' };
 
   function show(stateId) {
+    document.getElementById('storageCard').style.display = 'none';
     document.querySelectorAll('.billing-state').forEach(function(el) { el.classList.remove('active'); });
     document.getElementById(stateId).classList.add('active');
   }
@@ -479,7 +484,6 @@
       if (renews) meta.push((c.cancel_at_period_end ? 'Ends ' : 'Renews ') + renews);
       document.getElementById('subPlanMeta').textContent = meta.join(' · ');
       setupSeatsCard(c);
-      setupStorageCard(c);
       show('stateSubscribed');
     } else {
       // Trial or expired → choose a plan
@@ -494,6 +498,7 @@
       }
       show('stateChoose');
     }
+    setupStorageCard(c);
   }
 
   // ---- Billing interval toggle ----
@@ -669,6 +674,11 @@
     return data;
   }
   async function setupStorageCard(c) {
+    document.getElementById('storageCard').style.display = 'block';
+    var canBuy = Boolean(c.stripe_subscription_id) && c.subscription_status === 'active' && !c.cancel_at_period_end;
+    document.getElementById('storageEligibility').textContent = canBuy ? '' :
+      !c.stripe_subscription_id ? 'An active paid plan is required to purchase extra storage. Choose a plan above to subscribe.' :
+      'An active paid plan with renewal enabled is required to purchase extra storage.';
     var btn = document.getElementById('storageBuyBtn');
     btn.disabled = true;
     try {
@@ -685,7 +695,7 @@
       cancelBtn.style.display = data.addonExists ? 'inline-flex' : 'none';
       cancelBtn.disabled = Boolean(data.addonCancelAtPeriodEnd);
       btn.style.display = data.addonExists ? 'none' : 'inline-flex';
-      btn.disabled = Boolean(data.addonExists) || c.subscription_status !== 'active' || Boolean(c.cancel_at_period_end);
+      btn.disabled = Boolean(data.addonExists) || !canBuy;
     } catch (e) { document.getElementById('storageUsage').textContent = e.message; }
   }
   document.getElementById('storageBuyBtn').addEventListener('click', async function() {
