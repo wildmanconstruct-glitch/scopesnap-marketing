@@ -212,6 +212,8 @@
       <!-- Post-checkout banner -->
       <div id="checkoutBanner" style="display:none; max-width:720px; margin:0 auto 24px; padding:16px 20px; border-radius:var(--r); text-align:center; font-size:14px;"></div>
 
+      <div id="retentionNotice" class="billing-notice" role="status" style="display:none;margin-bottom:24px;"></div>
+
       <!-- STATE: loading -->
       <div id="stateLoading" class="billing-state active">
         <div class="spinner-wrap">Loading…</div>
@@ -262,7 +264,7 @@
           <div class="plan-meta" id="subPlanMeta"></div>
         </div>
         <div class="billing-notice" style="border:none; background:none; padding:0;">
-          <p style="margin-bottom:20px;">Change your plan, add seats, update your card, or download invoices in the secure Stripe billing portal.</p>
+          <p style="margin-bottom:20px;">Change your plan, add seats, update your card, or download invoices in the secure Stripe billing portal. If your paid subscription ends, jobs, photos and uploaded files are retained for 30 days before scheduled deletion. Reactivate or request an export during that period.</p>
           <button class="btn-primary" id="portalBtn" style="justify-content:center;">
             <span id="portalBtnText">Manage billing</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -388,6 +390,7 @@
 
   function show(stateId) {
     document.getElementById('storageCard').style.display = 'none';
+    document.getElementById('retentionNotice').style.display = 'none';
     document.querySelectorAll('.billing-state').forEach(function(el) { el.classList.remove('active'); });
     document.getElementById(stateId).classList.add('active');
   }
@@ -499,6 +502,7 @@
       show('stateChoose');
     }
     setupStorageCard(c);
+    loadRetentionNotice();
   }
 
   // ---- Billing interval toggle ----
@@ -660,6 +664,24 @@
     btn.disabled = false;
     btnText.textContent = 'Manage billing';
   });
+
+  async function loadRetentionNotice() {
+    var box = document.getElementById('retentionNotice');
+    try {
+      var res = await fetch(API_BASE + '/api/billing/retention', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + accessToken }, body: '{}'
+      });
+      if (!res.ok) return;
+      var data = await res.json();
+      var r = data.retention;
+      if (!r || !accessToken) return;
+      box.textContent = r.state === 'purged' ? 'Your previous job data has been deleted after the 30-day retention period.' :
+        r.state === 'purging' ? 'Scheduled job-data cleanup is in progress. Please contact support if you need help.' :
+        'Your paid access has ended. Jobs, photos and uploaded files are scheduled for deletion after ' + fmtDate(r.purge_after) +
+        '. Reactivate before that date to keep them, or email hello@scopesnap.com.au promptly to request an export. Your login account is separate.';
+      box.style.display = 'block';
+    } catch (_) { /* Billing remains usable when the notice cannot be loaded. */ }
+  }
 
   async function storageRequest(action) {
     var sessionRes = await sb.auth.getSession();
