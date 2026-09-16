@@ -270,6 +270,15 @@
         </div>
         <div class="billing-error" id="portalError"></div>
 
+        <div class="seats-card" id="storageCard">
+          <div class="seats-head">Company storage</div>
+          <p class="seats-desc" id="storageUsage" aria-live="polite">Loading storage…</p>
+          <p class="seats-desc">Add 100 GB for A$10/month + GST. Billed separately every month, including on an annual main plan. Renews until cancelled using Cancel extra storage below. Existing files are not automatically deleted when you reach your allowance.</p>
+          <button class="btn-primary" id="storageBuyBtn" disabled>Continue to storage checkout</button>
+          <button class="btn-primary" id="storageCancelBtn" style="display:none;" disabled>Cancel extra storage</button>
+          <div class="billing-error" id="storageError" role="status" style="margin-top:10px;"></div>
+        </div>
+
         <div class="seats-card" id="seatsCard" style="display:none;">
           <div class="seats-head">Additional seats</div>
           <p class="seats-desc" id="seatsDesc"></p>
@@ -470,6 +479,7 @@
       if (renews) meta.push((c.cancel_at_period_end ? 'Ends ' : 'Renews ') + renews);
       document.getElementById('subPlanMeta').textContent = meta.join(' · ');
       setupSeatsCard(c);
+      setupStorageCard(c);
       show('stateSubscribed');
     } else {
       // Trial or expired → choose a plan
@@ -646,6 +656,61 @@
     btnText.textContent = 'Manage billing';
   });
 
+  async function storageRequest(action) {
+    var sessionRes = await sb.auth.getSession();
+    var session = sessionRes.data && sessionRes.data.session;
+    if (!session) throw new Error('Please sign in again.');
+    var res = await fetch(API_BASE + '/api/billing/storage', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ action: action })
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.error && data.error.message || 'Storage billing is unavailable. Please try again.');
+    return data;
+  }
+  async function setupStorageCard(c) {
+    var btn = document.getElementById('storageBuyBtn');
+    btn.disabled = true;
+    try {
+      var data = await storageRequest('usage');
+      var usage = (data.usedBytes / 1000000000).toFixed(2) + ' GB used' + (data.limitBytes == null ? ' · Custom allowance' : ' of ' + data.limitBytes / 1000000000 + ' GB');
+      if (data.limitBytes > 0 && data.usedBytes >= data.limitBytes) usage += '. Storage is full. Free space before uploading more.';
+      else if (data.limitBytes > 0 && data.usedBytes / data.limitBytes >= 0.95) usage += '. At least 95% used.';
+      else if (data.limitBytes > 0 && data.usedBytes / data.limitBytes >= 0.8) usage += '. At least 80% used.';
+      if (data.extraPacks) usage += ' · ' + data.extraPacks * 100 + ' GB add-on included.';
+      document.getElementById('storageUsage').textContent = usage;
+      if (data.addonCancelAtPeriodEnd) usage += ' Extra storage ends at the end of its current billing period.';
+      document.getElementById('storageUsage').textContent = usage;
+      var cancelBtn = document.getElementById('storageCancelBtn');
+      cancelBtn.style.display = data.addonExists ? 'inline-flex' : 'none';
+      cancelBtn.disabled = Boolean(data.addonCancelAtPeriodEnd);
+      btn.style.display = data.addonExists ? 'none' : 'inline-flex';
+      btn.disabled = Boolean(data.addonExists) || c.subscription_status !== 'active' || Boolean(c.cancel_at_period_end);
+    } catch (e) { document.getElementById('storageUsage').textContent = e.message; }
+  }
+  document.getElementById('storageBuyBtn').addEventListener('click', async function() {
+    var btn = this;
+    btn.disabled = true;
+    document.getElementById('storageError').textContent = '';
+    try {
+      var data = await storageRequest('checkout');
+      var checkout = new URL(data.url);
+      if (checkout.protocol !== 'https:' || checkout.hostname !== 'checkout.stripe.com') throw new Error('Checkout is unavailable. Please contact support.');
+      window.location.assign(checkout.href);
+    } catch (e) { document.getElementById('storageError').textContent = e.message; btn.disabled = false; }
+  });
+
+  document.getElementById('storageCancelBtn').addEventListener('click', async function() {
+    if (!window.confirm('End the extra 100 GB at the end of its current billing period? Existing files will stay, but new uploads will pause if you exceed your remaining allowance. Your main plan continues.')) return;
+    var btn = this;
+    btn.disabled = true;
+    document.getElementById('storageError').textContent = '';
+    try {
+      await storageRequest('cancel');
+      document.getElementById('storageError').textContent = 'Extra storage will end at the end of its current billing period.';
+    } catch (e) { document.getElementById('storageError').textContent = e.message; btn.disabled = false; }
+  });
+
   // ---- Init ----
   var billingParam = new URLSearchParams(window.location.search).get('billing');
   if (billingParam === 'success' || billingParam === 'cancel') {
@@ -665,7 +730,15 @@
     history.replaceState(null, '', window.location.pathname);
   }
 
+  var storageParam = new URLSearchParams(window.location.search).get('storage');
+  if (storageParam) {
+    var storageBanner = document.getElementById('checkoutBanner');
+    storageBanner.textContent = storageParam === 'success' ? 'Storage checkout completed. Your allowance updates after payment is confirmed; this may take a moment.' : 'Storage checkout cancelled.';
+    storageBanner.style.display = 'block';
+    history.replaceState(null, '', window.location.pathname);
+  }
   loadAccount().then(function() {
+    if (storageParam === 'success') setTimeout(loadAccount, 5000);
     // After a successful payment the webhook may lag a few seconds —
     // if we still look unsubscribed, re-check once.
     if (billingParam === 'success' && document.getElementById('stateChoose').classList.contains('active')) {
@@ -676,3 +749,4 @@
 </script>
 </body>
 </html>
+
