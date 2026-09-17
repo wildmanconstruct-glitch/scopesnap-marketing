@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=11"/>
+  <link rel="stylesheet" href="/shared.css?v=12"/>
 </head>
 <body>
 <nav id="nav">
@@ -33,11 +33,11 @@
     <ul class="nav-links">
       <li><a href="/#features">Features</a></li>
       <li><a href="/#pricing">Pricing</a></li>
-      <li><a href="/billing.html">Billing</a></li>
       <li><a href="/contact.html">Contact</a></li>
+      <li><a href="https://app.scopesnap.com.au/">Log in</a></li>
     </ul>
-    <a href="https://app.scopesnap.com.au" class="btn-primary nav-cta">Start free trial <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+    <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary nav-cta">Start free trial <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <button class="menu-btn" id="menuBtn" aria-controls="mobileMenu" aria-label="Open menu">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
@@ -45,9 +45,9 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="/#features">Features</a>
   <a href="/#pricing">Pricing</a>
-  <a href="/billing.html">Billing</a>
   <a href="/contact.html">Contact</a>
-  <a href="https://app.scopesnap.com.au" class="mobile-cta">Start free trial →</a>
+  <a href="https://app.scopesnap.com.au/">Log in</a>
+  <a href="https://app.scopesnap.com.au/?signup=1" class="mobile-cta">Start free trial →</a>
 </div>
 
 <main>
@@ -80,7 +80,7 @@
           <div style="margin-top:32px; padding-top:24px; border-top:1px solid var(--border);">
             <div style="font-size:13px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:14px;">Useful links</div>
             <div style="display:flex; flex-direction:column; gap:10px;">
-              <a href="https://app.scopesnap.com.au" style="color:var(--gold); text-decoration:none; font-size:14px;">→ Start your free trial</a>
+              <a href="https://app.scopesnap.com.au/?signup=1" style="color:var(--gold); text-decoration:none; font-size:14px;">→ Start your free trial</a>
               <a href="/#features" style="color:var(--muted); text-decoration:none; font-size:14px;">→ See all features</a>
               <a href="/privacy.html" style="color:var(--muted); text-decoration:none; font-size:14px;">→ Privacy policy</a>
               <a href="/terms.html" style="color:var(--muted); text-decoration:none; font-size:14px;">→ Terms of service</a>
@@ -150,7 +150,7 @@
   </div>
 </footer>
 
-<script src="/shared.js"></script>
+<script src="/shared.js?v=12"></script>
 <script>
 // Preselect subject from URL (e.g. /contact.html?subject=demo)
 (function() {

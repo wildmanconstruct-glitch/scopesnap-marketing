@@ -26,6 +26,14 @@ if (menuBtn && mobileMenu) {
   document.addEventListener('click', (e) => {
     if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
       mobileMenu.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      mobileMenu.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.focus();
     }
   });
 }
