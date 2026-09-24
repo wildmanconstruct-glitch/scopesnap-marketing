@@ -146,7 +146,7 @@
       line-height: 1;
     }
     .seat-step:hover { border-color: var(--gold); }
-    #seatQty {
+    #seatQty, #monthlySeatQty {
       width: 70px;
       height: 40px;
       background: var(--bg3);
@@ -264,7 +264,7 @@
           <div class="plan-meta" id="subPlanMeta"></div>
         </div>
         <div class="billing-notice" style="border:none; background:none; padding:0;">
-          <p style="margin-bottom:20px;">Change your plan, add seats, update your card, or download invoices in the secure Stripe billing portal. If your paid subscription ends, jobs, photos and uploaded files are retained for 30 days before scheduled deletion. Reactivate or request an export during that period.</p>
+          <p style="margin-bottom:20px;">Update your card, download invoices or cancel renewal in the secure Stripe billing portal. Manage extra seats below. For a main-plan change, contact <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a>. If your paid subscription ends, jobs, photos and uploaded files are retained for 30 days before scheduled deletion. Reactivate or request an export during that period.</p>
           <button class="btn-primary" id="portalBtn" style="justify-content:center;">
             <span id="portalBtnText">Manage billing</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -272,8 +272,22 @@
         </div>
         <div class="billing-error" id="portalError"></div>
 
+        <div class="seats-card" id="monthlySeatsCard" style="display:none;">
+          <div class="seats-head">Monthly additional seats</div>
+          <p class="seats-desc" id="monthlySeatsDesc"></p>
+          <p class="seats-desc">Billed separately each month, including on annual plans. Your main plan keeps its renewal date. Increases are charged now for the remaining month; reductions are credited on a future seat invoice. Remove team members using the seats before reducing them. Set the quantity to 0 to end this add-on at its next renewal.</p>
+          <div class="seats-controls">
+            <label for="monthlySeatQty">Monthly seats</label>
+            <input type="number" id="monthlySeatQty" min="0" max="100" step="1" value="0"/>
+            <button class="btn-primary" id="monthlySeatSaveBtn" style="justify-content:center;" disabled>Loading…</button>
+          </div>
+          <p class="seats-desc" id="monthlySeatTotal" aria-live="polite"></p>
+          <div class="billing-error" id="monthlySeatError" style="margin-top:10px;"></div>
+          <div class="seat-success" id="monthlySeatSuccess" role="status"></div>
+        </div>
+
         <div class="seats-card" id="seatsCard" style="display:none;">
-          <div class="seats-head">Additional seats</div>
+          <div class="seats-head">Existing seat subscription</div>
           <p class="seats-desc" id="seatsDesc"></p>
           <div class="seats-controls">
             <button class="seat-step" id="seatMinus" aria-label="Fewer seats">&minus;</button>
@@ -499,6 +513,7 @@
       if (renews) meta.push((c.cancel_at_period_end ? 'Ends ' : 'Renews ') + renews);
       document.getElementById('subPlanMeta').textContent = meta.join(' · ');
       setupSeatsCard(c);
+      setupMonthlySeats(c);
       show('stateSubscribed');
     } else {
       // Trial or expired → choose a plan
@@ -582,13 +597,13 @@
     var planKey = String(company.subscription_plan || '').toLowerCase();
     var info = SEAT_INFO[planKey];
     var card = document.getElementById('seatsCard');
-    if (!info) { card.style.display = 'none'; return; }
+    if (!info || !(Number(company.additional_seats) > 0)) { card.style.display = 'none'; return; }
 
     var current = Math.max(0, Number(company.additional_seats) || 0);
     document.getElementById('seatQty').value = current;
     document.getElementById('seatsDesc').textContent =
-      'Your plan includes ' + info.included + ' seats. Extra seats are ' + info.price +
-      '. You currently have ' + current + ' additional seat' + (current === 1 ? '' : 's') + '.';
+      'Your plan includes ' + info.included + ' seats. These existing seats are ' + (company.billing_interval === 'year' ? (planKey === 'professional' ? '$348/year + GST each' : '$300/year + GST each') : info.price) +
+      '. You currently have ' + current + ' existing additional seat' + (current === 1 ? '' : 's') + '. New monthly seats can be purchased separately above.';
     document.getElementById('seatError').textContent = '';
     document.getElementById('seatSuccess').textContent = '';
     card.style.display = 'block';
@@ -608,7 +623,7 @@
     var btnText = document.getElementById('seatSaveText');
     var errEl = document.getElementById('seatError');
     var okEl = document.getElementById('seatSuccess');
-    var quantity = parseInt(document.getElementById('seatQty').value, 10);
+    var quantity = Number(document.getElementById('seatQty').value);
 
     errEl.textContent = '';
     okEl.textContent = '';
@@ -644,6 +659,74 @@
     btnText.textContent = 'Update seats';
   });
 
+  var monthlySeatCompany = null;
+  var monthlySeatStatus = null;
+  function showMonthlySeatTotal() {
+    var rate = monthlySeatCompany && monthlySeatCompany.subscription_plan === 'business' ? 25 : 29;
+    var quantity = Number(document.getElementById('monthlySeatQty').value);
+    var valid = Number.isSafeInteger(quantity) && quantity >= 0 && quantity <= 100;
+    document.getElementById('monthlySeatTotal').textContent = valid ? '$' + (rate * quantity) + '/month + GST (' + quantity + ' × $' + rate + ').' : 'Enter a whole number from 0 to 100.';
+    var btn = document.getElementById('monthlySeatSaveBtn');
+    btn.disabled = !monthlySeatStatus || !valid || (!monthlySeatStatus.exists && quantity === 0);
+    btn.textContent = monthlySeatStatus && monthlySeatStatus.exists ? (quantity === 0 ? 'Cancel monthly seat renewal' : 'Update monthly seats') : 'Continue to monthly checkout';
+  }
+  async function setupMonthlySeats(company) {
+    monthlySeatCompany = company;
+    monthlySeatStatus = null;
+    var card = document.getElementById('monthlySeatsCard');
+    if (!SEAT_INFO[company.subscription_plan]) { card.style.display = 'none'; return; }
+    card.style.display = 'block';
+    document.getElementById('monthlySeatSaveBtn').disabled = true;
+    document.getElementById('monthlySeatError').textContent = '';
+    try {
+      var res = await fetch(API_BASE + '/api/billing/monthly-seats', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + accessToken },
+        body: JSON.stringify({ action: 'status' })
+      });
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.error && data.error.message || 'Could not load monthly seats. Refresh to try again.');
+      monthlySeatStatus = data;
+      document.getElementById('monthlySeatQty').value = data.quantity;
+      var end = data.period_end ? fmtDate(new Date(data.period_end * 1000).toISOString()) : '';
+      document.getElementById('monthlySeatsDesc').textContent = 'Your plan includes ' + SEAT_INFO[company.subscription_plan].included + ' seats. ' + data.active_seats + ' monthly additional seats are active.' + (data.exists ? ' ' + (data.cancel_at_period_end ? 'These seats end ' : 'Monthly renewal: ') + end + '.' : '') + (data.exists && data.active_seats !== data.quantity ? ' Payment is pending; extra access appears after payment is confirmed.' : '');
+      if (data.legacy_seats > 0) setupSeatsCard(Object.assign({}, company, { billing_interval: data.legacy_interval }));
+      showMonthlySeatTotal();
+    } catch (error) {
+      document.getElementById('monthlySeatError').textContent = error.message;
+      document.getElementById('monthlySeatSaveBtn').textContent = 'Refresh to load seats';
+    }
+  }
+  document.getElementById('monthlySeatQty').addEventListener('input', showMonthlySeatTotal);
+  document.getElementById('monthlySeatSaveBtn').addEventListener('click', async function() {
+    var btn = this;
+    var quantity = Number(document.getElementById('monthlySeatQty').value);
+    if (!Number.isSafeInteger(quantity) || quantity < 0 || quantity > 100) return;
+    btn.disabled = true;
+    btn.textContent = 'Updating…';
+    var errorEl = document.getElementById('monthlySeatError');
+    errorEl.textContent = '';
+    document.getElementById('monthlySeatSuccess').textContent = '';
+    try {
+      var res = await fetch(API_BASE + '/api/billing/monthly-seats', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + accessToken },
+        body: JSON.stringify({ action: 'save', quantity: quantity })
+      });
+      var data = await res.json();
+      if (!res.ok) {
+        errorEl.textContent = data.error && data.error.message || 'Could not update monthly seats.';
+        if (data.url && data.url.startsWith('https://checkout.stripe.com/')) {
+          var link = document.createElement('a'); link.href = data.url; link.textContent = ' Continue existing checkout'; errorEl.appendChild(link);
+        }
+        return;
+      }
+      if (data.url) { window.location.assign(data.url); return; }
+      document.getElementById('monthlySeatSuccess').textContent = data.message;
+      await setupMonthlySeats(monthlySeatCompany);
+    } catch (_) {
+      errorEl.textContent = 'Connection interrupted. Refresh to check the seat status before retrying.';
+    } finally { showMonthlySeatTotal(); }
+  });
+
   // ---- Billing portal ----
   document.getElementById('portalBtn').addEventListener('click', async function() {
     var btn = document.getElementById('portalBtn');
@@ -668,7 +751,7 @@
         errEl.textContent = 'Your session has expired. Please sign in again.';
         show('stateLogin');
       } else {
-        errEl.textContent = (data && data.error && data.error.message) || 'Could not open billing portal. Try again.';
+        errEl.textContent = 'Billing portal is unavailable. Email hello@scopesnap.com.au for payment details, invoices or cancellation.';
       }
     } catch (_) {
       errEl.textContent = 'Network error. Check your connection and try again.';
@@ -780,7 +863,15 @@
     storageBanner.style.display = 'block';
     history.replaceState(null, '', window.location.pathname);
   }
+  var seatsParam = new URLSearchParams(window.location.search).get('seats');
+  if (seatsParam) {
+    var seatsBanner = document.getElementById('checkoutBanner');
+    seatsBanner.textContent = seatsParam === 'success' ? 'Monthly seat checkout completed. Extra seats activate after payment is confirmed; this may take a moment.' : 'Monthly seat checkout cancelled.';
+    seatsBanner.style.display = 'block';
+    history.replaceState(null, '', window.location.pathname);
+  }
   loadAccount().then(function() {
+    if (seatsParam === 'success') setTimeout(loadAccount, 5000);
     if (storageParam === 'success') setTimeout(loadAccount, 5000);
     // After a successful payment the webhook may lag a few seconds —
     // if we still look unsubscribed, re-check once.
