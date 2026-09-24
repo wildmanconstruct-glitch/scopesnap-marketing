@@ -411,7 +411,7 @@
         <p class="price-desc">For builders and teams running up to 50 jobs per month.</p>
         <ul class="price-list">
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>3 seats included</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span id="pro-seat-price">Additional seats $29/month</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span id="pro-seat-price">Seats $29/month or $348/year</span></li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>50 jobs/month</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Room-by-room photo capture</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>AI scope drafting</li>
@@ -432,7 +432,7 @@
         <p class="price-desc">For larger operations and growing teams.</p>
         <ul class="price-list">
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>8 seats included</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span id="biz-seat-price">Additional seats $25/month</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span id="biz-seat-price">Seats $25/month or $300/year</span></li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited jobs</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Room-by-room photo capture</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>AI scope drafting</li>
@@ -446,7 +446,7 @@
     </div>
     <div class="pricing-notes">
       <p><strong>Every free trial starts on Solo.</strong> The plans above show your options after the trial. All prices are in AUD and exclude GST.</p>
-      <p><strong>Annual billing:</strong> Save 2 months on your base plan. New additional seats are billed separately each month, even on an annual plan, and aren’t included in the annual discount. Existing seat subscriptions keep their current billing interval until changed.</p>
+      <p><strong>Annual billing:</strong> Save 2 months on your base plan. Additional seats can be billed monthly or annually, independently of your base plan. Annual seats are paid upfront at 12 times the monthly seat price; the base-plan annual discount does not apply to seats. Existing seat subscriptions keep their current billing interval until changed.</p>
       <p><strong>Included on every paid plan:</strong> All job types, photo and voice capture, AI scope drafting, and client and internal PDF reports. AI requires internet and your permission; short-term request limits apply. Declining AI permission does not change the subscription price.</p>
       <p><strong>Trial allowances:</strong> 1 user, 2 jobs, 100 stored files, approximately 500 MB total storage, 5 MB per upload and 30 shared AI requests for photo analysis, transcription and scope drafting. A voice workflow can use more than one request; retries and failed requests can count.</p>
       <p><strong>Job and upload limits:</strong> Monthly job allowances are shared by your company and count jobs created in the current UTC calendar month; deleting a job frees capacity. Paid photo uploads are limited to 5 MB after compression; other file uploads to 25 MB. Your company storage allowance also applies.</p>
@@ -757,8 +757,8 @@ function setBilling(mode) {
     document.getElementById('pro-sub').textContent = 'Billed annually';
     document.getElementById('biz-price').innerHTML = '$2,490<span class="price-per">/yr + GST</span>';
     document.getElementById('biz-sub').textContent = 'Billed annually';
-    document.getElementById('pro-seat-price').textContent = 'Additional seats $29/month';
-    document.getElementById('biz-seat-price').textContent = 'Additional seats $25/month';
+    document.getElementById('pro-seat-price').textContent = 'Seats $29/month or $348/year';
+    document.getElementById('biz-seat-price').textContent = 'Seats $25/month or $300/year';
   } else {
     document.getElementById('solo-price').innerHTML = '$59<span class="price-per">/mo + GST</span>';
     document.getElementById('solo-sub').innerHTML = '$590/year &mdash; save 2 months';
@@ -766,8 +766,8 @@ function setBilling(mode) {
     document.getElementById('pro-sub').innerHTML = '$1,190/year &mdash; save 2 months';
     document.getElementById('biz-price').innerHTML = '$249<span class="price-per">/mo + GST</span>';
     document.getElementById('biz-sub').innerHTML = '$2,490/year &mdash; save 2 months';
-    document.getElementById('pro-seat-price').textContent = 'Additional seats $29/month';
-    document.getElementById('biz-seat-price').textContent = 'Additional seats $25/month';
+    document.getElementById('pro-seat-price').textContent = 'Seats $29/month or $348/year';
+    document.getElementById('biz-seat-price').textContent = 'Seats $25/month or $300/year';
   }
 }
 

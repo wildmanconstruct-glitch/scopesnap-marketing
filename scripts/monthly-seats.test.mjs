@@ -37,3 +37,18 @@ test('fractional monthly quantities cannot be submitted',async()=>{
  const {element,window}=await page();await window.testSeats.setupMonthlySeats({subscription_plan:'professional'});
  element('monthlySeatQty').value='1.5';element('monthlySeatQty').handlers.input();assert.equal(element('monthlySeatSaveBtn').disabled,true);
 });
+test('annual choice shows the full yearly price and sends year to checkout',async()=>{
+ const {element,requests,window,state}=await page();state.exists=false;state.quantity=0;
+ await window.testSeats.setupMonthlySeats({subscription_plan:'professional',billing_interval:'month'});
+ element('monthlySeatQty').value='2';element('seatBillingInterval').value='year';element('seatBillingInterval').handlers.change();
+ assert.match(element('monthlySeatTotal').textContent,/\$696\/year/);
+ const button=element('monthlySeatSaveBtn');await button.handlers.click.call(button);
+ assert.equal(requests.find(r=>r.body.action==='save').body.interval,'year');
+});
+test('declining an interval switch does not submit a payment change',async()=>{
+ const {element,requests,window}=await page();window.confirm=()=>false;
+ await window.testSeats.setupMonthlySeats({subscription_plan:'business'});
+ element('seatBillingInterval').value='year';element('seatBillingInterval').handlers.change();
+ const button=element('monthlySeatSaveBtn');await button.handlers.click.call(button);
+ assert.equal(requests.filter(r=>r.body.action==='save').length,0);
+});

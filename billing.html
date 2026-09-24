@@ -146,6 +146,7 @@
       line-height: 1;
     }
     .seat-step:hover { border-color: var(--gold); }
+    #seatBillingInterval { min-height:40px; padding:8px; border:1px solid var(--border2); border-radius:var(--r); background:var(--bg3); color:var(--text); font:inherit; }
     #seatQty, #monthlySeatQty {
       width: 70px;
       height: 40px;
@@ -273,11 +274,13 @@
         <div class="billing-error" id="portalError"></div>
 
         <div class="seats-card" id="monthlySeatsCard" style="display:none;">
-          <div class="seats-head">Monthly additional seats</div>
+          <div class="seats-head">Additional seats</div>
           <p class="seats-desc" id="monthlySeatsDesc"></p>
-          <p class="seats-desc">Billed separately each month, including on annual plans. Your main plan keeps its renewal date. Increases are charged now for the remaining month; reductions are credited on a future seat invoice. Remove team members using the seats before reducing them. Set the quantity to 0 to end this add-on at its next renewal.</p>
+          <p class="seats-desc">Choose monthly or annual seat billing, independently of your main plan. Your main plan keeps its renewal date. Annual seats cost 12 monthly payments, paid upfront. Increases are charged now for the remaining billing period; reductions are credited on a future seat invoice. Changing the seat billing interval starts a new period immediately, with credit for unused paid time. Remove team members using the seats before reducing them. Set the quantity to 0 to end this add-on at its next renewal.</p>
           <div class="seats-controls">
-            <label for="monthlySeatQty">Monthly seats</label>
+            <label for="seatBillingInterval">Seat billing</label>
+            <select id="seatBillingInterval" aria-label="Seat billing interval"><option value="month">Monthly</option><option value="year">Annually</option></select>
+            <label for="monthlySeatQty">Extra seats</label>
             <input type="number" id="monthlySeatQty" min="0" max="100" step="1" value="0"/>
             <button class="btn-primary" id="monthlySeatSaveBtn" style="justify-content:center;" disabled>Loading…</button>
           </div>
@@ -352,7 +355,7 @@
             <button class="price-btn price-btn-outline" data-plan="business">Choose Business</button>
           </div>
         </div>
-        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>.<br>Need more seats than your plan includes? Subscribe first — you'll land back on this page, where you can add extra seats instantly ($29/mo each on Professional, $25/mo each on Business, + GST).</p>
+        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>.<br>Need more seats than your plan includes? Subscribe first — you'll land back on this page, where you can choose extra seats monthly or annually (Professional $29/month or $348/year; Business $25/month or $300/year, per seat + GST).</p>
         <div class="billing-error" id="checkoutError"></div>
       </div>
 
@@ -603,7 +606,7 @@
     document.getElementById('seatQty').value = current;
     document.getElementById('seatsDesc').textContent =
       'Your plan includes ' + info.included + ' seats. These existing seats are ' + (company.billing_interval === 'year' ? (planKey === 'professional' ? '$348/year + GST each' : '$300/year + GST each') : info.price) +
-      '. You currently have ' + current + ' existing additional seat' + (current === 1 ? '' : 's') + '. New monthly seats can be purchased separately above.';
+      '. You currently have ' + current + ' existing additional seat' + (current === 1 ? '' : 's') + '. New seats can be purchased separately above with monthly or annual billing.';
     document.getElementById('seatError').textContent = '';
     document.getElementById('seatSuccess').textContent = '';
     card.style.display = 'block';
@@ -663,12 +666,14 @@
   var monthlySeatStatus = null;
   function showMonthlySeatTotal() {
     var rate = monthlySeatCompany && monthlySeatCompany.subscription_plan === 'business' ? 25 : 29;
+    var interval = document.getElementById('seatBillingInterval').value || 'month';
+    if (interval === 'year') rate *= 12;
     var quantity = Number(document.getElementById('monthlySeatQty').value);
     var valid = Number.isSafeInteger(quantity) && quantity >= 0 && quantity <= 100;
-    document.getElementById('monthlySeatTotal').textContent = valid ? '$' + (rate * quantity) + '/month + GST (' + quantity + ' × $' + rate + ').' : 'Enter a whole number from 0 to 100.';
+    document.getElementById('monthlySeatTotal').textContent = valid ? '$' + (rate * quantity) + '/' + interval + ' + GST (' + quantity + ' × $' + rate + ').' : 'Enter a whole number from 0 to 100.';
     var btn = document.getElementById('monthlySeatSaveBtn');
     btn.disabled = !monthlySeatStatus || !valid || (!monthlySeatStatus.exists && quantity === 0);
-    btn.textContent = monthlySeatStatus && monthlySeatStatus.exists ? (quantity === 0 ? 'Cancel monthly seat renewal' : 'Update monthly seats') : 'Continue to monthly checkout';
+    btn.textContent = monthlySeatStatus && monthlySeatStatus.exists ? (quantity === 0 ? 'Cancel seat renewal' : 'Update extra seats') : 'Continue to checkout';
   }
   async function setupMonthlySeats(company) {
     monthlySeatCompany = company;
@@ -684,11 +689,12 @@
         body: JSON.stringify({ action: 'status' })
       });
       var data = await res.json();
-      if (!res.ok) throw new Error(data.error && data.error.message || 'Could not load monthly seats. Refresh to try again.');
+      if (!res.ok) throw new Error(data.error && data.error.message || 'Could not load extra seats. Refresh to try again.');
       monthlySeatStatus = data;
       document.getElementById('monthlySeatQty').value = data.quantity;
+      document.getElementById('seatBillingInterval').value = data.interval || 'month';
       var end = data.period_end ? fmtDate(new Date(data.period_end * 1000).toISOString()) : '';
-      document.getElementById('monthlySeatsDesc').textContent = 'Your plan includes ' + SEAT_INFO[company.subscription_plan].included + ' seats. ' + data.active_seats + ' monthly additional seats are active.' + (data.exists ? ' ' + (data.cancel_at_period_end ? 'These seats end ' : 'Monthly renewal: ') + end + '.' : '') + (data.exists && data.active_seats !== data.quantity ? ' Payment is pending; extra access appears after payment is confirmed.' : '');
+      document.getElementById('monthlySeatsDesc').textContent = 'Your plan includes ' + SEAT_INFO[company.subscription_plan].included + ' seats. ' + data.active_seats + ' additional seats are active.' + (data.exists ? ' ' + (data.cancel_at_period_end ? 'These seats end ' : (data.interval === 'year' ? 'Annual renewal: ' : 'Monthly renewal: ')) + end + '.' : '') + (data.exists && data.active_seats !== data.quantity ? ' Payment is pending; extra access appears after payment is confirmed.' : '');
       if (data.legacy_seats > 0) setupSeatsCard(Object.assign({}, company, { billing_interval: data.legacy_interval }));
       showMonthlySeatTotal();
     } catch (error) {
@@ -697,10 +703,16 @@
     }
   }
   document.getElementById('monthlySeatQty').addEventListener('input', showMonthlySeatTotal);
+  document.getElementById('seatBillingInterval').addEventListener('change', showMonthlySeatTotal);
   document.getElementById('monthlySeatSaveBtn').addEventListener('click', async function() {
     var btn = this;
     var quantity = Number(document.getElementById('monthlySeatQty').value);
     if (!Number.isSafeInteger(quantity) || quantity < 0 || quantity > 100) return;
+    var interval = document.getElementById('seatBillingInterval').value || 'month';
+    if (quantity > 0 && monthlySeatStatus && monthlySeatStatus.exists && interval !== (monthlySeatStatus.interval || 'month')) {
+      var total = (monthlySeatCompany.subscription_plan === 'business' ? 25 : 29) * quantity * (interval === 'year' ? 12 : 1);
+      if (!window.confirm('Change extra seats to $' + total + '/' + interval + ' + GST? A new billing period starts now. Stripe applies credit for unused paid time and charges any amount due now. Your main plan is unchanged.')) return;
+    }
     btn.disabled = true;
     btn.textContent = 'Updating…';
     var errorEl = document.getElementById('monthlySeatError');
@@ -709,11 +721,11 @@
     try {
       var res = await fetch(API_BASE + '/api/billing/monthly-seats', {
         method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + accessToken },
-        body: JSON.stringify({ action: 'save', quantity: quantity })
+        body: JSON.stringify({ action: 'save', quantity: quantity, interval: interval })
       });
       var data = await res.json();
       if (!res.ok) {
-        errorEl.textContent = data.error && data.error.message || 'Could not update monthly seats.';
+        errorEl.textContent = data.error && data.error.message || 'Could not update extra seats.';
         if (data.url && data.url.startsWith('https://checkout.stripe.com/')) {
           var link = document.createElement('a'); link.href = data.url; link.textContent = ' Continue existing checkout'; errorEl.appendChild(link);
         }
@@ -866,7 +878,7 @@
   var seatsParam = new URLSearchParams(window.location.search).get('seats');
   if (seatsParam) {
     var seatsBanner = document.getElementById('checkoutBanner');
-    seatsBanner.textContent = seatsParam === 'success' ? 'Monthly seat checkout completed. Extra seats activate after payment is confirmed; this may take a moment.' : 'Monthly seat checkout cancelled.';
+    seatsBanner.textContent = seatsParam === 'success' ? 'Extra-seat checkout completed. Extra seats activate after payment is confirmed; this may take a moment.' : 'Extra-seat checkout cancelled.';
     seatsBanner.style.display = 'block';
     history.replaceState(null, '', window.location.pathname);
   }
