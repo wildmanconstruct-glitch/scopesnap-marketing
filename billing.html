@@ -303,6 +303,18 @@
         </div>
       </div>
 
+      <div class="seats-card" id="extraJobsCard" style="display:none;">
+        <div class="seats-head">Business extra jobs</div>
+        <p class="seats-desc">10 extra jobs for <strong>$59/month + GST</strong> per pack, with the same Business AI allowances per job and 2 extra Plan Scans per month. No automatic overage charges.</p>
+        <p class="seats-desc">Billed separately each month, including on annual Business plans. Renews until cancelled. Increases are charged for the remaining add-on billing period. Job and AI allowances reset on the first of each month (UTC); unused allowance does not roll over. Per-job limits still apply. To reduce packs, cancel renewal and choose fewer after expiry.</p>
+        <p class="seats-desc" id="extraJobsStatus" role="status"></p>
+        <div class="seats-controls"><label for="extraJobsQty">Packs of 10 jobs</label><input id="extraJobsQty" type="number" min="1" max="10" value="1" step="1"/>
+        <button class="btn-primary" id="extraJobsBuy" disabled>Continue to checkout</button>
+        <button class="btn-primary" id="extraJobsCancel" style="display:none;">Cancel extra jobs renewal</button></div>
+        <p id="extraJobsTotal" class="seats-desc">$59/month + GST · 10 extra jobs</p>
+        <p id="extraJobsMessage" role="status" class="seats-desc"></p>
+        <p class="seats-desc"><a href="https://app.scopesnap.com.au/billing">View all usage in the app</a></p>
+      </div>
       <!-- STATE: trial / no subscription — choose a plan -->
       <div id="stateChoose" class="billing-state">
         <div class="account-bar">
@@ -330,7 +342,7 @@
               <div class="price-amount" data-price-monthly="$59" data-price-annual="$590" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$59<span class="price-per">/mo + GST</span></div>
               <div class="price-annual-note">$590/year &mdash; save 2 months</div>
             </div>
-            <p class="price-desc">For individual builders. 1 seat, 10 jobs per month.</p>
+            <p class="price-desc">For individual builders. 1 seat, 10 jobs per month, 25 photos and 15 voice recordings per job.</p>
             <button class="price-btn price-btn-outline" data-plan="solo">Choose Solo</button>
           </div>
           <!-- PROFESSIONAL -->
@@ -341,7 +353,7 @@
               <div class="price-amount" data-price-monthly="$119" data-price-annual="$1,190" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$119<span class="price-per">/mo + GST</span></div>
               <div class="price-annual-note">$1,190/year &mdash; save 2 months</div>
             </div>
-            <p class="price-desc">For teams. 3 seats included, 50 jobs per month.</p>
+            <p class="price-desc">For teams. 3 seats, 25 jobs per month, 50 photos and 30 voice recordings per job.</p>
             <button class="price-btn price-btn-dark" data-plan="professional">Choose Professional</button>
           </div>
           <!-- BUSINESS -->
@@ -351,11 +363,11 @@
               <div class="price-amount" data-price-monthly="$249" data-price-annual="$2,490" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$249<span class="price-per">/mo + GST</span></div>
               <div class="price-annual-note">$2,490/year &mdash; save 2 months</div>
             </div>
-            <p class="price-desc">For larger operations. 8 seats included, unlimited jobs.</p>
+            <p class="price-desc">For larger operations. 8 seats, 50 jobs per month, 75 photos and 45 voice recordings per job.</p>
             <button class="price-btn price-btn-outline" data-plan="business">Choose Business</button>
           </div>
         </div>
-        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>.<br>Need more seats than your plan includes? Subscribe first — you'll land back on this page, where you can choose extra seats monthly or annually (Professional $29/month or $348/year; Business $25/month or $300/year, per seat + GST).</p>
+        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Both reports plus two updates to each per job. Solo / Professional / Business include 2 / 5 / 10 Plan Scans monthly (one per job). Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>.<br>Need more seats than your plan includes? Subscribe first — you'll land back on this page, where you can choose extra seats monthly or annually (Professional $29/month or $348/year; Business $25/month or $300/year, per seat + GST).</p>
         <div class="billing-error" id="checkoutError"></div>
       </div>
 
@@ -412,6 +424,7 @@
 
   function show(stateId) {
     document.getElementById('storageCard').style.display = 'none';
+    document.getElementById('extraJobsCard').style.display = 'none';
     document.getElementById('retentionNotice').style.display = 'none';
     document.querySelectorAll('.billing-state').forEach(function(el) { el.classList.remove('active'); });
     document.getElementById(stateId).classList.add('active');
@@ -532,6 +545,7 @@
       show('stateChoose');
     }
     setupStorageCard(c);
+    setupExtraJobs(c);
     loadRetentionNotice();
   }
 
@@ -790,6 +804,66 @@
     } catch (_) { /* Billing remains usable when the notice cannot be loaded. */ }
   }
 
+  var extraJobsState = null;
+  async function extraJobsRequest(action, quantity) {
+    var sessionRes = await sb.auth.getSession();
+    var session = sessionRes.data && sessionRes.data.session;
+    if (!session) throw new Error('Please sign in again.');
+    var res = await fetch(API_BASE + '/api/billing/extra-jobs', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ action: action, quantity: quantity })
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.error && data.error.message || 'Extra jobs billing is unavailable.');
+    return data;
+  }
+  function extraJobsTotal() {
+    var quantity = Number(document.getElementById('extraJobsQty').value);
+    document.getElementById('extraJobsTotal').textContent = '$' + quantity * 59 + '/month + GST · ' + quantity * 10 + ' extra jobs';
+  }
+  async function setupExtraJobs(company) {
+    if (company.subscription_plan !== 'business') return;
+    document.getElementById('extraJobsCard').style.display = 'block';
+    try {
+      extraJobsState = await extraJobsRequest('status');
+      var end = extraJobsState.periodEnd ? new Date(extraJobsState.periodEnd * 1000).toLocaleDateString('en-AU') : '';
+      document.getElementById('extraJobsStatus').textContent = extraJobsState.exists
+        ? extraJobsState.quantity * 10 + ' extra jobs/month. ' + (extraJobsState.cancelAtPeriodEnd ? 'Ends ' : 'Renews ') + end + '. Allowance appears after successful payment.'
+        : 'Available with an active Business subscription.';
+      document.getElementById('extraJobsQty').value = extraJobsState.quantity || 1;
+      var buy = document.getElementById('extraJobsBuy');
+      buy.textContent = extraJobsState.exists ? 'Update extra jobs' : 'Continue to checkout';
+      buy.disabled = company.subscription_status !== 'active' || company.cancel_at_period_end;
+      document.getElementById('extraJobsCancel').style.display = extraJobsState.exists && !extraJobsState.cancelAtPeriodEnd ? 'inline-flex' : 'none';
+      extraJobsTotal();
+    } catch (error) { document.getElementById('extraJobsStatus').textContent = error.message; }
+  }
+  document.getElementById('extraJobsQty').addEventListener('input', extraJobsTotal);
+  document.getElementById('extraJobsBuy').addEventListener('click', async function() {
+    var quantity = Number(document.getElementById('extraJobsQty').value);
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) { document.getElementById('extraJobsMessage').textContent = 'Choose 1–10 packs.'; return; }
+    if (extraJobsState && extraJobsState.exists && !window.confirm('Set extra jobs to ' + quantity * 10 + ' for $' + quantity * 59 + '/month + GST? Increases are charged now for the remaining add-on billing period.')) return;
+    this.disabled = true;
+    document.getElementById('extraJobsMessage').textContent = '';
+    try {
+      var data = await extraJobsRequest('save', quantity);
+      if (data.url) { window.location.href = data.url; return; }
+      document.getElementById('extraJobsMessage').textContent = data.message;
+      await loadAccount();
+    } catch (error) { document.getElementById('extraJobsMessage').textContent = error.message; }
+    this.disabled = false;
+  });
+  document.getElementById('extraJobsCancel').addEventListener('click', async function() {
+    if (!window.confirm('Cancel extra jobs renewal? Paid extra capacity stays available until the add-on period ends.')) return;
+    this.disabled = true;
+    try {
+      var data = await extraJobsRequest('save', 0);
+      document.getElementById('extraJobsMessage').textContent = data.message;
+      await loadAccount();
+    } catch (error) { document.getElementById('extraJobsMessage').textContent = error.message; }
+    this.disabled = false;
+  });
+
   async function storageRequest(action) {
     var sessionRes = await sb.auth.getSession();
     var session = sessionRes.data && sessionRes.data.session;
@@ -868,6 +942,12 @@
     history.replaceState(null, '', window.location.pathname);
   }
 
+  var jobsParam = new URLSearchParams(window.location.search).get('jobs');
+  if (jobsParam) {
+    var jobsBanner = document.getElementById('checkoutBanner');
+    jobsBanner.textContent = jobsParam === 'success' ? 'Extra jobs checkout completed. Your allowance appears once payment is confirmed.' : 'Extra jobs checkout cancelled.';
+    jobsBanner.style.display = 'block';
+  }
   var storageParam = new URLSearchParams(window.location.search).get('storage');
   if (storageParam) {
     var storageBanner = document.getElementById('checkoutBanner');
@@ -884,7 +964,7 @@
   }
   loadAccount().then(function() {
     if (seatsParam === 'success') setTimeout(loadAccount, 5000);
-    if (storageParam === 'success') setTimeout(loadAccount, 5000);
+    if (storageParam === 'success' || jobsParam === 'success') setTimeout(loadAccount, 5000);
     // After a successful payment the webhook may lag a few seconds —
     // if we still look unsubscribed, re-check once.
     if (billingParam === 'success' && document.getElementById('stateChoose').classList.contains('active')) {
@@ -895,4 +975,5 @@
 </script>
 </body>
 </html>
+
 
