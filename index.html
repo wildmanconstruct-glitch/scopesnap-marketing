@@ -86,7 +86,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=12"/>
+  <link rel="stylesheet" href="/shared.css?v=13"/>
 </head>
 <body>
 
@@ -146,13 +146,15 @@
       <div class="phone-shell">
         <div class="phone-notch"></div>
         <img
-          src="/images/hero-phone.jpg"
+          src="/images/demo-rooms.jpg"
           loading="eager"
-          alt="ScopeSnap app — room capture grid showing Ensuite, Master Bedroom, Walk-in Robe, Staircase, Bedroom and Living Room with completion status"
+          width="860" height="1800"
+          alt="ScopeSnap app showing four reviewed rooms in a fictional Adelaide Hills renovation"
           class="phone-screen-img"
         />
       </div>
       <div class="phone-glow" aria-hidden="true"></div>
+      <p class="demo-hero-note">Actual app · Fictional demo job</p>
     </div>
   </div>
 </section>
@@ -363,6 +365,32 @@
         <p>Generate the report and share a clear record with your client or trades.</p>
       </div>
     </div>
+    <div class="demo-heading">
+      <h3>See the same job from capture to report.</h3>
+      <p>Actual app screens and report, using a fictional Adelaide Hills renovation. Select an image for a closer look.</p>
+    </div>
+    <p class="demo-swipe">Swipe to follow the job →</p>
+    <div class="demo-gallery" aria-label="ScopeSnap example workflow" tabindex="0">
+      <figure class="demo-card">
+        <a class="demo-image demo-image-phone" href="/images/demo-capture.jpg" target="_blank" rel="noopener" aria-label="Enlarge the room capture screenshot (opens a new tab)">
+          <img src="/images/demo-capture.jpg" width="860" height="1800" loading="lazy" alt="Kitchen capture screen with room questions, photos, AI voice recorder and tape measure"/>
+        </a>
+        <figcaption><span>01 / CAPTURE</span><h4>Keep the room together.</h4><p>Photos, voice notes and room details, all in one place.</p></figcaption>
+      </figure>
+      <figure class="demo-card">
+        <a class="demo-image demo-image-phone" href="/images/demo-scope.jpg" target="_blank" rel="noopener" aria-label="Enlarge the scope review screenshot (opens a new tab)">
+          <img src="/images/demo-scope.jpg" width="860" height="1800" loading="lazy" alt="Scope review screen showing an editable draft for the kitchen and ensuite"/>
+        </a>
+        <figcaption><span>02 / REVIEW</span><h4>Check it before you share it.</h4><p>Review the draft and edit the work to include.</p></figcaption>
+      </figure>
+      <figure class="demo-card">
+        <a class="demo-image demo-image-report" href="/sample-report.pdf" target="_blank" rel="noopener" aria-label="Open the complete fictional sample report PDF (opens a new tab)">
+          <img src="/images/demo-report.jpg" width="748" height="1060" loading="lazy" alt="Kitchen page from the sample PDF, with dimensions, proposed works and room selections"/>
+          <span class="demo-report-link">View the full sample report ↗</span>
+        </a>
+        <figcaption><span>03 / REPORT</span><h4>A clear record of the work.</h4><p>A room-by-room PDF ready to share with clients or trades.</p></figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -378,81 +406,118 @@
         <button class="billing-opt" id="toggleAnnual" onclick="setBilling('annual')">Annual <span class="billing-save">Pro &amp; Business save 1 month</span></button>
       </div>
     </div>
+    <p class="pricing-included">Every plan includes all job types, AI photo and voice capture, scope drafting, and client and internal PDF reports.</p>
     <div class="pricing-grid">
-
-      <!-- SOLO -->
       <div class="price-card fade-in">
+
         <div class="price-tier">Solo</div>
         <div class="price-amount-row">
           <div class="price-amount" id="solo-price">$59<span class="price-per">/mo + GST</span></div>
           <div class="price-annual-note" id="solo-sub">$708/year &mdash; no annual discount</div>
         </div>
-        <p class="price-desc">For individual builders. Up to 10 jobs per month.</p>
+        <p class="price-desc">For the builder doing the scoping.</p>
         <ul class="price-list">
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>1 seat</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>10 jobs/month</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>20 photos + analyses per job</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>10 voice recordings per job</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>10 GB company storage</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All job types &amp; voice capture</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Client &amp; internal PDF reports</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1 user</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>10 jobs per month</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>20 photos + analyses per job</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>10 voice recordings per job</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>10 GB company storage</li>
         </ul>
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-outline" data-track="cta-start-trial">Start free trial</a>
       </div>
 
-      <!-- PROFESSIONAL -->
-      <div class="price-card price-featured fade-in fade-in-delay-1">
+      <div class="price-card fade-in price-featured fade-in-delay-1">
         <div class="price-popular">Most popular</div>
         <div class="price-tier">Professional</div>
         <div class="price-amount-row">
           <div class="price-amount" id="pro-price">$119<span class="price-per">/mo + GST</span></div>
           <div class="price-annual-note" id="pro-sub">$1,309/year &mdash; save 1 month</div>
         </div>
-        <p class="price-desc">For builders and teams running up to 25 jobs per month.</p>
+        <p class="price-desc">For a small team sharing the work.</p>
         <ul class="price-list">
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>3 seats included</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span id="pro-seat-price">Seats $29/month or $348/year</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>25 jobs/month</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>40 photos + analyses per job</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>15 voice recordings per job</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>50 GB company storage</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>All job types</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Client &amp; internal PDF reports</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>3 users included</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>25 jobs per month</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>40 photos + analyses per job</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>15 voice recordings per job</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>50 GB company storage</li>
         </ul>
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-dark" data-track="cta-start-trial">Start free trial</a>
       </div>
 
-      <!-- BUSINESS -->
       <div class="price-card fade-in fade-in-delay-2">
+
         <div class="price-tier">Business</div>
         <div class="price-amount-row">
           <div class="price-amount" id="biz-price">$249<span class="price-per">/mo + GST</span></div>
           <div class="price-annual-note" id="biz-sub">$2,739/year &mdash; save 1 month</div>
         </div>
-        <p class="price-desc">For larger operations and growing teams.</p>
+        <p class="price-desc">For a growing team with more jobs.</p>
         <ul class="price-list">
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>8 seats included</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span id="biz-seat-price">Seats $25/month or $300/year</span></li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>50 jobs/month</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>60 photos + analyses per job</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>20 voice recordings per job</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>200 GB company storage</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in Professional</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>8 users included</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>50 jobs per month</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>60 photos + analyses per job</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>20 voice recordings per job</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>200 GB company storage</li>
         </ul>
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-outline" data-track="cta-start-trial">Start free trial</a>
       </div>
-
     </div>
-    <div class="pricing-notes">
-      <p><strong>Business extra jobs:</strong> Add 10 jobs for $59/month + GST per pack. Each extra job has the same Business photo, voice and report limits; each pack adds 2 Plan Scans per month. <a href="/billing.html">Manage extra jobs</a>.</p>
-      <p>Monthly allowances are shared by the company and reset on the first day of each month (UTC), including annual plans. Per-job AI allowances last for the life of the job. Voice includes 10 / 15 / 20 recordings per job, up to five minutes per recording in the app, and up to two processing passes per included recording. Failed provider requests do not use the displayed allowance; repeated attempts are separately limited. Reopening and downloading saved work uses no AI.</p>
-      <p><strong>Every free trial starts on Solo.</strong> The plans above show your options after the trial. All prices are in AUD and exclude GST.</p>
-      <p><strong>Annual billing:</strong> Solo annual is $708 with no discount. Professional annual is $1,309 and Business annual is $2,739, each saving one month. Additional seats can be billed monthly or annually, independently of your base plan. Annual seats are paid upfront at 12 times the monthly seat price; the base-plan annual discount does not apply to seats. Existing seat subscriptions keep their current billing interval until changed.</p>
-      <p><strong>Included on every paid plan:</strong> All job types, photo and voice capture, AI scope drafting, and client and internal PDF reports. Each job includes both reports plus two updates to each, three briefings, three Scope Checks and three scope-item breakdowns. Solo / Professional / Business include 2 / 5 / 10 Plan Scans per month, limited to one per job. AI requires internet and your permission; hard usage and retry limits apply. Declining AI permission does not change the subscription price.</p>
-      <p><strong>Trial allowances:</strong> 1 user, 5 jobs total across the 14-day trial, 100 stored files, approximately 500 MB total storage, 5 MB per upload and 30 photo analyses plus 30 separate AI requests for transcription, voice processing, reports and other AI features. Photos never consume the other AI allowance. These trial allowances do not reset monthly. A voice workflow can use more than one request; successful retries count; failed provider requests are refunded, with a separate retry cap.</p>
-      <p><strong>Job and upload limits:</strong> Monthly job allowances are shared by your company and count jobs created in the current UTC calendar month; deleting a job does not restore its monthly allowance. Paid photo uploads are limited to 5 MB after compression; other file uploads to 25 MB. Your company storage allowance also applies.</p>
-      <p><strong>Need more storage?</strong> Add 100 GB for $10/month + GST. Storage is billed separately each month, including on annual plans.</p>
+    <p class="pricing-footnote">All prices are AUD + GST. Every free trial starts on Solo. The plans above apply after your trial.</p>
+    <div class="pricing-details-group">
+      <details class="pricing-details" id="plan-comparison">
+        <summary>Compare plans &amp; all allowances</summary>
+        <div class="pricing-details-body">
+          <div class="plan-table-scroll" tabindex="0" role="region" aria-label="Plan allowance comparison, scroll horizontally on small screens">
+            <table class="plan-table">
+              <caption>Paid plan allowances, shared across your company</caption>
+              <thead><tr><th scope="col">Included allowance</th><th scope="col">Solo</th><th scope="col">Professional</th><th scope="col">Business</th></tr></thead>
+              <tbody>
+              <tr><th scope="row">Included users</th><td>1</td><td>3</td><td>8</td></tr>
+              <tr><th scope="row">Jobs created / month</th><td>10</td><td>25</td><td>50</td></tr>
+              <tr><th scope="row">Company storage</th><td>10 GB</td><td>50 GB</td><td>200 GB</td></tr>
+              <tr><th scope="row">Photos stored / job</th><td>20</td><td>40</td><td>60</td></tr>
+              <tr><th scope="row">Photo analyses / job</th><td>20</td><td>40</td><td>60</td></tr>
+              <tr><th scope="row">Voice recordings / job</th><td>10</td><td>15</td><td>20</td></tr>
+              <tr><th scope="row">Voice processing passes / job</th><td>20</td><td>30</td><td>40</td></tr>
+              <tr><th scope="row">Each report / job</th><td>3</td><td>3</td><td>3</td></tr>
+              <tr><th scope="row">Briefings / job</th><td>3</td><td>3</td><td>3</td></tr>
+              <tr><th scope="row">Scope Checks / job</th><td>3</td><td>3</td><td>3</td></tr>
+              <tr><th scope="row">Scope-item breakdowns / job</th><td>3</td><td>3</td><td>3</td></tr>
+              <tr><th scope="row">Plan Scans / job</th><td>1</td><td>1</td><td>1</td></tr>
+              <tr><th scope="row">Photo analyses / month</th><td>200</td><td>1,000</td><td>3,000</td></tr>
+              <tr><th scope="row">Voice recordings / month</th><td>100</td><td>375</td><td>1,000</td></tr>
+              <tr><th scope="row">Voice processing passes / month</th><td>200</td><td>750</td><td>2,000</td></tr>
+              <tr><th scope="row">Each report type / month</th><td>30</td><td>75</td><td>150</td></tr>
+              <tr><th scope="row">Briefings, Scope Checks and scope-item breakdowns / month</th><td>30 each</td><td>75 each</td><td>150 each</td></tr>
+              <tr><th scope="row">Plan Scans / month</th><td>2</td><td>5</td><td>10</td></tr>
+              <tr><th scope="row">Support</th><td>Standard</td><td>Standard</td><td>Priority</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Each job includes a client report and an internal report, plus two updates to each. Voice recordings can be up to five minutes long, with up to two processing passes per included recording.</p>
+          <p>Monthly allowances reset on the first day of each month (UTC), including annual plans. Per-job AI allowances last for the life of the job. Deleting a job does not restore its job allowance. Monthly AI limits also apply to work on older jobs.</p>
+          <p>Reopening or downloading saved work uses no AI. Failed provider requests are refunded; successful retries count and separate retry caps apply. AI requires internet and your permission. Declining AI permission does not change the subscription price.</p>
+          <p>Paid photo uploads are limited to 5 MB after compression; other files to 25 MB. Your company storage allowance also applies.</p>
+        </div>
+      </details>
+      <details class="pricing-details">
+        <summary>Extra jobs, users &amp; storage</summary>
+        <div class="pricing-details-body pricing-extras">
+          <p><strong>Business extra jobs</strong><br>Add 10 jobs for $59/month per pack, up to 10 packs. Each extra job gets the same Business photo, voice and report limits. Each pack also adds 2 Plan Scans per month.</p>
+          <p><strong>Additional users</strong><br>Professional: <span id="pro-seat-price">Seats $29/month or $348/year</span>.<br>Business: <span id="biz-seat-price">Seats $25/month or $300/year</span>.</p>
+          <p><strong>Extra storage</strong><br>Add 100 GB for $10/month, billed monthly on every plan.</p>
+          <p><strong>Annual billing</strong><br>Solo is $708/year with no discount. Professional is $1,309/year and Business is $2,739/year, each saving one month. Paid extras receive no annual discount. Additional seats can be billed monthly or annually, independently of the base plan; annual seats cost 12 times the monthly seat price. Existing seat subscriptions keep their billing interval until changed.</p>
+          <p>All prices are AUD + GST. <a href="/billing.html">Manage your plan and extras</a>.</p>
+        </div>
+      </details>
+      <details class="pricing-details">
+        <summary>What&rsquo;s included in the free trial?</summary>
+        <div class="pricing-details-body">
+          <p><strong>14 days &middot; 1 user &middot; 5 jobs total &middot; No credit card</strong></p>
+          <p>30 photo analyses and 30 separate other AI actions for transcription, voice processing, reports and other AI features. Photos never consume the other AI allowance. A voice recording can use transcription plus two processing actions.</p>
+          <p>The Solo per-job limits apply. Trial storage includes 100 stored files, approximately 500 MB total and 5 MB per upload. Trial allowances cover the full 14 days and do not reset monthly. Deleting a job does not restore its allowance. Failed provider requests are refunded; successful retries count and a separate retry cap applies.</p>
+        </div>
+      </details>
     </div>
 
     <!-- ROI CALCULATOR -->

@@ -1165,3 +1165,59 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .fade-in { opacity: 1; transform: none; }
 }
+
+/* Pricing: essential differences first, full allowances on demand. */
+#pricing .price-desc { min-height: 48px; margin-bottom: 18px; }
+.pricing-included { max-width: 720px; margin: 0 auto 26px; text-align: center; color: var(--muted); font-size: 16px; line-height: 1.65; }
+.pricing-footnote { margin: 20px auto 26px; color: var(--dim); text-align: center; font-size: 13px; line-height: 1.6; }
+.pricing-details-group { max-width: 1040px; margin: 0 auto; border-top: 1px solid var(--border); }
+.pricing-details { border-bottom: 1px solid var(--border); }
+.pricing-details > summary { padding: 20px 28px 20px 0; cursor: pointer; color: var(--text); font-size: 16px; font-weight: 600; list-style: none; position: relative; }
+.pricing-details > summary::-webkit-details-marker { display: none; }
+.pricing-details > summary::after { content: '+'; position: absolute; right: 4px; top: 16px; font-size: 25px; font-weight: 400; color: var(--gold); }
+.pricing-details[open] > summary::after { content: '−'; }
+.pricing-details-body { padding: 0 0 22px; }
+.pricing-details-body p { margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.pricing-details-body strong { color: var(--text); }
+.pricing-details-body a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+.plan-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.plan-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 14px; }
+.plan-table caption { text-align: left; color: var(--muted); font-size: 13px; padding: 0 0 14px; }
+.plan-table th, .plan-table td { padding: 13px 14px; border-bottom: 1px solid var(--border); text-align: center; vertical-align: top; }
+.plan-table th:first-child { text-align: left; width: 40%; }
+.plan-table thead th { color: var(--text); background: var(--bg2); font-weight: 600; }
+.plan-table tbody th { color: var(--muted); font-weight: 400; }
+.plan-table td { color: var(--text); }
+@media(max-width:767px) { #pricing .price-desc { min-height: 0; } .pricing-included { font-size: 15px; } .pricing-details > summary { font-size: 15px; } }
+
+/* Actual app demo: one fictional job from capture to the generated PDF. */
+.phone-screen-img { height: auto; }
+.demo-hero-note { position: relative; z-index: 1; margin-top: 18px; color: var(--dim); font-size: 12px; text-align: center; }
+.demo-heading { margin: 48px 0 24px; max-width: 650px; }
+.demo-heading h3 { font-family: var(--ff-h); font-size: 28px; line-height: 1.2; margin-bottom: 10px; }
+.demo-heading p { font-size: 15px; color: var(--muted); }
+.demo-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.demo-card { min-width: 0; }
+.demo-image { display: flex; height: 560px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 14px; padding: 16px; align-items: center; justify-content: center; overflow: hidden; }
+.demo-image img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 10px 24px rgba(0,0,0,.18); }
+.demo-image-phone img { border-radius: 10px; }
+.demo-image-report { flex-direction: column; gap: 22px; }
+.demo-image-report img { flex: 0 1 auto; min-height: 0; }
+.demo-report-link { color: var(--gold); font-size: 13px; text-align: center; }
+.demo-card figcaption { padding-top: 22px; }
+.demo-card figcaption > span { color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; }
+.demo-card h4 { font-family: var(--ff-h); font-size: 24px; line-height: 1.2; margin: 8px 0; }
+.demo-card figcaption p { color: var(--muted); font-size: 15px; line-height: 1.65; }
+.demo-swipe { display: none; }
+@media (min-width:768px) and (max-width:1000px) { .demo-gallery { gap: 16px; } .demo-image { height: 420px; padding: 10px; } }
+@media (max-width:767px) {
+  #pricing .billing-toggle { max-width: 100%; }
+  #pricing .billing-opt { justify-content: center; flex-wrap: wrap; padding: 8px 12px; }
+  #pricing .billing-save { white-space: normal; text-align: center; }
+  .demo-heading { margin-top: 36px; margin-bottom: 14px; }
+  .demo-swipe { display: block; color: var(--dim); font-size: 12px; margin-bottom: 14px; }
+  .demo-gallery { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 20px; margin: -4px; }
+  .demo-card { flex: 0 0 84%; scroll-snap-align: start; }
+  .demo-image { height: 490px; padding: 12px; }
+  .demo-card figcaption { padding-top: 18px; }
+}
