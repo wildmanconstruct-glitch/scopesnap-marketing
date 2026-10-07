@@ -1192,7 +1192,6 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 
 /* Actual app demo: one fictional job from capture to the generated PDF. */
 .phone-screen-img { height: auto; }
-.demo-hero-note { position: relative; z-index: 1; margin-top: 18px; color: var(--dim); font-size: 12px; text-align: center; }
 .demo-heading { margin: 48px 0 24px; max-width: 650px; }
 .demo-heading h3 { font-family: var(--ff-h); font-size: 28px; line-height: 1.2; margin-bottom: 10px; }
 .demo-heading p { font-size: 15px; color: var(--muted); }
@@ -1201,9 +1200,6 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 .demo-image { display: flex; height: 560px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 14px; padding: 16px; align-items: center; justify-content: center; overflow: hidden; }
 .demo-image img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 10px 24px rgba(0,0,0,.18); }
 .demo-image-phone img { border-radius: 10px; }
-.demo-image-report { flex-direction: column; gap: 22px; }
-.demo-image-report img { flex: 0 1 auto; min-height: 0; }
-.demo-report-link { color: var(--gold); font-size: 13px; text-align: center; }
 .demo-card figcaption { padding-top: 22px; }
 .demo-card figcaption > span { color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; }
 .demo-card h4 { font-family: var(--ff-h); font-size: 24px; line-height: 1.2; margin: 8px 0; }
@@ -1221,3 +1217,13 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
   .demo-image { height: 490px; padding: 12px; }
   .demo-card figcaption { padding-top: 18px; }
 }
+
+/* Report preview gets its own spread so the pages remain readable. */
+.demo-report-feature { margin-top: 48px; display: grid; grid-template-columns: .8fr 1.6fr; align-items: center; gap: 40px; padding: 32px; background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; }
+.demo-report-eyebrow { color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; }
+.demo-report-copy h3 { font-family: var(--ff-h); font-size: 34px; line-height: 1.1; margin: 12px 0 18px; }
+.demo-report-copy p { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 24px; }
+.demo-report-spread { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center; min-width: 0; }
+.demo-report-spread img { display: block; width: 100%; height: auto; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+@media (max-width:900px) { .demo-report-feature { grid-template-columns: 1fr; gap: 28px; } .demo-report-copy { max-width: 540px; } }
+@media (max-width:600px) { .demo-report-feature { padding: 22px 16px; margin-top: 32px; } .demo-report-copy h3 { font-size: 30px; } .demo-report-spread { gap: 10px; } }
