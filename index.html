@@ -677,13 +677,15 @@ function toggleFaq(btn) {
     document.getElementById('roiHrs').textContent = fmtHrs(low) + '–' + fmtHrs(high) + ' hrs';
     document.getElementById('roiMoney').textContent = fmt(low * rate) + '–' + fmt(high * rate);
     var plan = 'Solo';
-    if (seats >= 9) {
+    // Business supports 50 jobs plus at most ten paid packs of 10 jobs.
+    if (seats >= 9 || totalJobs > 150) {
       plan = 'Enterprise';
-    } else if (seats >= 4 || totalJobs > 50) {
+    } else if (seats >= 4 || totalJobs > 25) {
       plan = 'Business';
     } else if (seats >= 2 || totalJobs > 10) {
       plan = 'Professional';
     }
+    var extraJobPacks = plan === 'Business' ? Math.max(0, Math.ceil((totalJobs - 50) / 10)) : 0;
     var planEl = document.getElementById('roiPlan');
     var labelEl = document.getElementById('roiPlanLabel');
     var breakevenEl = document.getElementById('roiBreakeven');
@@ -691,12 +693,15 @@ function toggleFaq(btn) {
     planEl.style.color = plan === 'Enterprise' ? 'var(--text)' : '';
     labelEl.innerHTML = plan === 'Enterprise'
       ? 'Suggested plan &mdash; <a href="#enterprise" style="color:var(--gold)">talk to us</a>'
-      : 'Suggested plan';
+      : 'Suggested plan' + (extraJobPacks ? ' + ' + extraJobPacks + ' extra-job ' + (extraJobPacks === 1 ? 'pack' : 'packs') : '');
     if (breakevenEl && planCosts[plan]) {
-      var cost = planCosts[plan];
+      var cost = planCosts[plan] + extraJobPacks * 59;
       var jobsNeeded = Math.ceil(cost / (rate * 1.75));
       var jobWord = jobsNeeded === 1 ? 'job' : 'jobs';
-      breakevenEl.textContent = 'At these assumptions, the value of time saved across ' + jobsNeeded + ' ' + jobWord + ' covers the $' + cost + '/month base plan (excluding GST).';
+      var costDescription = extraJobPacks
+        ? '/month total, including ' + (extraJobPacks * 10) + ' extra jobs/month'
+        : '/month base plan';
+      breakevenEl.textContent = 'At these assumptions, the value of time saved across ' + jobsNeeded + ' ' + jobWord + ' covers the $' + cost + costDescription + ' (excluding GST).';
       breakevenEl.style.display = '';
     } else if (breakevenEl) {
       breakevenEl.style.display = 'none';
