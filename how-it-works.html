@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How ScopeSnap Works | Site Scoping for Australian Builders</title>
+  <meta name="description" content="See the ScopeSnap workflow: scan a plan, capture photos and voice notes by room, review the AI scope, then share a branded PDF report. Real product screenshots."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://scopesnap.com.au/how-it-works"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="How ScopeSnap works on site"/>
+  <meta property="og:description" content="From floor plan to room-by-room capture and a clear scope report. See the actual screens."/>
+  <meta property="og:url" content="https://scopesnap.com.au/how-it-works"/>
+  <meta property="og:image" content="https://scopesnap.com.au/og.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#0A0A0B"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/shared.css?v=16"/>
+  <style>
+    .walk-hero { padding: 76px 0 56px; background: radial-gradient(circle at 78% 24%, rgba(196,154,60,.11), transparent 34%); }
+    .walk-hero h1 { max-width: 900px; }
+    .walk-hero .hero-sub { max-width: 610px; margin-bottom: 28px; }
+    .walk-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .walk-actions .btn-ghost { min-height: 48px; }
+    .walk-steps { border-top: 1px solid var(--border); }
+    .walk-step { padding: 72px 0; border-bottom: 1px solid var(--border); }
+    .walk-step:nth-child(even) { background: var(--bg2); }
+    .walk-grid { display: grid; align-items: center; gap: 40px; }
+    .walk-copy { max-width: 560px; }
+    .walk-number { color: var(--gold); font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 18px; }
+    .walk-copy h2 { margin-bottom: 20px; }
+    .walk-copy p { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 16px; }
+    .walk-copy p:last-child { margin-bottom: 0; }
+    .walk-copy a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+    .walk-shot { min-width: 0; width: 100%; max-width: 490px; margin: 0 auto; }
+    .walk-shot a { display: block; padding: 10px; background: #F5F2ED; border: 1px solid var(--border2); border-radius: 16px; box-shadow: 0 20px 55px rgba(0,0,0,.26); }
+    .walk-shot img { display: block; width: 100%; height: auto; border-radius: 8px; }
+    .walk-shot figcaption { color: var(--dim); font-size: 13px; text-align: center; margin-top: 14px; line-height: 1.5; }
+    .walk-shot.tall { max-width: 330px; }
+    .walk-shot.report { max-width: 400px; }
+    .walk-outro { padding: 78px 0 90px; text-align: center; }
+    .walk-outro h2 { margin-bottom: 18px; }
+    .walk-outro p { color: var(--muted); line-height: 1.65; max-width: 570px; margin: 0 auto 26px; }
+    @media (min-width: 850px) {
+      .walk-grid { grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: clamp(48px, 7vw, 116px); }
+      .walk-step:nth-child(even) .walk-copy { order: 2; }
+      .walk-step:nth-child(even) .walk-shot { order: 1; }
+    }
+    @media (max-width: 849px) {
+      .walk-hero { padding: 56px 0 42px; }
+      .walk-step { padding: 56px 0; }
+      .walk-copy p { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="logo" aria-label="ScopeSnap home">
+      <div class="logo-icon"><img src="/favicon.svg" width="32" height="32" alt=""/></div>
+      <div class="logo-name">ScopeSnap</div>
+    </a>
+    <ul class="nav-links" role="navigation">
+      <li><a href="/how-it-works" aria-current="page">How it works</a></li>
+      <li><a href="/#pricing">Pricing</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+      <li><a href="https://app.scopesnap.com.au/">Log in</a></li>
+    </ul>
+    <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary nav-cta" data-track="cta-start-trial">Start free trial &#8594;</a>
+    <button class="menu-btn" id="menuBtn" aria-controls="mobileMenu" aria-label="Open menu" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="navigation">
+  <a href="/how-it-works" aria-current="page">How it works</a>
+  <a href="/#pricing">Pricing</a>
+  <a href="/contact.html">Contact</a>
+  <a href="https://app.scopesnap.com.au/">Log in</a>
+  <a href="https://app.scopesnap.com.au/?signup=1" class="mobile-cta" data-track="cta-start-trial">Start free trial &#8594;</a>
+</div>
+
+<main>
+  <section class="walk-hero">
+    <div class="wrap">
+      <div class="eyebrow">How it works</div>
+      <h1>Walk the site.<br><em>Leave with the scope.</em></h1>
+      <p class="hero-sub">ScopeSnap keeps your plans, photos, measurements and notes together by room. Here’s what the walkthrough looks like in the app.</p>
+      <div class="walk-actions">
+        <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start free trial &#8594;</a>
+        <a href="#start" class="btn-ghost">See the steps &#8595;</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="walk-steps">
+    <section class="walk-step" id="start">
+      <div class="wrap walk-grid">
+        <div class="walk-copy">
+          <div class="walk-number">01 / Set up the job</div>
+          <h2>Start with the plans.<br><em>Or add rooms yourself.</em></h2>
+          <p>Add the client and address, then choose the rooms you’ll inspect. If you have a floor plan, Plan Scan can pick out rooms and notes for you to review before adding them.</p>
+          <p>You stay in control of what goes into the job.</p>
+        </div>
+        <figure class="walk-shot tall">
+          <a href="/images/demo-plan-scan.jpg" target="_blank" rel="noopener" aria-label="Enlarge the Plan Scan screenshot (opens a new tab)"><img src="/images/demo-plan-scan.jpg" width="740" height="1648" loading="lazy" alt="Plan Scan review showing six detected rooms and notes, with controls to cancel or add the rooms"/></a>
+          <figcaption>Plan Scan review · Example renovation plan</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="walk-step">
+      <div class="wrap walk-grid">
+        <div class="walk-copy">
+          <div class="walk-number">02 / Capture on site</div>
+          <h2>Keep the photos<br><em>with the room.</em></h2>
+          <p>Work through each room with your phone. Take photos, add measurements and record a voice note as you describe the work. Everything stays attached to the right room.</p>
+          <p>AI can turn the recording into a draft scope for you to check and edit.</p>
+        </div>
+        <figure class="walk-shot">
+          <a href="/images/demo-capture.jpg?v=5" target="_blank" rel="noopener" aria-label="Enlarge the room capture screenshot (opens a new tab)"><img src="/images/demo-capture.jpg?v=5" width="796" height="568" loading="lazy" alt="Kitchen capture screen with room photos and AI Voice Scope controls"/></a>
+          <figcaption>Kitchen capture · Photos and voice in one place</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="walk-step">
+      <div class="wrap walk-grid">
+        <div class="walk-copy">
+          <div class="walk-number">03 / Confirm the details</div>
+          <h2>Record what stays.<br><em>And what changes.</em></h2>
+          <p>Check the room selections while you’re standing in front of them: layout, cabinetry, benchtops, finishes and fixtures. Those answers carry into the report with the room measurements.</p>
+        </div>
+        <figure class="walk-shot">
+          <a href="/images/demo-questions.jpg?v=3" target="_blank" rel="noopener" aria-label="Enlarge the selections screenshot (opens a new tab)"><img src="/images/demo-questions.jpg?v=3" width="796" height="1120" loading="lazy" alt="Kitchen selections showing retained layout, replacement cabinetry, stone benchtops and tiled splashback"/></a>
+          <figcaption>Kitchen selections · Confirm on site</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="walk-step">
+      <div class="wrap walk-grid">
+        <div class="walk-copy">
+          <div class="walk-number">04 / Review the scope</div>
+          <h2>Make the draft<br><em>your own.</em></h2>
+          <p>Read the proposed work room by room. Edit the wording, add what’s missing and check any details that still need a decision before you share it.</p>
+          <p>Your company scoping rules can remind the AI about the things your team always checks.</p>
+        </div>
+        <figure class="walk-shot">
+          <a href="/images/demo-scope.jpg?v=3" target="_blank" rel="noopener" aria-label="Enlarge the editable scope screenshot (opens a new tab)"><img src="/images/demo-scope.jpg?v=3" width="796" height="880" loading="lazy" alt="Editable kitchen scope draft with proposed works and selections to confirm"/></a>
+          <figcaption>Editable scope · You approve the final wording</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="walk-step">
+      <div class="wrap walk-grid">
+        <div class="walk-copy">
+          <div class="walk-number">05 / Share the report</div>
+          <h2>Put your name<br><em>on a clear PDF.</em></h2>
+          <p>Generate a report with your business branding, the room details, measurements, proposed work and reference photos. Use the client or internal version for the people who need it.</p>
+          <p><a href="/sample-report.pdf?v=5" target="_blank" rel="noopener">Open the sample report &#8599;</a></p>
+        </div>
+        <figure class="walk-shot report">
+          <a href="/sample-report.pdf?v=5#page=4" target="_blank" rel="noopener" aria-label="Open the sample report room details (opens a new tab)"><img src="/images/demo-report.jpg?v=3" width="1060" height="1330" loading="lazy" alt="Sample ensuite report page with dimensions, floor area, proposed work, selections and a room photo"/></a>
+          <figcaption>Example report · Room details together</figcaption>
+        </figure>
+      </div>
+    </section>
+  </div>
+
+  <section class="walk-outro">
+    <div class="wrap">
+      <div class="eyebrow">Ready for the next site visit?</div>
+      <h2>See it on <em>your job.</em></h2>
+      <p>Start a free trial and use ScopeSnap on your next walkthrough. No credit card required.</p>
+      <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start free trial &#8594;</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-left">
+      <a href="/" class="footer-logo"><img src="/favicon.svg" width="26" height="26" alt=""/><span>ScopeSnap</span></a>
+      <p class="footer-tagline">Site scoping app for Australian builders.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col"><div class="footer-col-title">Product</div>
+        <a href="/#features">Features</a><a href="/how-it-works">How it works</a><a href="/#pricing">Pricing</a><a href="/billing.html">Billing</a><a href="https://app.scopesnap.com.au/?signup=1">Sign up</a>
+      </div>
+      <div class="footer-col"><div class="footer-col-title">Company</div>
+        <a href="/contact.html">Contact</a><a href="/privacy.html">Privacy policy</a><a href="/delete-account">Account deletion</a><a href="/terms.html">Terms of service</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer-bottom"><span>&#169; <span id="year"></span> ScopeSnap Pty Ltd. All rights reserved.</span><span>Built for Australian builders.</span></div>
+</footer>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script src="/shared.js?v=12"></script>
+<script>
+  document.querySelectorAll('[data-track]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (window.va) window.va('event', { name: el.getAttribute('data-track') });
+    });
+  });
+</script>
+</body>
+</html>
