@@ -1154,9 +1154,9 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
   .hero-actions .btn-primary, .hero-actions .btn-ghost { justify-content: center; }
 }
 @media(max-width:380px) {
-  .nav-inner { gap: 8px; }
+  .nav-inner { gap: 6px; }
   .nav-inner .logo { gap: 6px; }
-  .nav-inner .nav-cta { padding: 10px; font-size: 12px; }
+  .nav-inner .nav-cta { padding: 10px 6px; font-size: 12px; gap: 0; }
   .nav-inner .logo-name { font-size: 14px; }
   .nav-inner.wrap { padding: 0 16px; }
 }
@@ -1180,7 +1180,7 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 .pricing-details-body p { margin: 14px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
 .pricing-details-body strong { color: var(--text); }
 .pricing-details-body a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
-.plan-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.plan-table-wrap { width: 100%; }
 .plan-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 14px; }
 .plan-table caption { text-align: left; color: var(--muted); font-size: 13px; padding: 0 0 14px; }
 .plan-table th, .plan-table td { padding: 13px 14px; border-bottom: 1px solid var(--border); text-align: center; vertical-align: top; }
@@ -1238,3 +1238,16 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
  #pricing .billing-save {white-space:normal;text-align:center;}
 }
 @media(prefers-reduced-motion:reduce) {html {scroll-behavior:auto;}}
+
+/* Keep all three allowances visible together on narrow screens. */
+@media (max-width: 680px) {
+  .plan-table { display: block; min-width: 0; }
+  .plan-table caption { display: block; }
+  .plan-table thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+  .plan-table tbody { display: grid; gap: 12px; }
+  .plan-table tbody tr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .plan-table tbody th:first-child { grid-column: 1 / -1; width: auto; padding: 11px 12px; background: var(--bg2); color: var(--text); font-weight: 500; }
+  .plan-table td { padding: 11px 3px 13px; border: 0; font-size: 14px; }
+  .plan-table td + td { border-left: 1px solid var(--border); }
+  .plan-table td::before { content: attr(data-plan); display: block; color: var(--muted); font-size: 11px; line-height: 1.5; margin-bottom: 5px; }
+}
