@@ -266,10 +266,13 @@
         </div>
         <div class="billing-notice" style="border:none; background:none; padding:0;">
           <p style="margin-bottom:20px;">Update your card, download invoices or cancel renewal in the secure Stripe billing portal. Manage extra seats below. For a main-plan change, contact <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a>. If your paid subscription ends, jobs, photos and uploaded files are retained for 30 days before scheduled deletion. Reactivate or request an export during that period.</p>
-          <button class="btn-primary" id="portalBtn" style="justify-content:center;">
-            <span id="portalBtnText">Manage billing</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+            <button class="btn-primary" id="portalBtn" style="justify-content:center;">
+              <span id="portalBtnText">Manage billing</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <button class="btn-ghost" id="cancelRenewalBtn" type="button" style="display:none;min-height:48px;">Cancel renewal</button>
+          </div>
         </div>
         <div class="billing-error" id="portalError"></div>
 
@@ -401,7 +404,7 @@
   </div>
 </footer>
 
-<script src="/vendor/supabase-js-2.104.1.js" integrity="sha384-bYM/KZp3sHR8/mPjlAsotoCaDWykHXDhYAE3eJalEburZQwZAsMSeQxer09tprOT"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/shared.js?v=12"></script>
 <script>
 (function() {
@@ -528,6 +531,7 @@
       var renews = fmtDate(c.current_period_end);
       if (renews) meta.push((c.cancel_at_period_end ? 'Ends ' : 'Renews ') + renews);
       document.getElementById('subPlanMeta').textContent = meta.join(' · ');
+      document.getElementById('cancelRenewalBtn').style.display = c.cancel_at_period_end ? 'none' : 'inline-flex';
       setupSeatsCard(c);
       setupMonthlySeats(c);
       show('stateSubscribed');
@@ -754,19 +758,20 @@
   });
 
   // ---- Billing portal ----
-  document.getElementById('portalBtn').addEventListener('click', async function() {
-    var btn = document.getElementById('portalBtn');
+  async function openBillingPortal(action) {
+    var btn = document.getElementById(action === 'cancel' ? 'cancelRenewalBtn' : 'portalBtn');
     var btnText = document.getElementById('portalBtnText');
     var errEl = document.getElementById('portalError');
     errEl.textContent = '';
     btn.disabled = true;
-    btnText.textContent = 'Opening…';
+    if (action === 'cancel') btn.textContent = 'Opening…';
+    else btnText.textContent = 'Opening…';
 
     try {
       var res = await fetch(API_BASE + '/api/billing/portal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + accessToken },
-        body: JSON.stringify({})
+        body: JSON.stringify({ action: action })
       });
       var data = await res.json();
       if (res.ok && data.url) {
@@ -777,14 +782,17 @@
         errEl.textContent = 'Your session has expired. Please sign in again.';
         show('stateLogin');
       } else {
-        errEl.textContent = 'Billing portal is unavailable. Email hello@scopesnap.com.au for payment details, invoices or cancellation.';
+        errEl.textContent = 'Billing portal is unavailable. Email hello@scopesnap.com.au for help with payment details, invoices or cancellation.';
       }
     } catch (_) {
       errEl.textContent = 'Network error. Check your connection and try again.';
     }
     btn.disabled = false;
-    btnText.textContent = 'Manage billing';
-  });
+    if (action === 'cancel') btn.textContent = 'Cancel renewal';
+    else btnText.textContent = 'Manage billing';
+  }
+  document.getElementById('portalBtn').addEventListener('click', function() { openBillingPortal('manage'); });
+  document.getElementById('cancelRenewalBtn').addEventListener('click', function() { openBillingPortal('cancel'); });
 
   async function loadRetentionNotice() {
     var box = document.getElementById('retentionNotice');
@@ -925,6 +933,15 @@
 
   // ---- Init ----
   var billingParam = new URLSearchParams(window.location.search).get('billing');
+  var subscriptionParam = new URLSearchParams(window.location.search).get('subscription');
+  if (subscriptionParam === 'cancellation-requested') {
+    var cancelBanner = document.getElementById('checkoutBanner');
+    cancelBanner.style.background = 'var(--bg2)';
+    cancelBanner.style.border = '1px solid var(--border2)';
+    cancelBanner.style.color = 'var(--muted)';
+    cancelBanner.textContent = 'Cancellation requested. Your current plan remains available until the paid period ends. The end date may take a moment to appear below.';
+    cancelBanner.style.display = 'block';
+  }
   if (billingParam === 'success' || billingParam === 'cancel') {
     var banner = document.getElementById('checkoutBanner');
     if (billingParam === 'success') {
