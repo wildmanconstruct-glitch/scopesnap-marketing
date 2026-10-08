@@ -537,7 +537,7 @@
       var trialEnds = fmtDate(c.trial_ends_at);
       if (status === 'trialing') {
         document.getElementById('choosePlanName').textContent = planName + ' (trial)';
-        document.getElementById('choosePlanMeta').textContent = trialEnds ? '5 jobs total · Trial ends ' + trialEnds : '5 jobs total across your 14-day trial';
+        document.getElementById('choosePlanMeta').textContent = trialEnds ? '5 jobs you create + sample · Trial ends ' + trialEnds : '5 jobs you create + sample across your 14-day trial';
       } else {
         document.getElementById('choosePlanName').textContent = planName;
         document.getElementById('choosePlanMeta').textContent = status ? 'Status: ' + status : '';
