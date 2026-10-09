@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths:
       - 'scripts/build_sample_reports.py'
+      - 'index.html'
+      - 'how-it-works.html'
+      - 'shared.css'
       - '.github/workflows/publish-example-reports.yml'
   workflow_dispatch:
 permissions:
@@ -28,6 +31,21 @@ jobs:
           pdfinfo sample-internal-report.pdf | grep Pages
           pdftotext sample-client-report.pdf - | grep -q 'Whole house'
           pdftotext sample-internal-report.pdf - | grep -q 'Approximate estimating quantities'
+      - name: Validate public report links and current previews
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          home=Path('index.html').read_text()
+          guide=Path('how-it-works.html').read_text()
+          for name in ('sample-client-report.pdf','sample-internal-report.pdf'):
+              assert '/'+name in home
+              assert '/'+name in guide
+              assert Path(name).stat().st_size>4000
+          for old in ('sample-report.pdf?v=5','demo-rooms.jpg?v=4','demo-capture.jpg?v=5','demo-scope.jpg?v=3','demo-plan-scan.jpg'):
+              assert old not in home and old not in guide, old
+          assert 'hero-app-preview' in home
+          print('Report links and current previews verified')
+          PY
       - name: Render PDF cover previews
         run: |
           pdftoppm -f 1 -l 1 -singlefile -scale-to 1200 -jpeg -jpegopt quality=86 sample-client-report.pdf images/sample-client-cover
