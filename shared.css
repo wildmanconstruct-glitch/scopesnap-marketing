@@ -1251,3 +1251,22 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
   .plan-table td + td { border-left: 1px solid var(--border); }
   .plan-table td::before { content: attr(data-plan); display: block; color: var(--muted); font-size: 11px; line-height: 1.5; margin-bottom: 5px; }
 }
+
+
+/* Two-report showcase: one captured job, distinct client and team outputs */
+.sample-strip-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sample-strip-btn-secondary{background:transparent!important;color:var(--text)!important;border:1px solid var(--border2)!important}
+.report-sample-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;margin-top:30px}
+.report-sample-card{min-width:0;border:1px solid var(--border2);border-radius:12px;overflow:hidden;background:var(--bg2);transition:transform .2s ease,border-color .2s ease}
+.report-sample-card:hover{transform:translateY(-3px);border-color:rgba(196,154,60,.55)}
+.report-sample-preview{display:flex;justify-content:center;align-items:flex-start;min-height:350px;max-height:450px;padding:25px 35px 0;background:radial-gradient(ellipse at 50% 25%,rgba(196,154,60,.12),transparent 70%),#161719;overflow:hidden}
+.report-sample-preview img{display:block;width:min(100%,300px);height:auto;box-shadow:0 16px 45px rgba(0,0,0,.45);transition:transform .2s ease}
+.report-sample-card:hover img{transform:translateY(-5px)}
+.report-sample-info{padding:27px 30px 30px}
+.report-sample-kicker{display:block;color:var(--gold);font-size:11px;letter-spacing:.16em;font-weight:700;margin-bottom:12px}
+.report-sample-info h3{font-size:clamp(24px,2.8vw,32px);line-height:1.1;margin:0 0 13px;font-family:var(--ff-h);font-weight:600}
+.report-sample-info p{color:var(--muted);font-size:14px;line-height:1.65;margin-bottom:22px}
+.report-sample-link{display:inline-flex;gap:9px;align-items:center;color:var(--gold);font-size:14px;font-weight:700;text-decoration:none}
+.report-sample-link:hover{text-decoration:underline}
+.report-sample-disclaimer{font-size:12px;color:var(--dim);line-height:1.6;margin-top:18px}
+@media(max-width:680px){.report-sample-grid{grid-template-columns:1fr;gap:18px}.report-sample-preview{min-height:280px;max-height:370px}.report-sample-info{padding:22px}.sample-strip-actions{width:100%}.sample-strip-actions .sample-strip-btn{flex:1;justify-content:center;min-width:145px}}
