@@ -168,7 +168,7 @@ def write(name,story,kind):
         author="ScopeSnap",subject="Fictional Australian renovation report example")
     doc.build(story,onFirstPage=lambda c,d:header(c,d,kind),
               onLaterPages=lambda c,d:header(c,d,kind),
-              canvasmaker=lambda *args, **kwargs: pdfcanvas.Canvas(*args, invariant=1, **kwargs))
+              canvasmaker=lambda *args, **kwargs: pdfcanvas.Canvas(*args, **{**kwargs, "invariant": 1}))
     assert target.stat().st_size>2000
     print(str(target.name),target.stat().st_size)
 
