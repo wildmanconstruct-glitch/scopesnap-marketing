@@ -32,6 +32,8 @@ jobs:
           python scripts/build_sample_reports.py
           pdfinfo sample-client-report.pdf | grep Pages
           pdfinfo sample-internal-report.pdf | grep Pages
+          test "$(pdfimages -list sample-client-report.pdf | grep -c " image " || true)" -ge 2
+          test "$(pdfimages -list sample-internal-report.pdf | grep -c " image " || true)" -ge 2
           pdftotext sample-client-report.pdf - | grep -q 'Whole house'
           pdftotext sample-internal-report.pdf - | grep -q 'Approximate estimating quantities'
       - name: Validate public report links and current previews
