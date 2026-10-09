@@ -87,6 +87,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/shared.css?v=16"/>
+<style>
+.field-tools-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.field-tool{background:var(--bg2);border:1px solid var(--border2);padding:30px;display:flex;flex-direction:column;gap:14px;min-height:300px}.field-tool h3{font-size:25px;line-height:1.1}.field-tool p,.report-full-heading p{color:var(--muted);line-height:1.65}.field-tool a{margin-top:auto;color:var(--gold);font-weight:700;text-decoration:none}.field-tool-kicker{font-size:12px;letter-spacing:2px;color:var(--gold);font-weight:800}.field-tool-note{margin-top:auto;font-size:12px;color:var(--dim)}.report-full-previews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:34px 0 42px}.report-full-card{border:1px solid var(--border2);background:var(--bg2);padding:20px;min-width:0}.report-full-heading{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:20px}.report-full-heading h3{font-size:25px;margin:9px 0}.report-full-card iframe{width:100%;height:660px;background:#fff;border:0}.report-full-card .btn-primary{white-space:normal}@media(max-width:850px){.field-tools-grid,.report-full-previews{grid-template-columns:1fr}.field-tool{min-height:230px}.report-full-card iframe{height:560px}}@media(max-width:480px){.report-full-card iframe{height:430px}.report-full-card{padding:10px}}
+</style>
 </head>
 <body>
 
@@ -307,6 +310,16 @@
 </section>
 
 
+<section class="section" id="field-tools" aria-labelledby="field-tools-title">
+<div class="wrap">
+<div class="eyebrow">Built for the walkthrough</div>
+<h2 id="field-tools-title">Three tools. <em>Less paperwork.</em></h2>
+<p class="section-sub" style="max-width:740px">See how ScopeSnap helps you move from a plan to a room-by-room site record. Explore the real interface and the report output below.</p>
+<div class="field-tools-grid">
+<article class="field-tool"><span class="field-tool-kicker">01 / PLANSCAN</span><h3>Upload the plan. Review the rooms.</h3><p>Identify rooms from a plan and check what has been found before adding them to your job.</p><a href="#planscan">Explore PlanScan →</a></article>
+<article class="field-tool"><span class="field-tool-kicker">02 / AI VOICE</span><h3>Walk. Talk. Scope.</h3><p>Record what needs doing on site, then review the structured notes before they go into your scope.</p><a href="#voice-demo">Explore AI Voice →</a></article>
+<article class="field-tool"><span class="field-tool-kicker">03 / AR TAPE MEASURE</span><h3>Measure without leaving the room.</h3><p>Capture approximate site dimensions using the phone camera, with manual entry when precision matters.</p><span class="field-tool-note">Camera measurement demonstration to be added from the current app build.</span></article>
+</div></div></section>
 <!-- ── SAMPLE REPORT STRIP ── -->
 <div class="sample-strip">
   <div class="wrap sample-strip-inner">
@@ -398,6 +411,10 @@
     <div class="report-intro">
       <div><div class="eyebrow">Your business. Your report.</div><h2>A scope you’re proud<br><em>to put your name on.</em></h2></div>
       <div class="report-intro-copy"><p>Add your business logo, brand colour and contact details. Share the room measurements, proposed works, selections and photos in one clear PDF.</p><a href="/sample-client-report.pdf" class="btn-ghost" target="_blank" rel="noopener">Open sample report</a></div>
+    </div>
+    <div class="report-full-previews" aria-label="Full example report previews">
+      <article class="report-full-card"><div class="report-full-heading"><div><span class="field-tool-kicker">CLIENT REPORT</span><h3>Made to send to your client</h3><p>Proposed works, room photography, selections and decisions requiring confirmation.</p></div><a href="/sample-client-report.pdf" target="_blank" rel="noopener" class="btn-primary">Open full client PDF ↗</a></div><iframe src="/sample-client-report.pdf#toolbar=0&view=FitH" title="Full client scope report example" loading="lazy"></iframe></article>
+      <article class="report-full-card"><div class="report-full-heading"><div><span class="field-tool-kicker">INTERNAL REPORT</span><h3>Built for the team on site</h3><p>Room-by-room work descriptions, site observations, measurements and photo references.</p></div><a href="/sample-internal-report.pdf" target="_blank" rel="noopener" class="btn-primary">Open full internal PDF ↗</a></div><iframe src="/sample-internal-report.pdf#toolbar=0&view=FitH" title="Full internal site report example" loading="lazy"></iframe></article>
     </div>
     <div class="report-pages">
       <figure><a href="/sample-client-report.pdf" target="_blank" rel="noopener" aria-label="Open the branded sample report PDF (opens a new tab)"><img src="/images/sample-client-cover.jpg" width="1191" height="1684" loading="lazy" alt="Client Scope Report example cover"/></a><figcaption><span>01 / CLIENT SCOPE</span>Proposed works, selections and decisions to confirm.</figcaption></figure>
