@@ -161,11 +161,13 @@ def build_internal():
         ("Selections","Shaker laminate cabinetry; stone benchtops; tiled splashback")],
         ["Appliances supplied by owner."],
         ["Appliance models, final cabinetry drawings and electrical requirements."])
+    add_reference_photo(story, "Kitchen")
     section(story,"02","Main bathroom","Existing area - renovation",[
         ("Measurements","3.10 m x 2.40 m x 2.70 m ceiling"),
         ("Scope","Remove fittings and finishes; waterproofing, tiling, shower screen and wall-hung vanity."),
         ("Site notes","Confirm wet-area substrate and shower-screen opening.")],
         confirm=["Shower screen dimensions, tile sizes and heights."])
+    add_reference_photo(story, "Bathroom")
     section(story,"03","Laundry","Existing area - renovation",[
         ("Measurements","2.50 m x 2.10 m x 2.70 m ceiling"),
         ("Scope","Replace cabinetry, trough and benchtop; retain window."),
