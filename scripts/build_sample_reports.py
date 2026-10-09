@@ -113,9 +113,9 @@ def add_reference_photo(story, room):
     photo.save(target, format="JPEG", quality=82, optimize=True)
     flow = PDFImage(str(target), width=151*mm, height=100*mm, kind="proportional")
     flow.hAlign = "LEFT"
-    story.extend([Spacer(1, 3*mm), P("SITE PHOTO EXAMPLE / " + room.upper(), "h2"), flow,
-                  Spacer(1, 2*mm), P("Reference image: " + credit + ". Illustrative only; not a photograph of the example property.", "small"),
-                  Spacer(1, 5*mm)])
+    story.append(KeepTogether([Spacer(1, 3*mm), P("REFERENCE PHOTO / " + room.upper(), "h2"), flow,
+                  Spacer(1, 2*mm), P("Image: " + credit + ". Reference photography, not the project site.", "small"),
+                  Spacer(1, 5*mm)]))
 
 def build_client():
     story=[]
