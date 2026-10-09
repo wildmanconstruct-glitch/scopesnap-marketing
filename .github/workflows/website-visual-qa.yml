@@ -42,7 +42,7 @@ jobs:
                 await new Promise(r=>setTimeout(r,45));
               }
               window.scrollTo(0,0);
-              await Promise.all([...document.images].map(img=>img.complete?Promise.resolve():new Promise(r=>{img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true});})));
+              await Promise.race([Promise.all([...document.images].map(img=>img.decode().catch(()=>{}))),new Promise(r=>setTimeout(r,5000))]);
             });
             await page.screenshot({path:'qa-screenshots/'+name+'.png',fullPage:true});
             const missing=await page.evaluate(()=>[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src));
