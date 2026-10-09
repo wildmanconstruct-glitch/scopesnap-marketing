@@ -50,6 +50,16 @@ jobs:
         run: |
           pdftoppm -f 1 -l 1 -singlefile -scale-to 1200 -jpeg -jpegopt quality=86 sample-client-report.pdf images/sample-client-cover
           pdftoppm -f 1 -l 1 -singlefile -scale-to 1200 -jpeg -jpegopt quality=86 sample-internal-report.pdf images/sample-internal-cover
+      - name: Attach generated report examples for visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-client-internal-examples
+          path: |
+            sample-client-report.pdf
+            sample-internal-report.pdf
+            images/sample-client-cover.jpg
+            images/sample-internal-cover.jpg
+          retention-days: 14
       - name: Commit refreshed samples
         run: |
           git config user.name "github-actions[bot]"
