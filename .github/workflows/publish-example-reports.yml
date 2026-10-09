@@ -9,6 +9,9 @@ on:
       - 'shared.css'
       - '.github/workflows/publish-example-reports.yml'
   workflow_dispatch:
+concurrency:
+  group: example-report-publish
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
