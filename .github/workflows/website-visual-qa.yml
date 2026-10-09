@@ -1,0 +1,36 @@
+name: Website visual QA
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.html
+      - how-it-works.html
+      - shared.css
+      - .github/workflows/website-visual-qa.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Capture desktop and mobile pages
+        run: |
+          python3 -m http.server 8080 >/tmp/scopesnap-http.log 2>&1 &
+          sleep 2
+          mkdir -p qa-screenshots
+          npx playwright screenshot --browser chromium --viewport-size "1440,900" --full-page http://127.0.0.1:8080/ qa-screenshots/home-desktop.png
+          npx playwright screenshot --browser chromium --viewport-size "390,844" --full-page http://127.0.0.1:8080/ qa-screenshots/home-mobile.png
+          npx playwright screenshot --browser chromium --viewport-size "1440,900" --full-page http://127.0.0.1:8080/how-it-works.html qa-screenshots/workflow-desktop.png
+      - uses: actions/upload-artifact@v4
+        with:
+          name: website-visual-qa
+          path: qa-screenshots/*.png
+          retention-days: 7
