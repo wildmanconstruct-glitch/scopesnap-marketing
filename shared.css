@@ -512,7 +512,7 @@ blockquote { font-family: var(--ff-h); font-size: clamp(20px,2.5vw,28px); font-w
 .final-cta-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 
 /* ── ANIMATIONS ── */
-.fade-in { opacity: 0; transform: translateY(14px); transition: opacity 0.45s ease, transform 0.45s ease; }
+.fade-in { opacity: 1; transform: none; transition: opacity 0.25s ease, transform 0.25s ease; }
 .fade-in.visible { opacity: 1; transform: none; }
 .fade-in-delay-1 { transition-delay: 0.07s; }
 .fade-in-delay-2 { transition-delay: 0.14s; }
