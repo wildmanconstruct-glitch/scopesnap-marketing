@@ -39,5 +39,6 @@ jobs:
           git add sample-client-report.pdf sample-internal-report.pdf images/sample-client-cover.jpg images/sample-internal-cover.jpg
           if ! git diff --cached --quiet; then
             git commit -m "Publish updated client and internal report examples"
+            git pull --rebase origin main
             git push
           fi
