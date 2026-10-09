@@ -26,9 +26,31 @@ jobs:
           python3 -m http.server 8080 >/tmp/scopesnap-http.log 2>&1 &
           sleep 2
           mkdir -p qa-screenshots
-          npx playwright screenshot --browser chromium --viewport-size "1440,900" --full-page http://127.0.0.1:8080/ qa-screenshots/home-desktop.png
-          npx playwright screenshot --browser chromium --viewport-size "390,844" --full-page http://127.0.0.1:8080/ qa-screenshots/home-mobile.png
-          npx playwright screenshot --browser chromium --viewport-size "1440,900" --full-page http://127.0.0.1:8080/how-it-works.html qa-screenshots/workflow-desktop.png
+          node --input-type=module <<'JS'
+          import { chromium } from 'playwright';
+          const browser = await chromium.launch({headless:true});
+          for (const [path,width,height,name] of [
+            ['/',1440,900,'home-desktop'],
+            ['/',390,844,'home-mobile'],
+            ['/how-it-works.html',1440,900,'workflow-desktop'],
+          ]) {
+            const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
+            await page.goto('http://127.0.0.1:8080'+path,{waitUntil:'networkidle'});
+            await page.evaluate(async () => {
+              for(let y=0;y<document.body.scrollHeight;y+=500) {
+                window.scrollTo(0,y);
+                await new Promise(r=>setTimeout(r,45));
+              }
+              window.scrollTo(0,0);
+              await Promise.all([...document.images].map(img=>img.complete?Promise.resolve():new Promise(r=>{img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true});})));
+            });
+            await page.screenshot({path:'qa-screenshots/'+name+'.png',fullPage:true});
+            const missing=await page.evaluate(()=>[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src));
+            if(missing.length) throw new Error('Missing images: '+missing.join(', '));
+            await page.close();
+          }
+          await browser.close();
+          JS
       - uses: actions/upload-artifact@v4
         with:
           name: website-visual-qa
