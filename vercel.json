@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/sample-report.pdf",
+      "destination": "/sample-client-report.pdf",
+      "permanent": false
+    },
+    {
       "source": "/(.*)",
       "has": [
         {
