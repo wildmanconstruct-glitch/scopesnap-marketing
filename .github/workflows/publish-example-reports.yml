@@ -46,7 +46,7 @@ jobs:
               assert Path(name).stat().st_size>4000
           for old in ('sample-report.pdf?v=5','demo-rooms.jpg?v=4','demo-capture.jpg?v=5','demo-scope.jpg?v=3','demo-plan-scan.jpg'):
               assert old not in home and old not in guide, old
-          assert 'hero-app-preview' in home
+          assert 'phone-mockup' in home
           print('Report links and current previews verified')
           PY
       - name: Render PDF cover previews
