@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install PDF inspection and rendering tools
+        run: sudo apt-get update -qq && sudo apt-get install -y poppler-utils
       - name: Generate both PDFs
         run: |
           python -m pip install --disable-pip-version-check reportlab
