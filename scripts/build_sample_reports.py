@@ -30,6 +30,8 @@ STYLES = {
     "label": ParagraphStyle("label", fontName="Helvetica-Bold", fontSize=8.5, leading=13, textColor=MUTED),
     "value": ParagraphStyle("value", fontName="Helvetica", fontSize=9.3, leading=14.5, textColor=INK),
     "meta": ParagraphStyle("meta", fontName="Helvetica", fontSize=10, leading=19, textColor=INK),
+    "inverse": ParagraphStyle("inverse", fontName="Helvetica", fontSize=9, leading=14, textColor=WHITE),
+    "inverseHeading": ParagraphStyle("inverseHeading", fontName="Helvetica-Bold", fontSize=9, leading=14, textColor=colors.HexColor("#F0C88D"), spaceAfter=5),
 }
 def P(text, style="body"):
     return Paragraph(text, STYLES[style])
@@ -37,7 +39,7 @@ def P(text, style="body"):
 def header(canvas, doc, kind):
     canvas.saveState()
     width, height = A4
-    canvas.setFillColor(GOLD)
+    canvas.setFillColor(INK if kind.startswith("Internal") else GOLD)
     canvas.rect(0, height-6, width, 6, fill=1, stroke=0)
     canvas.setFont("Helvetica-Bold", 9)
     canvas.setFillColor(INK)
@@ -67,9 +69,10 @@ def cover(story, kind):
     t.setStyle(TableStyle([("VALIGN",(0,0),(-1,-1),"TOP"),("BOTTOMPADDING",(0,0),(-1,-1),9),
                           ("LINEBELOW",(0,-1),(-1,-1),1.5,GOLD)]))
     story.extend([t, Spacer(1, 23*mm)])
-    note = Table([[P("SAMPLE DOCUMENT", "eyebrow")],
-                  [P("This is an illustrative example, not a quotation, contract or construction specification. Photos and measurements from a real site visit would be included in the live reports.", "small")]], colWidths=[158*mm])
-    note.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),PAPER),
+    internal = kind.startswith("Internal")
+    note = Table([[P("INTERNAL WORKING DOCUMENT" if internal else "SAMPLE DOCUMENT", "inverseHeading" if internal else "eyebrow")],
+                  [P("For estimating and site delivery. This fictional example demonstrates measurements, quantities and outstanding decisions. Actual job photos appear in live reports." if internal else "This is an illustrative example, not a quotation, contract or construction specification. Photos and measurements from a real site visit would be included in the live reports.", "inverse" if internal else "small")]], colWidths=[158*mm])
+    note.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,-1),INK if internal else PAPER),
                               ("LEFTPADDING",(0,0),(-1,-1),14),("RIGHTPADDING",(0,0),(-1,-1),14),
                               ("TOPPADDING",(0,0),(-1,0),13),("BOTTOMPADDING",(0,-1),(-1,-1),13)]))
     story.extend([note, PageBreak()])
