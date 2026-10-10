@@ -57,6 +57,19 @@ jobs:
               if(!geometry.phone || geometry.phone>340) throw new Error('Hero phone must remain contained: '+JSON.stringify(geometry));
               const fontStatus = await page.evaluate(() => ({available:document.fonts.check('800 22px Archivo'),heading:getComputedStyle(document.querySelector('.so-hero h1')).fontFamily}));
               console.log('Typography',fontStatus);
+              if(width>=900) {
+                const dimensionQA=await page.evaluate(() => [...document.querySelectorAll('.so-dimension-label text')].map(el=>({
+                  value:el.textContent.trim(),
+                  width:el.getBBox().width,
+                  fill:getComputedStyle(el).fill,
+                  opacity:getComputedStyle(el).opacity
+                })));
+                console.log('Window measurements',dimensionQA);
+                if(dimensionQA.length!==2 || dimensionQA.some(v=>v.width<45 || v.fill!=='rgb(193, 127, 62)' || v.opacity==='0')){
+                  throw new Error('App-gold labels need visible text: '+JSON.stringify(dimensionQA));
+                }
+              }
+
               if(width>=900 && geometry.hero>1050) throw new Error('Desktop hero too tall: '+JSON.stringify(geometry));
               const before=await page.locator('details.so-savings-disclosure').evaluate(el=>el.open);
               if(before) throw new Error('Calculator must be collapsed initially');
