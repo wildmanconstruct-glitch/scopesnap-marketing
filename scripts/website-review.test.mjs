@@ -58,3 +58,8 @@ for (const type of approvedTypes) {
 assert(!home.includes("inspect renovation sites"), "Marketing must not imply a renovation-only app");
 assert(!home.includes("Move through a renovation one room at a time"), "Overview must describe all project types");
 assert(home.includes("same report workflow supports new builds"), "Illustrated renovation reports must not limit the product");
+
+assert(home.includes("screen-room.jpg?v=site20261010"), "Lead with real room capture");
+assert(home.includes("screen-review.jpg?v=site20261010"), "Voice demo must show written draft");
+assert(!home.includes('class="ps-overview"'), "Do not repeat overview");
+assert(!home.includes('class="workflow-compact"'), "No orphan workflow");
