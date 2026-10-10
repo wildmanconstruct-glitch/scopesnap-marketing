@@ -32,11 +32,14 @@ jobs:
           guide = Path('how-it-works.html').read_text(encoding='utf-8')
           assert 'class="so-hero"' in home and 'class="so-report-layout"' in home
           assert '.so-hero' in css and 'scroll-snap-type:x mandatory' in css
-          assert '/brand-sync.css?v=20261011ar4' in home
-          for name in ('screen-planscan','screen-voice','screen-measure','screen-photo','screen-room'):
+          assert '/brand-sync.css?v=20261011voice2' in home
+          for name in ('screen-planscan','screen-voice','screen-measure','screen-photo'):
               path = Path(f'images/{name}.jpg')
               assert path.is_file() and path.stat().st_size > 30000, path
               assert f'/images/{name}.jpg' in home, name
+          assert '/images/screen-voice.jpg?v=20261011rev1' in home
+          assert 'so-live-waveform' in home and '2:37 remaining' in home
+          assert Path('images/screen-room.jpg').is_file()  # preserved for app reference, no longer the hero image
           for doc in ('client','internal'):
               pdf=Path(f'sample-{doc}-report.pdf')
               assert pdf.is_file() and pdf.stat().st_size > 300000, pdf
