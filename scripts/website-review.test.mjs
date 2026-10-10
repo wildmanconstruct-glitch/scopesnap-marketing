@@ -33,12 +33,12 @@ for(const variant of ["client","internal"]) {
 }
 const source = JSON.parse(read("assets/source-manifest.json"));
 assert(source.asset_source_commit === "9c3486ab2ccac41011d8b744e152c03e0ee2e56d", "Source capture revision matches delivered assets");
-assert(home.includes("screen-overview.jpg?v=demo20261010mitchell"), "Homepage screenshots bust previous browser caches");
+assert(home.includes("screen-room.jpg?v=demo20261010mitchell"), "Homepage room capture busts previous browser caches");
 assert(read("how-it-works.html").includes("screen-voice.jpg?v=demo20261010mitchell"), "Walkthrough screenshots bust previous browser caches");
 assert(read("vercel.json").includes("must-revalidate"), "Mutable image assets must revalidate");
 console.log("Website content accuracy and SEO checks passed.");
 
-const tour = home.slice(home.indexOf('class="ps-product-grid"'),home.indexOf('class="ps-overview"'));
+const tour = home.slice(home.indexOf('class="ps-product-grid"'),home.indexOf('<!-- ── VOICE TO SCOPE DEMO ── -->'));
 assert(tour.includes("01 / ROOM PHOTOS + AI"), "Photo capture must lead the feature tour");
 assert(tour.indexOf("01 / ROOM PHOTOS + AI") < tour.indexOf("02 / AI VOICE CAPTURE"), "Voice follows photos");
 assert(tour.indexOf("03 / ON-SITE MEASUREMENTS") < tour.indexOf("OPTIONAL / PLAN SCAN"), "Plans must remain secondary");
