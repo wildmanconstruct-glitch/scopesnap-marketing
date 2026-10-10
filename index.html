@@ -85,10 +85,11 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=16"/>
-  <link rel="stylesheet" href="/premium-showcase.css?v=20261010"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/shared.css?v=17"/>
+  <link rel="stylesheet" href="/premium-showcase.css?v=20261010site4"/>
 
+  <link rel="stylesheet" href="/brand-sync.css?v=20261010site4"/>
 </head>
 <body>
 
@@ -136,19 +137,27 @@
   <div class="hero-left">
     <div class="hero-eyebrow">For Australian builders</div>
     <h1>Walk the site.<br><em>Leave with<br>the scope.</em></h1>
-    <p class="hero-sub">Start a job, add your rooms or work areas and capture the details on site. Use photos, voice notes and measurements to build a scope you can review and share. No plans needed to get started.</p>
+    <p class="hero-sub">Capture the job while you walk it. Keep photos, voice notes, room measurements and what needs doing in one place — then review a clear scope and share it with your client or team.</p>
     <p class="scope-jobtypes">New builds <span aria-hidden="true">·</span> Extensions <span aria-hidden="true">·</span> Renovations <span aria-hidden="true">·</span> Repairs &amp; maintenance</p>
     <div class="hero-actions">
       <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start 14-day free trial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      <a href="#reports" class="btn-ghost">See a sample report</a>
+      <a href="#reports" class="btn-ghost">See the finished reports</a>
     </div>
   </div>
-  <div class="hero-right hero-product-stage" aria-label="ScopeSnap app showing the room capture screen">
-    <div class="hero-product-pair">
-      <a class="product-device hero-room-device" href="/images/screen-room.jpg?v=20261010hero2" target="_blank" rel="noopener" aria-label="Enlarge ScopeSnap room capture screen">
-        <img src="/images/screen-room.jpg?v=20261010hero2" width="780" height="1688" alt="ScopeSnap room capture screen showing job details, photos, voice notes and measurements" fetchpriority="high" />
+  <div class="hero-right hero-product-stage" aria-label="ScopeSnap site photo and genuine room capture screen">
+    <div class="hero-scene">
+      <div class="hero-site-image">
+        <img src="/images/demo/kitchen.jpg?v=20261010site4" width="1536" height="1024" alt="Existing cream laminate kitchen photographed for the ScopeSnap sample job" fetchpriority="high" />
+        <span class="hero-photo-label"><span class="hero-photo-indicator"></span> SITE CAPTURE · KITCHEN</span>
+      </div>
+      <a class="product-device hero-room-device" href="/images/screen-room.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="Open the real ScopeSnap room capture screen at full size">
+        <span class="device-camera" aria-hidden="true"></span>
+        <img src="/images/screen-room.jpg?v=20261010site4" width="780" height="1688" alt="Real ScopeSnap app, kitchen room capture showing three approved photos, AI Voice Scope and room measurements" />
       </a>
-      <span class="hero-stage-caption">ON SITE &nbsp;·&nbsp; ROOM CAPTURE</span>
+      <div class="hero-scene-caption">
+        <strong>On site, not back at the desk.</strong>
+        <span>Photo. Voice. Measurements. Scope.</span>
+      </div>
     </div>
   </div>
 </section>
@@ -227,6 +236,24 @@
   </div>
 </section>
 
+<!-- APPROVED ON-SITE PHOTO GALLERY -->
+<section class="section site-gallery" id="site-example" aria-labelledby="site-gallery-title">
+  <div class="wrap">
+    <div class="gallery-heading">
+      <div><div class="eyebrow">One job. Everything together.</div>
+        <h2 id="site-gallery-title">The details stay<br><em>with the job.</em></h2>
+      </div>
+      <p>Room photos and the existing outside conditions, captured together. Open a room to review what was recorded; keep the scope attached to the right place.</p>
+    </div>
+    <div class="site-gallery-grid">
+      <figure class="site-gallery-item"><img src="/images/demo/kitchen.jpg?v=20261010site4" alt="Original cream kitchen with laminate cabinetry and electric cooktop" loading="lazy"><figcaption><b>Kitchen</b><span>3 photos · existing condition</span></figcaption></figure>
+      <figure class="site-gallery-item"><img src="/images/demo/bathroom.jpg?v=20261010site4" alt="Clean dated main bathroom with shower-over-bath and timber-look vanity" loading="lazy"><figcaption><b>Main bathroom</b><span>3 photos · existing condition</span></figcaption></figure>
+      <figure class="site-gallery-item"><img src="/images/demo/living.jpg?v=20261010site4" alt="Lived-in living room with carpet and sliding glass door to the yard" loading="lazy"><figcaption><b>Living room</b><span>3 photos · existing condition</span></figcaption></figure>
+      <figure class="site-gallery-item"><img src="/images/demo/exterior.jpg?v=20261010site4" alt="Brown brick and terracotta roof at the front of the house" loading="lazy"><figcaption><b>Exterior</b><span>3 photos · site access</span></figcaption></figure>
+    </div>
+    <p class="gallery-footnote">One illustrative site capture, using ScopeSnap's actual room and report workflow.</p>
+  </div>
+</section>
 <!-- SCOPE SNAP / PREMIUM PRODUCT TOUR -->
 <section class="section ps-tour" id="features" aria-labelledby="ps-tour-title">
   <div class="wrap">
@@ -240,22 +267,22 @@
     <div class="ps-product-grid">
       <article class="ps-feature-card">
         <div class="ps-feature-copy"><span class="ps-step">01 / ROOM PHOTOS + AI</span><h3>Every room.<br>Every detail.</h3><p>Photograph existing conditions, new work areas or site details. Keep each photo with its room and check AI observations alongside your notes.</p></div>
-        <a class="ps-phone" href="/images/screen-photo.jpg?v=bank20261010logo" target="_blank" rel="noopener" aria-label="View actual ScopeSnap AI photo brief screen"><img src="/images/screen-photo.jpg?v=bank20261010logo" alt="Actual ScopeSnap photo lightbox displaying the pre-renovation kitchen and detailed AI photo observations" width="780" height="1688" loading="lazy"></a>
+        <a class="ps-phone" href="/images/screen-photo.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View actual ScopeSnap AI photo brief screen"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-photo.jpg?v=20261010site4" alt="Actual ScopeSnap photo lightbox displaying the pre-renovation kitchen and detailed AI photo observations" width="780" height="1688" loading="lazy"></a>
         <a class="ps-feature-link" href="/how-it-works#photos">See room capture <span aria-hidden="true">↗</span></a>
       </article>
       <article class="ps-feature-card">
         <div class="ps-feature-copy"><span class="ps-step">02 / AI VOICE CAPTURE</span><h3>Walk. Talk.<br>Scope.</h3><p>Describe what needs building, changing, repairing or confirming while you're there. ScopeSnap turns your recording into notes you can check and edit.</p></div>
-        <a class="ps-phone" href="/images/screen-voice.jpg?v=bank20261010logo" target="_blank" rel="noopener" aria-label="View actual ScopeSnap voice recording screen"><img src="/images/screen-voice.jpg?v=bank20261010logo" alt="Actual ScopeSnap AI Voice Scope recording control with waveform, stop button and five-minute timer" width="780" height="1688" loading="lazy"></a>
+        <a class="ps-phone" href="/images/screen-voice.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View actual ScopeSnap voice recording screen"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-voice.jpg?v=20261010site4" alt="Actual ScopeSnap AI Voice Scope recording control with waveform, stop button and five-minute timer" width="780" height="1688" loading="lazy"></a>
         <a class="ps-feature-link" href="#voice-demo">See voice to scope <span aria-hidden="true">↗</span></a>
       </article>
       <article class="ps-feature-card">
         <div class="ps-feature-copy"><span class="ps-step">03 / ON-SITE MEASUREMENTS</span><h3>Point. Measure.<br>Capture.</h3><p>Enter dimensions manually, or use the camera-assisted Tape Measure for estimates. Save everything with the room.</p></div>
-        <a class="ps-phone" href="/images/screen-measure.jpg?v=bank20261010logo" target="_blank" rel="noopener" aria-label="View actual ScopeSnap Tape Measure screen"><img src="/images/screen-measure.jpg?v=bank20261010logo" alt="Actual ScopeSnap camera Tape Measure with point-to-point line measuring a window" width="780" height="1688" loading="lazy"></a>
+        <a class="ps-phone" href="/images/screen-measure.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View actual ScopeSnap Tape Measure screen"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-measure.jpg?v=20261010site4" alt="Actual ScopeSnap camera Tape Measure with point-to-point line measuring a window" width="780" height="1688" loading="lazy"></a>
         <span class="ps-feature-footnote">Camera measurements are estimates; verify critical set-out on site.</span>
       </article>
       <article class="ps-feature-card">
         <div class="ps-feature-copy"><span class="ps-step">04 / REVIEW &amp; SHARE</span><h3>From site notes<br>to a clear scope.</h3><p>Check the scope wording and open items before creating the client and internal reports.</p></div>
-        <a class="ps-phone" href="/images/screen-review.jpg?v=bank20261010logo" target="_blank" rel="noopener" aria-label="See real ScopeSnap scope review screen"><img src="/images/screen-review.jpg?v=bank20261010logo" width="780" height="1688" loading="lazy" alt="Actual ScopeSnap AI draft review interface" /></a>
+        <a class="ps-phone" href="/images/screen-review.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="See real ScopeSnap scope review screen"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-review.jpg?v=20261010site4" width="780" height="1688" loading="lazy" alt="Actual ScopeSnap AI draft review interface" /></a>
         <a class="ps-feature-link" href="#reports">See finished reports <span aria-hidden="true">↗</span></a>
       </article>
     </div>
@@ -266,7 +293,7 @@
         <p>Add rooms yourself and start the inspection. If you already have a floor plan, Plan Scan can suggest rooms and notes for you to review before adding them.</p>
         <a href="/how-it-works#optional-plans">See optional Plan Scan <span aria-hidden="true">↗</span></a>
       </div>
-      <a class="ps-plan-optional-image" href="/images/screen-planscan.jpg?v=bank20261010logo" target="_blank" rel="noopener" aria-label="View actual optional Plan Scan interface"><img src="/images/screen-planscan.jpg?v=bank20261010logo" width="780" height="1688" loading="lazy" alt="Optional ScopeSnap Plan Scan using a black-and-white floor plan"></a>
+      <a class="ps-plan-optional-image" href="/images/screen-planscan.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View actual optional Plan Scan interface"><img src="/images/screen-planscan.jpg?v=20261010site4" width="780" height="1688" loading="lazy" alt="Optional ScopeSnap Plan Scan using a black-and-white floor plan"></a>
     </aside>
   </div>
 </section>
@@ -294,7 +321,7 @@
       </div>
     </div>
     <p class="vd-sr">A living room site note reads: &#8220;Righto, replace the existing carpet, patch the scuffed walls and repaint the walls and ceiling. Keep the sliding glass door. Confirm the floor area and threshold.&#8221; ScopeSnap drafts: remove and replace living room carpet; patch and paint walls and ceiling; retain the existing sliding door; measure the floor and confirm the threshold.</p></div>
-    <figure class="product-screen scope-screen"><a href="/images/screen-review.jpg?v=bank20261010logo" target="_blank" rel="noopener" aria-label="View the actual editable AI draft"><img src="/images/screen-review.jpg?v=bank20261010logo" width="780" height="1688" loading="lazy" alt="Actual ScopeSnap editable room-by-room AI draft"/></a><figcaption>Check and edit the AI draft</figcaption></figure>
+    <figure class="product-screen scope-screen phone-figure"><a class="device-shell" href="/images/screen-review.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View the actual editable AI draft"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-review.jpg?v=20261010site4" width="780" height="1688" loading="lazy" alt="Actual ScopeSnap editable room-by-room AI draft"/></a><figcaption>Check and edit the AI draft</figcaption></figure>
     </div>
   </div>
 </section>
@@ -313,22 +340,22 @@
     <div class="report-panel" id="report-client" role="tabpanel" data-report-panel="client">
       <div class="report-panel-copy"><span class="ps-step">01 / CLIENT SCOPE REPORT</span><h3>For your client.</h3>
         <p>Proposed work room by room with photos, selections, what’s by owner and what’s still to confirm.</p>
-        <div class="report-thumb-list" aria-label="Choose client report page"><button type="button" class="report-thumb" aria-pressed="false" data-report-type="client" data-report-image="/images/report-client-cover.jpg?v=bank20261010logo" aria-label="Report cover"><img src="/images/report-client-cover.jpg?v=bank20261010logo" width="931" height="1317" loading="lazy" alt="cover page"/></button>
-<button type="button" class="report-thumb active" aria-pressed="true" data-report-type="client" data-report-image="/images/report-client-detail.jpg?v=bank20261010logo" aria-label="Kitchen room scope"><img src="/images/report-client-detail.jpg?v=bank20261010logo" width="931" height="1317" loading="lazy" alt="detail page"/></button>
-<button type="button" class="report-thumb" aria-pressed="false" data-report-type="client" data-report-image="/images/report-client-photos.jpg?v=bank20261010logo" aria-label="Bathroom room scope"><img src="/images/report-client-photos.jpg?v=bank20261010logo" width="931" height="1317" loading="lazy" alt="photos page"/></button></div>
-        <a class="ps-report-download" href="/sample-client-report.pdf?v=bank20261010logo" target="_blank" rel="noopener">Open complete client PDF <span aria-hidden="true">↗</span></a>
+        <div class="report-thumb-list" aria-label="Choose client report page"><button type="button" class="report-thumb" aria-pressed="false" data-report-type="client" data-report-image="/images/report-client-cover.jpg?v=20261010site4" aria-label="Report cover"><img src="/images/report-client-cover.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="cover page"/></button>
+<button type="button" class="report-thumb active" aria-pressed="true" data-report-type="client" data-report-image="/images/report-client-detail.jpg?v=20261010site4" aria-label="Kitchen room scope"><img src="/images/report-client-detail.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="detail page"/></button>
+<button type="button" class="report-thumb" aria-pressed="false" data-report-type="client" data-report-image="/images/report-client-photos.jpg?v=20261010site4" aria-label="Bathroom room scope"><img src="/images/report-client-photos.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="photos page"/></button></div>
+        <a class="ps-report-download" href="/sample-client-report.pdf?v=20261010site4" target="_blank" rel="noopener">Open complete client PDF <span aria-hidden="true">↗</span></a>
       </div>
-      <a class="report-large-page" data-report-large-link="client" href="/images/report-client-detail.jpg?v=bank20261010logo" target="_blank" rel="noopener" aria-label="Enlarge selected client report page"><img data-report-large="client" src="/images/report-client-detail.jpg?v=bank20261010logo" alt="Client kitchen scope with actual photo" width="931" height="1317" loading="lazy"/></a>
+      <a class="report-large-page" data-report-large-link="client" href="/images/report-client-detail.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="Enlarge selected client report page"><img data-report-large="client" src="/images/report-client-detail.jpg?v=20261010site4" alt="Client kitchen scope with actual photo" width="931" height="1317" loading="lazy"/></a>
     </div>
     <div class="report-panel" id="report-internal" role="tabpanel" data-report-panel="internal" hidden>
       <div class="report-panel-copy"><span class="ps-step">02 / INTERNAL SITE REPORT</span><h3>For your team.</h3>
         <p>Measurements, approximate quantities, site notes, room photos and items still to confirm for pricing.</p>
-        <div class="report-thumb-list" aria-label="Choose internal report page"><button type="button" class="report-thumb" aria-pressed="false" data-report-type="internal" data-report-image="/images/report-internal-cover.jpg?v=bank20261010logo" aria-label="Internal report cover"><img src="/images/report-internal-cover.jpg?v=bank20261010logo" width="931" height="1317" loading="lazy" alt="cover page"/></button>
-<button type="button" class="report-thumb active" aria-pressed="true" data-report-type="internal" data-report-image="/images/report-internal-detail.jpg?v=bank20261010logo" aria-label="Kitchen internal scope"><img src="/images/report-internal-detail.jpg?v=bank20261010logo" width="931" height="1317" loading="lazy" alt="detail page"/></button>
-<button type="button" class="report-thumb" aria-pressed="false" data-report-type="internal" data-report-image="/images/report-internal-photos.jpg?v=bank20261010logo" aria-label="Bathroom internal scope"><img src="/images/report-internal-photos.jpg?v=bank20261010logo" width="931" height="1317" loading="lazy" alt="photos page"/></button></div>
-        <a class="ps-report-download" href="/sample-internal-report.pdf?v=bank20261010logo" target="_blank" rel="noopener">Open complete internal PDF <span aria-hidden="true">↗</span></a>
+        <div class="report-thumb-list" aria-label="Choose internal report page"><button type="button" class="report-thumb" aria-pressed="false" data-report-type="internal" data-report-image="/images/report-internal-cover.jpg?v=20261010site4" aria-label="Internal report cover"><img src="/images/report-internal-cover.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="cover page"/></button>
+<button type="button" class="report-thumb active" aria-pressed="true" data-report-type="internal" data-report-image="/images/report-internal-detail.jpg?v=20261010site4" aria-label="Kitchen internal scope"><img src="/images/report-internal-detail.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="detail page"/></button>
+<button type="button" class="report-thumb" aria-pressed="false" data-report-type="internal" data-report-image="/images/report-internal-photos.jpg?v=20261010site4" aria-label="Bathroom internal scope"><img src="/images/report-internal-photos.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="photos page"/></button></div>
+        <a class="ps-report-download" href="/sample-internal-report.pdf?v=20261010site4" target="_blank" rel="noopener">Open complete internal PDF <span aria-hidden="true">↗</span></a>
       </div>
-      <a class="report-large-page" data-report-large-link="internal" href="/images/report-internal-detail.jpg?v=bank20261010logo" target="_blank" rel="noopener" aria-label="Enlarge selected internal report page"><img data-report-large="internal" src="/images/report-internal-detail.jpg?v=bank20261010logo" alt="Internal kitchen scope with actual site photo" width="931" height="1317" loading="lazy"/></a>
+      <a class="report-large-page" data-report-large-link="internal" href="/images/report-internal-detail.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="Enlarge selected internal report page"><img data-report-large="internal" src="/images/report-internal-detail.jpg?v=20261010site4" alt="Internal kitchen scope with actual site photo" width="931" height="1317" loading="lazy"/></a>
     </div>
     <div class="ps-report-conclusion">
       <div><h3>Not a bare list of notes.</h3><p>Room photography, practical scope wording and clear responsibilities — ready to review, share and build from.</p></div>
