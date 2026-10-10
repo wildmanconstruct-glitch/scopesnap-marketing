@@ -23,7 +23,7 @@ for(const question of ["Is the AI always right?","Does ScopeSnap price or quote 
 for(const p of ["contact","privacy","terms","billing"]) {
  const page=read(p+".html");
  assert(page.includes('rel="canonical" href="https://scopesnap.com.au/'+p+'"'),"Canonical "+p);
- assert(page.includes('og:image" content="https://scopesnap.com.au/og.png"'),"Social image "+p);
+ assert(page.includes('og:image" content="https://scopesnap.com.au/og.png?v=20261011rev1"'),"Social image "+p);
  assert(page.includes("brand-sync.css?v=20261011rev1"),"Site Set-Out stylesheet on "+p);
 }
 for(const p of ["how-it-works","delete-account","404"])assert(read(p+".html").includes("brand-sync.css?v=20261011rev1"),"Unified styling on "+p);
