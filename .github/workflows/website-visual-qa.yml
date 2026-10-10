@@ -60,6 +60,18 @@ jobs:
           }
           await browser.close();
           JS
+      - name: Make lightweight inspectable screenshots
+        run: |
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          for name in ("home-desktop", "home-mobile", "workflow-desktop"):
+              src=Path("qa-screenshots") / f"{name}.png"
+              im=Image.open(src).convert("RGB")
+              im.thumbnail((1000,13000),Image.Resampling.LANCZOS)
+              im.save(Path("qa-screenshots") / f"{name}-review.jpg",quality=66,optimize=True)
+          PY
       - name: Publish QA snapshots to isolated branch
         run: |
           git config user.name "ScopeSnap visual QA bot"
