@@ -36,8 +36,11 @@ assert(!home.includes("Across 30+ jobs")&&!home.includes("45+ hours"),"No unsupp
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('Wildheart Homes'),"Do not name the building company on marketing homepage");
-assert(home.includes('viewBox="0 0 1450 1086"'),"Measurement overlay must share photograph coordinates");
-assert(home.includes('M615 226 V179')&&home.includes('M1034 203 H1083'),"Window dimension witness lines must anchor to window casing");
+assert(home.includes('viewBox="0 0 1448 1086"'),"Measurement overlay must share true image dimensions");
+assert(home.includes('M615 185 L1034 161')&&home.includes('M1078 202 L1071 496'),"Perspective-aware width and height measurement lines");
+assert(css.includes("color:#C17F3E")&&css.includes(".so-dimension-label rect{fill:rgba(14,14,13,.94);stroke:#C17F3E"),"True app gold measurement labels and lines");
+assert(home.includes("brand-sync.css?v=20261011gold3"),"Hero styles cache-busted");
+assert(home.includes('M615 226 L615 181')&&home.includes('M1034 202 L1078 202'),"Window dimension witness lines must anchor to window casing");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="so-report-caption"'),"Show a correct caption for report content");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
