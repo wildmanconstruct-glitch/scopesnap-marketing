@@ -6,6 +6,7 @@ on:
       - index.html
       - how-it-works.html
       - shared.css
+      - premium-showcase.css
       - .github/workflows/website-visual-qa.yml
   workflow_dispatch:
 permissions:
@@ -41,6 +42,19 @@ jobs:
             await page.screenshot({path:'qa-screenshots/'+name+'.png',fullPage:true});
             const missing=await page.evaluate(()=>[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src));
             if(missing.length) throw new Error('Missing images: '+missing.join(', '));
+            if(path==='/'){
+              const geometry=await page.evaluate(()=>({
+                viewport:innerWidth,
+                scroll:document.documentElement.scrollWidth,
+                phone:document.querySelector('.hero-room-device')?.getBoundingClientRect().width,
+                hero:document.querySelector('.hero')?.getBoundingClientRect().height,
+                giantReport:!!document.querySelector('.hero-report-peek')
+              }));
+              if(geometry.giantReport) throw new Error('Full report must not appear in the hero');
+              if(geometry.scroll>geometry.viewport+2) throw new Error('Horizontal page overflow: '+JSON.stringify(geometry));
+              if(!geometry.phone || geometry.phone>300) throw new Error('Hero phone must remain contained: '+JSON.stringify(geometry));
+              if(width>=900 && geometry.hero>850) throw new Error('Desktop hero too tall: '+JSON.stringify(geometry));
+            }
             await page.close();
           }
           await browser.close();
