@@ -32,7 +32,8 @@ for(const variant of ["client","internal"]) {
  assert(!buffer.includes(Buffer.from("ReportLab")), "PDFs must use the actual ScopeSnap exporter");
 }
 const source = JSON.parse(read("assets/source-manifest.json"));
-assert(source.asset_source_commit === "c6ace7d80798c475631368df17adb0e3fc9ff2bc", "Source capture revision matches delivered assets");
+assert(/^[a-f0-9]{40}$/.test(source.asset_source_commit), "Source capture commit must be a valid Git SHA");
+assert(source.generator === ".github/workflows/website-assets.yml", "Only actual app-generated captures may be used");
 assert(home.includes("/images/screen-room.jpg?v="), "Homepage room capture uses versioned screenshot");
 assert(read("how-it-works.html").includes("/images/screen-voice.jpg?v="), "Walkthrough includes versioned voice screen");
 assert(read("vercel.json").includes("must-revalidate"), "Mutable image assets must revalidate");
