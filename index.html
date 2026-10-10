@@ -85,13 +85,13 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=JetBrains+Mono:wght@400;500&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/shared.css?v=17"/>
-  <link rel="stylesheet" href="/premium-showcase.css?v=20261010site4"/>
+  <link rel="stylesheet" href="/premium-showcase.css?v=20261010setout1"/>
 
-  <link rel="stylesheet" href="/brand-sync.css?v=20261010site4"/>
+  <link rel="stylesheet" href="/brand-sync.css?v=20261010setout1"/>
 </head>
-<body>
+<body class="site-setout">
 
 <!-- NAV -->
 <nav id="nav">
@@ -112,7 +112,7 @@
     </a>
     <ul class="nav-links" role="navigation">
       <li><a href="/how-it-works">How it works</a></li>
-      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#reports">Reports</a></li><li><a href="#pricing">Pricing</a></li>
       <li><a href="/contact.html">Contact</a></li>
       <li><a href="https://app.scopesnap.com.au/">Log in</a></li>
     </ul>
@@ -131,244 +131,73 @@
 </div>
 
 <main>
-
-<!-- &#9472;&#9472; HERO &#9472;&#9472; -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-eyebrow">For Australian builders</div>
-    <h1>Walk the site.<br><em>Leave with<br>the scope.</em></h1>
-    <p class="hero-sub">Capture the job while you walk it. Keep photos, voice notes, room measurements and what needs doing in one place — then review a clear scope and share it with your client or team.</p>
-    <p class="scope-jobtypes">New builds <span aria-hidden="true">·</span> Extensions <span aria-hidden="true">·</span> Renovations <span aria-hidden="true">·</span> Repairs &amp; maintenance</p>
-    <div class="hero-actions">
-      <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start 14-day free trial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      <a href="#reports" class="btn-ghost">See the finished reports</a>
-    </div>
-  </div>
-  <div class="hero-right hero-product-stage" aria-label="ScopeSnap site photo and genuine room capture screen">
-    <div class="hero-scene">
-      <div class="hero-site-image">
-        <img src="/images/demo/kitchen.jpg?v=20261010site4" width="1536" height="1024" alt="Existing cream laminate kitchen photographed for the ScopeSnap sample job" fetchpriority="high" />
-        <span class="hero-photo-label"><span class="hero-photo-indicator"></span> SITE CAPTURE · KITCHEN</span>
-      </div>
-      <a class="product-device hero-room-device" href="/images/screen-room.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="Open the real ScopeSnap room capture screen at full size">
-        <span class="device-camera" aria-hidden="true"></span>
-        <img src="/images/screen-room.jpg?v=20261010site4" width="780" height="1688" alt="Real ScopeSnap app, kitchen room capture showing three approved photos, AI Voice Scope and room measurements" />
-      </a>
-      <div class="hero-scene-caption">
-        <strong>On site, not back at the desk.</strong>
-        <span>Photo. Voice. Measurements. Scope.</span>
-      </div>
-    </div>
-  </div>
+<!-- SITE SET-OUT / HERO -->
+<section class="so-hero" aria-labelledby="site-title">
+ <div class="so-hero-photo" aria-hidden="true"></div><div class="so-hero-grid" aria-hidden="true"></div>
+ <div class="so-dim so-dim-h" aria-hidden="true"><b>4.20 m</b></div><div class="so-dim so-dim-v" aria-hidden="true"><b>2.70 m</b></div>
+ <span class="so-plan-tag" aria-hidden="true">Kitchen · Replace joinery</span>
+ <div class="wrap">
+  <p class="so-mono so-eyebrow">Site scoping app · Built in the Adelaide Hills</p>
+  <h1 id="site-title" class="so-display">Walk the site.<br><span>Leave with the scope.</span></h1>
+  <p class="so-lead">Photos, voice notes and measurements captured room by room on your phone, turned into a clear client scope and internal site report. From renovations and extensions to new builds, repairs and maintenance. Plans optional.</p>
+  <div class="so-actions"><a class="btn-primary" href="https://app.scopesnap.com.au/?signup=1" data-track="cta-start-trial">Start 14-day free trial <span aria-hidden="true">→</span></a><a class="btn-ghost" href="#reports">See a real report <span aria-hidden="true">↗</span></a></div>
+ </div>
+ <a class="so-phone so-hero-phone" href="/images/screen-room.jpg" target="_blank" rel="noopener" aria-label="Open full-size ScopeSnap room capture screen"><img src="/images/screen-room.jpg" width="780" height="1688" alt="ScopeSnap room capture interface showing organised site photos, voice scoping and measurements" fetchpriority="high"></a>
+ <div class="so-specbar"><div class="wrap">
+  <span class="so-mono">Job <strong>Mitchell Residence</strong></span><span class="so-mono">Stirling SA</span><span class="so-mono"><strong>5</strong> rooms</span><span class="so-mono"><strong>14</strong> photos</span><span class="so-mono"><strong>3</strong> voice notes</span><span class="so-mono so-ready">Scope ready ✓</span>
+ </div></div>
 </section>
 
-<!-- &#9472;&#9472; TRUST BAR &#9472;&#9472; -->
-<div class="trust-bar">
-  <div class="wrap trust-bar-inner">
-    <div class="trust-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Built for Australian builders
-    </div>
-    <div class="trust-sep"></div>
-    <div class="trust-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-      14-day free trial &#8212; no credit card required
-    </div>
-    <div class="trust-sep"></div>
-    <div class="trust-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Cancel any time
-    </div>
-    <div class="trust-sep"></div>
-    <div class="trust-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      Payments secured by Stripe
-    </div>
+<!-- WORKFLOW -->
+<section class="so-light so-workflow" id="features">
+ <div class="wrap">
+  <div class="so-section-head">
+   <span class="so-mono">01 — Workflow</span><h2 class="so-display">Four steps.<br>One site visit.</h2><p>Built around how builders work on site: capture each area, record what needs doing and keep the details together. Start with plans if you have them.</p>
   </div>
-</div>
-
-<!-- ── PROOF SECTION ── -->
-<section class="section" id="proof">
-  <div class="wrap story-grid">
-    <div class="story-copy">
-    <div class="eyebrow">On site with Wildheart Homes</div>
-    <h2>Built on our own jobs.<br><em>For builders.</em></h2>
-    <p class="section-sub">Wildheart Homes is our Adelaide Hills building business, where we've developed and tested ScopeSnap's on-site capture workflow. The app is built for scoping new builds, extensions, renovations, repairs and other building projects — not just one type of job.</p>
-    </div>
-    <div class="story-results story-proof-simple">
-      <div class="story-proof-mark">WILDHEART <span aria-hidden="true">/</span> SCOPESNAP</div>
-      <p><strong>Designed around the work builders do on site.</strong> ScopeSnap has been developed and tested alongside our own South Australian building business.</p>
-      <p class="story-proof-small">Wildheart Homes · Adelaide Hills, South Australia</p>
-    </div>
+  <div class="so-steps" aria-label="Four workflow steps, swipe to see more on mobile" tabindex="0">
+   <article class="so-step"><div class="so-step-line so-mono"><b>01</b><span>Set up</span></div><h3>Start with<br>the job</h3><p>Create a job, select its rooms and areas, or scan plans to get a head start.</p><div class="so-step-shot"><img src="/images/screen-planscan.jpg" width="780" height="1688" loading="lazy" alt="ScopeSnap plan scan and room setup screen"></div></article>
+   <article class="so-step"><div class="so-step-line so-mono"><b>02</b><span>Capture</span></div><h3>Every photo.<br>Right room.</h3><p>Keep photos, AI observations and scope details attached to the right room.</p><div class="so-step-shot"><img src="/images/screen-photo.jpg" width="780" height="1688" loading="lazy" alt="ScopeSnap site photo capture screen"></div></article>
+   <article class="so-step"><div class="so-step-line so-mono"><b>03</b><span>Voice</span></div><h3>Say it.<br>It's written.</h3><p>Describe the work aloud. Review the draft ScopeSnap puts into writing.</p><div class="so-step-shot"><img src="/images/screen-voice.jpg" width="780" height="1688" loading="lazy" alt="ScopeSnap voice-to-scope screen"></div></article>
+   <article class="so-step"><div class="so-step-line so-mono"><b>04</b><span>Measure</span></div><h3>Measure<br>on the spot</h3><p>Use the camera tape measure for estimates or enter exact dimensions.</p><div class="so-step-shot"><img src="/images/screen-measure.jpg" width="780" height="1688" loading="lazy" alt="ScopeSnap room measurement screen"></div></article>
   </div>
+ </div>
 </section>
-
-<!-- &#9472;&#9472; PROBLEM &#9472;&#9472; -->
-<section class="section" id="problem">
-  <div class="wrap">
-    <div class="eyebrow">The problem</div>
-    <h2>The problem starts <em>after the site walk.</em></h2>
-    <p class="section-sub">The walkthrough is done. The evening spent sorting photos and writing up notes doesn’t have to follow.</p>
-    <div class="compare-grid">
-      <div class="compare-card fade-in">
-        <div class="compare-label bad-label">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          Without ScopeSnap
-        </div>
-        <ul class="compare-list">
-          <li>Photos buried in your camera roll</li>
-          <li>Notes spread across messages and voice memos</li>
-          <li>Scope written from memory after you get home</li>
-        </ul>
-      </div>
-      <div class="compare-card good fade-in fade-in-delay-1">
-        <div class="compare-label good-label">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-          With ScopeSnap
-        </div>
-        <ul class="compare-list">
-          <li>Photos and notes organised by room</li>
-          <li>Voice notes turned into written scope</li>
-          <li>A clear report to review and share</li>
-        </ul>
-      </div>
-    </div>
+<!-- VOICE -->
+<section class="so-voice" id="voice-demo">
+ <div class="wrap">
+  <div class="so-section-head so-dark-head"><span class="so-mono">02 — Voice to scope</span><h2 class="so-display so-voice-title">You talk.<br><span>It writes.</span></h2><p>Capture the job without typing on site. Read, check and edit the generated scope before sharing.</p></div>
+  <div class="so-voice-grid">
+   <div class="so-voice-side"><div class="so-mono" style="color:#C4BFB6">● Recorded on site — Ensuite — 0:38</div><p class="so-voice-quote">“Righto, ensuite’s getting the full strip-out. Shower’s leaking behind the wall so we’re re-sheeting that, new waterproofing, wall-hung vanity, and the client wants matte black tapware throughout.”</p></div>
+   <div class="so-voice-side"><div class="so-mono" style="color:#C4BFB6">ScopeSnap wrote — Check before sharing</div>
+    <ol class="so-voice-list"><li><span class="so-mono">01</span>Full strip-out of existing ensuite</li><li><span class="so-mono">02</span>Re-sheet shower wall; new waterproofing</li><li><span class="so-mono">03</span>Supply and install wall-hung vanity</li><li><span class="so-mono">04</span>Matte black tapware throughout</li></ol>
+   </div>
   </div>
+ </div>
 </section>
-
-<!-- APPROVED ON-SITE PHOTO GALLERY -->
-<section class="section site-gallery" id="site-example" aria-labelledby="site-gallery-title">
-  <div class="wrap">
-    <div class="gallery-heading">
-      <div><div class="eyebrow">One job. Everything together.</div>
-        <h2 id="site-gallery-title">The details stay<br><em>with the job.</em></h2>
-      </div>
-      <p>Room photos and the existing outside conditions, captured together. Open a room to review what was recorded; keep the scope attached to the right place.</p>
-    </div>
-    <div class="site-gallery-grid">
-      <figure class="site-gallery-item"><img src="/images/demo/kitchen.jpg?v=20261010site4" alt="Original cream kitchen with laminate cabinetry and electric cooktop" loading="lazy"><figcaption><b>Kitchen</b><span>3 photos · existing condition</span></figcaption></figure>
-      <figure class="site-gallery-item"><img src="/images/demo/bathroom.jpg?v=20261010site4" alt="Clean dated main bathroom with shower-over-bath and timber-look vanity" loading="lazy"><figcaption><b>Main bathroom</b><span>3 photos · existing condition</span></figcaption></figure>
-      <figure class="site-gallery-item"><img src="/images/demo/living.jpg?v=20261010site4" alt="Lived-in living room with carpet and sliding glass door to the yard" loading="lazy"><figcaption><b>Living room</b><span>3 photos · existing condition</span></figcaption></figure>
-      <figure class="site-gallery-item"><img src="/images/demo/exterior.jpg?v=20261010site4" alt="Brown brick and terracotta roof at the front of the house" loading="lazy"><figcaption><b>Exterior</b><span>3 photos · site access</span></figcaption></figure>
-    </div>
-    <p class="gallery-footnote">One illustrative site capture, using ScopeSnap's actual room and report workflow.</p>
+<!-- REAL PDF REPORTS -->
+<section class="so-reports" id="reports" aria-labelledby="so-report-title">
+ <div class="wrap">
+  <div class="so-section-head so-dark-head"><span class="so-mono">03 — Output</span><h2 id="so-report-title" class="so-display">Reports worth<br>your name.</h2><p>Client and internal PDFs, generated from the site details in ScopeSnap. Open the full reports to inspect the layout, photos and room-by-room scope.</p></div>
+  <div class="so-report-layout">
+   <div class="so-report-paper">
+    <a id="so-report-preview-link" href="/images/report-client-detail.jpg" target="_blank" rel="noopener" aria-label="Open current report preview image"><img id="so-report-preview" src="/images/report-client-detail.jpg" width="931" height="1317" loading="lazy" alt="Client scope report page with kitchen photograph and works"></a>
+    <span class="so-report-call photo" aria-hidden="true">Room photo</span><span class="so-report-call work" aria-hidden="true">Proposed works</span><span class="so-report-call owner" aria-hidden="true">By owner</span>
+   </div>
+   <div class="so-report-side"><div class="so-mono" style="color:var(--cu);margin-bottom:28px">Choose report</div>
+    <button type="button" class="so-report-option" aria-selected="true" aria-controls="so-report-preview" data-src="/images/report-client-detail.jpg" data-pdf="/sample-client-report.pdf" data-name="client"><span class="so-mono">Client report · PDF</span><b>For your client.</b><p>Proposed work by room, with photos, selections and responsibilities.</p></button>
+    <button type="button" class="so-report-option" aria-selected="false" aria-controls="so-report-preview" data-src="/images/report-internal-detail.jpg" data-pdf="/sample-internal-report.pdf" data-name="internal"><span class="so-mono">Internal report · PDF</span><b>For your team.</b><p>Measurements, quantities, site notes and open items for pricing.</p></button>
+    <a class="so-report-link btn-ghost" id="so-pdf-link" href="/sample-client-report.pdf" target="_blank" rel="noopener">Open full client PDF <span aria-hidden="true">↗</span></a>
+    <p class="so-report-note">Sample job. Photos are illustrative. Reports are generated by ScopeSnap.</p>
+   </div>
   </div>
-</section>
-<!-- SCOPE SNAP / PREMIUM PRODUCT TOUR -->
-<section class="section ps-tour" id="features" aria-labelledby="ps-tour-title">
-  <div class="wrap">
-    <div class="ps-section-top">
-      <div>
-        <div class="eyebrow">Built for the way builders actually work</div>
-        <h2 id="ps-tour-title">The site visit.<br><em>Sorted.</em></h2>
-      </div>
-      <p>Whether it's new construction or work to an existing building, capture each room or area with photos, voice notes and measurements. Review the scope afterwards. Plans are optional.</p>
-    </div>
-    <div class="ps-product-grid">
-      <article class="ps-feature-card">
-        <div class="ps-feature-copy"><span class="ps-step">01 / ROOM PHOTOS + AI</span><h3>Every room.<br>Every detail.</h3><p>Photograph existing conditions, new work areas or site details. Keep each photo with its room and check AI observations alongside your notes.</p></div>
-        <a class="ps-phone" href="/images/screen-photo.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View actual ScopeSnap AI photo brief screen"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-photo.jpg?v=20261010site4" alt="Actual ScopeSnap photo lightbox displaying the pre-renovation kitchen and detailed AI photo observations" width="780" height="1688" loading="lazy"></a>
-        <a class="ps-feature-link" href="/how-it-works#photos">See room capture <span aria-hidden="true">↗</span></a>
-      </article>
-      <article class="ps-feature-card">
-        <div class="ps-feature-copy"><span class="ps-step">02 / AI VOICE CAPTURE</span><h3>Walk. Talk.<br>Scope.</h3><p>Describe what needs building, changing, repairing or confirming while you're there. ScopeSnap turns your recording into notes you can check and edit.</p></div>
-        <a class="ps-phone" href="/images/screen-voice.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View actual ScopeSnap voice recording screen"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-voice.jpg?v=20261010site4" alt="Actual ScopeSnap AI Voice Scope recording control with waveform, stop button and five-minute timer" width="780" height="1688" loading="lazy"></a>
-        <a class="ps-feature-link" href="#voice-demo">See voice to scope <span aria-hidden="true">↗</span></a>
-      </article>
-      <article class="ps-feature-card">
-        <div class="ps-feature-copy"><span class="ps-step">03 / ON-SITE MEASUREMENTS</span><h3>Point. Measure.<br>Capture.</h3><p>Enter dimensions manually, or use the camera-assisted Tape Measure for estimates. Save everything with the room.</p></div>
-        <a class="ps-phone" href="/images/screen-measure.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View actual ScopeSnap Tape Measure screen"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-measure.jpg?v=20261010site4" alt="Actual ScopeSnap camera Tape Measure with point-to-point line measuring a window" width="780" height="1688" loading="lazy"></a>
-        <span class="ps-feature-footnote">Camera measurements are estimates; verify critical set-out on site.</span>
-      </article>
-      <article class="ps-feature-card">
-        <div class="ps-feature-copy"><span class="ps-step">04 / REVIEW &amp; SHARE</span><h3>From site notes<br>to a clear scope.</h3><p>Check the scope wording and open items before creating the client and internal reports.</p></div>
-        <a class="ps-phone" href="/images/screen-review.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="See real ScopeSnap scope review screen"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-review.jpg?v=20261010site4" width="780" height="1688" loading="lazy" alt="Actual ScopeSnap AI draft review interface" /></a>
-        <a class="ps-feature-link" href="#reports">See finished reports <span aria-hidden="true">↗</span></a>
-      </article>
-    </div>
-    <aside class="ps-plan-optional" id="plan-scan" aria-label="Optional Plan Scan feature">
-      <div class="ps-plan-optional-copy">
-        <span class="ps-step">OPTIONAL / PLAN SCAN</span>
-        <h3>Got drawings? Great. No plans? No problem.</h3>
-        <p>Add rooms yourself and start the inspection. If you already have a floor plan, Plan Scan can suggest rooms and notes for you to review before adding them.</p>
-        <a href="/how-it-works#optional-plans">See optional Plan Scan <span aria-hidden="true">↗</span></a>
-      </div>
-      <a class="ps-plan-optional-image" href="/images/screen-planscan.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View actual optional Plan Scan interface"><img src="/images/screen-planscan.jpg?v=20261010site4" width="780" height="1688" loading="lazy" alt="Optional ScopeSnap Plan Scan using a black-and-white floor plan"></a>
-    </aside>
-  </div>
-</section>
-<!-- ── VOICE TO SCOPE DEMO ── -->
-<section class="section" id="voice-demo">
-  <div class="wrap">
-<div class="voice-layout"><div class="voice-copy">    <div class="eyebrow">Voice to scope</div>
-    <h2>You talk. <em>It writes.</em></h2>
-    <p class="section-sub">Describe the work in your own words. Get a structured draft, then check the details before you share it.</p>
-    <div class="vd-tabs" role="tablist" aria-label="Voice demo view">
-      <button class="vd-tab" id="vdTabVoice" role="tab" aria-selected="false" onclick="setVdTab('voice')">What you said</button>
-      <button class="vd-tab active" id="vdTabScope" role="tab" aria-selected="true" onclick="setVdTab('scope')">What ScopeSnap wrote</button>
-    </div>
-    <div class="vd-grid fade-in" id="vdGrid" data-tab="scope">
-      <div class="vd-card">
-        <div class="vd-label"><span class="vd-dot" aria-hidden="true"></span>You, on site &#8212; Living Room</div>
-        <div class="vd-text" id="vdVoice" aria-hidden="true"></div>
-      </div>
-      <div class="vd-arrow" aria-hidden="true">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-      <div class="vd-card vd-scope">
-        <div class="vd-label vd-label-gold">ScopeSnap writes</div>
-        <div class="vd-lines" id="vdScope" aria-hidden="true"></div>
-      </div>
-    </div>
-    <p class="vd-sr">A living room site note reads: &#8220;Righto, replace the existing carpet, patch the scuffed walls and repaint the walls and ceiling. Keep the sliding glass door. Confirm the floor area and threshold.&#8221; ScopeSnap drafts: remove and replace living room carpet; patch and paint walls and ceiling; retain the existing sliding door; measure the floor and confirm the threshold.</p></div>
-    <figure class="product-screen scope-screen phone-figure"><a class="device-shell" href="/images/screen-review.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="View the actual editable AI draft"><span class="device-camera" aria-hidden="true"></span><img src="/images/screen-review.jpg?v=20261010site4" width="780" height="1688" loading="lazy" alt="Actual ScopeSnap editable room-by-room AI draft"/></a><figcaption>Check and edit the AI draft</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<!-- SCOPE SNAP / CLIENT AND INTERNAL REPORTS -->
-<section class="section ps-reports" id="reports" aria-labelledby="ps-reports-title">
-  <div class="wrap">
-    <div class="ps-section-top ps-report-top">
-      <div><div class="eyebrow">From captured details to finished documents</div><h2 id="ps-reports-title">Reports worth<br><em>putting your name on.</em></h2></div>
-      <p>These client and internal PDFs show a home renovation captured in ScopeSnap and generated by its actual report exporter. The same report workflow supports new builds, extensions, repairs and other work. Open both reports to see the output.</p>
-    </div>
-    <div class="report-tabs" role="tablist" aria-label="ScopeSnap report types">
-      <button class="report-tab active" type="button" role="tab" aria-selected="true" aria-controls="report-client" data-report-tab="client">Client report</button>
-      <button class="report-tab" type="button" role="tab" aria-selected="false" aria-controls="report-internal" data-report-tab="internal">Internal report</button>
-    </div>
-    <div class="report-panel" id="report-client" role="tabpanel" data-report-panel="client">
-      <div class="report-panel-copy"><span class="ps-step">01 / CLIENT SCOPE REPORT</span><h3>For your client.</h3>
-        <p>Proposed work room by room with photos, selections, what’s by owner and what’s still to confirm.</p>
-        <div class="report-thumb-list" aria-label="Choose client report page"><button type="button" class="report-thumb" aria-pressed="false" data-report-type="client" data-report-image="/images/report-client-cover.jpg?v=20261010site4" aria-label="Report cover"><img src="/images/report-client-cover.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="cover page"/></button>
-<button type="button" class="report-thumb active" aria-pressed="true" data-report-type="client" data-report-image="/images/report-client-detail.jpg?v=20261010site4" aria-label="Kitchen room scope"><img src="/images/report-client-detail.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="detail page"/></button>
-<button type="button" class="report-thumb" aria-pressed="false" data-report-type="client" data-report-image="/images/report-client-photos.jpg?v=20261010site4" aria-label="Bathroom room scope"><img src="/images/report-client-photos.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="photos page"/></button></div>
-        <a class="ps-report-download" href="/sample-client-report.pdf?v=20261010site4" target="_blank" rel="noopener">Open complete client PDF <span aria-hidden="true">↗</span></a>
-      </div>
-      <a class="report-large-page" data-report-large-link="client" href="/images/report-client-detail.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="Enlarge selected client report page"><img data-report-large="client" src="/images/report-client-detail.jpg?v=20261010site4" alt="Client kitchen scope with actual photo" width="931" height="1317" loading="lazy"/></a>
-    </div>
-    <div class="report-panel" id="report-internal" role="tabpanel" data-report-panel="internal" hidden>
-      <div class="report-panel-copy"><span class="ps-step">02 / INTERNAL SITE REPORT</span><h3>For your team.</h3>
-        <p>Measurements, approximate quantities, site notes, room photos and items still to confirm for pricing.</p>
-        <div class="report-thumb-list" aria-label="Choose internal report page"><button type="button" class="report-thumb" aria-pressed="false" data-report-type="internal" data-report-image="/images/report-internal-cover.jpg?v=20261010site4" aria-label="Internal report cover"><img src="/images/report-internal-cover.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="cover page"/></button>
-<button type="button" class="report-thumb active" aria-pressed="true" data-report-type="internal" data-report-image="/images/report-internal-detail.jpg?v=20261010site4" aria-label="Kitchen internal scope"><img src="/images/report-internal-detail.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="detail page"/></button>
-<button type="button" class="report-thumb" aria-pressed="false" data-report-type="internal" data-report-image="/images/report-internal-photos.jpg?v=20261010site4" aria-label="Bathroom internal scope"><img src="/images/report-internal-photos.jpg?v=20261010site4" width="931" height="1317" loading="lazy" alt="photos page"/></button></div>
-        <a class="ps-report-download" href="/sample-internal-report.pdf?v=20261010site4" target="_blank" rel="noopener">Open complete internal PDF <span aria-hidden="true">↗</span></a>
-      </div>
-      <a class="report-large-page" data-report-large-link="internal" href="/images/report-internal-detail.jpg?v=20261010site4" target="_blank" rel="noopener" aria-label="Enlarge selected internal report page"><img data-report-large="internal" src="/images/report-internal-detail.jpg?v=20261010site4" alt="Internal kitchen scope with actual site photo" width="931" height="1317" loading="lazy"/></a>
-    </div>
-    <div class="ps-report-conclusion">
-      <div><h3>Not a bare list of notes.</h3><p>Room photography, practical scope wording and clear responsibilities — ready to review, share and build from.</p></div>
-      <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start your free trial <span aria-hidden="true">→</span></a>
-    </div>
-  </div>
+ </div>
 </section>
 <!-- PRICING -->
+
 <section class="section" id="pricing">
   <div class="wrap">
-    <div class="eyebrow" style="justify-content:center;">Pricing</div>
-    <h2 style="text-align:center;">Simple, transparent<br><em>pricing.</em></h2>
-    <p class="section-sub" style="margin:0 auto 28px; text-align:center; max-width:520px;">Try Solo free for 14 days with 5 jobs you create, plus a sample job to explore. No credit card required. After your trial, choose the plan that fits your team.</p>
+    <div class="eyebrow">04 — Pricing</div><h2>Simple plans.<br>Cancel any time.</h2>
+    <p class="section-sub">Try Solo free for 14 days with 5 jobs you create, plus a sample job to explore. No credit card required. After your trial, choose the plan that fits your team.</p>
     <div class="billing-toggle-wrap">
       <div class="billing-toggle">
         <button class="billing-opt active" id="toggleMonthly" onclick="setBilling('monthly')">Monthly</button>
@@ -627,20 +456,7 @@
 </section>
 
 <!-- ── GET STARTED ── -->
-<section class="section" id="get-started">
-  <div class="wrap">
-    <div class="signup-cta fade-in">
-      <div class="eyebrow" style="justify-content:center;">Get started today</div>
-      <h2 style="text-align:center;">Ready to scope jobs<br><em>faster?</em></h2>
-      <p class="section-sub" style="margin:0 auto 32px; text-align:center; max-width:460px;">Start your 14-day Solo trial, including 5 jobs you create, plus a sample job. No credit card required.</p>
-      <div class="signup-actions">
-        <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start free trial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        <a href="/contact.html" class="btn-ghost">Talk to us</a>
-      </div>
-      <p class="signup-note">No credit card required &middot; 14-day free trial &middot; Cancel any time</p>
-    </div>
-  </div>
-</section>
+<section class="so-final" id="get-started"><div class="wrap"><p class="so-mono so-eyebrow">Next site visit</p><h2 class="so-display">Your next scope<br><span>starts on site.</span></h2><div class="so-actions"><a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start 14-day free trial <span aria-hidden="true">→</span></a><a href="/contact.html" class="btn-ghost">Talk to us</a></div></div></section>
 </main>
 
 <!-- &#9472;&#9472; FOOTER &#9472;&#9472; -->
@@ -855,77 +671,10 @@ function setBilling(mode) {
   }
 }
 
-// Voice-to-scope demo animation
-(function() {
-  var voiceEl = document.getElementById('vdVoice');
-  var scopeEl = document.getElementById('vdScope');
-  if (!voiceEl || !scopeEl) return;
+</script>
 
-  var VOICE = "...righto, replace the existing living room carpet, patch the scuffed walls and repaint the walls and ceiling. Keep the sliding glass door. Need to confirm the floor area and threshold...";
-  var LINES = [
-    "Remove and replace existing living room carpet",
-    "Patch scuffs; repaint walls and ceiling",
-    "Protect and retain the sliding glass door",
-    "Confirm floor area and threshold details"
-  ];
-  var CHECK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';
-
-  function makeLine(text) {
-    var div = document.createElement('div');
-    div.className = 'vd-line';
-    div.innerHTML = CHECK + '<span></span>';
-    div.querySelector('span').textContent = text;
-    return div;
-  }
-
-  function showStatic() {
-    voiceEl.textContent = VOICE;
-    LINES.forEach(function(t) { var l = makeLine(t); l.classList.add('show'); scopeEl.appendChild(l); });
-  }
-
-  // AI-written lines are visible without waiting for an animation.
-  showStatic();
-  return;
-
-  var started = false;
-  var CHAR_MS = 17, PAUSE_MS = 250, LINE_MS = 380, HOLD_MS = 5000;
-  var TYPE_END = VOICE.length * CHAR_MS;
-  var LINES_END = TYPE_END + PAUSE_MS + LINES.length * LINE_MS;
-  var CYCLE = LINES_END + HOLD_MS;
-  var startTime = null, lineEls = null;
-
-  function setup() {
-    voiceEl.textContent = '';
-    scopeEl.innerHTML = '';
-    lineEls = LINES.map(function(t) { var l = makeLine(t); scopeEl.appendChild(l); return l; });
-  }
-
-  function frame(now) {
-    if (startTime === null) startTime = now;
-    var t = (now - startTime) % CYCLE;
-    var chars = Math.min(VOICE.length, Math.floor(t / CHAR_MS));
-    var shown = voiceEl.textContent.length;
-    if (chars < shown) { voiceEl.textContent = ''; lineEls.forEach(function(l) { l.classList.remove('show'); }); shown = 0; }
-    if (chars > shown) voiceEl.textContent = VOICE.slice(0, chars);
-    var lt = t - TYPE_END - PAUSE_MS;
-    lineEls.forEach(function(l, j) {
-      if (lt >= (j + 1) * LINE_MS) l.classList.add('show');
-    });
-    requestAnimationFrame(frame);
-  }
-
-  var vdObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting && !started) {
-        started = true;
-        setup();
-        requestAnimationFrame(frame);
-        vdObserver.disconnect();
-      }
-    });
-  }, { threshold: 0.3 });
-  vdObserver.observe(document.getElementById('voice-demo'));
-})();
+<script>
+(function(){var buttons=document.querySelectorAll('.so-report-option'),image=document.getElementById('so-report-preview'),imageLink=document.getElementById('so-report-preview-link'),pdf=document.getElementById('so-pdf-link');buttons.forEach(function(button){button.addEventListener('click',function(){buttons.forEach(function(b){b.setAttribute('aria-selected',String(b===button));});image.src=button.dataset.src;image.alt=(button.dataset.name==='client'?'Client':'Internal')+' ScopeSnap report page';imageLink.href=button.dataset.src;pdf.href=button.dataset.pdf;pdf.innerHTML='Open full '+button.dataset.name+' PDF <span aria-hidden="true">↗</span>';});});})();
 </script>
 </body>
 </html>
