@@ -89,7 +89,7 @@
   <link rel="stylesheet" href="/shared.css?v=17"/>
   <link rel="stylesheet" href="/premium-showcase.css?v=20261010setout2"/>
 
-  <link rel="stylesheet" href="/brand-sync.css?v=20261011voice2"/>
+  <link rel="stylesheet" href="/brand-sync.css?v=20261011roomvoice1"/>
 </head>
 <body class="site-setout">
 
@@ -157,16 +157,22 @@
   <p class="so-lead">Photos, voice notes and measurements captured room by room on your phone, turned into a clear client scope and internal site report. From renovations and extensions to new builds, repairs and maintenance. Plans optional.</p>
   <div class="so-actions"><a class="btn-primary" href="https://app.scopesnap.com.au/?signup=1" data-track="cta-start-trial">Start 14-day free trial <span aria-hidden="true">→</span></a><a class="btn-ghost" href="#reports">See a real report <span aria-hidden="true">↗</span></a></div>
  </div>
- <a class="so-phone so-hero-phone so-voice-capture-phone" href="/images/screen-voice.jpg?v=20261011rev1" target="_blank" rel="noopener" aria-label="Open full-size ScopeSnap Voice Scope recording screen">
-  <img src="/images/screen-voice.jpg?v=20261011rev1" width="780" height="1688" alt="ScopeSnap Kitchen Voice Scope actively recording, with red stop button, purple live audio waveform and recording countdown" fetchpriority="high">
-  <!-- Real VoiceNote tile screenshot, enhanced in the small hero phone with a mid-recording timestamp and animated waveform. -->
-  <span class="so-live-waveform" aria-hidden="true">
-   <i style="--wave-h:45%"></i><i style="--wave-h:70%"></i><i style="--wave-h:95%"></i><i style="--wave-h:53%"></i>
-   <i style="--wave-h:87%"></i><i style="--wave-h:44%"></i><i style="--wave-h:76%"></i><i style="--wave-h:100%"></i>
-   <i style="--wave-h:55%"></i><i style="--wave-h:81%"></i><i style="--wave-h:48%"></i><i style="--wave-h:72%"></i>
+ <div class="so-phone so-hero-phone so-voice-capture-phone">
+  <!-- Genuine RoomDetail screen captured by the ScopeSnap React app, including
+       the three approved kitchen photos, per-photo AI captions, measurements,
+       Site Questions and Additional Notes. Only the moving waveform and
+       clock are drawn over their intentionally blank screenshot slots. -->
+  <span class="so-hero-screen">
+   <img src="/images/screen-hero.jpg?v=20261011roomvoice1" width="1170" height="2532" alt="Actual ScopeSnap Kitchen room screen: three kitchen photos with AI descriptions, live Voice Scope recording, Open Tape Measure, Site Questions and Additional Notes" fetchpriority="high">
+   <span class="so-live-waveform" aria-hidden="true">
+    <i style="--wave-h:34%"></i><i style="--wave-h:64%"></i><i style="--wave-h:86%"></i>
+    <i style="--wave-h:54%"></i><i style="--wave-h:74%"></i><i style="--wave-h:48%"></i>
+    <i style="--wave-h:70%"></i><i style="--wave-h:93%"></i><i style="--wave-h:50%"></i>
+    <i style="--wave-h:82%"></i><i style="--wave-h:47%"></i><i style="--wave-h:68%"></i>
+   </span>
+   <span class="so-live-countdown" id="so-voice-clock" aria-hidden="true">2:37 remaining</span>
   </span>
-  <span class="so-live-countdown" aria-hidden="true">2:37 remaining</span>
- </a>
+ </div>
  <div class="so-specbar"><div class="wrap">
   <span class="so-mono">Job <strong>Mitchell Residence</strong></span><span class="so-mono">Stirling SA</span><span class="so-mono"><strong>5</strong> rooms</span><span class="so-mono"><strong>14</strong> photos</span><span class="so-mono"><strong>3</strong> voice notes</span><span class="so-mono so-ready">Scope ready ✓</span>
  </div></div>
@@ -715,6 +721,22 @@ function setBilling(mode) {
 
 <script>
 (function(){var buttons=document.querySelectorAll('.so-report-option'),image=document.getElementById('so-report-preview'),imageLink=document.getElementById('so-report-preview-link'),pdf=document.getElementById('so-pdf-link');buttons.forEach(function(button){button.addEventListener('click',function(){buttons.forEach(function(b){b.setAttribute('aria-selected',String(b===button));});image.src=button.dataset.src;image.alt=(button.dataset.name==='client'?'Client':'Internal')+' ScopeSnap report page';imageLink.href=button.dataset.src;pdf.href=button.dataset.pdf;pdf.innerHTML='Open full '+button.dataset.name+' PDF <span aria-hidden="true">↗</span>';var caption=document.getElementById('so-report-caption');if(caption)caption.textContent=button.dataset.name==='client'?'Kitchen · Proposed works · By owner · Selections':'Kitchen · Scope summary · Site photographs';});});})();
+</script>
+
+<script>
+/* Visual demo clock only. This labels an actual ScopeSnap app capture;
+   it does not request the microphone or pretend to save a recording. */
+(function(){
+ var clock=document.getElementById('so-voice-clock');
+ if(!clock)return;
+ var started=Date.now(), demoSeconds=157;
+ function update(){
+  var elapsed=Math.floor((Date.now()-started)/1000);
+  var remaining=demoSeconds-(elapsed%(demoSeconds+1));
+  clock.textContent=Math.floor(remaining/60)+':'+String(remaining%60).padStart(2,'0')+' remaining';
+ }
+ update();setInterval(update,1000);
+})();
 </script>
 </body>
 </html>
