@@ -37,3 +37,9 @@ assert(home.includes("screen-overview.jpg?v=ai20261010"), "Homepage screenshots 
 assert(read("how-it-works.html").includes("screen-voice.jpg?v=ai20261010"), "Walkthrough screenshots bust previous browser caches");
 assert(read("vercel.json").includes("must-revalidate"), "Mutable image assets must revalidate");
 console.log("Website content accuracy and SEO checks passed.");
+
+const tour = home.slice(home.indexOf('class="ps-product-grid"'),home.indexOf('class="ps-overview"'));
+assert(tour.includes("01 / ROOM PHOTOS + AI"), "Photo capture must lead the feature tour");
+assert(tour.indexOf("01 / ROOM PHOTOS + AI") < tour.indexOf("02 / AI VOICE CAPTURE"), "Voice follows photos");
+assert(tour.indexOf("03 / ON-SITE MEASUREMENTS") < tour.indexOf("OPTIONAL / PLAN SCAN"), "Plans must remain secondary");
+assert(home.includes("No plans needed to get started"), "Make it clear plans are not required");

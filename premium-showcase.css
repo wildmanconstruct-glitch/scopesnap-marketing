@@ -44,3 +44,14 @@
  .ps-overview-metrics span{font-size:12px}
  .ps-report-card-footer>span,.ps-report-download{font-size:13px}
 }
+
+/* Start with site capture. Plan Scan is optional, not a headline feature. */
+@media(min-width:1111px){.ps-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ps-plan-optional{display:grid;grid-template-columns:minmax(0,1fr) 120px;align-items:center;gap:28px;margin-top:20px;padding:22px 30px;background:#211f1d;border:1px solid rgba(255,255,255,.12);border-radius:14px}
+.ps-plan-optional-copy h3{font-family:var(--ff-h),'Barlow Condensed',sans-serif;font-size:clamp(23px,2.35vw,31px);color:#f3eee6;line-height:1.14;margin:8px 0 7px}
+.ps-plan-optional-copy p{font-size:13px;line-height:1.65;color:#bbb7ae;max-width:690px;margin:0 0 9px}
+.ps-plan-optional-copy a{font-size:13px;font-weight:700;color:#D6B386;text-decoration:none}
+.ps-plan-optional-copy a:hover{color:#fff}
+.ps-plan-optional-image{width:100%;max-width:115px;display:block;justify-self:center}
+.ps-plan-optional-image img{display:block;width:100%;height:146px;object-fit:cover;object-position:top;border-radius:8px;border:1px solid rgba(255,255,255,.14)}
+@media(max-width:600px){.ps-plan-optional{grid-template-columns:minmax(0,1fr) 64px;gap:13px;padding:20px 16px;margin-top:16px}.ps-plan-optional-copy h3{font-size:23px}.ps-plan-optional-image{max-width:64px}.ps-plan-optional-image img{height:112px}}
