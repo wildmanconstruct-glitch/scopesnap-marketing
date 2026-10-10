@@ -36,6 +36,13 @@ assert(!home.includes('data-pdf=')&&!home.includes('id="so-pdf-link"')&&!home.in
 assert(!/sample-(?:client|internal)-report\.pdf/i.test(home+guide),"No publicly linked full report PDFs");
 assert(home.includes('so-report-preview-frame')&&home.includes('so-report-view-only'),"Reports remain visible as non-clickable previews");
 assert(home.includes('so-workflow-swipe'),"Mobile workflow explains swipe navigation");
+assert(css.includes('.so-step{')&&css.includes('flex:0 0 calc(100% - 23px)'),"Mobile workflow displays one readable step at a time");
+assert(css.includes('.so-report-side{')&&css.includes('grid-template-columns:minmax(0,1fr) minmax(0,1fr)'),"Compact mobile report selector");
+assert(css.includes('width:185px;right:17px;bottom:-35px'),"Larger mobile hero phone with natural crop");
+assert(!home.includes('Open full client PDF')&&!home.includes('Open full internal PDF'),"No report download CTA");
+assert(!existsSync(new URL("../assets/pdf-chunks",import.meta.url)),"Reconstructible full PDF chunks cannot be public");
+const vercel=JSON.parse(read("vercel.json"));
+assert(!vercel.redirects.some(r=>/sample.*report/.test(r.source)),"No download aliases");
 assert(!home.includes("Across 30+ jobs")&&!home.includes("45+ hours"),"No unsupported results");
 
 
@@ -47,7 +54,7 @@ assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;to
 assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
 assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
 assert(home.includes('/images/screen-measure.jpg?v=20261011rev1'),"Workflow measure uses the camera overlay screenshot");
-assert(home.includes('brand-sync.css?v=20261011hero-peek2'),"Voice hero styles cache version");
+assert(home.includes('brand-sync.css?v=20261011mobile-preview2'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('Wildheart Homes'),"Do not name the building company on marketing homepage");
@@ -58,7 +65,7 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261011hero-peek2'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261011mobile-preview2'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="so-report-caption"'),"Show a correct caption for report content");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
