@@ -1,77 +1,59 @@
-name: Publish example reports
+name: Verify premium website and reports
 on:
   push:
     branches: [main]
     paths:
-      - 'scripts/build_sample_reports.py'
       - 'index.html'
       - 'how-it-works.html'
-      - 'shared.css'
+      - 'premium-showcase.css'
+      - 'images/**'
+      - 'sample-client-report.pdf'
+      - 'sample-internal-report.pdf'
       - '.github/workflows/publish-example-reports.yml'
   workflow_dispatch:
-concurrency:
-  group: example-report-publish
-  cancel-in-progress: true
 permissions:
-  contents: write
+  contents: read
 jobs:
-  build-samples:
+  check-assets-and-reports:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: true
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install PDF inspection and rendering tools
-        run: sudo apt-get update -qq && sudo apt-get install -y poppler-utils
-      - name: Generate both PDFs
+      - name: Verify marketing assets and document links
         run: |
-          python -m pip install --disable-pip-version-check reportlab
-          python scripts/build_sample_reports.py
-          pdfinfo sample-client-report.pdf | grep Pages
-          pdfinfo sample-internal-report.pdf | grep Pages
-          test "$(pdfimages -list sample-client-report.pdf | grep -c " image " || true)" -ge 2
-          test "$(pdfimages -list sample-internal-report.pdf | grep -c " image " || true)" -ge 2
-          pdftotext sample-client-report.pdf - | grep -q 'Whole house'
-          pdftotext sample-internal-report.pdf - | grep -q 'Approximate estimating quantities'
-      - name: Validate public report links and current previews
-        run: |
-          python - <<'PY'
+          python3 - <<'PY'
           from pathlib import Path
-          home=Path('index.html').read_text()
-          guide=Path('how-it-works.html').read_text()
-          for name in ('sample-client-report.pdf','sample-internal-report.pdf'):
-              assert '/'+name in home
-              assert '/'+name in guide
-              assert Path(name).stat().st_size>4000
-          for old in ('sample-report.pdf?v=5','demo-rooms.jpg?v=4','demo-capture.jpg?v=5','demo-scope.jpg?v=3','demo-plan-scan.jpg'):
-              assert old not in home and old not in guide, old
-          assert 'phone-mockup' in home
-          print('Report links and current previews verified')
+          home = Path('index.html').read_text(encoding='utf-8')
+          guide = Path('how-it-works.html').read_text(encoding='utf-8')
+          css = Path('premium-showcase.css')
+          assert css.exists() and css.stat().st_size > 3000
+          assert '/premium-showcase.css' in home
+          for name in ('screen-planscan','screen-voice','screen-measure','screen-photo','screen-overview'):
+              path = Path(f'images/{name}.jpg')
+              assert path.is_file() and path.stat().st_size > 30000, path
+              assert f'/images/{name}.jpg' in home, name
+          for doc in ('client','internal'):
+              pdf=Path(f'sample-{doc}-report.pdf')
+              assert pdf.is_file() and pdf.stat().st_size > 300000, pdf
+              assert f'/sample-{doc}-report.pdf' in home
+              for detail in ('cover','detail','photos'):
+                  picture = Path(f'images/report-{doc}-{detail}.jpg')
+                  assert picture.is_file() and picture.stat().st_size > 30000, picture
+                  assert f'/images/report-{doc}-{detail}.jpg' in home
+          for room in ('kitchen','ensuite','bathroom','laundry','living','exterior'):
+              p=Path(f'images/room-{room}.jpg')
+              assert p.is_file() and p.stat().st_size > 30000, p
+          assert '/images/screen-measure.jpg' in guide
+          assert '<section class="section ps-tour"' in home
+          assert '<section class="section ps-reports"' in home
+          print('All full-size marketing screenshots and report links are present')
           PY
-      - name: Render PDF cover previews
+      - name: Inspect full-length photo reports
         run: |
-          pdftoppm -f 1 -l 1 -singlefile -scale-to 1200 -jpeg -jpegopt quality=86 sample-client-report.pdf images/sample-client-cover
-          pdftoppm -f 1 -l 1 -singlefile -scale-to 1200 -jpeg -jpegopt quality=86 sample-internal-report.pdf images/sample-internal-cover
-      - name: Attach generated report examples for visual QA
-        uses: actions/upload-artifact@v4
-        with:
-          name: website-client-internal-examples
-          path: |
-            sample-client-report.pdf
-            sample-internal-report.pdf
-            images/sample-client-cover.jpg
-            images/sample-internal-cover.jpg
-          retention-days: 14
-      - name: Commit refreshed samples
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sample-client-report.pdf sample-internal-report.pdf images/sample-client-cover.jpg images/sample-internal-cover.jpg
-          if ! git diff --cached --quiet; then
-            git commit -m "Publish updated client and internal report examples"
-            git pull --rebase origin main
-            git push
-          fi
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils
+          test "$(pdfinfo sample-client-report.pdf | awk '/^Pages:/ {print $2}')" -ge 10
+          test "$(pdfinfo sample-internal-report.pdf | awk '/^Pages:/ {print $2}')" -ge 11
+          test "$(pdfimages -list sample-client-report.pdf | awk 'NR > 2 {n++} END {print n+0}')" -ge 6
+          test "$(pdfimages -list sample-internal-report.pdf | awk 'NR > 2 {n++} END {print n+0}')" -ge 6
+          echo 'Both full-length photography-rich PDF reports verified'

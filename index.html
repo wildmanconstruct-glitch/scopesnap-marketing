@@ -87,10 +87,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/shared.css?v=16"/>
-<style>
-.field-tools-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.field-tool{background:var(--bg2);border:1px solid var(--border2);padding:30px;display:flex;flex-direction:column;gap:14px;min-height:300px}.field-tool h3{font-size:25px;line-height:1.1}.field-tool p,.report-full-heading p{color:var(--muted);line-height:1.65}.field-tool a{margin-top:auto;color:var(--gold);font-weight:700;text-decoration:none}.field-tool-kicker{font-size:12px;letter-spacing:2px;color:var(--gold);font-weight:800}.field-tool-note{margin-top:auto;font-size:12px;color:var(--dim)}.report-full-previews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:34px 0 42px}.report-full-card{border:1px solid var(--border2);background:var(--bg2);padding:20px;min-width:0}.report-full-heading{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:20px}.report-full-heading h3{font-size:25px;margin:9px 0}.report-full-card iframe{width:100%;height:660px;background:#fff;border:0}.report-full-card .btn-primary{white-space:normal}@media(max-width:850px){.field-tools-grid,.report-full-previews{grid-template-columns:1fr}.field-tool{min-height:230px}.report-full-card iframe{height:560px}}@media(max-width:480px){.report-full-card iframe{height:430px}.report-full-card{padding:10px}}
-.field-tools-showcase{grid-template-columns:repeat(4,minmax(0,1fr))}.field-tools-showcase .field-tool{padding:19px;min-width:0}.field-tools-showcase .field-tool h3{font-size:22px;min-height:49px}.tool-preview,.tool-voice-preview,.tool-measure-preview{display:flex;height:260px;width:100%;overflow:hidden;background:#0d1018;border:1px solid var(--border2);border-radius:14px;align-items:center;justify-content:center}.tool-preview img{display:block;height:100%;width:100%;object-fit:contain}.tool-voice-preview{flex-direction:column;gap:20px;padding:14px;color:#e6d9ff;text-align:center}.voice-preview-icon{display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:#7643e8;color:white;font-size:24px}.voice-preview-bars{display:flex;gap:4px;height:60px;align-items:center}.voice-preview-bars i{width:5px;border-radius:8px;background:#9b6dff;height:28%}.voice-preview-bars i:nth-child(3n){height:85%}.voice-preview-bars i:nth-child(4n){height:55%}.tool-voice-preview span{font-size:12px}.tool-measure-preview{position:relative;background:linear-gradient(135deg,#393b3f,#171a20);flex-direction:column;gap:20px}.measure-line{display:flex;align-items:center;width:86%;justify-content:space-between;border-top:3px solid #a478ff;position:relative;margin-top:35px}.measure-line span{width:11px;height:11px;background:#b18bff;border-radius:50%;margin-top:-7px}.measure-line strong{position:absolute;left:50%;transform:translate(-50%,-40px);white-space:nowrap;background:#f4f1ff;color:#21143b;padding:7px 10px;border-radius:8px;font-size:13px}.tool-measure-preview small{color:#ddd;font-size:11px}@media(max-width:1100px){.field-tools-showcase{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.field-tools-showcase{grid-template-columns:1fr}.field-tools-showcase .field-tool h3{min-height:0}.tool-preview,.tool-voice-preview,.tool-measure-preview{height:320px}}
-</style>
+  <link rel="stylesheet" href="/premium-showcase.css?v=20261010"/>
+
 </head>
 <body>
 
@@ -149,10 +147,10 @@
       <div class="phone-shell">
         <div class="phone-notch"></div>
         <img
-          src="/images/hero-phone.jpg"
+          src="/images/screen-overview.jpg"
           loading="eager"
-          width="860" height="1720"
-          alt="ScopeSnap app showing four reviewed rooms in an Adelaide Hills renovation"
+          width="780" height="1688"
+          alt="ScopeSnap job overview with renovation room details and photo galleries"
           class="phone-screen-img"
         />
       </div>
@@ -249,77 +247,51 @@
   </div>
 </section>
 
-<!-- ── PLAN SCAN ── -->
-<section class="section" id="plan-scan">
-  <div class="wrap voice-layout">
-    <div class="product-story-copy">
-      <div class="eyebrow">AI Plan Scan</div>
-      <h2>Your plans.<br><em>A head start on the job.</em></h2>
-      <p>Upload a floor plan. ScopeSnap picks out the rooms and notes, ready for you to review and add to the job.</p>
-      <ul class="compare-list" style="margin-top:24px;">
-        <li>Start with a PDF or image of the plan</li>
-        <li>Check, rename or skip each room</li>
-        <li>Bring the plan notes into your walkthrough</li>
-      </ul>
-      <p class="product-detail">Find Plan Scan on the job’s Overview screen.<br>One scan per job on every plan.</p>
-      <a href="https://app.scopesnap.com.au/?signup=1" class="btn-ghost" data-track="cta-start-trial" style="margin-top:24px;">Try Plan Scan &#8594;</a>
-    </div>
-    <figure class="product-screen">
-      <a href="/images/ss-overview.jpg" target="_blank" rel="noopener" aria-label="Enlarge the Plan Scan review screenshot (opens a new tab)"><img src="/images/ss-overview.jpg" width="740" height="1648" loading="lazy" alt="ScopeSnap Plan Scan review with six rooms found, kitchen and bathroom notes, and visible Cancel and Add 6 rooms buttons"/></a>
-      <figcaption>Actual review screen · Example renovation plan</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- &#9472;&#9472; FEATURES &#9472;&#9472; -->
-<section class="section" id="features">
+<!-- SCOPE SNAP / PREMIUM PRODUCT TOUR -->
+<section class="section ps-tour" id="features" aria-labelledby="ps-tour-title">
+  <div id="plan-scan"></div>
   <div class="wrap">
-<div class="capture-layout"><div class="capture-copy">    <h2>Everything you capture.<br><em>One clear job record.</em></h2>
-    <div class="features-grid">
-      <div class="feature-card fade-in">
-        <div class="f-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-        </div>
-        <h3>Organised by room</h3>
-        <p>Keep measurements, selections and scope notes together, room by room.</p>
+    <div class="ps-section-top">
+      <div>
+        <div class="eyebrow">Built for the way builders actually work</div>
+        <h2 id="ps-tour-title">The site visit.<br><em>Sorted.</em></h2>
       </div>
-      <div class="feature-card fade-in fade-in-delay-1">
-        <div class="f-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        </div>
-        <h3>Photos tagged to the room</h3>
-        <p>Capture a photo inside a room and it stays there, alongside the work it relates to.</p>
+      <p>Photos, floor plans, voice notes and approximate measurements — brought together by room, ready to turn into a professional scope.</p>
+    </div>
+    <div class="ps-product-grid">
+      <article class="ps-feature-card">
+        <div class="ps-feature-copy"><span class="ps-step">01 / PLANSCAN</span><h3>From floor plan<br>to room list.</h3><p>Upload a plan, review the rooms and bring the details into your next walkthrough. You stay in control of what gets added.</p></div>
+        <a class="ps-phone" href="/images/screen-planscan.jpg" target="_blank" rel="noopener" aria-label="Enlarge the complete PlanScan screen"><img src="/images/screen-planscan.jpg" alt="Full ScopeSnap PlanScan screen showing an architectural plan and identified rooms" width="780" height="1688" loading="lazy"></a>
+        <a class="ps-feature-link" href="/how-it-works">Explore PlanScan <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="ps-feature-card">
+        <div class="ps-feature-copy"><span class="ps-step">02 / AI VOICE CAPTURE</span><h3>Walk. Talk.<br>Scope.</h3><p>Describe the work naturally on site. ScopeSnap turns your recording into structured notes you can check and edit.</p></div>
+        <a class="ps-phone" href="/images/screen-voice.jpg" target="_blank" rel="noopener" aria-label="Enlarge the complete AI Voice screen"><img src="/images/screen-voice.jpg" alt="Full AI Voice recording screen with bronze waveform, timer and captured renovation notes" width="780" height="1688" loading="lazy"></a>
+        <a class="ps-feature-link" href="#voice-demo">See voice to scope <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="ps-feature-card">
+        <div class="ps-feature-copy"><span class="ps-step">03 / CAMERA TAPE MEASURE</span><h3>Point. Measure.<br>Capture.</h3><p>Record approximate on-site dimensions through the camera, or type in exact measurements. Save them with the room.</p></div>
+        <a class="ps-phone" href="/images/screen-measure.jpg" target="_blank" rel="noopener" aria-label="Enlarge the complete camera Tape Measure screen"><img src="/images/screen-measure.jpg" alt="Full camera-assisted Tape Measure visual showing gold measuring line and 3.62 metre estimate across a room" width="780" height="1688" loading="lazy"></a>
+        <span class="ps-feature-footnote">Camera measurements are estimates; verify critical set-out on site.</span>
+      </article>
+      <article class="ps-feature-card">
+        <div class="ps-feature-copy"><span class="ps-step">04 / PHOTOS + AI</span><h3>Every photo.<br>In the right room.</h3><p>Keep site photos, observations and a detailed AI photo brief together — rather than searching through a camera roll later.</p></div>
+        <a class="ps-phone" href="/images/screen-photo.jpg" target="_blank" rel="noopener" aria-label="Enlarge the complete photo analysis screen"><img src="/images/screen-photo.jpg" alt="Full kitchen photo analysis screen with four room photographs and a detailed AI photo brief" width="780" height="1688" loading="lazy"></a>
+        <a class="ps-feature-link" href="/how-it-works">See room capture <span aria-hidden="true">↗</span></a>
+      </article>
+    </div>
+    <div class="ps-overview">
+      <div class="ps-overview-copy">
+        <span class="ps-step">ONE JOB. EVERYTHING TOGETHER.</span>
+        <h3>Every room, photo and note — right where you need it.</h3>
+        <p>Move through a renovation one room at a time. All your site information stays connected to the job, ready for your client or internal report.</p>
+        <div class="ps-overview-metrics"><span>Room-by-room capture</span><span>Photo galleries</span><span>AI scope notes</span><span>Two report formats</span></div>
+        <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">See ScopeSnap for yourself <span aria-hidden="true">→</span></a>
       </div>
-      <div class="feature-card fade-in fade-in-delay-2">
-        <div class="f-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
-        </div>
-        <h3>Voice to scope</h3>
-        <p>Talk through what needs doing. AI turns your recording into structured notes you can review and edit.</p>
-      </div>
-      <div class="feature-card fade-in fade-in-delay-3">
-        <div class="f-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <h3>Clear scope reports</h3>
-        <p>Bring the room details together in a readable report for your client or trades.</p>
-      </div>
-    </div></div>
-    <figure class="product-screen capture-screen"><a href="/images/ss-rooms.jpg" target="_blank" rel="noopener" aria-label="Enlarge the room capture screenshot (opens a new tab)"><img src="/images/ss-rooms.jpg" width="796" height="568" loading="lazy" alt="Kitchen photo capture and AI Voice Scope controls in ScopeSnap"/></a><figcaption>Photos and AI voice · Kept with the room</figcaption></figure>
+      <a class="ps-overview-image" href="/images/screen-overview.jpg" target="_blank" rel="noopener" aria-label="View the complete job overview screen"><img src="/images/screen-overview.jpg" width="780" height="1688" loading="lazy" alt="ScopeSnap job overview with a hero renovation photograph, four rooms and inspection details"></a>
     </div>
   </div>
 </section>
-
-
-<section class="section" id="field-tools" aria-labelledby="field-tools-title"><div class="wrap">
-<div class="eyebrow">Your on-site toolkit</div><h2 id="field-tools-title">Capture more.<br><em>Write less.</em></h2>
-<p class="section-sub" style="max-width:760px">From plans to photos and voice notes, ScopeSnap keeps your inspection organised. See the current PlanScan interface and explore the tools behind every report.</p>
-<div class="field-tools-grid field-tools-showcase">
-<article class="field-tool"><span class="field-tool-kicker">01 / PLANSCAN</span><h3>From floor plan to room list.</h3><a class="tool-preview" href="/images/ss-overview.jpg" target="_blank" rel="noopener"><img src="/images/ss-overview.jpg" loading="lazy" alt="ScopeSnap PlanScan room review screen" /></a><p>Upload a floor plan, review the rooms found and add them to the job.</p><a href="#plan-scan">See how PlanScan works →</a></article>
-<article class="field-tool"><span class="field-tool-kicker">02 / AI VOICE CAPTURE</span><h3>Walk. Talk. Scope.</h3><div class="tool-voice-preview" aria-label="Voice capture workflow illustration"><div class="voice-preview-icon">●</div><div class="voice-preview-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span>Record on site → review your scope</span></div><p>Speak naturally during the walkthrough. Review and edit the structured scope notes afterwards.</p><a href="#voice-demo">Explore the voice demo →</a></article>
-<article class="field-tool"><span class="field-tool-kicker">03 / AR TAPE MEASURE</span><h3>Point. Measure. Capture.</h3><div class="tool-measure-preview" aria-label="Illustration of an approximate room measurement"><div class="measure-line"><span></span><strong>Approx. 3.62 m</strong><span></span></div><small>Illustrative measurement overlay</small></div><p>Use the phone camera for approximate room measurements, or enter exact dimensions manually.</p><span class="field-tool-note">Verify critical dimensions on site.</span></article>
-<article class="field-tool"><span class="field-tool-kicker">04 / PHOTO & AI NOTES</span><h3>Photos that stay with the room.</h3><a class="tool-preview" href="/images/ss-rooms.jpg" target="_blank" rel="noopener"><img src="/images/ss-rooms.jpg" loading="lazy" alt="ScopeSnap room photo capture screen" /></a><p>Keep your site photos and AI observations alongside the room they belong to.</p><a href="#features">Explore room capture →</a></article>
-</div></div></section>
 <!-- ── SAMPLE REPORT STRIP ── -->
 <div class="sample-strip">
   <div class="wrap sample-strip-inner">
@@ -358,7 +330,7 @@
         <div class="vd-lines" id="vdScope" aria-hidden="true"></div>
       </div>
     </div>
-    <p class="vd-sr">Example: you say &#8220;righto, ensuite&#8217;s getting the full strip-out. Shower&#8217;s leaking behind the wall so we&#8217;re re-sheeting that, new waterproofing, wall-hung vanity, and the client wants matte black tapware throughout&#8221; &#8212; and ScopeSnap writes: full strip-out of existing ensuite; re-sheet shower wall with new waterproofing; supply and install wall-hung vanity; matte black tapware throughout.</p></div>
+    <p class="vd-sr">Listen to this: &#8220;righto, ensuite&#8217;s getting the full strip-out. Shower&#8217;s leaking behind the wall so we&#8217;re re-sheeting that, new waterproofing, wall-hung vanity, and the client wants matte black tapware throughout&#8221; &#8212; and ScopeSnap writes: full strip-out of existing ensuite; re-sheet shower wall with new waterproofing; supply and install wall-hung vanity; matte black tapware throughout.</p></div>
     <figure class="product-screen scope-screen"><a href="/images/ss-report.jpg" target="_blank" rel="noopener" aria-label="Enlarge the editable scope screenshot (opens a new tab)"><img src="/images/ss-report.jpg" width="796" height="880" loading="lazy" alt="Editable kitchen scope draft showing proposed works and selections still to confirm"/></a><figcaption>Review the draft · Edit before sharing</figcaption></figure>
     </div>
   </div>
@@ -406,24 +378,40 @@
   </div>
 </section>
 
-<section class="section report-showcase" id="reports">
+<!-- SCOPE SNAP / CLIENT AND INTERNAL REPORTS -->
+<section class="section ps-reports" id="reports" aria-labelledby="ps-reports-title">
   <div class="wrap">
-    <div class="report-intro">
-      <div><div class="eyebrow">Your business. Your report.</div><h2>A scope you’re proud<br><em>to put your name on.</em></h2></div>
-      <div class="report-intro-copy"><p>Add your business logo, brand colour and contact details. Share the room measurements, proposed works, selections and photos in one clear PDF.</p><a href="/sample-client-report.pdf" class="btn-ghost" target="_blank" rel="noopener">Open sample report</a></div>
+    <div class="ps-section-top ps-report-top">
+      <div><div class="eyebrow">From captured details to finished documents</div><h2 id="ps-reports-title">Reports worth<br><em>putting your name on.</em></h2></div>
+      <p>Two clear outputs from the same site capture: a client-ready scope that is easy to understand, and a detailed internal record for the team.</p>
     </div>
-    <div class="report-full-previews" aria-label="Full example report previews">
-      <article class="report-full-card"><div class="report-full-heading"><div><span class="field-tool-kicker">CLIENT REPORT</span><h3>Made to send to your client</h3><p>Proposed works, room photography, selections and decisions requiring confirmation.</p></div><a href="/sample-client-report.pdf" target="_blank" rel="noopener" class="btn-primary">Open full client PDF ↗</a></div><iframe src="/sample-client-report.pdf#view=FitH" title="Full client scope report example" loading="lazy"></iframe></article>
-      <article class="report-full-card"><div class="report-full-heading"><div><span class="field-tool-kicker">INTERNAL REPORT</span><h3>Built for the team on site</h3><p>Room-by-room work descriptions, site observations, measurements and photo references.</p></div><a href="/sample-internal-report.pdf" target="_blank" rel="noopener" class="btn-primary">Open full internal PDF ↗</a></div><iframe src="/sample-internal-report.pdf#view=FitH" title="Full internal site report example" loading="lazy"></iframe></article>
+    <div class="ps-report-grid">
+      <article class="ps-report-card">
+        <div class="ps-report-card-head"><div><span class="ps-step">01 / CLIENT SCOPE REPORT</span><h3>Clear for your client.<br>Beautifully presented.</h3><p>Proposed work room by room, selections, photos and decisions to confirm — laid out so everyone can see what is included.</p></div></div>
+        <div class="ps-report-pages">
+          <a class="ps-page ps-page-lead" href="/images/report-client-cover.jpg" target="_blank" rel="noopener" aria-label="View complete client report cover page"><img src="/images/report-client-cover.jpg" alt="Complete client PDF cover featuring kitchen photograph and renovation project information" width="931" height="1317" loading="lazy"></a>
+          <a class="ps-page" href="/images/report-client-detail.jpg" target="_blank" rel="noopener" aria-label="View client report kitchen scope page"><img src="/images/report-client-detail.jpg" alt="Complete kitchen scope page with large kitchen photograph, proposed works, selections and confirmation items" width="931" height="1317" loading="lazy"></a>
+          <a class="ps-page" href="/images/report-client-photos.jpg" target="_blank" rel="noopener" aria-label="View client report photo register page"><img src="/images/report-client-photos.jpg" alt="Complete client report photo register with six different room and exterior photos" width="931" height="1317" loading="lazy"></a>
+        </div>
+        <div class="ps-report-card-footer"><span>10 pages · Room-by-room photography</span><a href="/sample-client-report.pdf" target="_blank" rel="noopener" class="ps-report-download">Open complete client report <span aria-hidden="true">↗</span></a></div>
+      </article>
+      <article class="ps-report-card">
+        <div class="ps-report-card-head"><div><span class="ps-step">02 / INTERNAL SITE REPORT</span><h3>Built for the team.<br>Detailed where it counts.</h3><p>Measurements, estimating quantities, trade coordination, observations and site photos organised into one working document.</p></div></div>
+        <div class="ps-report-pages">
+          <a class="ps-page ps-page-lead" href="/images/report-internal-cover.jpg" target="_blank" rel="noopener" aria-label="View complete internal site report cover page"><img src="/images/report-internal-cover.jpg" alt="Complete internal PDF cover featuring a kitchen site photo and job details" width="931" height="1317" loading="lazy"></a>
+          <a class="ps-page" href="/images/report-internal-detail.jpg" target="_blank" rel="noopener" aria-label="View internal kitchen estimating page"><img src="/images/report-internal-detail.jpg" alt="Complete internal room estimating page with site photo and detailed quantity and trade checks" width="931" height="1317" loading="lazy"></a>
+          <a class="ps-page" href="/images/report-internal-photos.jpg" target="_blank" rel="noopener" aria-label="View internal report photo register page"><img src="/images/report-internal-photos.jpg" alt="Complete internal photo register page showing six photographed rooms and exterior areas" width="931" height="1317" loading="lazy"></a>
+        </div>
+        <div class="ps-report-card-footer"><span>11 pages · Estimating & trade notes</span><a href="/sample-internal-report.pdf" target="_blank" rel="noopener" class="ps-report-download">Open complete internal report <span aria-hidden="true">↗</span></a></div>
+      </article>
     </div>
-    <div class="report-pages" style="display:none">
-      <figure><a href="/sample-client-report.pdf" target="_blank" rel="noopener" aria-label="Open the branded sample report PDF (opens a new tab)"><img src="/images/sample-client-cover.jpg" width="1191" height="1684" loading="lazy" alt="Client Scope Report example cover"/></a><figcaption><span>01 / CLIENT SCOPE</span>Proposed works, selections and decisions to confirm.</figcaption></figure>
-      <figure><a href="/sample-internal-report.pdf" target="_blank" rel="noopener" aria-label="Open the internal site report (opens a new tab)"><img src="/images/sample-internal-cover.jpg" width="1060" height="1330" loading="lazy" alt="Internal Site Report example cover"/></a><figcaption><span>02 / THE ROOM DETAILS</span>The scope, measurements and photos together.</figcaption></figure>
+    <div class="ps-report-conclusion">
+      <div><h3>Not a bare list of notes.</h3><p>Room photography, practical scope wording and clear responsibilities — ready to review, share and build from.</p></div>
+      <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start your free trial <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
-
-<!-- &#9472;&#9472; PRICING &#9472;&#9472; -->
+<!-- PRICING -->
 <section class="section" id="pricing">
   <div class="wrap">
     <div class="eyebrow" style="justify-content:center;">Pricing</div>
