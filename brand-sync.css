@@ -142,7 +142,7 @@ body.site-setout .sticky-cta{display:none!important}
    390x844 viewport; waveform x29 y414.5 w69 h24;
    countdown x278 y418.5 w83 h16. Neither region has a second timer beneath it. */
 .so-voice-capture-phone.so-hero-phone{
- width:220px;right:4.5%;bottom:78px;display:block;
+ width:248px;right:4.5%;bottom:-28px;display:block;
 }
 .so-hero-screen{display:block;position:relative;width:100%;container-type:inline-size;isolation:isolate}
 .so-hero-screen>img{display:block;width:100%;height:auto}
@@ -167,6 +167,6 @@ body.site-setout .sticky-cta{display:none!important}
  letter-spacing:0;white-space:nowrap;
 }
 @keyframes so-live-audio{from{transform:scaleY(.35);opacity:.74}to{transform:scaleY(1);opacity:1}}
-@media(max-width:800px){.so-voice-capture-phone.so-hero-phone{width:180px;right:3%;bottom:68px}}
-@media(max-width:600px){.so-voice-capture-phone.so-hero-phone{width:145px;right:15px;bottom:54px}}
+@media(max-width:800px){.so-voice-capture-phone.so-hero-phone{width:200px;right:3%;bottom:-20px}}
+@media(max-width:600px){.so-voice-capture-phone.so-hero-phone{width:160px;right:15px;bottom:-18px}}
 @media(prefers-reduced-motion:reduce){.so-live-waveform i{animation:none}}
