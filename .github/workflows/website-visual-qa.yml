@@ -54,7 +54,7 @@ jobs:
               }));
               if(geometry.giantReport) throw new Error('Full report must not appear in the hero');
               if(geometry.scroll>geometry.viewport+2) throw new Error('Horizontal page overflow: '+JSON.stringify(geometry));
-              if(!geometry.phone || geometry.phone>(width<=600?166:width<=800?206:255)) throw new Error('Hero phone should be slightly larger without taking over kitchen background: '+JSON.stringify(geometry));
+              if(!geometry.phone || geometry.phone>(width<=650?195:width<=800?206:255)) throw new Error('Hero phone should be slightly larger without taking over kitchen background: '+JSON.stringify(geometry));
 
               const heroContent=await page.locator('.so-hero-phone').evaluate(el=>{
                 const image=el.querySelector('img');
@@ -75,6 +75,26 @@ jobs:
               await page.waitForTimeout(1300);
               const clockAfter=await page.locator('#so-voice-clock').textContent();
               if(clockBefore===clockAfter)throw new Error('Hero voice timer must count down within the actual screenshot (not cover another timer)');
+              const blocked=await page.evaluate(async()=>Promise.all(['/sample-client-report.pdf','/sample-internal-report.pdf','/sample-report.pdf'].map(async path=>({
+                path,status:(await fetch(path,{cache:'no-store'})).status
+              }))));
+              if(blocked.some(result=>result.status!==404))throw new Error('Full report downloads still publicly accessible: '+JSON.stringify(blocked));
+              const unsafeLinks=await page.locator('a[href*=".pdf"]').count();
+              if(unsafeLinks)throw new Error('No website report PDF download links allowed');
+              if(width<=650){
+                const layout=await page.evaluate(()=>({
+                  stepWidth:document.querySelector('.so-step')?.getBoundingClientRect().width,
+                  viewport:innerWidth,
+                  swipeHint:getComputedStyle(document.querySelector('.so-workflow-swipe')).display,
+                  previewLink:!!document.querySelector('#so-report-preview-link'),
+                  selectionColumns:getComputedStyle(document.querySelector('.so-report-side')).gridTemplateColumns
+                }));
+                if(layout.stepWidth<layout.viewport*.74 || layout.swipeHint==='none'||layout.previewLink)
+                  throw new Error('Mobile workflow/report layout needs better legibility: '+JSON.stringify(layout));
+                const tabs=await page.locator('.so-report-option').count();
+                if(tabs!==2)throw new Error('Expected exactly two compact report preview tabs');
+              }
+
 
               const fontStatus = await page.evaluate(() => ({available:document.fonts.check('800 22px Archivo'),heading:getComputedStyle(document.querySelector('.so-hero h1')).fontFamily}));
               console.log('Typography',fontStatus);
