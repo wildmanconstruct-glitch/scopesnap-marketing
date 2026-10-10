@@ -32,7 +32,7 @@ jobs:
           guide = Path('how-it-works.html').read_text(encoding='utf-8')
           assert 'class="so-hero"' in home and 'class="so-report-layout"' in home
           assert '.so-hero' in css and 'scroll-snap-type:x mandatory' in css
-          assert '/brand-sync.css?v=20261010setout1' in home
+          assert '/brand-sync.css?v=20261010setout2' in home
           for name in ('screen-planscan','screen-voice','screen-measure','screen-photo','screen-room'):
               path = Path(f'images/{name}.jpg')
               assert path.is_file() and path.stat().st_size > 30000, path
