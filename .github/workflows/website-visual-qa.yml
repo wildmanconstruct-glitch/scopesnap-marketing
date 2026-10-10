@@ -54,7 +54,7 @@ jobs:
               }));
               if(geometry.giantReport) throw new Error('Full report must not appear in the hero');
               if(geometry.scroll>geometry.viewport+2) throw new Error('Horizontal page overflow: '+JSON.stringify(geometry));
-              if(!geometry.phone || geometry.phone>(width<=600?151:width<=800?185:225)) throw new Error('Hero phone should be a small accent, not cover kitchen background: '+JSON.stringify(geometry));
+              if(!geometry.phone || geometry.phone>(width<=600?166:width<=800?206:255)) throw new Error('Hero phone should be slightly larger without taking over kitchen background: '+JSON.stringify(geometry));
 
               const heroContent=await page.locator('.so-hero-phone').evaluate(el=>{
                 const image=el.querySelector('img');
@@ -64,12 +64,13 @@ jobs:
                 const strip=document.querySelector('.so-specbar')?.getBoundingClientRect();
                 return {src:image?.getAttribute('src'),width:image?.naturalWidth,height:image?.naturalHeight,
                   photos:!!clock&&!!el.querySelector('.so-live-waveform'),
-                  fullyAboveStrip:!!strip && bounds.bottom<=strip.top+4,
+                  croppedByHero:bounds.bottom>el.closest('.so-hero').getBoundingClientRect().bottom+8,
+                  startsAboveStrip:!!strip && bounds.top<strip.top-130,
                   imageWidth:screen?.width};
               });
               if(!heroContent.src?.includes('/images/screen-hero.jpg?v=20261011roomvoice1') || heroContent.width!==1170 || heroContent.height!==2532 || !heroContent.photos)
                 throw new Error('Must show the genuine Kitchen RoomDetail image with live voice overlays: '+JSON.stringify(heroContent));
-              if(!heroContent.fullyAboveStrip)throw new Error('Full hero screen must be visible above specs strip: '+JSON.stringify(heroContent));
+              if(!heroContent.croppedByHero || !heroContent.startsAboveStrip)throw new Error('Phone should show live recording but naturally disappear below the hero edge: '+JSON.stringify(heroContent));
               const clockBefore=await page.locator('#so-voice-clock').textContent();
               await page.waitForTimeout(1300);
               const clockAfter=await page.locator('#so-voice-clock').textContent();
