@@ -726,7 +726,9 @@ function toggleFaq(btn) {
       var costDescription = extraJobPacks
         ? '/month total, including ' + (extraJobPacks * 10) + ' extra jobs/month'
         : '/month base plan';
-      breakevenEl.textContent = 'At 
+      breakevenEl.textContent = 'At $' + rate + '/hr, saving around 1.75 hours on ' +
+        jobsNeeded + ' ' + jobWord + ' per month could cover ' + plan + ' ($' +
+        cost + costDescription + ', excluding GST). Figures are illustrative.';
       breakevenEl.style.display = '';
     } else if (breakevenEl) {
       breakevenEl.style.display = 'none';
