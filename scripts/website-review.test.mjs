@@ -24,9 +24,9 @@ for(const p of ["contact","privacy","terms","billing"]) {
  const page=read(p+".html");
  assert(page.includes('rel="canonical" href="https://scopesnap.com.au/'+p+'"'),"Canonical "+p);
  assert(page.includes('og:image" content="https://scopesnap.com.au/og.png"'),"Social image "+p);
- assert(page.includes("brand-sync.css?v=20261010setout1"),"Site Set-Out stylesheet on "+p);
+ assert(page.includes("brand-sync.css?v=20261010setout2"),"Site Set-Out stylesheet on "+p);
 }
-for(const p of ["how-it-works","delete-account","404"])assert(read(p+".html").includes("brand-sync.css?v=20261010setout1"),"Unified styling on "+p);
+for(const p of ["how-it-works","delete-account","404"])assert(read(p+".html").includes("brand-sync.css?v=20261010setout2"),"Unified styling on "+p);
 assert(guide.includes("No drawings required."),"Plan scan stays optional");
 for(const type of ["New builds","Extensions","Renovations","Repairs &amp; maintenance"])assert(guide.includes(type),"Guide coverage: "+type);
 assert(read("sitemap.xml").includes("https://scopesnap.com.au/contact</loc>"),"Canonical contact route");
