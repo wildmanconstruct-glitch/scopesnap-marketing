@@ -574,7 +574,7 @@ function toggleFaq(btn) {
     var labelEl = document.getElementById('roiPlanLabel');
     var breakevenEl = document.getElementById('roiBreakeven');
     planEl.textContent = plan;
-    planEl.style.color = plan === 'Enterprise' ? 'var(--text)' : '';
+    planEl.style.color = plan === 'Enterprise' ? 'var(--ink)' : '';
     labelEl.innerHTML = plan === 'Enterprise'
       ? 'Suggested plan &mdash; <a href="#enterprise" style="color:var(--gold)">talk to us</a>'
       : 'Suggested plan' + (extraJobPacks ? ' + ' + extraJobPacks + ' extra-job ' + (extraJobPacks === 1 ? 'pack' : 'packs') : '');
