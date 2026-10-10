@@ -3,11 +3,6 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/sample-report.pdf",
-      "destination": "/sample-client-report.pdf",
-      "permanent": false
-    },
-    {
       "source": "/(.*)",
       "has": [
         {
@@ -43,15 +38,6 @@
     },
     {
       "source": "/(.*)\\.(css|js|svg|png|jpg|ico|woff|woff2)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=600, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/(.*)\\.pdf",
       "headers": [
         {
           "key": "Cache-Control",
