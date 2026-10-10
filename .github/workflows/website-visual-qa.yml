@@ -58,16 +58,23 @@ jobs:
               const fontStatus = await page.evaluate(() => ({available:document.fonts.check('800 22px Archivo'),heading:getComputedStyle(document.querySelector('.so-hero h1')).fontFamily}));
               console.log('Typography',fontStatus);
               if(width>=900) {
-                const dimensionQA=await page.evaluate(() => [...document.querySelectorAll('.so-dimension-label text')].map(el=>({
-                  value:el.textContent.trim(),
-                  width:el.getBBox().width,
-                  fill:getComputedStyle(el).fill,
-                  opacity:getComputedStyle(el).opacity
-                })));
-                console.log('Window measurements',dimensionQA);
-                if(dimensionQA.length!==2 || dimensionQA.some(v=>v.width<45 || v.fill!=='rgb(193, 127, 62)' || v.opacity==='0')){
-                  throw new Error('App-gold labels need visible text: '+JSON.stringify(dimensionQA));
-                }
+                const dimensionQA=await page.evaluate(() => ({
+                  labels:[...document.querySelectorAll('.so-ar-label')].map(el=>({
+                    value:el.textContent.trim(),width:el.getBBox().width,fill:getComputedStyle(el).fill
+                  })),
+                  lines:[...document.querySelectorAll('.so-ar-line')].map(el=>getComputedStyle(el).stroke),
+                  points:[...document.querySelectorAll('.so-ar-point')].map(el=>({
+                    fill:getComputedStyle(el).fill,shape:el.tagName.toLowerCase()
+                  })),
+                  strayWitnesses:document.querySelectorAll('.so-window-witness,.so-window-tick').length
+                }));
+                console.log('Window AR measurement QA',dimensionQA);
+                if(dimensionQA.labels.length!==2 || dimensionQA.labels.some(v=>v.width<40 || v.fill!=='rgb(255, 255, 255)'))
+                  throw new Error('Actual AR measurement text not rendered: '+JSON.stringify(dimensionQA));
+                if(dimensionQA.lines.length!==2 || dimensionQA.lines.some(v=>v!=='rgb(242, 214, 143)'))
+                  throw new Error('Tape lines must use actual in-app gold: '+JSON.stringify(dimensionQA));
+                if(dimensionQA.points.length!==4 || dimensionQA.points.some(v=>v.shape!=='circle' || v.fill!=='rgb(242, 214, 143)') || dimensionQA.strayWitnesses)
+                  throw new Error('Measurement endpoints must be small gold circles; no drafting ticks: '+JSON.stringify(dimensionQA));
               }
 
               if(width>=900 && geometry.hero>1050) throw new Error('Desktop hero too tall: '+JSON.stringify(geometry));
