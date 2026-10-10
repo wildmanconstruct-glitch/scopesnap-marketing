@@ -14,7 +14,7 @@ assert(!home.includes('class="hero-report-peek"'),"Never display full PDF in her
 assert(!home.includes('font-style:italic'),"No italic hero accent");
 assert(home.includes("Plans optional."),"Plans not required");
 for(const text of ["renovations","extensions","new builds","repairs and maintenance"])assert(home.toLowerCase().includes(text),"Supported job type "+text);
-for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/report-client-photos.jpg","/images/report-internal-detail.jpg","/sample-client-report.pdf","/sample-internal-report.pdf"])assert((home+css).includes(path),"Missing asset URL "+path);
+for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/report-client-photos.jpg","/images/report-internal-detail.jpg"])assert((home+css).includes(path),"Missing asset URL "+path);
 assert(home.includes('id="so-report-preview"')&&home.includes('class="so-report-option"'),"Functional report preview");
 assert(home.includes("setBilling('monthly')")&&home.includes("setBilling('annual')"),"Monthly/annual prices");
 for(const id of ["solo-price","pro-price","biz-price","roiSlider","roiPlan","faq"])assert(home.includes('id="'+id+'"'),"Missing interactive control "+id);
@@ -31,7 +31,11 @@ assert(guide.includes("No drawings required."),"Plan scan stays optional");
 for(const type of ["New builds","Extensions","Renovations","Repairs &amp; maintenance"])assert(guide.includes(type),"Guide coverage: "+type);
 assert(read("sitemap.xml").includes("https://scopesnap.com.au/contact</loc>"),"Canonical contact route");
 assert(existsSync(new URL("../favicon.ico",import.meta.url)),"Favicon");
-for(const name of ["client","internal"]){const pdf=readFileSync(new URL("../sample-"+name+"-report.pdf",import.meta.url));assert(pdf.subarray(0,5).toString()==="%PDF-","PDF "+name);assert(!pdf.includes(Buffer.from("ReportLab")),"Actual app exporter PDF "+name)}
+for(const name of ["client","internal"])assert(!existsSync(new URL("../sample-"+name+"-report.pdf",import.meta.url)),"Full example PDF must never be publicly deployed: "+name);
+assert(!home.includes('data-pdf=')&&!home.includes('id="so-pdf-link"')&&!home.includes('id="so-report-preview-link"'),"Marketing may only display in-page report previews");
+assert(!/sample-(?:client|internal)-report\.pdf/i.test(home+guide),"No publicly linked full report PDFs");
+assert(home.includes('so-report-preview-frame')&&home.includes('so-report-view-only'),"Reports remain visible as non-clickable previews");
+assert(home.includes('so-workflow-swipe'),"Mobile workflow explains swipe navigation");
 assert(!home.includes("Across 30+ jobs")&&!home.includes("45+ hours"),"No unsupported results");
 
 
