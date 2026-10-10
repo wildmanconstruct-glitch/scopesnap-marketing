@@ -32,5 +32,8 @@
     "images/plan-existing.svg",
     "sample-client-report.pdf",
     "sample-internal-report.pdf"
-  ]
+  ],
+  "ui_capture_source_commit": "5d310fdb279808949ba52e9beaa5e20b3aae4d0b",
+  "ui_app_commit": "41d3a29140f7289ca81003a1437fedf5dbca800c",
+  "ui_note": "Six running-component screenshots recaptured after centralising subtle purple AI styling; PDFs and original report-photo source are unchanged."
 }

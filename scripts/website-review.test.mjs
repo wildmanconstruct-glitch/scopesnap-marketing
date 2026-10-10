@@ -33,7 +33,7 @@ for(const variant of ["client","internal"]) {
 }
 const source = JSON.parse(read("assets/source-manifest.json"));
 assert(source.asset_source_commit === "63cea3dc03468782e0874425192f7280722928d1", "Source capture revision matches delivered assets");
-assert(home.includes("screen-overview.jpg?v=app20261010d77"), "Homepage screenshots bust previous browser caches");
-assert(read("how-it-works.html").includes("screen-voice.jpg?v=app20261010d77"), "Walkthrough screenshots bust previous browser caches");
+assert(home.includes("screen-overview.jpg?v=ai20261010"), "Homepage screenshots bust previous browser caches");
+assert(read("how-it-works.html").includes("screen-voice.jpg?v=ai20261010"), "Walkthrough screenshots bust previous browser caches");
 assert(read("vercel.json").includes("must-revalidate"), "Mutable image assets must revalidate");
 console.log("Website content accuracy and SEO checks passed.");
