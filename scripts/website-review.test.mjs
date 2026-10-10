@@ -59,6 +59,12 @@ assert(!home.includes("inspect renovation sites"), "Marketing must not imply a r
 assert(!home.includes("Move through a renovation one room at a time"), "Overview must describe all project types");
 assert(home.includes("same report workflow supports new builds"), "Illustrated renovation reports must not limit the product");
 
+assert(!home.includes('class="hero-report-peek"'), "Never put a full PDF page in the hero");
+assert(home.includes('class="hero-room-device"'), "Hero must lead with the app room capture");
+const layout = read("premium-showcase.css");
+assert(layout.includes(".hero-room-device { width:min(55%,255px)"), "Limit hero phone to a readable but compact width");
+assert(layout.includes("grid-template-columns:repeat(2,minmax(0,1fr))"), "Desktop feature cards need a concise two-column gallery");
+assert(layout.includes(".hero-product-pair"), "Hero must remain responsive");
 assert(home.includes("/images/screen-room.jpg?v="), "Lead with real room capture");
 assert(home.includes("/images/screen-review.jpg?v="), "Voice demo must show written draft");
 assert(!home.includes('class="ps-overview"'), "Do not repeat overview");
