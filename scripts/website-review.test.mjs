@@ -6,9 +6,9 @@ assert(!home.includes("Across 30+ jobs"), "Remove unsupported job count claims")
 assert(!home.includes("45+ hours"), "Remove unsupported time claims");
 assert(!home.includes("trade coordination"), "Do not claim unimplemented trade coordination output");
 assert(!home.includes("created from the same site capture"), "Do not call the design reports app exports");
-assert(home.includes("app-generated"), "Report pages must be identified as app-generated");
+assert(home.includes("actual report exporter"), "Report previews must come from the app exporter");
 assert(!home.includes("Design preview"), "Marketing must no longer show static report design placeholders");
-assert(home.includes("workflow-compact"), "The homepage should link to the walkthrough instead of duplicating it");
+assert(!home.includes('class="workflow-compact"'), "No orphan homepage process strip");
 assert(!home.includes('class="rf-row'), "Do not restore the redundant long home walkthrough");
 assert(home.includes("/sample-client-report.pdf") && home.includes("/sample-internal-report.pdf"), "Keep both report links");
 for(const slug of ["contact","privacy","terms","billing"]){
@@ -32,7 +32,7 @@ for(const variant of ["client","internal"]) {
  assert(!buffer.includes(Buffer.from("ReportLab")), "PDFs must use the actual ScopeSnap exporter");
 }
 const source = JSON.parse(read("assets/source-manifest.json"));
-assert(source.asset_source_commit === "63cea3dc03468782e0874425192f7280722928d1", "Source capture revision matches delivered assets");
+assert(source.asset_source_commit === "9c3486ab2ccac41011d8b744e152c03e0ee2e56d", "Source capture revision matches delivered assets");
 assert(home.includes("screen-overview.jpg?v=ai20261010"), "Homepage screenshots bust previous browser caches");
 assert(read("how-it-works.html").includes("screen-voice.jpg?v=ai20261010"), "Walkthrough screenshots bust previous browser caches");
 assert(read("vercel.json").includes("must-revalidate"), "Mutable image assets must revalidate");
