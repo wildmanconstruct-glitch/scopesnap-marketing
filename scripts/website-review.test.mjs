@@ -43,3 +43,9 @@ assert(tour.includes("01 / ROOM PHOTOS + AI"), "Photo capture must lead the feat
 assert(tour.indexOf("01 / ROOM PHOTOS + AI") < tour.indexOf("02 / AI VOICE CAPTURE"), "Voice follows photos");
 assert(tour.indexOf("03 / ON-SITE MEASUREMENTS") < tour.indexOf("OPTIONAL / PLAN SCAN"), "Plans must remain secondary");
 assert(home.includes("No plans needed to get started"), "Make it clear plans are not required");
+
+const walkthrough = read("how-it-works.html");
+assert(walkthrough.indexOf("01 / Create the job") < walkthrough.indexOf("OPTIONAL / PLAN SCAN"), "Plan Scan is not a first step");
+assert(!walkthrough.includes("Start with the plans."), "No plans-first language");
+assert(walkthrough.includes('id="optional-plans"'), "Plan Scan remains a useful optional tool");
+assert(walkthrough.includes("No drawings required."), "Builders can start without plans");
