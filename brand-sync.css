@@ -34,3 +34,14 @@ body:not(.site-setout) .walk-steps .walk-step{border-radius:0}
 body:not(.site-setout) .walk-steps .walk-step img{border-radius:20px}
 #pricing .roi-calc p,#pricing .pricing-details p,#pricing .pricing-details li,#pricing .pricing-details-body{color:#55524C}
 #pricing .price-list li{display:block}
+
+/* QA review: keep the first mobile viewport clear and restore calculator text contrast. */
+body.site-setout .sticky-cta{display:none!important}
+#pricing .roi-calc,#pricing .roi-calc *:not(.roi-team-btn.active):not(.roi-rate-btn.active),#pricing .roi-out-card,#pricing .roi-out-card *{opacity:1}
+#pricing .roi-calc .roi-sub,#pricing .roi-calc .roi-note,#pricing .roi-out-label,#pricing .roi-hint,#pricing .roi-calc .roi-desc,#pricing .roi-calc small,#pricing .roi-calc label,#pricing .roi-calc .roi-label{color:#55524C!important}
+#pricing .roi-calc p,#pricing .roi-calc .roi-label,#pricing .roi-calc .roi-sub,#pricing .roi-calc .roi-note,#pricing .roi-calc .roi-hint{color:#55524C!important}
+#pricing .roi-team-btn,#pricing .roi-rate-btn{color:#55524C;background:transparent}
+#pricing .roi-team-btn.active,#pricing .roi-rate-btn.active{color:var(--bone)!important;background:var(--ink)!important}
+#pricing .roi-out-num,#pricing .roi-out-card strong,#pricing .roi-calc h3{color:var(--ink)}
+#pricing .roi-money-num{color:#35613A!important}
+#pricing .roi-out-card{background:transparent;border:1px solid var(--line-l)}
