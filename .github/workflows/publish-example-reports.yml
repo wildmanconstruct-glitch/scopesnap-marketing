@@ -34,10 +34,10 @@ jobs:
               path = Path(f'images/{name}.jpg')
               assert path.is_file() and path.stat().st_size > 30000, path
               assert f'/images/{name}.jpg' in home or name == 'screen-overview', name
-for name in ('screen-room','screen-review'):
-    p = Path(f'images/{name}.jpg')
-    assert p.is_file() and p.stat().st_size > 30000, p
-    assert f'/images/{name}.jpg' in home, name
+          for name in ('screen-room','screen-review'):
+              p = Path(f'images/{name}.jpg')
+              assert p.is_file() and p.stat().st_size > 30000, p
+              assert f'/images/{name}.jpg' in home, name
           for doc in ('client','internal'):
               pdf=Path(f'sample-{doc}-report.pdf')
               assert pdf.is_file() and pdf.stat().st_size > 300000, pdf
