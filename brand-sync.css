@@ -116,22 +116,23 @@ body.site-setout .sticky-cta{display:none!important}
  .so-savings .roi-head h3{font-size:35px}
 }
 
-/* 2026-10-11: dimensions now track physical outer edges of the kitchen window.
-   SVG shares source image viewBox and xMidYMid slice with background-size:cover/center,
-   so witness lines remain registered to the casing through desktop resizing. */
+/* ScopeSnap AR-measure palette. SVG viewBox is the true 1448x1086 image resolution
+   and uses cover/center, matching the same background photograph exactly. */
 .so-photo-dimensions{
  position:absolute;inset:0 0 0 30%;z-index:1;overflow:hidden;
- pointer-events:none;
+ pointer-events:none;color:#C17F3E; /* actual ScopeSnap app --gold */
 }
 .so-photo-dimensions svg{width:100%;height:100%;display:block;overflow:hidden}
-.so-window-dimension-lines{stroke-opacity:.92}
-.so-window-dimension-text{
- fill:#ECE8E0;font-family:'JetBrains Mono',monospace;
- font-size:20px;font-weight:500;letter-spacing:1.2px;dominant-baseline:auto;
+.so-window-dimension-lines{stroke-opacity:1}
+.so-window-measure{stroke-width:2.7}
+.so-window-witness{stroke-opacity:.84;stroke-width:2}
+.so-window-tick{stroke-width:3}
+.so-dimension-label rect{fill:rgba(14,14,13,.94);stroke:#C17F3E;stroke-width:1.35}
+.so-dimension-label text{
+ fill:#C17F3E;font:600 19px/1 'JetBrains Mono',monospace;
+ letter-spacing:.55px;paint-order:stroke;
 }
-@media(max-width:800px){
- .so-photo-dimensions{inset:25% 0 0}
-}
+@media(max-width:800px){.so-photo-dimensions{inset:25% 0 0}}
 @media(max-width:600px){
  /* The room photo is tightly cropped on phone; no detached lines or tiny illegible labels. */
  .so-photo-dimensions{display:none}
