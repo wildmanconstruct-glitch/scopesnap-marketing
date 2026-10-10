@@ -58,6 +58,26 @@ jobs:
               const fontStatus = await page.evaluate(() => ({available:document.fonts.check('800 22px Archivo'),heading:getComputedStyle(document.querySelector('.so-hero h1')).fontFamily}));
               console.log('Typography',fontStatus);
               if(width>=900 && geometry.hero>1050) throw new Error('Desktop hero too tall: '+JSON.stringify(geometry));
+              const before=await page.locator('details.so-savings-disclosure').evaluate(el=>el.open);
+              if(before) throw new Error('Calculator must be collapsed initially');
+              if(width>1300){
+                const phoneWidth=await page.locator('.so-step-shot').first().evaluate(el=>el.getBoundingClientRect().width);
+                if(phoneWidth<250 || phoneWidth>285) throw new Error('Desktop walkthrough screens too small: '+phoneWidth);
+                const sample=await page.locator('#so-report-preview').getAttribute('src');
+                if(!sample?.includes('/images/report-client-photos.jpg?v=20261011rev1')) throw new Error('Fuller client report not selected');
+                await page.locator('.so-report-option[data-name="internal"]').click();
+                const internal=await page.locator('#so-report-preview').getAttribute('src');
+                if(!internal?.includes('report-internal-detail.jpg?v=20261011rev1'))throw new Error('Report type switching broken');
+                await page.locator('details.so-savings-disclosure > summary').click();
+                const opened=await page.locator('details.so-savings-disclosure').evaluate(el=>el.open);
+                if(!opened) throw new Error('Savings toggle broken');
+                const moneyColor=await page.locator('#roiMoney').evaluate(el=>getComputedStyle(el).color);
+                if(moneyColor!=='rgb(14, 14, 13)')throw new Error('Calculator number must be ink, got: '+moneyColor);
+                await page.locator('#toggleAnnual').click();
+                const annual=await page.locator('#pro-price').textContent();
+                if(!annual.includes('$1,309'))throw new Error('Annual billing toggle broken');
+              }
+
             }
             await page.close();
           }
