@@ -1,4 +1,4 @@
-name: Verify premium website and reports
+name: Verify marketing website and report previews
 on:
   push:
     branches: [main]
@@ -16,52 +16,32 @@ on:
 permissions:
   contents: read
 jobs:
-  check-assets-and-reports:
+  check-marketing:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Check website claims and SEO
+      - name: Verify marketing UI, pricing, navigation and no full report downloads
         run: node scripts/website-review.test.mjs
-      - name: Verify marketing assets and document links
+      - name: Verify authentic app previews with NO public report PDF files
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          home = Path('index.html').read_text(encoding='utf-8')
-          css = Path('brand-sync.css').read_text(encoding='utf-8')
-          guide = Path('how-it-works.html').read_text(encoding='utf-8')
-          assert 'class="so-hero"' in home and 'class="so-report-layout"' in home
-          assert '.so-hero' in css and 'scroll-snap-type:x mandatory' in css
-          assert '/brand-sync.css?v=20261011hero-peek2' in home
+          home=Path('index.html').read_text(encoding='utf-8')
+          guide=Path('how-it-works.html').read_text(encoding='utf-8')
           for name in ('screen-hero','screen-planscan','screen-voice','screen-measure','screen-photo'):
-              path = Path(f'images/{name}.jpg')
-              assert path.is_file() and path.stat().st_size > 30000, path
+              p=Path(f'images/{name}.jpg')
+              assert p.is_file() and p.stat().st_size > 30000, p
               assert f'/images/{name}.jpg' in home, name
-          assert '/images/screen-hero.jpg?v=20261011roomvoice1' in home
-          assert 'so-live-waveform' in home and '2:37 remaining' in home
-          assert Path('images/screen-room.jpg').is_file()  # retain original real room image for other site uses
-          for doc in ('client','internal'):
-              pdf=Path(f'sample-{doc}-report.pdf')
-              assert pdf.is_file() and pdf.stat().st_size > 300000, pdf
-              assert f'/sample-{doc}-report.pdf' in home
-              variant = 'photos' if doc == 'client' else 'detail'
-              picture = Path(f'images/report-{doc}-{variant}.jpg')
-              assert picture.is_file() and picture.stat().st_size > 30000, picture
-              assert f'/images/report-{doc}-{variant}.jpg?v=20261011rev1' in home
-          for room in ('kitchen','bathroom','living','exterior'):
-              p=Path(f'images/demo/{room}.jpg')
-              assert p.is_file() and p.stat().st_size > 20000, p
-          assert '/images/screen-measure.jpg' in guide
-          print('Site Set-Out app screenshots, product features and real report assets verified')
+          for name in ('client','internal'):
+              p=Path(f'sample-{name}-report.pdf')
+              assert not p.exists(), f'Public downloadable report must not exist: {p}'
+              preview=Path('images/report-'+name+('-photos.jpg' if name=='client' else '-detail.jpg'))
+              assert preview.exists() and preview.stat().st_size>30000
+          assert 'data-pdf=' not in home
+          assert 'so-report-preview' in home
+          assert '/sample-client-report.pdf' not in home+guide
+          assert '/sample-internal-report.pdf' not in home+guide
+          assert 'so-report-preview-frame' in home
+          print('Real app screenshots and preview-only reports verified')
           PY
-      - name: Inspect full-length photo reports
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq poppler-utils
-          test "$(pdfinfo sample-client-report.pdf | awk '/^Pages:/ {print $2}')" -ge 4
-          test "$(pdfinfo sample-internal-report.pdf | awk '/^Pages:/ {print $2}')" -ge 4
-          test "$(pdfimages -list sample-client-report.pdf | awk 'NR > 2 {n++} END {print n+0}')" -ge 6
-          test "$(pdfimages -list sample-internal-report.pdf | awk 'NR > 2 {n++} END {print n+0}')" -ge 6
-          pdfinfo sample-client-report.pdf | grep -qi 'jspdf'
-          pdfinfo sample-internal-report.pdf | grep -qi 'jspdf'
-          echo 'Both authentic app-generated photo reports verified'
