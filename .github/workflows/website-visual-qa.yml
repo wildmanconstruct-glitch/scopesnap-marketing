@@ -54,7 +54,7 @@ jobs:
               }));
               if(geometry.giantReport) throw new Error('Full report must not appear in the hero');
               if(geometry.scroll>geometry.viewport+2) throw new Error('Horizontal page overflow: '+JSON.stringify(geometry));
-              if(!geometry.phone || geometry.phone>340) throw new Error('Hero phone must remain contained: '+JSON.stringify(geometry));
+              if(!geometry.phone || geometry.phone>(width<=600?151:width<=800?185:225)) throw new Error('Hero phone should be a small accent, not cover kitchen background: '+JSON.stringify(geometry));
 
               const heroContent=await page.locator('.so-hero-phone').evaluate(el=>{
                 const image=el.querySelector('img');
