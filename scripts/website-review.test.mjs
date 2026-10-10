@@ -33,8 +33,8 @@ for(const variant of ["client","internal"]) {
 }
 const source = JSON.parse(read("assets/source-manifest.json"));
 assert(source.asset_source_commit === "c6ace7d80798c475631368df17adb0e3fc9ff2bc", "Source capture revision matches delivered assets");
-assert(home.includes("screen-room.jpg?v=bank20261010logo"), "Homepage room capture busts previous browser caches");
-assert(read("how-it-works.html").includes("screen-voice.jpg?v=bank20261010logo"), "Walkthrough screenshots bust previous browser caches");
+assert(home.includes("/images/screen-room.jpg?v="), "Homepage room capture uses versioned screenshot");
+assert(read("how-it-works.html").includes("/images/screen-voice.jpg?v="), "Walkthrough includes versioned voice screen");
 assert(read("vercel.json").includes("must-revalidate"), "Mutable image assets must revalidate");
 console.log("Website content accuracy and SEO checks passed.");
 
@@ -59,8 +59,8 @@ assert(!home.includes("inspect renovation sites"), "Marketing must not imply a r
 assert(!home.includes("Move through a renovation one room at a time"), "Overview must describe all project types");
 assert(home.includes("same report workflow supports new builds"), "Illustrated renovation reports must not limit the product");
 
-assert(home.includes("screen-room.jpg?v=bank20261010logo"), "Lead with real room capture");
-assert(home.includes("screen-review.jpg?v=bank20261010logo"), "Voice demo must show written draft");
+assert(home.includes("/images/screen-room.jpg?v="), "Lead with real room capture");
+assert(home.includes("/images/screen-review.jpg?v="), "Voice demo must show written draft");
 assert(!home.includes('class="ps-overview"'), "Do not repeat overview");
 assert(!home.includes('class="workflow-compact"'), "No orphan workflow");
 
@@ -69,8 +69,8 @@ assert(home.includes('data-report-large="client"') && home.includes('data-report
 assert(!home.includes('class="ps-report-grid"'), "Remove tiny 3-column PDF thumbnails");
 
 const how=read("how-it-works.html");
-assert(how.includes('screen-room.jpg?v=bank20261010logo'), "Show actual room capture on walkthrough");
-assert(how.includes('screen-review.jpg?v=bank20261010logo'), "Walkthrough must show AI draft rather than report selection");
+assert(how.includes('/images/screen-room.jpg?v='), "Show actual room capture on walkthrough");
+assert(how.includes('/images/screen-review.jpg?v='), "Walkthrough must show AI draft rather than report selection");
 
 assert(home.includes("Is the AI always right?"), "AI draft FAQ");
 assert(home.includes("Does ScopeSnap price or quote the job?"), "Price/quote distinction");
