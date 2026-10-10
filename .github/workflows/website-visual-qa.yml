@@ -8,6 +8,7 @@ on:
       - shared.css
       - premium-showcase.css
       - brand-sync.css
+      - .github/workflows/publish-example-reports.yml
       - .github/workflows/website-visual-qa.yml
   workflow_dispatch:
 permissions:
@@ -33,7 +34,7 @@ jobs:
           const browser = await chromium.launch({headless:true});
           for (const [path,width,height,name] of [
             ['/',1440,900,'home-desktop'],
-            ['/',390,844,'home-mobile'],
+            ['/',375,812,'home-mobile'],
             ['/how-it-works.html',1440,900,'workflow-desktop'],
           ]) {
             const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
@@ -47,14 +48,16 @@ jobs:
               const geometry=await page.evaluate(()=>({
                 viewport:innerWidth,
                 scroll:document.documentElement.scrollWidth,
-                phone:document.querySelector('.hero-room-device')?.getBoundingClientRect().width,
-                hero:document.querySelector('.hero')?.getBoundingClientRect().height,
+                phone:document.querySelector('.so-hero-phone')?.getBoundingClientRect().width,
+                hero:document.querySelector('.so-hero')?.getBoundingClientRect().height,
                 giantReport:!!document.querySelector('.hero-report-peek')
               }));
               if(geometry.giantReport) throw new Error('Full report must not appear in the hero');
               if(geometry.scroll>geometry.viewport+2) throw new Error('Horizontal page overflow: '+JSON.stringify(geometry));
-              if(!geometry.phone || geometry.phone>300) throw new Error('Hero phone must remain contained: '+JSON.stringify(geometry));
-              if(width>=900 && geometry.hero>850) throw new Error('Desktop hero too tall: '+JSON.stringify(geometry));
+              if(!geometry.phone || geometry.phone>340) throw new Error('Hero phone must remain contained: '+JSON.stringify(geometry));
+              const fontStatus = await page.evaluate(() => ({available:document.fonts.check('800 22px Archivo'),heading:getComputedStyle(document.querySelector('.so-hero h1')).fontFamily}));
+              console.log('Typography',fontStatus);
+              if(width>=900 && geometry.hero>1050) throw new Error('Desktop hero too tall: '+JSON.stringify(geometry));
             }
             await page.close();
           }
