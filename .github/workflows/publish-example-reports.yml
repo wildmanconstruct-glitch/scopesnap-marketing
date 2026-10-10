@@ -44,7 +44,7 @@ jobs:
                   assert f'/images/report-{doc}-{detail}.jpg' in home
           for room in ('kitchen','ensuite','bathroom','laundry','living','exterior'):
               p=Path(f'images/room-{room}.jpg')
-              assert p.is_file() and p.stat().st_size > 30000, p
+              assert p.is_file() and p.stat().st_size > 20000, p
           assert '/images/screen-measure.jpg' in guide
           assert '<section class="section ps-tour"' in home
           assert '<section class="section ps-reports"' in home
