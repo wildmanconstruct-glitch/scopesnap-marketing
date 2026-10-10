@@ -116,21 +116,20 @@ body.site-setout .sticky-cta{display:none!important}
  .so-savings .roi-head h3{font-size:35px}
 }
 
-/* ScopeSnap AR-measure palette. SVG viewBox is the true 1448x1086 image resolution
-   and uses cover/center, matching the same background photograph exactly. */
+/* Mirrors src/components/capture/TapeMeasure.jsx: pale gold line, gold endpoint
+   circles with fine white outlines, and white outlined dimension text. */
 .so-photo-dimensions{
  position:absolute;inset:0 0 0 30%;z-index:1;overflow:hidden;
- pointer-events:none;color:#C17F3E; /* actual ScopeSnap app --gold */
+ pointer-events:none;color:#f2d68f;
 }
-.so-photo-dimensions svg{width:100%;height:100%;display:block;overflow:hidden}
-.so-window-dimension-lines{stroke-opacity:1}
-.so-window-measure{stroke-width:2.7}
-.so-window-witness{stroke-opacity:.84;stroke-width:2}
-.so-window-tick{stroke-width:3}
-.so-dimension-label rect{fill:rgba(14,14,13,.94);stroke:#C17F3E;stroke-width:1.35}
-.so-dimension-label text{
- fill:#C17F3E;font:600 19px/1 'JetBrains Mono',monospace;
- letter-spacing:.55px;paint-order:stroke;
+.so-photo-dimensions svg{display:block;width:100%;height:100%;overflow:hidden}
+.so-ar-line{stroke:#f2d68f;stroke-width:3.2;stroke-linecap:round}
+.so-ar-point{fill:#f2d68f;stroke:#fff;stroke-width:2}
+.so-ar-label{
+ fill:#fff;stroke:#191919;stroke-width:3;paint-order:stroke;
+ stroke-linejoin:round;stroke-linecap:round;
+ font:700 25px/1 'Archivo',system-ui,sans-serif;
+ letter-spacing:.3px;
 }
 @media(max-width:800px){.so-photo-dimensions{inset:25% 0 0}}
 @media(max-width:600px){
