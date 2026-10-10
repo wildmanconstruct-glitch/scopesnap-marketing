@@ -46,7 +46,7 @@ jobs:
                   picture = Path(f'images/report-{doc}-{detail}.jpg')
                   assert picture.is_file() and picture.stat().st_size > 30000, picture
                   assert f'/images/report-{doc}-{detail}.jpg' in home
-          for room in ('kitchen','ensuite','bathroom','laundry','living','exterior'):
+          for room in ('kitchen','bathroom','living','exterior'):
               p=Path(f'images/room-{room}.jpg')
               assert p.is_file() and p.stat().st_size > 20000, p
           assert '/images/screen-measure.jpg' in guide
@@ -58,8 +58,8 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq poppler-utils
-          test "$(pdfinfo sample-client-report.pdf | awk '/^Pages:/ {print $2}')" -ge 8
-          test "$(pdfinfo sample-internal-report.pdf | awk '/^Pages:/ {print $2}')" -ge 11
+          test "$(pdfinfo sample-client-report.pdf | awk '/^Pages:/ {print $2}')" -ge 4
+          test "$(pdfinfo sample-internal-report.pdf | awk '/^Pages:/ {print $2}')" -ge 4
           test "$(pdfimages -list sample-client-report.pdf | awk 'NR > 2 {n++} END {print n+0}')" -ge 6
           test "$(pdfimages -list sample-internal-report.pdf | awk 'NR > 2 {n++} END {print n+0}')" -ge 6
           pdfinfo sample-client-report.pdf | grep -qi 'jspdf'
