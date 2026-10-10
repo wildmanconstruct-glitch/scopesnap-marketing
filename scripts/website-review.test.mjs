@@ -63,3 +63,7 @@ assert(home.includes("screen-room.jpg?v=site20261010"), "Lead with real room cap
 assert(home.includes("screen-review.jpg?v=site20261010"), "Voice demo must show written draft");
 assert(!home.includes('class="ps-overview"'), "Do not repeat overview");
 assert(!home.includes('class="workflow-compact"'), "No orphan workflow");
+
+assert(home.includes('data-report-tab="client"') && home.includes('data-report-tab="internal"'), "Both report tabs must be present");
+assert(home.includes('data-report-large="client"') && home.includes('data-report-large="internal"'), "Show readable report pages");
+assert(!home.includes('class="ps-report-grid"'), "Remove tiny 3-column PDF thumbnails");
