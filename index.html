@@ -89,7 +89,7 @@
   <link rel="stylesheet" href="/shared.css?v=17"/>
   <link rel="stylesheet" href="/premium-showcase.css?v=20261010setout2"/>
 
-  <link rel="stylesheet" href="/brand-sync.css?v=20261011hero-peek2"/>
+  <link rel="stylesheet" href="/brand-sync.css?v=20261011mobile-private1"/>
 </head>
 <body class="site-setout">
 
@@ -155,7 +155,7 @@
   <p class="so-mono so-eyebrow">Site scoping app · Built in the Adelaide Hills</p>
   <h1 id="site-title" class="so-display">Walk the site.<br><span>Leave with the scope.</span></h1>
   <p class="so-lead">Photos, voice notes and measurements captured room by room on your phone, turned into a clear client scope and internal site report. From renovations and extensions to new builds, repairs and maintenance. Plans optional.</p>
-  <div class="so-actions"><a class="btn-primary" href="https://app.scopesnap.com.au/?signup=1" data-track="cta-start-trial">Start 14-day free trial <span aria-hidden="true">→</span></a><a class="btn-ghost" href="#reports">See a real report <span aria-hidden="true">↗</span></a></div>
+  <div class="so-actions"><a class="btn-primary" href="https://app.scopesnap.com.au/?signup=1" data-track="cta-start-trial">Start 14-day free trial <span aria-hidden="true">→</span></a><a class="btn-ghost" href="#reports">Preview reports <span aria-hidden="true">↗</span></a></div>
  </div>
  <div class="so-phone so-hero-phone so-voice-capture-phone">
   <!-- Genuine RoomDetail screen captured by the ScopeSnap React app, including
@@ -215,16 +215,16 @@
 <!-- REAL PDF REPORTS -->
 <section class="so-reports" id="reports" aria-labelledby="so-report-title">
  <div class="wrap">
-  <div class="so-section-head so-dark-head"><span class="so-mono">03 — Output</span><h2 id="so-report-title" class="so-display">Reports worth<br>your name.</h2><p>Client and internal PDFs, generated from the site details in ScopeSnap. Open the full reports to inspect the layout, photos and room-by-room scope.</p></div>
+  <div class="so-section-head so-dark-head"><span class="so-mono">03 — Output</span><h2 id="so-report-title" class="so-display">Reports worth<br>your name.</h2><p>Client and internal reports, built from the details captured in ScopeSnap. Switch between the previews to see how photos, scope items and site notes come together.</p></div>
   <div class="so-report-layout">
    <div class="so-report-paper">
-    <a id="so-report-preview-link" href="/images/report-client-photos.jpg?v=20261011rev1" target="_blank" rel="noopener" aria-label="Open current report preview image"><img id="so-report-preview" src="/images/report-client-photos.jpg?v=20261011rev1" width="931" height="1317" loading="lazy" alt="Real client kitchen report: work items, owner supply and selections"></a>
+    <div class="so-report-preview-frame"><img id="so-report-preview" src="/images/report-client-photos.jpg?v=20261011rev1" width="931" height="1317" loading="lazy" alt="ScopeSnap client kitchen report preview showing work items, owner supply and selections"></div>
     <p class="so-report-image-caption so-mono" id="so-report-caption">Kitchen · Proposed works · By owner · Selections</p>
    </div>
    <div class="so-report-side"><div class="so-mono" style="color:var(--cu);margin-bottom:28px">Choose report</div>
-    <button type="button" class="so-report-option" aria-selected="true" aria-controls="so-report-preview" data-src="/images/report-client-photos.jpg?v=20261011rev1" data-pdf="/sample-client-report.pdf?v=20261011rev1" data-name="client"><span class="so-mono">Client report · PDF</span><b>For your client.</b><p>Proposed work by room, with photos, selections and responsibilities.</p></button>
-    <button type="button" class="so-report-option" aria-selected="false" aria-controls="so-report-preview" data-src="/images/report-internal-detail.jpg?v=20261011rev1" data-pdf="/sample-internal-report.pdf?v=20261011rev1" data-name="internal"><span class="so-mono">Internal report · PDF</span><b>For your team.</b><p>Measurements, quantities, site notes and open items for pricing.</p></button>
-    <a class="so-report-link btn-ghost" id="so-pdf-link" href="/sample-client-report.pdf?v=20261011rev1" target="_blank" rel="noopener">Open full client PDF <span aria-hidden="true">↗</span></a>
+    <button type="button" class="so-report-option" aria-selected="true" aria-controls="so-report-preview" data-src="/images/report-client-photos.jpg?v=20261011rev1"  data-name="client"><span class="so-mono">Client report · PDF</span><b>For your client.</b><p>Proposed work by room, with photos, selections and responsibilities.</p></button>
+    <button type="button" class="so-report-option" aria-selected="false" aria-controls="so-report-preview" data-src="/images/report-internal-detail.jpg?v=20261011rev1"  data-name="internal"><span class="so-mono">Internal report · PDF</span><b>For your team.</b><p>Measurements, quantities, site notes and open items for pricing.</p></button>
+    <p class="so-report-view-only so-mono">Preview the layout. Full reports are created inside your ScopeSnap account.</p>
     <p class="so-report-note">Sample job. Photos are illustrative. Reports are generated by ScopeSnap.</p>
    </div>
   </div>
@@ -720,7 +720,21 @@ function setBilling(mode) {
 </script>
 
 <script>
-(function(){var buttons=document.querySelectorAll('.so-report-option'),image=document.getElementById('so-report-preview'),imageLink=document.getElementById('so-report-preview-link'),pdf=document.getElementById('so-pdf-link');buttons.forEach(function(button){button.addEventListener('click',function(){buttons.forEach(function(b){b.setAttribute('aria-selected',String(b===button));});image.src=button.dataset.src;image.alt=(button.dataset.name==='client'?'Client':'Internal')+' ScopeSnap report page';imageLink.href=button.dataset.src;pdf.href=button.dataset.pdf;pdf.innerHTML='Open full '+button.dataset.name+' PDF <span aria-hidden="true">↗</span>';var caption=document.getElementById('so-report-caption');if(caption)caption.textContent=button.dataset.name==='client'?'Kitchen · Proposed works · By owner · Selections':'Kitchen · Scope summary · Site photographs';});});})();
+(function(){
+ var buttons=document.querySelectorAll('.so-report-option');
+ var img=document.getElementById('so-report-preview');
+ var caption=document.getElementById('so-report-caption');
+ buttons.forEach(function(button){
+  button.addEventListener('click',function(){
+   buttons.forEach(function(b){b.setAttribute('aria-selected',String(b===button));});
+   img.src=button.dataset.src;
+   img.alt=(button.dataset.name==='client'?'Client':'Internal')+' ScopeSnap report page preview';
+   if(caption)caption.textContent=button.dataset.name==='client'
+    ? 'Kitchen · Proposed works · By owner · Selections'
+    : 'Kitchen · Scope summary · Site photographs';
+  });
+ });
+})();
 </script>
 
 <script>
