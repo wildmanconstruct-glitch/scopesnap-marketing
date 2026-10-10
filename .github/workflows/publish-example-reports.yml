@@ -6,6 +6,8 @@ on:
       - 'index.html'
       - 'how-it-works.html'
       - 'premium-showcase.css'
+      - 'brand-sync.css'
+      - 'scripts/website-review.test.mjs'
       - 'images/**'
       - 'sample-client-report.pdf'
       - 'sample-internal-report.pdf'
@@ -26,33 +28,27 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           home = Path('index.html').read_text(encoding='utf-8')
+          css = Path('brand-sync.css').read_text(encoding='utf-8')
           guide = Path('how-it-works.html').read_text(encoding='utf-8')
-          css = Path('premium-showcase.css')
-          assert css.exists() and css.stat().st_size > 3000
-          assert '/premium-showcase.css' in home
-          for name in ('screen-planscan','screen-voice','screen-measure','screen-photo','screen-overview'):
+          assert 'class="so-hero"' in home and 'class="so-report-layout"' in home
+          assert '.so-hero' in css and 'scroll-snap-type:x mandatory' in css
+          assert '/brand-sync.css?v=20261010setout1' in home
+          for name in ('screen-planscan','screen-voice','screen-measure','screen-photo','screen-room'):
               path = Path(f'images/{name}.jpg')
               assert path.is_file() and path.stat().st_size > 30000, path
-              assert f'/images/{name}.jpg' in home or name == 'screen-overview', name
-          for name in ('screen-room','screen-review'):
-              p = Path(f'images/{name}.jpg')
-              assert p.is_file() and p.stat().st_size > 30000, p
               assert f'/images/{name}.jpg' in home, name
           for doc in ('client','internal'):
               pdf=Path(f'sample-{doc}-report.pdf')
               assert pdf.is_file() and pdf.stat().st_size > 300000, pdf
               assert f'/sample-{doc}-report.pdf' in home
-              for detail in ('cover','detail','photos'):
-                  picture = Path(f'images/report-{doc}-{detail}.jpg')
-                  assert picture.is_file() and picture.stat().st_size > 30000, picture
-                  assert f'/images/report-{doc}-{detail}.jpg' in home
+              picture = Path(f'images/report-{doc}-detail.jpg')
+              assert picture.is_file() and picture.stat().st_size > 30000, picture
+              assert f'/images/report-{doc}-detail.jpg' in home
           for room in ('kitchen','bathroom','living','exterior'):
-              p=Path(f'images/room-{room}.jpg')
+              p=Path(f'images/demo/{room}.jpg')
               assert p.is_file() and p.stat().st_size > 20000, p
           assert '/images/screen-measure.jpg' in guide
-          assert '<section class="section ps-tour"' in home
-          assert '<section class="section ps-reports"' in home
-          print('All full-size marketing screenshots and report links are present')
+          print('Site Set-Out app screenshots, product features and real report assets verified')
           PY
       - name: Inspect full-length photo reports
         run: |
