@@ -14,7 +14,7 @@ assert(!home.includes('class="hero-report-peek"'),"Never display full PDF in her
 assert(!home.includes('font-style:italic'),"No italic hero accent");
 assert(home.includes("Plans optional."),"Plans not required");
 for(const text of ["renovations","extensions","new builds","repairs and maintenance"])assert(home.toLowerCase().includes(text),"Supported job type "+text);
-for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-room.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/report-client-photos.jpg","/images/report-internal-detail.jpg","/sample-client-report.pdf","/sample-internal-report.pdf"])assert((home+css).includes(path),"Missing asset URL "+path);
+for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/report-client-photos.jpg","/images/report-internal-detail.jpg","/sample-client-report.pdf","/sample-internal-report.pdf"])assert((home+css).includes(path),"Missing asset URL "+path);
 assert(home.includes('id="so-report-preview"')&&home.includes('class="so-report-option"'),"Functional report preview");
 assert(home.includes("setBilling('monthly')")&&home.includes("setBilling('annual')"),"Monthly/annual prices");
 for(const id of ["solo-price","pro-price","biz-price","roiSlider","roiPlan","faq"])assert(home.includes('id="'+id+'"'),"Missing interactive control "+id);
@@ -34,6 +34,14 @@ assert(existsSync(new URL("../favicon.ico",import.meta.url)),"Favicon");
 for(const name of ["client","internal"]){const pdf=readFileSync(new URL("../sample-"+name+"-report.pdf",import.meta.url));assert(pdf.subarray(0,5).toString()==="%PDF-","PDF "+name);assert(!pdf.includes(Buffer.from("ReportLab")),"Actual app exporter PDF "+name)}
 assert(!home.includes("Across 30+ jobs")&&!home.includes("45+ hours"),"No unsupported results");
 
+
+assert(home.includes('class="so-phone so-hero-phone so-voice-capture-phone"'),"Hero phone shows voice recording screen");
+assert(home.includes('href="/images/screen-voice.jpg?v=20261011rev1"'),"Hero screenshot opens the real Voice Scope screen");
+assert(home.includes('2:37 remaining')&&home.includes('class="so-live-waveform"'),"Hero recording has a visible timer and live waveform");
+assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
+assert(home.includes('/images/screen-measure.jpg?v=20261011rev1'),"Workflow measure uses the camera overlay screenshot");
+assert(home.includes('brand-sync.css?v=20261011voice2'),"Voice hero styles cache version");
+
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('Wildheart Homes'),"Do not name the building company on marketing homepage");
 assert(home.includes('viewBox="0 0 1448 1086"'),"Measurement overlay must use the photo coordinates");
@@ -43,7 +51,7 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261011ar4'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261011voice2'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="so-report-caption"'),"Show a correct caption for report content");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
