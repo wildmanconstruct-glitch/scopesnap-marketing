@@ -25,3 +25,22 @@
 @media(max-width:1110px){.ps-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.ps-feature-card{padding:28px;}.ps-feature-copy{min-height:124px}.ps-phone img{max-width:265px}.ps-report-pages{height:340px}}
 @media(max-width:850px){.ps-section-top{grid-template-columns:1fr;gap:15px;margin-bottom:31px}.ps-section-top>p{max-width:740px}.ps-overview{grid-template-columns:1fr .7fr;gap:15px;padding:36px 30px 0}.ps-overview h3{font-size:36px}.ps-overview-image img{width:230px}.ps-report-grid{grid-template-columns:1fr;gap:25px}.ps-report-pages{height:420px}.ps-report-card-head{min-height:0}}
 @media(max-width:600px){.ps-tour{padding-top:75px;padding-bottom:73px}.ps-feature-card{padding:24px 20px}.ps-product-grid{grid-template-columns:1fr}.ps-feature-copy{min-height:0}.ps-feature-copy h3{font-size:30px}.ps-phone{margin:20px auto}.ps-phone img{width:235px;max-width:94%}.ps-overview{grid-template-columns:1fr;padding:31px 25px 0}.ps-overview-copy{padding-bottom:0}.ps-overview-image img{width:230px}.ps-report-card{padding:22px 17px}.ps-reports{padding-top:73px;padding-bottom:70px}.ps-report-pages{height:280px;gap:6px;margin:21px 0}.ps-report-card-head h3{font-size:30px}.ps-report-conclusion{align-items:flex-start;flex-direction:column}.ps-report-conclusion .btn-primary{white-space:normal}.ps-report-card-footer{align-items:stretch;flex-direction:column}}
+/* Compact homepage journey and touch-friendly feature rail (2026-10-10 review). */
+.workflow-compact{padding:32px 0;background:#191817;border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.09)}
+.workflow-compact-inner{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.workflow-compact-label{display:block;font-size:11px;font-weight:800;letter-spacing:.16em;color:#caa36f;margin-bottom:6px}
+.workflow-compact p{font-size:18px;font-weight:600;color:#f3eee6;line-height:1.5;margin:0}
+.workflow-compact-link{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;text-decoration:none;font-size:14px;font-weight:700;color:#dfb987}
+.workflow-compact-link:hover{color:#fff}
+@media(max-width:600px){
+ .workflow-compact{padding:28px 0}
+ .workflow-compact-inner{flex-direction:column;align-items:flex-start;gap:13px}
+ .workflow-compact p{font-size:16px}
+ .ps-product-grid{display:flex;gap:15px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-inline:2px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding:2px 26px 14px 2px;margin-right:-18px;scrollbar-width:thin}
+ .ps-product-grid>.ps-feature-card{flex:0 0 min(81vw,320px);scroll-snap-align:start}
+ .ps-feature-copy p{font-size:14px}
+ .ps-step{font-size:11px}
+ .ps-feature-link,.ps-feature-footnote{font-size:13px}
+ .ps-overview-metrics span{font-size:12px}
+ .ps-report-card-footer>span,.ps-report-download{font-size:13px}
+}

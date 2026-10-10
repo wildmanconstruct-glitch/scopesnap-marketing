@@ -19,6 +19,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Check website claims and SEO
+        run: node scripts/website-review.test.mjs
       - name: Verify marketing assets and document links
         run: |
           python3 - <<'PY'
