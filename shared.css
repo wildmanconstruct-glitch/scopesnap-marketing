@@ -180,6 +180,9 @@ h3 {
   margin-bottom: 28px;
 }
 
+.scope-jobtypes{font-size:12px;font-weight:600;letter-spacing:.015em;color:var(--muted);line-height:1.6;margin:-9px 0 24px;max-width:550px}
+.scope-jobtypes span{margin:0 6px;color:var(--gold);opacity:.78}
+@media(max-width:600px){.scope-jobtypes{font-size:11.5px;margin:-4px 0 23px}.scope-jobtypes span{margin:0 4px}}
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* ── PHONE (hero right) ── */

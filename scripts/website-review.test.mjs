@@ -49,3 +49,12 @@ assert(walkthrough.indexOf("01 / Create the job") < walkthrough.indexOf("OPTIONA
 assert(!walkthrough.includes("Start with the plans."), "No plans-first language");
 assert(walkthrough.includes('id="optional-plans"'), "Plan Scan remains a useful optional tool");
 assert(walkthrough.includes("No drawings required."), "Builders can start without plans");
+
+const approvedTypes = ["New builds", "Extensions", "Renovations", "Repairs &amp; maintenance"];
+for (const type of approvedTypes) {
+  assert(home.includes(type), "Homepage must mention supported building work: " + type);
+  assert(walkthrough.includes(type), "Walkthrough must cover supported building work: " + type);
+}
+assert(!home.includes("inspect renovation sites"), "Marketing must not imply a renovation-only app");
+assert(!home.includes("Move through a renovation one room at a time"), "Overview must describe all project types");
+assert(home.includes("same report workflow supports new builds"), "Illustrated renovation reports must not limit the product");
