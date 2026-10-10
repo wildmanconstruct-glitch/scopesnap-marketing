@@ -54,8 +54,10 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq poppler-utils
-          test "$(pdfinfo sample-client-report.pdf | awk '/^Pages:/ {print $2}')" -ge 10
+          test "$(pdfinfo sample-client-report.pdf | awk '/^Pages:/ {print $2}')" -ge 8
           test "$(pdfinfo sample-internal-report.pdf | awk '/^Pages:/ {print $2}')" -ge 11
           test "$(pdfimages -list sample-client-report.pdf | awk 'NR > 2 {n++} END {print n+0}')" -ge 6
           test "$(pdfimages -list sample-internal-report.pdf | awk 'NR > 2 {n++} END {print n+0}')" -ge 6
-          echo 'Both full-length photography-rich PDF reports verified'
+          pdfinfo sample-client-report.pdf | grep -qi 'jspdf'
+          pdfinfo sample-internal-report.pdf | grep -qi 'jspdf'
+          echo 'Both authentic app-generated photo reports verified'

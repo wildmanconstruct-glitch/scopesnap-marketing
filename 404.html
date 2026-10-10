@@ -8,16 +8,19 @@
   <meta name="robots" content="noindex, follow"/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/shared.css?v=16"/>
   <style>
-   body{min-height:100vh;display:flex;flex-direction:column;background:#0a0a0b;color:#f2eee8;font-family:Arial,sans-serif}
+   body{min-height:100vh;display:flex;flex-direction:column;background:#0a0a0b;color:#f2eee8;font-family:var(--ff-b),'Barlow',sans-serif}
    .not-found-nav{padding:22px 0;border-bottom:1px solid rgba(255,255,255,.12)}
    .not-found-nav a,.not-found-footer a{color:#d8b586;text-decoration:none}
-   .not-found-logo{display:inline-flex;align-items:center;gap:12px;font-size:20px;color:#f5ede0!important;font-weight:bold}
+   .not-found-logo{display:inline-flex;align-items:center;gap:12px;font-size:20px;color:#f5ede0!important;font-weight:700;font-family:var(--ff-b),'Barlow',sans-serif}
    main{flex:1;display:grid;align-items:center;padding:70px 0}
    .not-found-wrap{max-width:780px}
    .not-found-eyebrow{color:#d8b586;font-weight:bold;letter-spacing:.18em;font-size:13px}
-   h1{font-size:clamp(48px,10vw,96px);line-height:1.06;letter-spacing:-.05em;margin:18px 0 22px;text-transform:none}
+   h1{font-family:var(--ff-h),'Barlow Condensed',sans-serif;font-size:clamp(58px,11vw,112px);line-height:.95;letter-spacing:-.025em;margin:18px 0 22px;text-transform:uppercase}
    .not-found-text{font-size:clamp(17px,2vw,21px);color:#c4c0b8;max-width:540px;margin:0 0 32px}
    .not-found-actions{display:flex;gap:12px;flex-wrap:wrap}
    .not-found-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 23px;border-radius:7px;text-decoration:none;font-weight:bold}
@@ -27,7 +30,15 @@
   </style>
 </head>
 <body>
-  <header class="not-found-nav"><div class="wrap"><a class="not-found-logo" href="/"><img src="/favicon.svg" width="32" height="32" alt=""/> ScopeSnap</a></div></header>
+  <header class="not-found-nav"><div class="wrap"><a class="not-found-logo" href="/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="32" height="32">
+  <path d="M80,14 A66,66 0 0,1 137.2,47 Q125,68 94,95 L100,73 Q93,31 80,14 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M137.2,47 A66,66 0 0,1 137.2,113 Q112,112 72,98 L94,95 Q125,68 137.2,47 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M137.2,113 A66,66 0 0,1 80,146 Q67,125 58,84 L72,98 Q112,112 137.2,113 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M80,146 A66,66 0 0,1 22.8,113 Q35,92 66,65 L58,84 Q67,125 80,146 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M22.8,113 A66,66 0 0,1 22.8,47 Q48,48 84,62 L66,65 Q35,92 22.8,113 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M22.8,47 A66,66 0 0,1 80,14 Q93,35 100,73 L84,62 Q48,48 22.8,47 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+  <circle cx="80" cy="80" r="66" fill="none" stroke="#C49A3C" stroke-width="5"/>
+</svg> ScopeSnap</a></div></header>
   <main><div class="wrap not-found-wrap">
     <p class="not-found-eyebrow">404 / PAGE NOT FOUND</p>
     <h1>This page is off the plans.</h1>
