@@ -136,3 +136,30 @@ body.site-setout .sticky-cta{display:none!important}
  /* The room photo is tightly cropped on phone; no detached lines or tiny illegible labels. */
  .so-photo-dimensions{display:none}
 }
+
+/* Hero phone: the actual VoiceNote recording tile shown mid-capture.
+   The source image is the app's real red Stop state; these small overlays
+   animate its waveform and show a believable point in the 5-minute recording. */
+.so-voice-capture-phone{display:block;container-type:inline-size;isolation:isolate}
+.so-voice-capture-phone>img{position:relative;z-index:0}
+.so-live-waveform{
+  position:absolute;left:7%;top:22.45%;width:19%;height:3.0cqw;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;gap:.5cqw;
+  padding:0 .25cqw;background:#ebe7e3;pointer-events:none;
+}
+.so-live-waveform i{
+  display:block;flex:1;max-width:.82cqw;height:var(--wave-h);
+  background:#9166ae;border-radius:30px;transform-origin:50% 50%;
+  animation:so-live-audio .8s ease-in-out infinite alternate;
+}
+.so-live-waveform i:nth-child(3n+1){animation-duration:.55s;animation-delay:-.23s}
+.so-live-waveform i:nth-child(3n+2){animation-duration:.78s;animation-delay:-.47s}
+.so-live-waveform i:nth-child(3n){animation-duration:.92s;animation-delay:-.16s}
+.so-live-countdown{
+  position:absolute;top:22.38%;right:3.5%;z-index:1;display:block;
+  padding:0 .4cqw;background:#ebe7e3;color:#443b36;pointer-events:none;
+  font:600 3.0cqw/1.35 'Archivo',Arial,sans-serif;letter-spacing:-.025em;
+  white-space:nowrap;
+}
+@keyframes so-live-audio{from{transform:scaleY(.35);opacity:.76}to{transform:scaleY(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.so-live-waveform i{animation:none}}
