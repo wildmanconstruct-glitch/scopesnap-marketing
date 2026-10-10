@@ -14,7 +14,7 @@ assert(!home.includes('class="hero-report-peek"'),"Never display full PDF in her
 assert(!home.includes('font-style:italic'),"No italic hero accent");
 assert(home.includes("Plans optional."),"Plans not required");
 for(const text of ["renovations","extensions","new builds","repairs and maintenance"])assert(home.toLowerCase().includes(text),"Supported job type "+text);
-for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-room.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/report-client-detail.jpg","/images/report-internal-detail.jpg","/sample-client-report.pdf","/sample-internal-report.pdf"])assert((home+css).includes(path),"Missing asset URL "+path);
+for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-room.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/report-client-photos.jpg","/images/report-internal-detail.jpg","/sample-client-report.pdf","/sample-internal-report.pdf"])assert((home+css).includes(path),"Missing asset URL "+path);
 assert(home.includes('id="so-report-preview"')&&home.includes('class="so-report-option"'),"Functional report preview");
 assert(home.includes("setBilling('monthly')")&&home.includes("setBilling('annual')"),"Monthly/annual prices");
 for(const id of ["solo-price","pro-price","biz-price","roiSlider","roiPlan","faq"])assert(home.includes('id="'+id+'"'),"Missing interactive control "+id);
@@ -24,13 +24,29 @@ for(const p of ["contact","privacy","terms","billing"]) {
  const page=read(p+".html");
  assert(page.includes('rel="canonical" href="https://scopesnap.com.au/'+p+'"'),"Canonical "+p);
  assert(page.includes('og:image" content="https://scopesnap.com.au/og.png"'),"Social image "+p);
- assert(page.includes("brand-sync.css?v=20261010setout2"),"Site Set-Out stylesheet on "+p);
+ assert(page.includes("brand-sync.css?v=20261011rev1"),"Site Set-Out stylesheet on "+p);
 }
-for(const p of ["how-it-works","delete-account","404"])assert(read(p+".html").includes("brand-sync.css?v=20261010setout2"),"Unified styling on "+p);
+for(const p of ["how-it-works","delete-account","404"])assert(read(p+".html").includes("brand-sync.css?v=20261011rev1"),"Unified styling on "+p);
 assert(guide.includes("No drawings required."),"Plan scan stays optional");
 for(const type of ["New builds","Extensions","Renovations","Repairs &amp; maintenance"])assert(guide.includes(type),"Guide coverage: "+type);
 assert(read("sitemap.xml").includes("https://scopesnap.com.au/contact</loc>"),"Canonical contact route");
 assert(existsSync(new URL("../favicon.ico",import.meta.url)),"Favicon");
 for(const name of ["client","internal"]){const pdf=readFileSync(new URL("../sample-"+name+"-report.pdf",import.meta.url));assert(pdf.subarray(0,5).toString()==="%PDF-","PDF "+name);assert(!pdf.includes(Buffer.from("ReportLab")),"Actual app exporter PDF "+name)}
 assert(!home.includes("Across 30+ jobs")&&!home.includes("45+ hours"),"No unsupported results");
-console.log("ScopeSnap Site Set-Out content, pricing, accessibility structure and SEO checks passed.");
+
+assert(home.includes('Wildheart Homes, Adelaide Hills.'),"Restore real builder credibility");
+assert(home.includes('id="so-report-caption"'),"Show a correct caption for report content");
+assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
+assert(home.includes('/images/report-client-photos.jpg?v=20261011rev1'),"Use fuller genuine report page");
+assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="faq"'),"Put optional calculator below FAQ");
+assert(home.includes('<details class="so-savings-disclosure">'),"Calculator should default closed");
+assert(css.includes('@media(min-width:960px)')&&css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Big phones in two desktop rows");
+assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes('.so-savings .roi-money-num{color:var(--ink);'),"Estimator numbers no green");
+for(const path of ["index.html","how-it-works.html","contact.html","billing.html","privacy.html","terms.html","delete-account.html","404.html"]){
+ const page=read(path);
+ for(const m of page.matchAll(/\/(?:images\/[\w./-]+|sample-[\w-]+\.pdf)[^"'\s<>]*/g)){
+  assert(m[0].includes('?v=20261011rev1'),"Old image/PDF URL in "+path+": "+m[0]);
+ }
+}
+
+console.log("ScopeSnap Site Set-Out refinements, asset versions, pricing, accessible layout and SEO checks passed.");
