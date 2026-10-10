@@ -1,0 +1,53 @@
+name: Assemble approved real-app PDF reports
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/pdf-chunks/**'
+      - '.github/workflows/assemble-approved-reports.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-pdfs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstitute and independently verify both real exporter PDFs
+        shell: bash
+        run: |
+          set -euo pipefail
+          for kind in client internal; do
+            folder="assets/pdf-chunks/${kind}"
+            test -s "${folder}/part-000.txt"
+            cat "${folder}"/part-*.txt | base64 --decode > "sample-${kind}-report.pdf"
+            expected="$(cut -d' ' -f1 "${folder}/checksum.txt")"
+            actual="$(sha256sum "sample-${kind}-report.pdf" | cut -d' ' -f1)"
+            test "$actual" = "$expected" || { echo "::error::Checksum mismatch for $kind PDF"; exit 1; }
+            python3 - "$kind" <<'PY'
+          from pathlib import Path
+          import sys
+          kind = sys.argv[1]
+          pdf = Path(f"sample-{kind}-report.pdf")
+          data = pdf.read_bytes()
+          assert data.startswith(b"%PDF-"), "Invalid PDF header"
+          assert len(data) > 1000000, "Unexpected small report"
+          print(f"{kind} PDF exact source checksum verified: {len(data)} bytes")
+          PY
+          done
+      - name: Commit verified full PDFs to public marketing website
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "ScopeSnap PDF publisher"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sample-client-report.pdf sample-internal-report.pdf
+          if git diff --cached --quiet; then
+            echo "Complete PDFs are already up to date."
+          else
+            git commit -m "Publish approved photo-rich real exporter PDF reports"
+            git push origin HEAD:main
+          fi
