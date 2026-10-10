@@ -67,3 +67,7 @@ assert(!home.includes('class="workflow-compact"'), "No orphan workflow");
 assert(home.includes('data-report-tab="client"') && home.includes('data-report-tab="internal"'), "Both report tabs must be present");
 assert(home.includes('data-report-large="client"') && home.includes('data-report-large="internal"'), "Show readable report pages");
 assert(!home.includes('class="ps-report-grid"'), "Remove tiny 3-column PDF thumbnails");
+
+const how=read("how-it-works.html");
+assert(how.includes('screen-room.jpg?v=site20261010'), "Show actual room capture on walkthrough");
+assert(how.includes('screen-review.jpg?v=site20261010'), "Walkthrough must show AI draft rather than report selection");

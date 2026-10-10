@@ -99,3 +99,10 @@
 .report-large-page img{display:block;width:100%;height:auto;max-height:800px;object-fit:contain}
 @media(max-width:850px){.report-panel{grid-template-columns:1fr;padding:28px}.report-large-page{max-width:510px}}
 @media(max-width:600px){.report-tabs{width:100%}.report-tab{flex:1;padding:13px 8px}.report-panel{padding:24px 15px;gap:20px}.report-large-page{width:100%}.report-large-page img{max-height:none}.report-thumb{width:61px;height:84px}}
+
+/* Consistent physical device framing across real-app phone captures. */
+.ps-phone{position:relative}
+.ps-phone img{border:5px solid #302d2a;padding:7px;border-radius:34px;background:#1b1917;box-shadow:0 22px 40px rgba(0,0,0,.35)}
+.ps-feature-card .ps-phone img{border:5px solid #302d2a;padding:7px}
+.product-device::before{content:"9:41      ●●● ▰";position:absolute;top:8px;left:12%;right:12%;z-index:2;height:21px;text-align:center;font-size:10px;letter-spacing:.12em;font-weight:700;color:#302b26;background:rgba(253,251,248,.80);border-radius:99px;pointer-events:none}
+@media(max-width:600px){.product-device::before{font-size:9px;height:18px}}
