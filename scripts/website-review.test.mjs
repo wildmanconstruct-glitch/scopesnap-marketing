@@ -36,11 +36,14 @@ assert(!home.includes("Across 30+ jobs")&&!home.includes("45+ hours"),"No unsupp
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('Wildheart Homes'),"Do not name the building company on marketing homepage");
-assert(home.includes('viewBox="0 0 1448 1086"'),"Measurement overlay must share true image dimensions");
-assert(home.includes('M615 185 L1034 161')&&home.includes('M1078 202 L1071 496'),"Perspective-aware width and height measurement lines");
-assert(css.includes("color:#C17F3E")&&css.includes(".so-dimension-label rect{fill:rgba(14,14,13,.94);stroke:#C17F3E"),"True app gold measurement labels and lines");
-assert(home.includes("brand-sync.css?v=20261011gold3"),"Hero styles cache-busted");
-assert(home.includes('M615 226 L615 181')&&home.includes('M1034 202 L1078 202'),"Window dimension witness lines must anchor to window casing");
+assert(home.includes('viewBox="0 0 1448 1086"'),"Measurement overlay must use the photo coordinates");
+assert((home.match(/class="so-ar-line"/g)||[]).length===2,"Exactly two AR measurement lines");
+assert((home.match(/class="so-ar-point"/g)||[]).length===4,"Two circular endpoints per AR line");
+assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No drafting-style witness lines or ticks");
+assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
+assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
+assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
+assert(home.includes('brand-sync.css?v=20261011ar4'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="so-report-caption"'),"Show a correct caption for report content");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
