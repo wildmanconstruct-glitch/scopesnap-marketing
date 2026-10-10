@@ -726,7 +726,357 @@ function toggleFaq(btn) {
       var costDescription = extraJobPacks
         ? '/month total, including ' + (extraJobPacks * 10) + ' extra jobs/month'
         : '/month base plan';
-      breakevenEl.textContent = 'At these assumptions, the value of time saved across ' + jobsNeeded + ' ' + jobWord + ' covers the $' + cost + costDescription + ' (excluding GST).';
+      breakevenEl.textContent = 'At 
+      breakevenEl.style.display = '';
+    } else if (breakevenEl) {
+      breakevenEl.style.display = 'none';
+    }
+  }
+  window.setRoiTeam = function(btn) {
+    document.querySelectorAll('.roi-team-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    seats = parseInt(btn.dataset.seats);
+    updateRoi();
+  };
+  window.setRoiRate = function(btn) {
+    document.querySelectorAll('.roi-rate-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    rate = parseInt(btn.dataset.rate);
+    updateRoi();
+  };
+  slider.addEventListener('input', updateRoi);
+  updateRoi();
+})();
+
+// Voice section tab toggle (mobile)
+function setVdTab(tab) {
+  document.getElementById('vdTabVoice').classList.toggle('active', tab === 'voice');
+  document.getElementById('vdTabVoice').setAttribute('aria-selected', tab === 'voice');
+  document.getElementById('vdTabScope').classList.toggle('active', tab === 'scope');
+  document.getElementById('vdTabScope').setAttribute('aria-selected', tab === 'scope');
+  var grid = document.getElementById('vdGrid');
+  if (grid) grid.setAttribute('data-tab', tab);
+}
+
+// Sticky mobile CTA bar
+(function() {
+  var bar = document.getElementById('stickyCta');
+  if (!bar) return;
+  var shown = false;
+  window.addEventListener('scroll', function() {
+    var shouldShow = window.scrollY > 400;
+    if (shouldShow !== shown) {
+      shown = shouldShow;
+      bar.classList.toggle('show', shown);
+      bar.setAttribute('aria-hidden', !shown);
+    }
+  }, { passive: true });
+})();
+
+// Accessible report tabs and one full-size preview at a time
+document.querySelectorAll('[data-report-tab]').forEach(function(btn) {
+  btn.addEventListener('click',function() {
+    var target=btn.dataset.reportTab;
+    document.querySelectorAll('[data-report-tab]').forEach(function(tab) {
+      var active=tab.dataset.reportTab===target;tab.classList.toggle('active',active);tab.setAttribute('aria-selected',String(active));
+    });
+    document.querySelectorAll('[data-report-panel]').forEach(function(panel) { panel.hidden=panel.dataset.reportPanel!==target; });
+  });
+});
+document.querySelectorAll('[data-report-image]').forEach(function(btn) {
+  btn.addEventListener('click',function() {
+    var type=btn.dataset.reportType,img=document.querySelector('[data-report-large="'+type+'"]'),link=document.querySelector('[data-report-large-link="'+type+'"]');
+    if(!img||!link)return;
+    img.src=btn.dataset.reportImage;img.alt=btn.getAttribute('aria-label')||'Report page';link.href=img.src;
+    document.querySelectorAll('[data-report-type="'+type+'"]').forEach(function(button) {
+      var active=button===btn;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));
+    });
+  });
+});
+// CTA click tracking
+document.querySelectorAll('[data-track]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    if (window.va) window.va('event', { name: el.getAttribute('data-track') });
+  });
+});
+
+function setBilling(mode) {
+  var isAnnual = mode === 'annual';
+  document.getElementById('toggleMonthly').classList.toggle('active', !isAnnual);
+  document.getElementById('toggleAnnual').classList.toggle('active', isAnnual);
+
+  if (isAnnual) {
+    document.getElementById('solo-price').innerHTML = '$708<span class="price-per">/yr + GST</span>';
+    document.getElementById('solo-sub').textContent = 'Billed annually';
+    document.getElementById('pro-price').innerHTML = '$1,309<span class="price-per">/yr + GST</span>';
+    document.getElementById('pro-sub').textContent = 'Billed annually';
+    document.getElementById('biz-price').innerHTML = '$2,739<span class="price-per">/yr + GST</span>';
+    document.getElementById('biz-sub').textContent = 'Billed annually';
+    document.getElementById('pro-seat-price').textContent = 'Seats $29/month or $348/year';
+    document.getElementById('biz-seat-price').textContent = 'Seats $25/month or $300/year';
+  } else {
+    document.getElementById('solo-price').innerHTML = '$59<span class="price-per">/mo + GST</span>';
+    document.getElementById('solo-sub').innerHTML = '$708 billed yearly';
+    document.getElementById('pro-price').innerHTML = '$119<span class="price-per">/mo + GST</span>';
+    document.getElementById('pro-sub').innerHTML = '$1,309/year &mdash; save 1 month';
+    document.getElementById('biz-price').innerHTML = '$249<span class="price-per">/mo + GST</span>';
+    document.getElementById('biz-sub').innerHTML = '$2,739/year &mdash; save 1 month';
+    document.getElementById('pro-seat-price').textContent = 'Seats $29/month or $348/year';
+    document.getElementById('biz-seat-price').textContent = 'Seats $25/month or $300/year';
+  }
+}
+
+// Voice-to-scope demo animation
+(function() {
+  var voiceEl = document.getElementById('vdVoice');
+  var scopeEl = document.getElementById('vdScope');
+  if (!voiceEl || !scopeEl) return;
+
+  var VOICE = "...righto, ensuite’s getting the full strip-out. Shower’s leaking behind the wall so we’re re-sheeting that, new waterproofing, wall-hung vanity, and the client wants matte black tapware throughout...";
+  var LINES = [
+    "Full strip-out of existing ensuite",
+    "Re-sheet shower wall; new waterproofing",
+    "Supply + install wall-hung vanity",
+    "Matte black tapware throughout"
+  ];
+  var CHECK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  function makeLine(text) {
+    var div = document.createElement('div');
+    div.className = 'vd-line';
+    div.innerHTML = CHECK + '<span></span>';
+    div.querySelector('span').textContent = text;
+    return div;
+  }
+
+  function showStatic() {
+    voiceEl.textContent = VOICE;
+    LINES.forEach(function(t) { var l = makeLine(t); l.classList.add('show'); scopeEl.appendChild(l); });
+  }
+
+  // AI-written lines are visible without waiting for an animation.
+  showStatic();
+  return;
+
+  var started = false;
+  var CHAR_MS = 17, PAUSE_MS = 250, LINE_MS = 380, HOLD_MS = 5000;
+  var TYPE_END = VOICE.length * CHAR_MS;
+  var LINES_END = TYPE_END + PAUSE_MS + LINES.length * LINE_MS;
+  var CYCLE = LINES_END + HOLD_MS;
+  var startTime = null, lineEls = null;
+
+  function setup() {
+    voiceEl.textContent = '';
+    scopeEl.innerHTML = '';
+    lineEls = LINES.map(function(t) { var l = makeLine(t); scopeEl.appendChild(l); return l; });
+  }
+
+  function frame(now) {
+    if (startTime === null) startTime = now;
+    var t = (now - startTime) % CYCLE;
+    var chars = Math.min(VOICE.length, Math.floor(t / CHAR_MS));
+    var shown = voiceEl.textContent.length;
+    if (chars < shown) { voiceEl.textContent = ''; lineEls.forEach(function(l) { l.classList.remove('show'); }); shown = 0; }
+    if (chars > shown) voiceEl.textContent = VOICE.slice(0, chars);
+    var lt = t - TYPE_END - PAUSE_MS;
+    lineEls.forEach(function(l, j) {
+      if (lt >= (j + 1) * LINE_MS) l.classList.add('show');
+    });
+    requestAnimationFrame(frame);
+  }
+
+  var vdObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !started) {
+        started = true;
+        setup();
+        requestAnimationFrame(frame);
+        vdObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  vdObserver.observe(document.getElementById('voice-demo'));
+})();
+</script>
+</body>
+</html>
+
+ + rate + '/hr, saving time on ' + (jobsNeeded === 1 ? 'just one scope' : jobsNeeded + ' scopes') + ' per month could cover ' + plan + ' (' + '
+      breakevenEl.style.display = '';
+    } else if (breakevenEl) {
+      breakevenEl.style.display = 'none';
+    }
+  }
+  window.setRoiTeam = function(btn) {
+    document.querySelectorAll('.roi-team-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    seats = parseInt(btn.dataset.seats);
+    updateRoi();
+  };
+  window.setRoiRate = function(btn) {
+    document.querySelectorAll('.roi-rate-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    rate = parseInt(btn.dataset.rate);
+    updateRoi();
+  };
+  slider.addEventListener('input', updateRoi);
+  updateRoi();
+})();
+
+// Voice section tab toggle (mobile)
+function setVdTab(tab) {
+  document.getElementById('vdTabVoice').classList.toggle('active', tab === 'voice');
+  document.getElementById('vdTabVoice').setAttribute('aria-selected', tab === 'voice');
+  document.getElementById('vdTabScope').classList.toggle('active', tab === 'scope');
+  document.getElementById('vdTabScope').setAttribute('aria-selected', tab === 'scope');
+  var grid = document.getElementById('vdGrid');
+  if (grid) grid.setAttribute('data-tab', tab);
+}
+
+// Sticky mobile CTA bar
+(function() {
+  var bar = document.getElementById('stickyCta');
+  if (!bar) return;
+  var shown = false;
+  window.addEventListener('scroll', function() {
+    var shouldShow = window.scrollY > 400;
+    if (shouldShow !== shown) {
+      shown = shouldShow;
+      bar.classList.toggle('show', shown);
+      bar.setAttribute('aria-hidden', !shown);
+    }
+  }, { passive: true });
+})();
+
+// Accessible report tabs and one full-size preview at a time
+document.querySelectorAll('[data-report-tab]').forEach(function(btn) {
+  btn.addEventListener('click',function() {
+    var target=btn.dataset.reportTab;
+    document.querySelectorAll('[data-report-tab]').forEach(function(tab) {
+      var active=tab.dataset.reportTab===target;tab.classList.toggle('active',active);tab.setAttribute('aria-selected',String(active));
+    });
+    document.querySelectorAll('[data-report-panel]').forEach(function(panel) { panel.hidden=panel.dataset.reportPanel!==target; });
+  });
+});
+document.querySelectorAll('[data-report-image]').forEach(function(btn) {
+  btn.addEventListener('click',function() {
+    var type=btn.dataset.reportType,img=document.querySelector('[data-report-large="'+type+'"]'),link=document.querySelector('[data-report-large-link="'+type+'"]');
+    if(!img||!link)return;
+    img.src=btn.dataset.reportImage;img.alt=btn.getAttribute('aria-label')||'Report page';link.href=img.src;
+    document.querySelectorAll('[data-report-type="'+type+'"]').forEach(function(button) {
+      var active=button===btn;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));
+    });
+  });
+});
+// CTA click tracking
+document.querySelectorAll('[data-track]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    if (window.va) window.va('event', { name: el.getAttribute('data-track') });
+  });
+});
+
+function setBilling(mode) {
+  var isAnnual = mode === 'annual';
+  document.getElementById('toggleMonthly').classList.toggle('active', !isAnnual);
+  document.getElementById('toggleAnnual').classList.toggle('active', isAnnual);
+
+  if (isAnnual) {
+    document.getElementById('solo-price').innerHTML = '$708<span class="price-per">/yr + GST</span>';
+    document.getElementById('solo-sub').textContent = 'Billed annually';
+    document.getElementById('pro-price').innerHTML = '$1,309<span class="price-per">/yr + GST</span>';
+    document.getElementById('pro-sub').textContent = 'Billed annually';
+    document.getElementById('biz-price').innerHTML = '$2,739<span class="price-per">/yr + GST</span>';
+    document.getElementById('biz-sub').textContent = 'Billed annually';
+    document.getElementById('pro-seat-price').textContent = 'Seats $29/month or $348/year';
+    document.getElementById('biz-seat-price').textContent = 'Seats $25/month or $300/year';
+  } else {
+    document.getElementById('solo-price').innerHTML = '$59<span class="price-per">/mo + GST</span>';
+    document.getElementById('solo-sub').innerHTML = '$708 billed yearly';
+    document.getElementById('pro-price').innerHTML = '$119<span class="price-per">/mo + GST</span>';
+    document.getElementById('pro-sub').innerHTML = '$1,309/year &mdash; save 1 month';
+    document.getElementById('biz-price').innerHTML = '$249<span class="price-per">/mo + GST</span>';
+    document.getElementById('biz-sub').innerHTML = '$2,739/year &mdash; save 1 month';
+    document.getElementById('pro-seat-price').textContent = 'Seats $29/month or $348/year';
+    document.getElementById('biz-seat-price').textContent = 'Seats $25/month or $300/year';
+  }
+}
+
+// Voice-to-scope demo animation
+(function() {
+  var voiceEl = document.getElementById('vdVoice');
+  var scopeEl = document.getElementById('vdScope');
+  if (!voiceEl || !scopeEl) return;
+
+  var VOICE = "...righto, ensuite’s getting the full strip-out. Shower’s leaking behind the wall so we’re re-sheeting that, new waterproofing, wall-hung vanity, and the client wants matte black tapware throughout...";
+  var LINES = [
+    "Full strip-out of existing ensuite",
+    "Re-sheet shower wall; new waterproofing",
+    "Supply + install wall-hung vanity",
+    "Matte black tapware throughout"
+  ];
+  var CHECK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  function makeLine(text) {
+    var div = document.createElement('div');
+    div.className = 'vd-line';
+    div.innerHTML = CHECK + '<span></span>';
+    div.querySelector('span').textContent = text;
+    return div;
+  }
+
+  function showStatic() {
+    voiceEl.textContent = VOICE;
+    LINES.forEach(function(t) { var l = makeLine(t); l.classList.add('show'); scopeEl.appendChild(l); });
+  }
+
+  // AI-written lines are visible without waiting for an animation.
+  showStatic();
+  return;
+
+  var started = false;
+  var CHAR_MS = 17, PAUSE_MS = 250, LINE_MS = 380, HOLD_MS = 5000;
+  var TYPE_END = VOICE.length * CHAR_MS;
+  var LINES_END = TYPE_END + PAUSE_MS + LINES.length * LINE_MS;
+  var CYCLE = LINES_END + HOLD_MS;
+  var startTime = null, lineEls = null;
+
+  function setup() {
+    voiceEl.textContent = '';
+    scopeEl.innerHTML = '';
+    lineEls = LINES.map(function(t) { var l = makeLine(t); scopeEl.appendChild(l); return l; });
+  }
+
+  function frame(now) {
+    if (startTime === null) startTime = now;
+    var t = (now - startTime) % CYCLE;
+    var chars = Math.min(VOICE.length, Math.floor(t / CHAR_MS));
+    var shown = voiceEl.textContent.length;
+    if (chars < shown) { voiceEl.textContent = ''; lineEls.forEach(function(l) { l.classList.remove('show'); }); shown = 0; }
+    if (chars > shown) voiceEl.textContent = VOICE.slice(0, chars);
+    var lt = t - TYPE_END - PAUSE_MS;
+    lineEls.forEach(function(l, j) {
+      if (lt >= (j + 1) * LINE_MS) l.classList.add('show');
+    });
+    requestAnimationFrame(frame);
+  }
+
+  var vdObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !started) {
+        started = true;
+        setup();
+        requestAnimationFrame(frame);
+        vdObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  vdObserver.observe(document.getElementById('voice-demo'));
+})();
+</script>
+</body>
+</html>
+
+ + cost + costDescription + ', excluding GST). Figures are illustrative.';
       breakevenEl.style.display = '';
     } else if (breakevenEl) {
       breakevenEl.style.display = 'none';

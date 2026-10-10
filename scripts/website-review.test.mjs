@@ -75,3 +75,5 @@ assert(how.includes('screen-review.jpg?v=demo20261010mitchell'), "Walkthrough mu
 assert(home.includes("Is the AI always right?"), "AI draft FAQ");
 assert(home.includes("Does ScopeSnap price or quote the job?"), "Price/quote distinction");
 assert(home.includes("Can I use my building company logo?"), "Company branding answer");
+
+assert(home.includes("per month could cover"), "ROI assumptions follow user inputs without fixed sales claims");
