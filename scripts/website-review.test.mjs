@@ -2,7 +2,7 @@ import {readFileSync,existsSync} from "node:fs";
 import assert from "node:assert/strict";
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 const home=read("index.html"),css=read("brand-sync.css"),guide=read("how-it-works.html");
-for(const part of ['class="so-hero"','class="so-hero-grid"','class="so-dim so-dim-h"','class="so-plan-tag"','class="so-specbar"','class="so-steps"','class="so-voice-grid"','class="so-report-layout"','class="so-final"']) assert(home.includes(part),"Missing Site Set-Out component: "+part);
+for(const part of ['class="so-hero"','class="so-hero-grid"','class="so-photo-dimensions"','class="so-plan-tag"','class="so-specbar"','class="so-steps"','class="so-voice-grid"','class="so-report-layout"','class="so-final"']) assert(home.includes(part),"Missing Site Set-Out component: "+part);
 assert(home.includes('class="site-setout"'),"Homepage design variant");
 assert(css.includes("--ink:#0E0E0D")&&css.includes("--bone:#ECE8E0")&&css.includes("--cu:#C8843F"),"Site Set-Out design tokens");
 assert(css.includes("Archivo:wdth,wght")&&css.includes("JetBrains+Mono"),"Spec sheet fonts");
@@ -34,7 +34,11 @@ assert(existsSync(new URL("../favicon.ico",import.meta.url)),"Favicon");
 for(const name of ["client","internal"]){const pdf=readFileSync(new URL("../sample-"+name+"-report.pdf",import.meta.url));assert(pdf.subarray(0,5).toString()==="%PDF-","PDF "+name);assert(!pdf.includes(Buffer.from("ReportLab")),"Actual app exporter PDF "+name)}
 assert(!home.includes("Across 30+ jobs")&&!home.includes("45+ hours"),"No unsupported results");
 
-assert(home.includes('Wildheart Homes, Adelaide Hills.'),"Restore real builder credibility");
+assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
+assert(!home.includes('Wildheart Homes'),"Do not name the building company on marketing homepage");
+assert(home.includes('viewBox="0 0 1450 1086"'),"Measurement overlay must share photograph coordinates");
+assert(home.includes('M615 226 V179')&&home.includes('M1034 203 H1083'),"Window dimension witness lines must anchor to window casing");
+assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="so-report-caption"'),"Show a correct caption for report content");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
 assert(home.includes('/images/report-client-photos.jpg?v=20261011rev1'),"Use fuller genuine report page");
