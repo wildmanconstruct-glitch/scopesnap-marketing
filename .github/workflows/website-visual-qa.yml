@@ -48,8 +48,8 @@ jobs:
               await page.waitForFunction(()=>document.querySelector('#rv')?.classList.contains('rv-loaded'),null,{timeout:15000});
               await page.locator('#rv').scrollIntoViewIfNeeded();
               await page.waitForFunction(()=>{
-                const imgs=[...document.querySelectorAll('#rv .rv-set:first-child img')];
-                return imgs.length===4 && imgs.every(img=>img.complete&&img.naturalWidth>500);
+                const img=document.querySelector('#rv #rv-page');
+                return !!img && img.complete && img.naturalWidth>=1200;
               },null,{timeout:18000});
               await page.evaluate(()=>window.scrollTo(0,0));
               await page.waitForTimeout(250);
@@ -124,11 +124,20 @@ jobs:
               const manifest=await page.evaluate(()=>fetch('/images/reports/manifest.json').then(r=>r.json()));
               if(manifest.client.pages!==4||manifest.internal.pages!==5||manifest.client.files.length!==4||manifest.internal.files.length!==5)
                 throw new Error('Approved complete report sets were not deployed: '+JSON.stringify(manifest));
-              const visibleReport=await page.locator('#rv .rv-set').first().locator('img').evaluateAll(imgs=>imgs.map(img=>({src:img.currentSrc,loaded:img.complete,width:img.naturalWidth,height:img.naturalHeight})));
-              if(visibleReport.length!==4||visibleReport.some(img=>!img.loaded||img.width<1200||img.height<1800))
-                throw new Error('Actual client report pages must be loaded, not blank: '+JSON.stringify(visibleReport));
-              const trackCount=await page.locator('#rv .rv-set').count();
-              if(trackCount!==2)throw new Error('Seamless loop requires two complete copies of each page stack');
+              const visibleReport=await page.locator('#rv #rv-page').evaluate(img=>({loaded:img.complete,width:img.naturalWidth,height:img.naturalHeight,url:img.src}));
+              if(!visibleReport.loaded||visibleReport.width<1200||visibleReport.height<1800||!visibleReport.url.includes('/images/reports/client-01.webp'))
+                throw new Error('Only one full resolution real client report page may be visible at a time: '+JSON.stringify(visibleReport));
+              if(await page.locator('#rv .rv-set, #rv .rv-track').count())throw new Error('Old vertical stacked scrolling report markup remains');
+              const reportTabLayout=await page.evaluate(()=>{
+                const report=document.querySelector('#reports').getBoundingClientRect();
+                const tabs=document.querySelector('.rv-switcher').getBoundingClientRect();
+                const viewer=document.querySelector('#rv').getBoundingClientRect();
+                return {switchAbove:tabs.bottom<viewer.top, fullWidth:tabs.width>=report.width*.75,
+                  readable:document.querySelector('.rv-switcher-label')?.textContent.includes('SWITCH REPORT'),
+                  selected:[...document.querySelectorAll('.so-report-option')].filter(x=>x.getAttribute('aria-selected')==='true').length};
+              });
+              if(!reportTabLayout.switchAbove||!reportTabLayout.fullWidth||!reportTabLayout.readable||reportTabLayout.selected!==1)
+                throw new Error('Client/Internal report switch must be unmistakable above the booklet: '+JSON.stringify(reportTabLayout));
               const unsafeLinks=await page.locator('a[href*=".pdf"]').count();
               if(unsafeLinks)throw new Error('No website report PDF download links allowed');
               if(width<=650){
@@ -137,23 +146,25 @@ jobs:
                   viewport:innerWidth,
                   swipeHint:getComputedStyle(document.querySelector('.so-workflow-swipe')).display,
                   previewLink:!!document.querySelector('#so-report-preview-link'),
-                  selectionColumns:getComputedStyle(document.querySelector('.so-report-side')).gridTemplateColumns
+                  selectionColumns:getComputedStyle(document.querySelector('.rv-switcher-options')).gridTemplateColumns
                 }));
                 if(layout.stepWidth<layout.viewport*.74 || layout.swipeHint==='none'||layout.previewLink)
                   throw new Error('Mobile workflow/report layout needs better legibility: '+JSON.stringify(layout));
                 const tabs=await page.locator('.so-report-option').count();
                 if(tabs!==2)throw new Error('Expected exactly two compact report preview tabs');
-                await page.locator('#rv').evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{pointerType:'touch',bubbles:true})));
-                if(!await page.locator('#rv').evaluate(el=>el.classList.contains('rv-held')))throw new Error('Touch and hold should pause report animation');
-                await page.locator('#rv').evaluate(el=>el.dispatchEvent(new PointerEvent('pointerup',{pointerType:'touch',bubbles:true})));
-                if(await page.locator('#rv').evaluate(el=>el.classList.contains('rv-held')))throw new Error('Release should resume report animation');
+                const swipeHint=await page.locator('.rv-swipe-hint').isVisible();
+                if(!swipeHint)throw new Error('Mobile must explicitly say the pages are swipeable');
                 await page.emulateMedia({reducedMotion:'reduce'});
-                const staticVisible=await page.locator('#rv-manual').isVisible();
-                if(!staticVisible)throw new Error('Reduced motion should show a static report page');
-                const imgBefore=await page.locator('#rv-manual').getAttribute('src');
-                await page.locator('#rv-next').click();
-                const imgAfter=await page.locator('#rv-manual').getAttribute('src');
-                if(imgBefore===imgAfter)throw new Error('Reduced motion arrows must change pages');
+                await page.locator('#rv').evaluate(el=>{
+                  const bounds=el.getBoundingClientRect(),y=bounds.y+bounds.height/2;
+                  el.dispatchEvent(new PointerEvent('pointerdown',{pointerType:'touch',clientX:bounds.x+230,clientY:y,bubbles:true}));
+                  el.dispatchEvent(new PointerEvent('pointerup',{pointerType:'touch',clientX:bounds.x+70,clientY:y,bubbles:true}));
+                });
+                await page.waitForFunction(()=>document.querySelector('#rv-current')?.textContent==='PAGE 2 OF 4');
+                if(!await page.locator('#rv #rv-page').getAttribute('src')?.then(src=>src.includes('client-02.webp')))
+                  throw new Error('Mobile swipe must actually change to the next genuine report page');
+                await page.locator('#rv-prev').click();
+                await page.waitForFunction(()=>document.querySelector('#rv-current')?.textContent==='PAGE 1 OF 4');
                 await page.emulateMedia({reducedMotion:'no-preference'});
               }
 
@@ -189,20 +200,29 @@ jobs:
                 await page.waitForFunction(()=>document.querySelector('#rv')?.classList.contains('rv-loaded'),{timeout:12000});
                 const clientCaption=await page.locator('#rv-caption').innerText();
                 if(!clientCaption.includes('4 PAGES')) throw new Error('Full four-page client report not loaded');
-                const client=await page.locator('#rv .rv-set').first().locator('img').count();
-                if(client!==4)throw new Error('Client needs four genuine PDF-exported image pages');
+                if((await page.locator('#rv-current').textContent())!=='PAGE 1 OF 4')throw new Error('Client should start on cover');
+                await page.locator('#rv-next').click();
+                await page.waitForFunction(()=>document.querySelector('#rv-current')?.textContent==='PAGE 2 OF 4');
+                if(!await page.locator('#rv #rv-page').evaluate(img=>img.src.includes('client-02.webp')&&img.naturalWidth>0))
+                  throw new Error('Next must show full actual client kitchen report page');
+                await page.locator('#rv-prev').click();
+                await page.waitForFunction(()=>document.querySelector('#rv-current')?.textContent==='PAGE 1 OF 4');
                 await page.locator('.so-report-option[data-name="internal"]').click();
                 await page.waitForFunction(()=>document.querySelector('#rv-caption')?.textContent.includes('INTERNAL REPORT'));
-                const internal=await page.locator('#rv .rv-set').first().locator('img').count();
-                if(internal!==5)throw new Error('Internal report needs five genuine app-exported pages');
-                const files=await page.locator('#rv .rv-set').first().locator('img').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-src')));
-                if(!files.every(src=>src?.includes('/images/reports/internal-')))throw new Error('Report tab displays wrong source images: '+files.join(','));
-                await page.locator('#rv').evaluate(el=>el.dispatchEvent(new AnimationEvent('animationiteration',{bubbles:true})));
-                await page.waitForFunction(()=>document.querySelector('#rv-caption')?.textContent.includes('CLIENT REPORT'));
+                if((await page.locator('#rv-current').textContent())!=='PAGE 1 OF 5')throw new Error('Internal tab must reset to its cover');
+                if(!await page.locator('#rv #rv-page').evaluate(img=>img.src.includes('internal-01.webp')))
+                  throw new Error('Switch must show full internal report cover');
                 await page.locator('#rv').hover();
-                const paused=await page.locator('#rv .rv-track').evaluate(el=>getComputedStyle(el).animationPlayState);
-                if(paused!=='paused') throw new Error('Hover must pause page scrolling: '+paused);
+                await page.waitForTimeout(5700);
+                if((await page.locator('#rv-current').textContent())!=='PAGE 1 OF 5')
+                  throw new Error('Hover should pause automatic page advance');
                 await page.mouse.move(5,5);
+                await page.locator('.so-report-option[data-name="client"]').click();
+                await page.locator('#rv').scrollIntoViewIfNeeded();
+                await page.mouse.move(5,5);
+                await page.waitForFunction(()=>document.querySelector('#rv-current')?.textContent==='PAGE 2 OF 4',null,{timeout:9000});
+                if((await page.locator('.so-report-option[aria-selected="true"]').getAttribute('data-name'))!=='client')
+                  throw new Error('Auto advancing pages must not automatically change report type');
                 await page.locator('details.so-savings-disclosure > summary').click();
                 const opened=await page.locator('details.so-savings-disclosure').evaluate(el=>el.open);
                 if(!opened) throw new Error('Savings toggle broken');
