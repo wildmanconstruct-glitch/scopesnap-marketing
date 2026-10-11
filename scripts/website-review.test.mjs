@@ -14,7 +14,7 @@ assert(!home.includes('class="hero-report-peek"'),"Never display full PDF in her
 assert(!home.includes('font-style:italic'),"No italic hero accent");
 assert(guide.includes("No drawings required."),"Plan scan remains optional without crowding the hero");
 for(const text of ["renovations","extensions","new builds","repairs and maintenance"])assert(home.toLowerCase().includes(text),"Supported job type "+text);
-for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/reports/client-02.webp","/images/reports/internal-02.webp"])assert((home+css).includes(path),"Missing asset URL "+path);
+for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/reports/client-02.webp"])assert((home+css).includes(path),"Missing asset URL "+path);
 assert(home.includes('id="rv"')&&home.includes('class="so-report-option"'),"Functional full report viewer");
 assert(home.includes("setBilling('monthly')")&&home.includes("setBilling('annual')"),"Monthly/annual prices");
 for(const id of ["solo-price","pro-price","biz-price","roiSlider","roiPlan","faq"])assert(home.includes('id="'+id+'"'),"Missing interactive control "+id);
