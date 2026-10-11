@@ -50,12 +50,18 @@ for(const kind of ["client","internal"]){
  for(const name of item.files)assert(existsSync(new URL("../images/reports/"+name,import.meta.url)),"Missing real-exported "+name);
  assert(item.bytes<2_500_000,"Optimised report size cap "+kind);
 }
-assert(home.includes('report-viewer.js?v=9ac0250e1214ea77')&&home.includes('report-viewer.css?v=9ac0250e1214ea77'),"Report viewer scripts loaded at final build");
-assert(viewerCss.includes('@keyframes rv-scroll')&&viewerCss.includes('translateY(-50%)'),"Report frames scroll with seamless duplicated sets");
-assert(viewer.includes('animationiteration')&&viewer.includes('IntersectionObserver'),"Auto-switches after complete loop and stops offscreen");
-assert(viewerCss.includes('prefers-reduced-motion:reduce')&&home.includes('id="rv-next"'),"Reduced-motion static navigation");
-assert(viewer.includes('600px 0px')&&viewer.includes('populateRest'),"Lazy load nearby page images");
-assert(viewer.includes('rv-held')&&viewerCss.includes('.rv:hover .rv-track'),"Touch-and-hold and hover pause");
+assert(home.includes('report-viewer.js?v=20261011singlepage1')&&home.includes('report-viewer.css?v=20261011singlepage1'),"Single page report viewer assets cache-busted");
+assert(!viewerCss.includes('@keyframes rv-scroll')&&!viewer.includes('rv-set'),"No vertical report scroll or double-page spread");
+assert(viewerCss.includes('.rv-page.rv-coming')&&viewerCss.includes('translateX(9%)')&&viewer.includes('rv-arrived'),"Horizontal single-page transition implemented");
+assert(viewer.includes('FIRST_DELAY=5500')&&viewer.includes('setTimeout(()=>goTo(index+1)')&&viewer.includes('IntersectionObserver'),"Page auto-advance, remaining on selected report, pauses offscreen");
+assert(!viewer.includes('animationiteration'),"No automatic switching between report types");
+assert(viewerCss.includes('prefers-reduced-motion:reduce')&&viewer.includes('motion.matches')&&home.includes('id="rv-next"'),"Reduced motion static page with functional manual arrows");
+assert(viewer.includes('preload(type,idx)')&&viewer.includes('new Image()'),"Preload next real-export page without displaying a second page");
+assert(viewer.includes('hovered=true;stopTimer()')&&viewer.includes('held=true;stopTimer()'),"Hover and touch-and-hold pause auto-advance");
+assert(viewerCss.includes('touch-action:pan-y')&&viewer.includes('Math.abs(dx)>=38'),"Swipe horizontally on mobile without breaking vertical scroll");
+assert(home.includes('role="tablist"')&&home.includes('SWITCH REPORT')&&home.includes('rv-tab-client')&&home.includes('rv-tab-internal'),"Report switch is prominent, explicit and keyboard accessible");
+assert(home.includes('SWIPE TO SEE MORE PAGES')&&home.includes('PAGE 1 OF 4'),"Mobile swipe hint and page number visible");
+assert(viewer.includes('goTo(index-1)')&&viewer.includes('goTo(index+1)'),"Previous and next report page arrows operate");
 assert(!home.includes('id="so-report-preview"')&&!home.includes('id="so-pdf-link"'),"Legacy static/report download controls removed");
 
 assert(!existsSync(new URL("../assets/pdf-chunks",import.meta.url)),"Reconstructible full PDF chunks cannot be public");
@@ -99,7 +105,7 @@ assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follo
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
 assert(home.includes('brand-sync.css?v=20261011origin-slim1'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
-assert(home.includes('id="rv-caption"'),"Show manifest-driven report page count caption");
+assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
 assert(home.includes('/images/reports/client-02.webp?v=9ac0250e1214ea77'),"Use actual ScopeSnap-exported report images");
 assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="faq"'),"Put optional calculator below FAQ");
