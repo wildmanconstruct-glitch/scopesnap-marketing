@@ -9,6 +9,8 @@ on:
       - 'brand-sync.css'
       - 'scripts/website-review.test.mjs'
       - 'images/**'
+      - 'report-viewer.css'
+      - 'report-viewer.js'
       - 'sample-client-report.pdf'
       - 'sample-internal-report.pdf'
       - '.github/workflows/publish-example-reports.yml'
@@ -39,9 +41,18 @@ jobs:
               preview=Path('images/report-'+name+('-photos.jpg' if name=='client' else '-detail.jpg'))
               assert preview.exists() and preview.stat().st_size>30000
           assert 'data-pdf=' not in home
-          assert 'so-report-preview' in home
+          assert 'id="rv"' in home and 'report-viewer.js' in home
           assert '/sample-client-report.pdf' not in home+guide
           assert '/sample-internal-report.pdf' not in home+guide
-          assert 'so-report-preview-frame' in home
-          print('Real app screenshots and preview-only reports verified')
+          from json import loads
+          manifest=loads(Path('images/reports/manifest.json').read_text(encoding='utf8'))
+          assert manifest['client']['pages']==4 and manifest['internal']['pages']==5
+          assert manifest['version']=='9ac0250e1214ea77c6cb822519c46544ef86814c'
+          for kind in ('client','internal'):
+              files=manifest[kind]['files']
+              assert len(files)==manifest[kind]['pages']
+              assert all((Path('images/reports')/name).is_file() for name in files)
+              assert sum((Path('images/reports')/name).stat().st_size for name in files)<2500000
+          assert not list(Path('.').rglob('*.pdf'))
+          print('Approved 4-page client and 5-page internal real-export report images; no public PDF binaries')
           PY
