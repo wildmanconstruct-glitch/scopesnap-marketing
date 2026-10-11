@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, writeFile, mkdir, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -59,3 +59,17 @@ const support = privacy.replace(/<title>[^<]+<\/title>/, "<title>Support — Sco
   </main>`);
 await writeFile(path.join(root, "app", "contact.html"), appPage(support, "contact"));
 console.log("Built four app help/legal pages from the current policies.");
+
+// Never ship complete PDF samples to the public marketing deployment.
+// Vercel uses the repository root as outputDirectory, so scan recursively.
+async function assertNoPublicPdfs(dir, relative = "") {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    if (entry.name === ".git" || entry.name === "node_modules" || entry.name === ".vercel") continue;
+    const child = path.join(dir, entry.name);
+    const name = path.posix.join(relative, entry.name);
+    if (entry.isDirectory()) await assertNoPublicPdfs(child, name);
+    else if (entry.isFile() && /\\.pdf$/i.test(entry.name)) throw new Error("Refusing deploy: public PDF exists: " + name);
+  }
+}
+await assertNoPublicPdfs(root);
+console.log("No complete PDF files in ScopeSnap marketing deploy output.");
