@@ -1,0 +1,84 @@
+{
+  "client": {
+    "pages": 4,
+    "files": [
+      "client-01.webp",
+      "client-02.webp",
+      "client-03.webp",
+      "client-04.webp"
+    ],
+    "imageInfo": [
+      {
+        "file": "client-01.webp",
+        "width": 1310,
+        "height": 1853,
+        "alt": "Client report page 1 — Banksia Park Build Co cover, exterior photograph and client details"
+      },
+      {
+        "file": "client-02.webp",
+        "width": 1310,
+        "height": 1853,
+        "alt": "Client report page 2 — Kitchen; app-generated scope and photographs"
+      },
+      {
+        "file": "client-03.webp",
+        "width": 1310,
+        "height": 1853,
+        "alt": "Client report page 3 — Main Bathroom; app-generated scope and photographs"
+      },
+      {
+        "file": "client-04.webp",
+        "width": 1310,
+        "height": 1853,
+        "alt": "Client report page 4 — Living Room; app-generated scope and photographs"
+      }
+    ],
+    "bytes": 433892,
+    "embeddedImages": 10
+  },
+  "internal": {
+    "pages": 5,
+    "files": [
+      "internal-01.webp",
+      "internal-02.webp",
+      "internal-03.webp",
+      "internal-04.webp",
+      "internal-05.webp"
+    ],
+    "imageInfo": [
+      {
+        "file": "internal-01.webp",
+        "width": 1310,
+        "height": 1853,
+        "alt": "Internal report page 1 — Banksia Park Build Co cover, Mitchell Residence and exterior photograph"
+      },
+      {
+        "file": "internal-02.webp",
+        "width": 1310,
+        "height": 1853,
+        "alt": "Internal report page 2 — Whole-home site conditions, services, trade notes and quantities"
+      },
+      {
+        "file": "internal-03.webp",
+        "width": 1310,
+        "height": 1853,
+        "alt": "Internal report page 3 — Kitchen trade scope, photos and selections"
+      },
+      {
+        "file": "internal-04.webp",
+        "width": 1310,
+        "height": 1853,
+        "alt": "Internal report page 4 — Main Bathroom; app-generated scope and photographs"
+      },
+      {
+        "file": "internal-05.webp",
+        "width": 1310,
+        "height": 1853,
+        "alt": "Internal report page 5 — Living Room; app-generated scope and photographs"
+      }
+    ],
+    "bytes": 477720,
+    "embeddedImages": 10
+  },
+  "version": "9ac0250e1214ea77c6cb822519c46544ef86814c"
+}
