@@ -88,7 +88,7 @@ assert(home.includes('/images/screen-measure.jpg?v=20261011rev1'),"Workflow meas
 assert(home.includes('brand-sync.css?v=20261011origin-slim1'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
-assert(!home.includes('class="so-specbar"')&&!home.includes('Mitchell Residence')&&!home.includes('Scope ready ✓'),"Remove fictional job status strip below the hero");
+assert(!home.includes('class="so-specbar"')&&!heroMarkup.includes('Mitchell Residence')&&!heroMarkup.includes('Scope ready ✓'),"Remove fictional job status strip below the hero but permit report previews to name the demo job");
 assert(!home.includes('so-origin-index')&&!home.includes('so-origin-mark'),"Remove repeated builder proof labels");
 assert(home.includes('Tested on real site inspections and quoting jobs.'),"Keep direct builder proof");
 assert((home.match(/Built by builders, for builders\./g)||[]).length===1,"Builder proof appears once");
