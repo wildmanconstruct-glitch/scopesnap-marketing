@@ -50,7 +50,7 @@ for(const kind of ["client","internal"]){
  for(const name of item.files)assert(existsSync(new URL("../images/reports/"+name,import.meta.url)),"Missing real-exported "+name);
  assert(item.bytes<2_500_000,"Optimised report size cap "+kind);
 }
-assert(home.includes('report-viewer.js?v=20261011singlepage1')&&home.includes('report-viewer.css?v=20261011singlepage1'),"Single page report viewer assets cache-busted");
+assert(home.includes('report-viewer.js?v=20261011sidechoice2')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
 assert(!viewerCss.includes('@keyframes rv-scroll')&&!viewer.includes('rv-set'),"No vertical report scroll or double-page spread");
 assert(viewerCss.includes('.rv-page.rv-coming')&&viewerCss.includes('translateX(9%)')&&viewer.includes('rv-arrived'),"Horizontal single-page transition implemented");
 assert(viewer.includes('FIRST_DELAY=5500')&&viewer.includes('setTimeout(()=>goTo(index+1)')&&viewer.includes('IntersectionObserver'),"Page auto-advance, remaining on selected report, pauses offscreen");
@@ -59,7 +59,13 @@ assert(viewerCss.includes('prefers-reduced-motion:reduce')&&viewer.includes('mot
 assert(viewer.includes('preload(type,idx)')&&viewer.includes('new Image()'),"Preload next real-export page without displaying a second page");
 assert(viewer.includes('hovered=true;stopTimer()')&&viewer.includes('held=true;stopTimer()'),"Hover and touch-and-hold pause auto-advance");
 assert(viewerCss.includes('touch-action:pan-y')&&viewer.includes('Math.abs(dx)>=38'),"Swipe horizontally on mobile without breaking vertical scroll");
-assert(home.includes('role="tablist"')&&home.includes('SWITCH REPORT')&&home.includes('rv-tab-client')&&home.includes('rv-tab-internal'),"Report switch is prominent, explicit and keyboard accessible");
+assert(home.includes('role="tablist"')&&home.includes('CHOOSE A REPORT')&&home.includes('rv-tab-client')&&home.includes('rv-tab-internal'),"Report switch is prominent, explicit and keyboard accessible");
+assert(home.indexOf('class="rv-switcher"')>home.indexOf('class="so-report-side"'),"Report choices belong inside right column, not above report");
+assert(home.includes('VIEW CLIENT REPORT')&&home.includes('VIEW INTERNAL REPORT'),"Both write-ups are clearly selectable");
+assert(home.includes('Trade-specific scope and notes')&&home.includes('Site photos and measurements'),"Both client and internal details are visible together");
+assert(!home.includes('id="rv-audience-title"')&&!home.includes('id="rv-feature-points"'),"Remove redundant dynamically replaced single audience blurb");
+assert(viewerCss.includes('flex-direction:column;gap:12px;flex:1')&&viewerCss.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Stack both report write-ups on desktop, use compact selector above viewer on mobile");
+assert(!viewer.includes('content[selected]')&&viewer.includes('aria-selected'),"Selecting report changes pages without hiding either description");
 assert(home.includes('SWIPE TO SEE MORE PAGES')&&home.includes('PAGE 1 OF 4'),"Mobile swipe hint and page number visible");
 assert(viewer.includes('goTo(index-1)')&&viewer.includes('goTo(index+1)'),"Previous and next report page arrows operate");
 assert(!home.includes('id="so-report-preview"')&&!home.includes('id="so-pdf-link"'),"Legacy static/report download controls removed");
