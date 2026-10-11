@@ -44,6 +44,16 @@ jobs:
             await page.goto('http://127.0.0.1:8080'+path,{waitUntil:'networkidle'});
             await page.evaluate(() => { for(const img of document.images) img.loading='eager'; });
             await page.waitForTimeout(1800);
+            if(path==='/'){
+              await page.waitForFunction(()=>document.querySelector('#rv')?.classList.contains('rv-loaded'),null,{timeout:15000});
+              await page.locator('#rv').scrollIntoViewIfNeeded();
+              await page.waitForFunction(()=>{
+                const imgs=[...document.querySelectorAll('#rv .rv-set:first-child img')];
+                return imgs.length===4 && imgs.every(img=>img.complete&&img.naturalWidth>500);
+              },null,{timeout:18000});
+              await page.evaluate(()=>window.scrollTo(0,0));
+              await page.waitForTimeout(250);
+            }
             await page.screenshot({path:'qa-screenshots/'+name+'.png',fullPage:true});
             const missing=await page.evaluate(()=>[...document.images].filter(img=>img.hasAttribute('src')&&!img.naturalWidth).map(img=>img.src));
             if(missing.length) throw new Error('Missing images: '+missing.join(', '));
@@ -114,6 +124,9 @@ jobs:
               const manifest=await page.evaluate(()=>fetch('/images/reports/manifest.json').then(r=>r.json()));
               if(manifest.client.pages!==4||manifest.internal.pages!==5||manifest.client.files.length!==4||manifest.internal.files.length!==5)
                 throw new Error('Approved complete report sets were not deployed: '+JSON.stringify(manifest));
+              const visibleReport=await page.locator('#rv .rv-set').first().locator('img').evaluateAll(imgs=>imgs.map(img=>({src:img.currentSrc,loaded:img.complete,width:img.naturalWidth,height:img.naturalHeight})));
+              if(visibleReport.length!==4||visibleReport.some(img=>!img.loaded||img.width<1200||img.height<1800))
+                throw new Error('Actual client report pages must be loaded, not blank: '+JSON.stringify(visibleReport));
               const trackCount=await page.locator('#rv .rv-set').count();
               if(trackCount!==2)throw new Error('Seamless loop requires two complete copies of each page stack');
               const unsafeLinks=await page.locator('a[href*=".pdf"]').count();
