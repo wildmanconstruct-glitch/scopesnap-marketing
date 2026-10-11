@@ -121,6 +121,7 @@
   margin:38px 0 10px;padding-left:12px;border-left:2px solid var(--cu);
   color:#C8BDAE;font-size:13px;line-height:1.6;
 }
+.so-reports .rv-reading-mobile{display:none}
 .so-reports .so-report-note{margin-top:auto;padding-top:34px;font-size:12px;color:#BDB5A8}
 .so-reports .so-report-view-only{
   margin:12px 0 0;padding:13px 0 0;border-top:1px solid #51483F;
@@ -170,6 +171,8 @@
   .so-reports .rv-audience-description{font-size:14px}
   .so-reports .rv-feature-points span{padding:10px 0}
   .so-reports .rv-reading-note{font-size:12px;margin-top:16px}
+  .so-reports .rv-reading-desktop{display:none}
+  .so-reports .rv-reading-mobile{display:inline}
 }
 @media(prefers-reduced-motion:reduce){
   .so-reports .so-report-paper .rv-page{transition:none!important;animation:none!important}
