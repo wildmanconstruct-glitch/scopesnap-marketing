@@ -34,6 +34,10 @@
  text-transform:uppercase;text-align:center;color:#C4B9AA;margin:0;
 }
 .rv-fallback{display:block;width:100%;height:auto;max-width:430px;margin:auto}
+.rv.rv-loaded .rv-fallback,.rv-fallback[hidden]{display:none!important}
+.rv.rv-fallback-mode .rv-fallback{display:block!important}
+.rv .rv-track{pointer-events:none}
+.rv:focus-visible{outline:2px solid var(--cu);outline-offset:3px}
 .rv-controls{display:none;align-items:center;gap:13px;justify-content:center;font:500 11px var(--ff-m)}
 .rv-controls button{
  background:transparent;border:1px solid var(--line-d);color:var(--bone);
@@ -61,4 +65,12 @@
  .rv-manual{display:block;width:100%;height:100%;padding:20px;object-fit:contain;background:var(--char)}
  .rv-controls{display:flex}
  .rv,.rv:hover{ -webkit-mask-image:none; mask-image:none; }
+}
+
+/* Keep the report type selector beneath the preview on smaller screens.
+   The source report page images remain unchanged and full-resolution. */
+@media(max-width:950px){
+ .so-reports .so-report-layout{display:flex;flex-direction:column}
+ .so-reports .so-report-paper{order:0}
+ .so-reports .so-report-side{order:1}
 }
