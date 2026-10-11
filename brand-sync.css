@@ -254,3 +254,26 @@ body.site-setout .sticky-cta{display:none!important}
   #pricing h2{font-size:clamp(44px,10.7vw,59px)}
   .so-final h2{font-size:clamp(54px,11vw,72px)}
 }
+
+/* Hero refinement: the joinery tag's witness dot now lands on a lower kitchen
+   cupboard front (below the window), not the tiled splashback. */
+@media(min-width:1251px){
+  .so-plan-tag{top:61%;left:59%;z-index:3}
+  .so-plan-tag::before{width:38px}
+  .so-plan-tag::after{right:calc(100% + 37px)}
+}
+@media(min-width:601px) and (max-width:1250px){
+  .so-plan-tag{display:none}
+}
+/* One conversion CTA. Job coverage sits below it as secondary metadata. */
+.so-job-types{
+  margin:18px 0 0;max-width:490px;
+  color:#C9BFAE;font-size:10px;line-height:1.75;
+  letter-spacing:.095em;overflow-wrap:normal;
+}
+@media(max-width:650px){
+  body.site-setout .so-lead{max-width:355px}
+  body.site-setout .so-hero .so-actions{max-width:340px}
+  body.site-setout .so-hero .so-actions .btn-primary{width:100%;justify-content:space-between}
+  body.site-setout .so-job-types{margin-top:14px;max-width:330px;font-size:9px;line-height:1.8;letter-spacing:.055em}
+}
