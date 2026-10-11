@@ -277,3 +277,12 @@ body.site-setout .sticky-cta{display:none!important}
   body.site-setout .so-hero .so-actions .btn-primary{width:100%;justify-content:space-between}
   body.site-setout .so-job-types{margin-top:14px;max-width:330px;font-size:9px;line-height:1.8;letter-spacing:.055em}
 }
+
+/* Keep the approved hero introduction to roughly two visual lines on desktop,
+   without making the mobile text or CTA overlap the photo. */
+@media(min-width:1251px){
+  .so-hero .so-lead{max-width:710px;font-size:17px;line-height:1.58}
+}
+@media(min-width:651px) and (max-width:1250px){
+  .so-hero .so-lead{max-width:550px;font-size:16px}
+}
