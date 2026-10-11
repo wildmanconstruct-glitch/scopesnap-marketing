@@ -8,6 +8,9 @@ on:
       - shared.css
       - premium-showcase.css
       - brand-sync.css
+      - report-viewer.css
+      - report-viewer.js
+      - images/reports/**
       - .github/workflows/publish-example-reports.yml
       - .github/workflows/website-visual-qa.yml
   workflow_dispatch:
@@ -42,7 +45,7 @@ jobs:
             await page.evaluate(() => { for(const img of document.images) img.loading='eager'; });
             await page.waitForTimeout(1800);
             await page.screenshot({path:'qa-screenshots/'+name+'.png',fullPage:true});
-            const missing=await page.evaluate(()=>[...document.images].filter(img=>!img.naturalWidth).map(img=>img.src));
+            const missing=await page.evaluate(()=>[...document.images].filter(img=>img.hasAttribute('src')&&!img.naturalWidth).map(img=>img.src));
             if(missing.length) throw new Error('Missing images: '+missing.join(', '));
             if(path==='/'){
               const geometry=await page.evaluate(()=>({
@@ -107,6 +110,12 @@ jobs:
                 path,status:(await fetch(path,{cache:'no-store'})).status
               }))));
               if(blocked.some(result=>result.status!==404))throw new Error('Full report downloads still publicly accessible: '+JSON.stringify(blocked));
+              await page.waitForFunction(()=>document.querySelector('#rv')?.classList.contains('rv-loaded'),{timeout:12000});
+              const manifest=await page.evaluate(()=>fetch('/images/reports/manifest.json').then(r=>r.json()));
+              if(manifest.client.pages!==4||manifest.internal.pages!==5||manifest.client.files.length!==4||manifest.internal.files.length!==5)
+                throw new Error('Approved complete report sets were not deployed: '+JSON.stringify(manifest));
+              const trackCount=await page.locator('#rv .rv-set').count();
+              if(trackCount!==2)throw new Error('Seamless loop requires two complete copies of each page stack');
               const unsafeLinks=await page.locator('a[href*=".pdf"]').count();
               if(unsafeLinks)throw new Error('No website report PDF download links allowed');
               if(width<=650){
@@ -121,6 +130,18 @@ jobs:
                   throw new Error('Mobile workflow/report layout needs better legibility: '+JSON.stringify(layout));
                 const tabs=await page.locator('.so-report-option').count();
                 if(tabs!==2)throw new Error('Expected exactly two compact report preview tabs');
+                await page.locator('#rv').evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{pointerType:'touch',bubbles:true})));
+                if(!await page.locator('#rv').evaluate(el=>el.classList.contains('rv-held')))throw new Error('Touch and hold should pause report animation');
+                await page.locator('#rv').evaluate(el=>el.dispatchEvent(new PointerEvent('pointerup',{pointerType:'touch',bubbles:true})));
+                if(await page.locator('#rv').evaluate(el=>el.classList.contains('rv-held')))throw new Error('Release should resume report animation');
+                await page.emulateMedia({reducedMotion:'reduce'});
+                const staticVisible=await page.locator('#rv-manual').isVisible();
+                if(!staticVisible)throw new Error('Reduced motion should show a static report page');
+                const imgBefore=await page.locator('#rv-manual').getAttribute('src');
+                await page.locator('#rv-next').click();
+                const imgAfter=await page.locator('#rv-manual').getAttribute('src');
+                if(imgBefore===imgAfter)throw new Error('Reduced motion arrows must change pages');
+                await page.emulateMedia({reducedMotion:'no-preference'});
               }
 
 
@@ -152,11 +173,23 @@ jobs:
               if(width>1300){
                 const phoneWidth=await page.locator('.so-step-shot').first().evaluate(el=>el.getBoundingClientRect().width);
                 if(phoneWidth<250 || phoneWidth>285) throw new Error('Desktop walkthrough screens too small: '+phoneWidth);
-                const sample=await page.locator('#so-report-preview').getAttribute('src');
-                if(!sample?.includes('/images/report-client-photos.jpg?v=20261011rev1')) throw new Error('Fuller client report not selected');
+                await page.waitForFunction(()=>document.querySelector('#rv')?.classList.contains('rv-loaded'),{timeout:12000});
+                const clientCaption=await page.locator('#rv-caption').innerText();
+                if(!clientCaption.includes('4 PAGES')) throw new Error('Full four-page client report not loaded');
+                const client=await page.locator('#rv .rv-set').first().locator('img').count();
+                if(client!==4)throw new Error('Client needs four genuine PDF-exported image pages');
                 await page.locator('.so-report-option[data-name="internal"]').click();
-                const internal=await page.locator('#so-report-preview').getAttribute('src');
-                if(!internal?.includes('report-internal-detail.jpg?v=20261011rev1'))throw new Error('Report type switching broken');
+                await page.waitForFunction(()=>document.querySelector('#rv-caption')?.textContent.includes('INTERNAL REPORT'));
+                const internal=await page.locator('#rv .rv-set').first().locator('img').count();
+                if(internal!==5)throw new Error('Internal report needs five genuine app-exported pages');
+                const files=await page.locator('#rv .rv-set').first().locator('img').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-src')));
+                if(!files.every(src=>src?.includes('/images/reports/internal-')))throw new Error('Report tab displays wrong source images: '+files.join(','));
+                await page.locator('#rv').evaluate(el=>el.dispatchEvent(new AnimationEvent('animationiteration',{bubbles:true})));
+                await page.waitForFunction(()=>document.querySelector('#rv-caption')?.textContent.includes('CLIENT REPORT'));
+                await page.locator('#rv').hover();
+                const paused=await page.locator('#rv .rv-track').evaluate(el=>getComputedStyle(el).animationPlayState);
+                if(paused!=='paused') throw new Error('Hover must pause page scrolling: '+paused);
+                await page.mouse.move(5,5);
                 await page.locator('details.so-savings-disclosure > summary').click();
                 const opened=await page.locator('details.so-savings-disclosure').evaluate(el=>el.open);
                 if(!opened) throw new Error('Savings toggle broken');
