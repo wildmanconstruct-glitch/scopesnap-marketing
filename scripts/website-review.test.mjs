@@ -14,8 +14,8 @@ assert(!home.includes('class="hero-report-peek"'),"Never display full PDF in her
 assert(!home.includes('font-style:italic'),"No italic hero accent");
 assert(guide.includes("No drawings required."),"Plan scan remains optional without crowding the hero");
 for(const text of ["renovations","extensions","new builds","repairs and maintenance"])assert(home.toLowerCase().includes(text),"Supported job type "+text);
-for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/report-client-photos.jpg","/images/report-internal-detail.jpg"])assert((home+css).includes(path),"Missing asset URL "+path);
-assert(home.includes('id="so-report-preview"')&&home.includes('class="so-report-option"'),"Functional report preview");
+for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/reports/client-02.webp","/images/reports/internal-02.webp"])assert((home+css).includes(path),"Missing asset URL "+path);
+assert(home.includes('id="rv"')&&home.includes('class="so-report-option"'),"Functional full report viewer");
 assert(home.includes("setBilling('monthly')")&&home.includes("setBilling('annual')"),"Monthly/annual prices");
 for(const id of ["solo-price","pro-price","biz-price","roiSlider","roiPlan","faq"])assert(home.includes('id="'+id+'"'),"Missing interactive control "+id);
 for(const phrase of ["$59","$119","$249","$1,309","$2,739","50 GB company storage","200 GB company storage","10 voice recordings per job","15 voice recordings per job","20 voice recordings per job","100 GB for $10"])assert(home.includes(phrase),"Preserve pricing fact "+phrase);
@@ -34,12 +34,30 @@ assert(existsSync(new URL("../favicon.ico",import.meta.url)),"Favicon");
 for(const name of ["client","internal"])assert(!existsSync(new URL("../sample-"+name+"-report.pdf",import.meta.url)),"Full example PDF must never be publicly deployed: "+name);
 assert(!home.includes('data-pdf=')&&!home.includes('id="so-pdf-link"')&&!home.includes('id="so-report-preview-link"'),"Marketing may only display in-page report previews");
 assert(!/sample-(?:client|internal)-report\.pdf/i.test(home+guide),"No publicly linked full report PDFs");
-assert(home.includes('so-report-preview-frame')&&home.includes('so-report-view-only'),"Reports remain visible as non-clickable previews");
+assert(home.includes('id="rv-caption"')&&home.includes('so-report-view-only'),"Image-only report walkthrough and no PDF download");
 assert(home.includes('so-workflow-swipe'),"Mobile workflow explains swipe navigation");
 assert(css.includes('.so-step{')&&css.includes('flex:0 0 calc(100% - 23px)'),"Mobile workflow displays one readable step at a time");
 assert(css.includes('.so-report-side{')&&css.includes('grid-template-columns:minmax(0,1fr) minmax(0,1fr)'),"Compact mobile report selector");
 assert(css.includes('width:185px;right:17px;bottom:-35px'),"Larger mobile hero phone with natural crop");
 assert(!home.includes('Open full client PDF')&&!home.includes('Open full internal PDF'),"No report download CTA");
+const viewer=read("report-viewer.js"),viewerCss=read("report-viewer.css");
+const reportManifest=JSON.parse(read("images/reports/manifest.json"));
+assert(reportManifest.client.pages===4&&reportManifest.internal.pages===5,"Only approved 4-page client and 5-page internal reports");
+assert(reportManifest.version==="9ac0250e1214ea77c6cb822519c46544ef86814c","Marketing report source is the real exporter commit");
+for(const kind of ["client","internal"]){
+ const item=reportManifest[kind];
+ assert(item.files.length===item.pages&&item.imageInfo.length===item.pages,"Exact original image page list "+kind);
+ for(const name of item.files)assert(existsSync(new URL("../images/reports/"+name,import.meta.url)),"Missing real-exported "+name);
+ assert(item.bytes<2_500_000,"Optimised report size cap "+kind);
+}
+assert(home.includes('report-viewer.js?v=9ac0250e1214ea77')&&home.includes('report-viewer.css?v=9ac0250e1214ea77'),"Report viewer scripts loaded at final build");
+assert(viewerCss.includes('@keyframes rv-scroll')&&viewerCss.includes('translateY(-50%)'),"Report frames scroll with seamless duplicated sets");
+assert(viewer.includes('animationiteration')&&viewer.includes('IntersectionObserver'),"Auto-switches after complete loop and stops offscreen");
+assert(viewerCss.includes('prefers-reduced-motion:reduce')&&home.includes('id="rv-next"'),"Reduced-motion static navigation");
+assert(viewer.includes('600px 0px')&&viewer.includes('populateRest'),"Lazy load nearby page images");
+assert(viewer.includes('rv-held')&&viewerCss.includes('.rv:hover .rv-track'),"Touch-and-hold and hover pause");
+assert(!home.includes('id="so-report-preview"')&&!home.includes('id="so-pdf-link"'),"Legacy static/report download controls removed");
+
 assert(!existsSync(new URL("../assets/pdf-chunks",import.meta.url)),"Reconstructible full PDF chunks cannot be public");
 const vercel=JSON.parse(read("vercel.json"));
 assert(!vercel.redirects.some(r=>/sample.*report/.test(r.source)),"No download aliases");
@@ -81,9 +99,9 @@ assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follo
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
 assert(home.includes('brand-sync.css?v=20261011origin-slim1'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
-assert(home.includes('id="so-report-caption"'),"Show a correct caption for report content");
+assert(home.includes('id="rv-caption"'),"Show manifest-driven report page count caption");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
-assert(home.includes('/images/report-client-photos.jpg?v=20261011rev1'),"Use fuller genuine report page");
+assert(home.includes('/images/reports/client-02.webp?v=9ac0250e1214ea77'),"Use actual ScopeSnap-exported report images");
 assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="faq"'),"Put optional calculator below FAQ");
 assert(home.includes('<details class="so-savings-disclosure">'),"Calculator should default closed");
 assert(css.includes('@media(min-width:960px)')&&css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Big phones in two desktop rows");
@@ -91,7 +109,7 @@ assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes
 for(const path of ["index.html","how-it-works.html","contact.html","billing.html","privacy.html","terms.html","delete-account.html","404.html"]){
  const page=read(path);
  for(const m of page.matchAll(/\/(?:images\/[\w./-]+|sample-[\w-]+\.pdf)[^"'\s<>]*/g)){
-  const expected=m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : '?v=20261011rev1';
+  const expected=m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=9ac0250e1214ea77' : '?v=20261011rev1';
   assert(m[0].includes(expected),"Old image/PDF URL in "+path+": "+m[0]);
  }
 }
