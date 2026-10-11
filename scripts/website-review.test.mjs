@@ -12,7 +12,7 @@ assert(!home.includes('class="trust-bar"'),"Remove old trust icons");
 assert(!home.includes('class="ps-product-grid"'),"Remove AI-template product cards");
 assert(!home.includes('class="hero-report-peek"'),"Never display full PDF in hero");
 assert(!home.includes('font-style:italic'),"No italic hero accent");
-assert(home.includes("Plans optional."),"Plans not required");
+assert(guide.includes("No drawings required."),"Plan scan remains optional without crowding the hero");
 for(const text of ["renovations","extensions","new builds","repairs and maintenance"])assert(home.toLowerCase().includes(text),"Supported job type "+text);
 for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/report-client-photos.jpg","/images/report-internal-detail.jpg"])assert((home+css).includes(path),"Missing asset URL "+path);
 assert(home.includes('id="so-report-preview"')&&home.includes('class="so-report-option"'),"Functional report preview");
@@ -46,6 +46,13 @@ assert(!vercel.redirects.some(r=>/sample.*report/.test(r.source)),"No download a
 assert(!home.includes("Across 30+ jobs")&&!home.includes("45+ hours"),"No unsupported results");
 
 
+assert(home.includes('Photos, voice notes and measurements, captured room by room. Turned into a client scope and an internal site report.'),"Keep approved compact two-sentence hero description");
+assert(home.includes('class="so-job-types so-mono"')&&home.includes('Renovations · Extensions · New builds · Repairs &amp; maintenance'),"Job types live beneath the trial CTA");
+const heroMarkup=home.slice(home.indexOf('<!-- SITE SET-OUT / HERO -->'),home.indexOf('<!-- BUILT BY BUILDERS -->'));
+assert((heroMarkup.match(/class="btn-primary"/g)||[]).length===1,"Exactly one primary hero CTA");
+assert(!heroMarkup.includes('href="#reports"')&&!heroMarkup.includes('btn-ghost'),"Remove secondary hero report button completely");
+assert(!heroMarkup.includes('Plans optional.'),"No plans afterthought in hero copy");
+assert(css.includes('.so-plan-tag{top:61%;left:59%;z-index:3}')&&css.includes('.so-plan-tag::before{width:38px}'),"Joinery tag is anchored below the window on cabinet fronts");
 assert(home.includes('class="so-phone so-hero-phone so-voice-capture-phone"'),"Hero phone shows voice recording screen");
 assert(home.includes('src="/images/screen-hero.jpg?v=20261011roomvoice1"'),"Hero uses genuine full Kitchen room app capture");
 assert(home.includes('2:37 remaining')&&home.includes('class="so-live-waveform"'),"Hero recording has a visible timer and live waveform");
@@ -54,7 +61,7 @@ assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;to
 assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
 assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
 assert(home.includes('/images/screen-measure.jpg?v=20261011rev1'),"Workflow measure uses the camera overlay screenshot");
-assert(home.includes('brand-sync.css?v=20261011mobile-preview2'),"Voice hero styles cache version");
+assert(home.includes('brand-sync.css?v=20261011hero-copy3'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('Wildheart Homes'),"Do not name the building company on marketing homepage");
@@ -65,7 +72,7 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261011mobile-preview2'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261011hero-copy3'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="so-report-caption"'),"Show a correct caption for report content");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
