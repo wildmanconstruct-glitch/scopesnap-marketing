@@ -11,25 +11,9 @@
   const caption=document.getElementById("rv-caption");
   const previous=document.getElementById("rv-prev");
   const next=document.getElementById("rv-next");
-  const title=document.getElementById("rv-audience-title");
-  const description=document.getElementById("rv-audience-description");
-  const kicker=document.getElementById("rv-audience-kicker");
-  const points=document.getElementById("rv-feature-points");
   const motion=window.matchMedia("(prefers-reduced-motion: reduce)");
   const FIRST_DELAY=5500;
   const TURN_DURATION=480;
-  const content={
-    client:{
-      title:"For your client.",kicker:"01 — CLIENT COPY",
-      description:"A clear room-by-room scope, with site photos, proposed works, selections, and what's supplied by the owner.",
-      bullets:["Proposed works by room","Photos and measurements","Owner supply and decisions"]
-    },
-    internal:{
-      title:"For your team.",kicker:"02 — INTERNAL COPY",
-      description:"The detail your team needs before pricing: measurements, trade scope, site conditions, selections and outstanding items.",
-      bullets:["Trade-specific scope and notes","Whole-home conditions and quantities","Measurements and items to confirm"]
-    }
-  };
 
   let manifest=null,selected="client",index=0;
   let visible=false,hovered=false,held=false,focused=false,turning=false;
@@ -67,11 +51,7 @@
       tab.setAttribute("aria-selected",String(active));
       tab.tabIndex=active?0:-1;
     });
-    const view=content[selected];
-    title.textContent=view.title;description.textContent=view.description;kicker.textContent=view.kicker;
-    points.replaceChildren(...view.bullets.map(value=>{
-      const el=document.createElement("span");el.textContent=value;return el;
-    }));
+    // Both audience descriptions stay visible; only active styling changes.
   }
   function imageFor(type,idx){
     const item=pages(type)[idx],image=document.createElement("img");
