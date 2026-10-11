@@ -12,7 +12,7 @@
         "file": "client-01.webp",
         "width": 1310,
         "height": 1853,
-        "alt": "Client report page 1 — Banksia Park Build Co cover, exterior photograph and client details"
+        "alt": "Branded client report cover with Banksia Park Build Co architectural/banksia logo, exterior site photograph and client details"
       },
       {
         "file": "client-02.webp",
@@ -33,7 +33,7 @@
         "alt": "Client report page 4 — Living Room; app-generated scope and photographs"
       }
     ],
-    "bytes": 433892,
+    "bytes": 434270,
     "embeddedImages": 10
   },
   "internal": {
@@ -50,7 +50,7 @@
         "file": "internal-01.webp",
         "width": 1310,
         "height": 1853,
-        "alt": "Internal report page 1 — Banksia Park Build Co cover, Mitchell Residence and exterior photograph"
+        "alt": "Branded internal report cover with Banksia Park Build Co architectural/banksia logo and exterior site photograph"
       },
       {
         "file": "internal-02.webp",
@@ -77,8 +77,13 @@
         "alt": "Internal report page 5 — Living Room; app-generated scope and photographs"
       }
     ],
-    "bytes": 477720,
+    "bytes": 480924,
     "embeddedImages": 10
   },
-  "version": "9ac0250e1214ea77c6cb822519c46544ef86814c"
+  "version": "07d15aeca14664790b99ffc72f1481b453fd5b64",
+  "builderBrand": {
+    "name": "Banksia Park Build Co",
+    "emblem": "Architectural gable and banksia flower",
+    "logoOnEveryPage": true
+  }
 }

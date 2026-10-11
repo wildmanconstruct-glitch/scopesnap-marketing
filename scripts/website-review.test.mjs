@@ -43,7 +43,8 @@ assert(!home.includes('Open full client PDF')&&!home.includes('Open full interna
 const viewer=read("report-viewer.js"),viewerCss=read("report-viewer.css");
 const reportManifest=JSON.parse(read("images/reports/manifest.json"));
 assert(reportManifest.client.pages===4&&reportManifest.internal.pages===5,"Only approved 4-page client and 5-page internal reports");
-assert(reportManifest.version==="9ac0250e1214ea77c6cb822519c46544ef86814c","Marketing report source is the real exporter commit");
+assert(reportManifest.version==="07d15aeca14664790b99ffc72f1481b453fd5b64","Marketing report source is the approved branded exporter commit");
+assert(reportManifest.builderBrand?.name==="Banksia Park Build Co"&&reportManifest.builderBrand?.logoOnEveryPage===true,"Actual illustrated Banksia Park logo required on every PDF page");
 for(const kind of ["client","internal"]){
  const item=reportManifest[kind];
  assert(item.files.length===item.pages&&item.imageInfo.length===item.pages,"Exact original image page list "+kind);
@@ -68,6 +69,7 @@ assert(viewerCss.includes('flex-direction:column;gap:12px;flex:1')&&viewerCss.in
 assert(!viewer.includes('content[selected]')&&viewer.includes('aria-selected'),"Selecting report changes pages without hiding either description");
 assert(home.includes('SWIPE TO SEE MORE PAGES')&&home.includes('PAGE 1 OF 4'),"Mobile swipe hint and page number visible");
 assert(viewer.includes('goTo(index-1)')&&viewer.includes('goTo(index+1)'),"Previous and next report page arrows operate");
+assert(guide.includes("Branded Banksia Park Build Co client kitchen scope"),"How It Works must show updated logo report page");
 assert(!home.includes('id="so-report-preview"')&&!home.includes('id="so-pdf-link"'),"Legacy static/report download controls removed");
 
 assert(!existsSync(new URL("../assets/pdf-chunks",import.meta.url)),"Reconstructible full PDF chunks cannot be public");
@@ -113,7 +115,7 @@ assert(home.includes('brand-sync.css?v=20261011origin-slim1'),"Hero styling has 
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
-assert(home.includes('/images/reports/client-01.webp?v=9ac0250e1214ea77'),"Use actual ScopeSnap-exported report images");
+assert(home.includes('/images/reports/client-01.webp?v=07d15aeca1466479'),"Use actual ScopeSnap-exported report images");
 assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="faq"'),"Put optional calculator below FAQ");
 assert(home.includes('<details class="so-savings-disclosure">'),"Calculator should default closed");
 assert(css.includes('@media(min-width:960px)')&&css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Big phones in two desktop rows");
@@ -121,7 +123,7 @@ assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes
 for(const path of ["index.html","how-it-works.html","contact.html","billing.html","privacy.html","terms.html","delete-account.html","404.html"]){
  const page=read(path);
  for(const m of page.matchAll(/\/(?:images\/[\w./-]+|sample-[\w-]+\.pdf)[^"'\s<>]*/g)){
-  const expected=m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=9ac0250e1214ea77' : '?v=20261011rev1';
+  const expected=m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=07d15aeca1466479' : '?v=20261011rev1';
   assert(m[0].includes(expected),"Old image/PDF URL in "+path+": "+m[0]);
  }
 }
