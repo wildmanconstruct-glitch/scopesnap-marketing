@@ -2,7 +2,7 @@ import {readFileSync,existsSync} from "node:fs";
 import assert from "node:assert/strict";
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 const home=read("index.html"),css=read("brand-sync.css"),guide=read("how-it-works.html");
-for(const part of ['class="so-hero"','class="so-hero-grid"','class="so-photo-dimensions"','class="so-plan-tag"','class="so-specbar"','class="so-steps"','class="so-voice-grid"','class="so-report-layout"','class="so-final"']) assert(home.includes(part),"Missing Site Set-Out component: "+part);
+for(const part of ['class="so-hero"','class="so-hero-grid"','class="so-photo-dimensions"','class="so-plan-tag"','class="so-origin"','class="so-steps"','class="so-voice-grid"','class="so-report-layout"','class="so-final"']) assert(home.includes(part),"Missing Site Set-Out component: "+part);
 assert(home.includes('class="site-setout"'),"Homepage design variant");
 assert(css.includes("--ink:#0E0E0D")&&css.includes("--bone:#ECE8E0")&&css.includes("--cu:#C8843F"),"Site Set-Out design tokens");
 assert(css.includes("Archivo:wdth,wght")&&css.includes("JetBrains+Mono"),"Spec sheet fonts");
@@ -61,9 +61,16 @@ assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;to
 assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
 assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
 assert(home.includes('/images/screen-measure.jpg?v=20261011rev1'),"Workflow measure uses the camera overlay screenshot");
-assert(home.includes('brand-sync.css?v=20261011hero-copy3'),"Voice hero styles cache version");
+assert(home.includes('brand-sync.css?v=20261011origin-slim1'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
+assert(!home.includes('class="so-specbar"')&&!home.includes('Mitchell Residence')&&!home.includes('Scope ready ✓'),"Remove fictional job status strip below the hero");
+assert(!home.includes('so-origin-index')&&!home.includes('so-origin-mark'),"Remove repeated builder proof labels");
+assert(home.includes('Tested on real site inspections and quoting jobs.'),"Keep direct builder proof");
+assert((home.match(/Built by builders, for builders\./g)||[]).length===1,"Builder proof appears once");
+assert(home.includes('class="so-origin-check"'),"Builder proof uses one understated gold check icon");
+assert(css.includes('.so-workflow .so-section-head{padding-top:70px}')&&css.includes('.so-workflow .so-section-head{padding-top:48px}'),"Bring Four Steps nearer to the hero");
+
 assert(!home.includes('Wildheart Homes'),"Do not name the building company on marketing homepage");
 assert(home.includes('viewBox="0 0 1448 1086"'),"Measurement overlay must use the photo coordinates");
 assert((home.match(/class="so-ar-line"/g)||[]).length===2,"Exactly two AR measurement lines");
@@ -72,7 +79,7 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261011hero-copy3'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261011origin-slim1'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="so-report-caption"'),"Show a correct caption for report content");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
