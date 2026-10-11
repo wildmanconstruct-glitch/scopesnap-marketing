@@ -147,15 +147,14 @@
   .so-reports .rv-switcher-label{margin-bottom:8px;font-size:10px}
   .so-reports .rv-switcher-label span:last-child{font-size:9px}
   .so-reports .rv-switcher-options{gap:8px}
-  .so-reports .so-report-side .so-report-option{min-height:171px;padding:12px 11px 10px}
+  .so-reports .so-report-side .so-report-option{min-height:226px;padding:12px 11px 10px}
   .so-reports .rv-switch-mark{font-size:9px;letter-spacing:.025em;gap:3px}
   .so-reports .rv-switch-mark>span{font-size:9px}
   .so-reports .rv-switch-heading{gap:2px;margin:10px 0 8px}
   .so-reports .rv-switch-heading b{font-size:clamp(23px,6vw,29px);line-height:1}
   .so-reports .rv-switch-arrow{font-size:17px}
   .so-reports .rv-switch-description{
-    font-size:11px;line-height:1.42;
-    display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
+    font-size:11px;line-height:1.42;display:block;
   }
   .so-reports .rv-switch-features{display:none}
   .so-reports .rv-switch-action{font-size:9px;letter-spacing:0;margin-top:11px;padding-top:8px}
