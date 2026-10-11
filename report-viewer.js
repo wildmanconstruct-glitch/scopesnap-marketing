@@ -112,8 +112,14 @@
     .then(response=>{if(!response.ok)throw new Error("Report image manifest missing");return response.json();})
     .then(data=>{
       if(!data.client?.files?.length||!data.internal?.files?.length)throw new Error("No report page images");
-      manifest=data;frame.classList.add("rv-loaded");activate("client");syncMotion();
+      manifest=data;activate("client");syncMotion();
       if(isNear)populateRest("client");
+      // Keep a real, static report image visible until the animated stack's
+      // first page has actually decoded. Never show an empty white frame.
+      const first=frame.querySelector(".rv-set:first-child img[src]");
+      const ready=()=>frame.classList.add("rv-loaded");
+      if(first?.complete&&first.naturalWidth>0)ready();
+      else first?.addEventListener("load",ready,{once:true});
     })
     .catch(error=>{
       console.warn("Report previews unavailable:",error.message);
