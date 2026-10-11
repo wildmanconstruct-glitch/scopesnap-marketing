@@ -129,15 +129,21 @@ jobs:
                 throw new Error('Only one full resolution real client report page may be visible at a time: '+JSON.stringify(visibleReport));
               if(await page.locator('#rv .rv-set, #rv .rv-track').count())throw new Error('Old vertical stacked scrolling report markup remains');
               const reportTabLayout=await page.evaluate(()=>{
-                const report=document.querySelector('#reports').getBoundingClientRect();
-                const tabs=document.querySelector('.rv-switcher').getBoundingClientRect();
-                const viewer=document.querySelector('#rv').getBoundingClientRect();
-                return {switchAbove:tabs.bottom<viewer.top, fullWidth:tabs.width>=report.width*.75,
-                  readable:document.querySelector('.rv-switcher-label')?.textContent.includes('SWITCH REPORT'),
+                const panel=document.querySelector('.so-report-side');
+                const tabs=document.querySelector('.rv-switcher');
+                const choices=tabs?.getBoundingClientRect();
+                const viewer=document.querySelector('#rv')?.getBoundingClientRect();
+                const texts=[...document.querySelectorAll('.so-report-option .rv-switch-description')].map(el=>el.textContent.trim());
+                return {insideRightPanel:!!panel?.contains(tabs),
+                  desktopRight:choices.left>=viewer.right-3,
+                  mobileAbove:choices.bottom<viewer.top-3,
+                  readable:tabs?.textContent.includes('CHOOSE A REPORT')&&tabs?.textContent.includes('VIEW INTERNAL REPORT'),
+                  bothDescriptions:texts.length===2&&texts.every(x=>x.length>60),
                   selected:[...document.querySelectorAll('.so-report-option')].filter(x=>x.getAttribute('aria-selected')==='true').length};
               });
-              if(!reportTabLayout.switchAbove||!reportTabLayout.fullWidth||!reportTabLayout.readable||reportTabLayout.selected!==1)
-                throw new Error('Client/Internal report switch must be unmistakable above the booklet: '+JSON.stringify(reportTabLayout));
+              if(!reportTabLayout.insideRightPanel||!reportTabLayout.readable||!reportTabLayout.bothDescriptions||reportTabLayout.selected!==1||
+                 (width>950&&!reportTabLayout.desktopRight)||(width<=950&&!reportTabLayout.mobileAbove))
+                throw new Error('Both report descriptions should be available in right column on desktop, above viewer on mobile: '+JSON.stringify(reportTabLayout));
               const unsafeLinks=await page.locator('a[href*=".pdf"]').count();
               if(unsafeLinks)throw new Error('No website report PDF download links allowed');
               if(width<=650){
