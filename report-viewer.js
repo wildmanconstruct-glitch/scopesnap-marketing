@@ -170,8 +170,16 @@
   frame.addEventListener("pointercancel",()=>{held=false;swipeStart=null;schedule();});
   frame.addEventListener("pointerenter",event=>{if(event.pointerType==="mouse"){hovered=true;stopTimer();}});
   frame.addEventListener("pointerleave",event=>{if(event.pointerType==="mouse"){hovered=false;schedule();}});
-  root.addEventListener("focusin",()=>{focused=true;stopTimer();});
-  root.addEventListener("focusout",()=>{focused=!!root.contains(document.activeElement);schedule();});
+  // Pause for keyboard focus, but not permanently after a mouse clicks
+  // a report tab: pointer users should still see automatic page changes.
+  root.addEventListener("focusin",()=>{
+    focused=!!root.querySelector(":focus-visible");
+    if(focused)stopTimer();else schedule();
+  });
+  root.addEventListener("focusout",()=>{
+    focused=!!root.querySelector(":focus-visible");
+    schedule();
+  });
   frame.addEventListener("keydown",event=>{
     if(event.key!=="ArrowRight"&&event.key!=="ArrowLeft")return;
     event.preventDefault();goTo(index+(event.key==="ArrowRight"?1:-1));
