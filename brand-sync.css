@@ -187,7 +187,7 @@ body.site-setout .sticky-cta{display:none!important}
 .so-workflow-swipe{display:none}
 @media(max-width:650px){
   body.site-setout .so-hero{min-height:0}
-  body.site-setout .so-hero>.wrap{padding-top:112px;padding-bottom:325px}
+  body.site-setout .so-hero>.wrap{padding-top:112px;padding-bottom:365px}
   body.site-setout .so-hero h1{font-size:clamp(48px,11.6vw,59px);line-height:.91;max-width:355px}
   body.site-setout .so-eyebrow{font-size:10px;margin-bottom:19px;max-width:260px}
   body.site-setout .so-lead{font-size:15px;line-height:1.55;margin:23px 0 24px;max-width:340px}
