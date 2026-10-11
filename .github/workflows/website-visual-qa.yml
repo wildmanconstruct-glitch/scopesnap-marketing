@@ -71,6 +71,17 @@ jobs:
               if(!heroContent.src?.includes('/images/screen-hero.jpg?v=20261011roomvoice1') || heroContent.width!==1170 || heroContent.height!==2532 || !heroContent.photos)
                 throw new Error('Must show the genuine Kitchen RoomDetail image with live voice overlays: '+JSON.stringify(heroContent));
               if(!heroContent.croppedByHero || !heroContent.startsAboveStrip)throw new Error('Phone should show live recording but naturally disappear below the hero edge: '+JSON.stringify(heroContent));
+
+              if(width<=650){
+                const captionRoom=await page.evaluate(()=>{
+                  const label=document.querySelector('.so-job-types')?.getBoundingClientRect();
+                  const phone=document.querySelector('.so-hero-phone')?.getBoundingClientRect();
+                  return {labelBottom:label?.bottom,phoneTop:phone?.top,
+                    overlap:!!label&&!!phone&&label.bottom>phone.top&&label.right>phone.left};
+                });
+                if(captionRoom.overlap)throw new Error('Supported-job caption must not be hidden by phone: '+JSON.stringify(captionRoom));
+              }
+
               const clockBefore=await page.locator('#so-voice-clock').textContent();
               await page.waitForTimeout(1300);
               const clockAfter=await page.locator('#so-voice-clock').textContent();
