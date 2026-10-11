@@ -286,3 +286,32 @@ body.site-setout .sticky-cta{display:none!important}
 @media(min-width:651px) and (max-width:1250px){
   .so-hero .so-lead{max-width:550px;font-size:16px}
 }
+
+/* One slim builder-credibility strip. The job-status bar and repeated
+   Builder-led/Tested labels have been removed from the homepage markup. */
+body.site-setout .so-hero{min-height:820px}
+.so-origin{border-top:1px solid var(--line-d);border-bottom:1px solid var(--line-d);background:#151513}
+.so-origin .so-origin-inner{
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding-top:20px;padding-bottom:20px;
+}
+.so-origin .so-origin-inner p{
+  margin:0;max-width:none;color:#C8C3BA;
+  font-size:clamp(14px,1.35vw,17px);line-height:1.45;
+}
+.so-origin .so-origin-inner p strong{color:var(--bone);font-weight:750}
+.so-origin .so-origin-inner p span{color:#C7C0B6}
+.so-origin-check{color:var(--cu);flex:none;margin-left:12px}
+.so-workflow .so-section-head{padding-top:70px}
+@media(min-width:651px) and (max-width:800px){
+ body.site-setout .so-hero{min-height:815px}
+ .so-origin .so-origin-inner{padding-top:17px;padding-bottom:17px}
+}
+@media(max-width:650px){
+ body.site-setout .so-hero{min-height:0}
+ .so-origin .so-origin-inner{display:flex;gap:13px;padding-top:15px;padding-bottom:15px}
+ .so-origin .so-origin-inner p{font-size:13px;line-height:1.5}
+ .so-origin .so-origin-inner p span{display:block;font-size:12px;margin-top:3px}
+ .so-origin-check{width:20px;height:20px;margin-left:0}
+ .so-workflow .so-section-head{padding-top:48px}
+}
