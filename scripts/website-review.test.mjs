@@ -14,7 +14,7 @@ assert(!home.includes('class="hero-report-peek"'),"Never display full PDF in her
 assert(!home.includes('font-style:italic'),"No italic hero accent");
 assert(guide.includes("No drawings required."),"Plan scan remains optional without crowding the hero");
 for(const text of ["renovations","extensions","new builds","repairs and maintenance"])assert(home.toLowerCase().includes(text),"Supported job type "+text);
-for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/reports/client-02.webp"])assert((home+css).includes(path),"Missing asset URL "+path);
+for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/reports/client-01.webp"])assert((home+css).includes(path),"Missing asset URL "+path);
 assert(home.includes('id="rv"')&&home.includes('class="so-report-option"'),"Functional full report viewer");
 assert(home.includes("setBilling('monthly')")&&home.includes("setBilling('annual')"),"Monthly/annual prices");
 for(const id of ["solo-price","pro-price","biz-price","roiSlider","roiPlan","faq"])assert(home.includes('id="'+id+'"'),"Missing interactive control "+id);
@@ -107,7 +107,7 @@ assert(home.includes('brand-sync.css?v=20261011origin-slim1'),"Hero styling has 
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
-assert(home.includes('/images/reports/client-02.webp?v=9ac0250e1214ea77'),"Use actual ScopeSnap-exported report images");
+assert(home.includes('/images/reports/client-01.webp?v=9ac0250e1214ea77'),"Use actual ScopeSnap-exported report images");
 assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="faq"'),"Put optional calculator below FAQ");
 assert(home.includes('<details class="so-savings-disclosure">'),"Calculator should default closed");
 assert(css.includes('@media(min-width:960px)')&&css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Big phones in two desktop rows");
