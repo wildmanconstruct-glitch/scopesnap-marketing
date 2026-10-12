@@ -123,7 +123,7 @@ assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes
 for(const path of ["index.html","how-it-works.html","contact.html","billing.html","privacy.html","terms.html","delete-account.html","404.html"]){
  const page=read(path);
  for(const m of page.matchAll(/\/(?:images\/[\w./-]+|sample-[\w-]+\.pdf)[^"'\s<>]*/g)){
-  const expected=m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=07d15aeca1466479' : '?v=20261011rev1';
+  const expected=m[0].startsWith('/images/workflow/') ? '?v=9e78c595f210901ad87ecebd0e1e0a5feb3bf2aa' : m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=07d15aeca1466479' : '?v=20261011rev1';
   assert(m[0].includes(expected),"Old image/PDF URL in "+path+": "+m[0]);
  }
 }
