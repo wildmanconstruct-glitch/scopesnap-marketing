@@ -324,7 +324,7 @@ body.site-setout .so-hero{min-height:820px}
 #why .so-familiar-intro{grid-column:2;margin:23px 0 0;font-size:16px;line-height:1.55;color:#55524C}
 #why .so-familiar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-left:1px solid var(--line-l)}
 #why .so-familiar-card{min-width:0;min-height:206px;display:flex;flex-direction:column;padding:25px 27px 27px;border-right:1px solid var(--line-l);border-bottom:1px solid var(--line-l)}
-#why .so-familiar-card h3{font-family:var(--ff-b);font-size:20px;font-weight:750;line-height:1.35;letter-spacing:-.02em;text-transform:none;margin:0;color:var(--ink)}
+#why .so-familiar-card h3{font-family:var(--ff-b);font-stretch:normal;font-size:20px;font-weight:750;line-height:1.35;letter-spacing:-.02em;text-transform:none;margin:0;color:var(--ink)}
 #why .so-familiar-rule{width:36px;height:1px;background:var(--cu);margin:18px 0 13px;flex:none}
 #why .so-familiar-card p{font-size:15px;line-height:1.55;color:var(--t-l2,#55524C);margin:0;font-weight:400}
 @media(max-width:800px){
