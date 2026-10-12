@@ -319,12 +319,21 @@ jobs:
           const categories=JSON.parse(readFileSync('qa-screenshots/lighthouse.json','utf8')).categories;
           const performance=Math.round(categories.performance.score*100);
           const accessibility=Math.round(categories.accessibility.score*100);
+          const report=JSON.parse(readFileSync('qa-screenshots/lighthouse.json','utf8'));
           console.log('Lighthouse mobile:',{performance,accessibility});
+          const keys=['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','render-blocking-resources','unused-css-rules','unused-javascript','modern-image-formats','uses-optimized-images','uses-responsive-images','network-requests','total-byte-weight','font-display','lcp-discovery-insight','lcp-request-discovery','network-dependency-tree-insight','image-delivery-insight'];
+          for(const key of keys){
+            const audit=report.audits[key]; if(!audit) continue;
+            console.log('AUDIT',key,'score',audit.score,'value',audit.displayValue||audit.numericValue||'',
+              'wasted',audit.details?.overallSavingsMs||audit.details?.overallSavingsBytes||audit.details?.items?.slice(0,6).map(item=>({url:item.url,totalBytes:item.totalBytes,wastedBytes:item.wastedBytes,wastedMs:item.wastedMs})));
+          }
           if(performance<85||accessibility<95) throw Error('Lighthouse thresholds unmet: performance>=85, accessibility>=95');
           JS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: website-visual-qa
-          path: qa-screenshots/*.png
+          path: |
+            qa-screenshots/*.png
+            qa-screenshots/lighthouse.json
           retention-days: 7
