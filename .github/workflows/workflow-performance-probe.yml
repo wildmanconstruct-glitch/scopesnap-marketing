@@ -6,6 +6,7 @@ on:
       - index.html
       - brand-sync.css
       - shared.css
+      - shared-critical.css
       - workflow.css
       - report-viewer.js
       - scripts/website-review.test.mjs
