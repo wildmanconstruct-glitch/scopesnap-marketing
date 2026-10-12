@@ -343,3 +343,6 @@ body.site-setout .so-hero{min-height:820px}
  #why .so-familiar-intro{font-size:15px}
  #why .so-familiar-card{padding:19px 17px 20px}
 }
+
+/* Keep the moved calculator's existing ink totals inside Pricing. */
+#pricing .so-savings .roi-money-num{color:var(--ink)!important}
