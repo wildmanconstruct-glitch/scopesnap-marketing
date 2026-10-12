@@ -106,7 +106,7 @@ jobs:
                   startsAboveHeroEnd:!!hero && bounds.top<hero.bottom-130,
                   imageWidth:screen?.width};
               });
-              if(!heroContent.src?.includes('/images/perf/hero-phone.webp?v=20261012fast1') || heroContent.width!==1170 || heroContent.height!==2532 || !heroContent.photos)
+              if(!heroContent.src?.includes('/images/perf/hero-phone.webp?v=20261012mobile1') || heroContent.width!==750 || heroContent.height!==1623 || !heroContent.photos)
                 throw new Error('Must show the genuine Kitchen RoomDetail image with live voice overlays: '+JSON.stringify(heroContent));
               if(!heroContent.croppedByHero || !heroContent.startsAboveHeroEnd)throw new Error('Phone should show live recording but naturally disappear below the hero edge: '+JSON.stringify(heroContent));
 
