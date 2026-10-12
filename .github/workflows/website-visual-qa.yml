@@ -250,6 +250,11 @@ jobs:
 
             }
             if(path==='/' && width===1440){
+              // First two screens must be fetched from the initial HTML.
+              await page.waitForFunction(()=>
+                [...document.querySelectorAll('#features .wf-screen')].slice(0,2)
+                  .every(img=>img.getAttribute('src') && img.loading==='eager' && img.complete && img.naturalWidth>0)
+              ,null,{timeout:10000});
               for(let n=1;n<=5;n++){
                 await page.evaluate(stage=>{
                   const el=document.querySelector('#features .wf-step[data-step="'+stage+'"]');
@@ -257,9 +262,15 @@ jobs:
                   window.scrollTo({top:window.scrollY+r.top+r.height/2-window.innerHeight/2,behavior:'instant'});
                 },n);
                 await page.waitForFunction(stage=>document.querySelector('#features .wf-screen[data-step="'+stage+'"]')?.classList.contains('is-active'),n,{timeout:7000});
-                await page.waitForTimeout(320);
+                await page.waitForTimeout(630); // let report-stage slide settle
                 const frame=await page.locator('#features .wf-phone').boundingBox();
                 if(!frame||frame.y<0||frame.y+frame.height>height) throw new Error('Workflow phone clipped in stage '+n+': '+JSON.stringify(frame));
+                const column=await page.locator('#features .wf-stage').boundingBox();
+                if(!column)throw new Error('Missing workflow phone column');
+                if(n<=4 && Math.abs((frame.x+frame.width)-(column.x+column.width))>6)
+                  throw new Error('Stages 1-4 phone must sit on the right: '+JSON.stringify({n,frame,column}));
+                if(n===5 && Math.abs(frame.x-column.x)>6)
+                  throw new Error('Stage 5 phone must slide left: '+JSON.stringify({frame,column}));
                 if(n===5){
                   const reportPage=await page.locator('#features .wf-report .wf-pages').boundingBox();
                   const phone=await page.locator('#features .wf-phone').boundingBox();
