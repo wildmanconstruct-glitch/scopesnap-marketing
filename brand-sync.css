@@ -346,3 +346,8 @@ body.site-setout .so-hero{min-height:820px}
 
 /* Keep the moved calculator's existing ink totals inside Pricing. */
 #pricing .so-savings .roi-money-num{color:var(--ink)!important}
+
+/* Familiar-to-workflow handoff: separate adjacent bone sections with a hairline and breathing room. */
+#features.so-workflow{border-top:1px solid var(--line-l)}
+#features.so-workflow .so-section-head{padding-top:110px}
+@media(max-width:650px){#features.so-workflow .so-section-head{padding-top:88px}}
