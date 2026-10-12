@@ -6,6 +6,7 @@ on:
       - index.html
       - how-it-works.html
       - shared.css
+      - shared-critical.css
       - premium-showcase.css
       - brand-sync.css
       - report-viewer.css
