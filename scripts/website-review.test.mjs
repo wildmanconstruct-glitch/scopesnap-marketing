@@ -93,7 +93,7 @@ assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;to
 assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
 assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
 assert(!home.includes('/images/screen-measure.jpg?v=20261011rev1')&&home.includes('/images/workflow/wf-02-capture.webp'),"The old unaligned tape-measure graphic is not used in Workflow");
-assert(home.includes('brand-sync.css?v=20261012mobile1'),"Voice hero styles cache version");
+assert(home.includes('brand-sync.css?v=20261012familiar1'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('class="so-specbar"')&&!heroMarkup.includes('Mitchell Residence')&&!heroMarkup.includes('Scope ready ✓'),"Remove fictional job status strip below the hero but permit report previews to name the demo job");
@@ -111,12 +111,12 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261012mobile1'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261012familiar1'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
 assert(home.includes('/images/reports/client-01.webp?v=07d15aeca1466479'),"Use actual ScopeSnap-exported report images");
-assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="faq"'),"Put optional calculator below FAQ");
+assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="pricing"')&&home.indexOf('id="savings"')<home.indexOf('id="faq"'),"Put optional calculator within Pricing");
 assert(home.includes('<details class="so-savings-disclosure">'),"Calculator should default closed");
 assert(css.includes('@media(min-width:960px)')&&css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Big phones in two desktop rows");
 assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes('.so-savings .roi-money-num{color:var(--ink);'),"Estimator numbers no green");
@@ -138,3 +138,27 @@ assert(workflow.includes('Room questions')&&workflow.includes('Scope Check')&&wo
 assert(!/screen-(?:planscan|photo|voice|measure)\\.jpg/.test(workflow),"Workflow only uses new genuine app screenshots");
 assert(read('workflow.js').includes('IntersectionObserver')&&!read('workflow.js').includes('preventDefault'),"Natural-scrolling sticky phone workflow");
 for(const name of ['wf-01-start','wf-02-capture','wf-03-questions','wf-04-review','wf-05-report','wf-05-client-page','wf-05-internal-page'])assert(existsSync(new URL('../images/workflow/'+name+'.webp',import.meta.url)),"Missing real workflow capture: "+name);
+
+// Task 2: six exact problem/fix pairs and only five numbered homepage sections.
+const familiar=home.slice(home.indexOf('<section class="so-light so-familiar" id="why"'),home.indexOf('<!-- WORKFLOW -->'));
+assert(familiar.includes('SOUND FAMILIAR?')&&familiar.includes("THE SITE VISIT'S DONE.")&&familiar.includes("THE SCOPE ISN'T."),"Sound familiar headings");
+assert(familiar.includes('Every builder knows these. ScopeSnap is built to stop them.'),"Sound familiar intro");
+for(const [problem,fix] of [
+  ['Notes on the back of a quote. Photos lost in your camera roll.','Every photo, note and measurement saved to the right room, in one job.'],
+  ['Back at the office: &quot;What was the width of that window?&quot;','Measure on the spot, and check the photos and room notes instead of driving back.'],
+  ['Left the tape in the ute.','Get a quick camera estimate. Confirm the critical measurements later.'],
+  ['Writing the scope at 9pm from memory.','Talk it through on site. The scope is drafted before you&#39;re home.'],
+  ['&quot;I thought that was included.&quot;','What&#39;s by owner and what&#39;s still to confirm, written into the client report.'],
+  ['The person pricing the job wasn&#39;t on site.','Everyone works from the same photos, notes and internal report.'],
+])assert(familiar.includes(problem)&&familiar.includes(fix),'Missing familiar problem/fix: '+problem);
+assert((familiar.match(/class="so-familiar-card"/g)||[]).length===6,"Exactly six cards");
+assert(home.indexOf('id="why"')>home.indexOf('class="so-origin"')&&home.indexOf('id="why"')<home.indexOf('id="features"'),"Familiar follows proof strip and precedes workflow");
+const headlineSections=[
+  ['features','01 — WORKFLOW'],['voice-demo','02 — VOICE TO SCOPE'],
+  ['reports','03 — REPORTS'],['pricing','04 — PRICING'],['faq','05 — FAQ']
+];
+let previous=0;
+for(const [id,label] of headlineSections){const position=home.indexOf('id="'+id+'"');assert(position>previous&&home.slice(position,position+500).includes(label),'Wrong section numbering: '+label);previous=position;}
+assert(!home.includes('05 — Estimate')&&home.indexOf('id="savings"')>home.indexOf('id="pricing"')&&home.indexOf('id="savings"')<home.indexOf('id="faq"'),"Calculator belongs under Pricing, no extra numbered section");
+const familiarCss=read("brand-sync.css");
+assert(familiarCss.includes('#why .so-familiar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))')&&familiarCss.includes('#why .so-familiar-grid{grid-template-columns:1fr}'),"Three columns desktop, one mobile");
