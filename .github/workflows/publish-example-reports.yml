@@ -42,7 +42,8 @@ jobs:
               p=Path(f'images/workflow/{name}.webp')
               assert p.is_file() and p.stat().st_size > 30000, p
               assert f'/images/workflow/{name}.webp' in home, name
-          assert home.count('class="wf-step') == 5
+          from re import findall
+          assert len(findall(r'class="wf-step(?: is-active)?"',home)) == 5, 'Expected exactly five workflow steps'
           assert 'Quick Create' in home and 'Full Setup' in home and 'Scope Check' in home
           for name in ('client','internal'):
               p=Path(f'sample-{name}-report.pdf')
