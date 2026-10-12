@@ -1,0 +1,39 @@
+name: Optimise existing real images for mobile
+on:
+  push:
+    branches: [workflow-polish-92]
+    paths:
+      - .github/workflows/optimise-mobile-images.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  optimise:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make responsive WebP copies from approved existing imagery
+        run: |
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          for source,target,width,quality in [
+            ('images/perf/hero-kitchen.webp','images/perf/hero-kitchen-mobile.webp',840,80),
+            ('images/perf/hero-phone.webp','images/perf/hero-phone.webp',750,82),
+          ]:
+              src=Path(source); dest=Path(target)
+              im=Image.open(src).convert('RGB')
+              if im.width>width:
+                  im=im.resize((width,round(im.height*width/im.width)),Image.Resampling.LANCZOS)
+              dest.parent.mkdir(parents=True,exist_ok=True)
+              im.save(dest,'WEBP',quality=quality,method=6)
+              print(f'{source} -> {target} size={im.size} bytes={dest.stat().st_size}')
+          PY
+      - name: Push optimized assets to current review branch
+        run: |
+          git config user.name "ScopeSnap mobile image QA"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/perf/hero-phone.webp images/perf/hero-kitchen-mobile.webp
+          git commit -m "Shrink actual mobile hero images without changing image content" -- images/perf/
+          git push origin HEAD:refs/heads/workflow-polish-92
