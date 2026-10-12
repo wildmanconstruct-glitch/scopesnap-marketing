@@ -116,7 +116,7 @@ assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Wi
 assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
 assert(home.includes('/images/reports/client-01.webp?v=07d15aeca1466479'),"Use actual ScopeSnap-exported report images");
-assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="faq"'),"Put optional calculator below FAQ");
+assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="pricing"')&&home.indexOf('id="savings"')<home.indexOf('id="faq"'),"Put optional calculator within Pricing");
 assert(home.includes('<details class="so-savings-disclosure">'),"Calculator should default closed");
 assert(css.includes('@media(min-width:960px)')&&css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Big phones in two desktop rows");
 assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes('.so-savings .roi-money-num{color:var(--ink);'),"Estimator numbers no green");
