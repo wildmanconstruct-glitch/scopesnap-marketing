@@ -351,3 +351,6 @@ body.site-setout .so-hero{min-height:820px}
 #features.so-workflow{border-top:1px solid var(--line-l)}
 #features.so-workflow .so-section-head{padding-top:110px}
 @media(max-width:650px){#features.so-workflow .so-section-head{padding-top:88px}}
+
+/* Task 3: give the Voice and Reports dark sections a distinct handoff. */
+#reports.so-reports{border-top:1px solid var(--line-d);margin-top:120px}
