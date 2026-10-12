@@ -51,7 +51,7 @@ for(const kind of ["client","internal"]){
  for(const name of item.files)assert(existsSync(new URL("../images/reports/"+name,import.meta.url)),"Missing real-exported "+name);
  assert(item.bytes<2_500_000,"Optimised report size cap "+kind);
 }
-assert(home.includes('report-viewer.js?v=20261011sidechoice2')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
+assert(home.includes('report-viewer.js?v=20261012deferred1')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
 assert(!viewerCss.includes('@keyframes rv-scroll')&&!viewer.includes('rv-set'),"No vertical report scroll or double-page spread");
 assert(viewerCss.includes('.rv-page.rv-coming')&&viewerCss.includes('translateX(9%)')&&viewer.includes('rv-arrived'),"Horizontal single-page transition implemented");
 assert(viewer.includes('FIRST_DELAY=5500')&&viewer.includes('setTimeout(()=>goTo(index+1)')&&viewer.includes('IntersectionObserver'),"Page auto-advance, remaining on selected report, pauses offscreen");
