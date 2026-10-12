@@ -210,7 +210,7 @@ jobs:
               if(before) throw new Error('Calculator must be collapsed initially');
               if(width>1300){
                 const phoneWidth=await page.locator('#features .wf-phone').evaluate(el=>el.getBoundingClientRect().width);
-                if(phoneWidth<250 || phoneWidth>310) throw new Error('Sticky desktop phone must be readable: +phoneWidth);
+                if(phoneWidth<250 || phoneWidth>310) throw new Error('Sticky desktop phone must be readable: '+phoneWidth);
                 await page.waitForFunction(()=>document.querySelector('#rv')?.classList.contains('rv-loaded'),{timeout:12000});
                 const clientCaption=await page.locator('#rv-caption').innerText();
                 if(!clientCaption.includes('4 PAGES')) throw new Error('Full four-page client report not loaded');
