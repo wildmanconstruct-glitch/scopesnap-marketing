@@ -1,15 +1,20 @@
 name: Website visual QA
 on:
   push:
-    branches: [main]
+    branches: [main, workflow-5-stage]
     paths:
       - index.html
       - how-it-works.html
       - shared.css
+      - shared-critical.css
       - premium-showcase.css
       - brand-sync.css
       - report-viewer.css
       - report-viewer.js
+      - workflow.css
+      - workflow.js
+      - images/workflow/**
+      - scripts/website-review.test.mjs
       - images/reports/**
       - .github/workflows/publish-example-reports.yml
       - .github/workflows/website-visual-qa.yml
@@ -25,7 +30,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --no-save playwright
+      - run: node scripts/website-review.test.mjs
+      - run: npm install --no-save playwright lighthouse
       - run: npx playwright install --with-deps chromium
       - name: Capture desktop and mobile pages
         run: |
@@ -38,6 +44,8 @@ jobs:
           for (const [path,width,height,name] of [
             ['/',1440,900,'home-desktop'],
             ['/',375,812,'home-mobile'],
+            ['/',1280,800,'home-desktop-1280'],
+            ['/',390,844,'home-mobile-390'],
             ['/how-it-works.html',1440,900,'workflow-desktop'],
           ]) {
             const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
@@ -81,7 +89,7 @@ jobs:
                 throw new Error('The builder proof should be one slim strip immediately below hero: '+JSON.stringify(proof));
               }
               if(width>=900 && proof.stepsTop-proof.proofTop>200)
-                throw new Error('Four Steps section should sit close to the hero: '+JSON.stringify(proof));
+                throw new Error('Workflow section should sit close to the hero: '+JSON.stringify(proof));
 
               if(geometry.scroll>geometry.viewport+2) throw new Error('Horizontal page overflow: '+JSON.stringify(geometry));
               if(!geometry.phone || geometry.phone>(width<=650?195:width<=800?206:255)) throw new Error('Hero phone should be slightly larger without taking over kitchen background: '+JSON.stringify(geometry));
@@ -98,7 +106,7 @@ jobs:
                   startsAboveHeroEnd:!!hero && bounds.top<hero.bottom-130,
                   imageWidth:screen?.width};
               });
-              if(!heroContent.src?.includes('/images/screen-hero.jpg?v=20261011roomvoice1') || heroContent.width!==1170 || heroContent.height!==2532 || !heroContent.photos)
+              if(!heroContent.src?.includes('/images/perf/hero-phone.webp?v=20261012fast1') || heroContent.width!==1170 || heroContent.height!==2532 || !heroContent.photos)
                 throw new Error('Must show the genuine Kitchen RoomDetail image with live voice overlays: '+JSON.stringify(heroContent));
               if(!heroContent.croppedByHero || !heroContent.startsAboveHeroEnd)throw new Error('Phone should show live recording but naturally disappear below the hero edge: '+JSON.stringify(heroContent));
 
@@ -148,14 +156,15 @@ jobs:
               if(unsafeLinks)throw new Error('No website report PDF download links allowed');
               if(width<=650){
                 const layout=await page.evaluate(()=>({
-                  stepWidth:document.querySelector('.so-step')?.getBoundingClientRect().width,
-                  viewport:innerWidth,
-                  swipeHint:getComputedStyle(document.querySelector('.so-workflow-swipe')).display,
-                  previewLink:!!document.querySelector('#so-report-preview-link'),
-                  selectionColumns:getComputedStyle(document.querySelector('.rv-switcher-options')).gridTemplateColumns
+                  stages:document.querySelectorAll('#features .wf-step').length,
+                  mobileFrame:getComputedStyle(document.querySelector('#features .wf-mobile-phone')).display,
+                  frameWidth:document.querySelector('#features .wf-mobile-phone')?.getBoundingClientRect().width,
+                  mobileReportButtons:document.querySelectorAll('#features .wf-mobile-report [data-wf-type]').length,
+                  oldSwipe:document.querySelectorAll('#features .so-steps,#features .so-workflow-swipe').length
                 }));
-                if(layout.stepWidth<layout.viewport*.74 || layout.swipeHint==='none'||layout.previewLink)
-                  throw new Error('Mobile workflow/report layout needs better legibility: '+JSON.stringify(layout));
+                if(layout.stages!==5||layout.mobileFrame==='none'||layout.frameWidth<250||
+                   layout.mobileReportButtons!==2||layout.oldSwipe)
+                  throw new Error('Five real-screen workflow stages must stack on mobile: '+JSON.stringify(layout));
                 const tabs=await page.locator('.so-report-option').count();
                 if(tabs!==2)throw new Error('Expected exactly two compact report preview tabs');
                 const swipeHint=await page.locator('.rv-swipe-hint').isVisible();
@@ -201,8 +210,8 @@ jobs:
               const before=await page.locator('details.so-savings-disclosure').evaluate(el=>el.open);
               if(before) throw new Error('Calculator must be collapsed initially');
               if(width>1300){
-                const phoneWidth=await page.locator('.so-step-shot').first().evaluate(el=>el.getBoundingClientRect().width);
-                if(phoneWidth<250 || phoneWidth>285) throw new Error('Desktop walkthrough screens too small: '+phoneWidth);
+                const phoneWidth=await page.locator('#features .wf-phone').evaluate(el=>el.getBoundingClientRect().width);
+                if(phoneWidth<250 || phoneWidth>310) throw new Error('Sticky desktop phone must be readable: '+phoneWidth);
                 await page.waitForFunction(()=>document.querySelector('#rv')?.classList.contains('rv-loaded'),{timeout:12000});
                 const clientCaption=await page.locator('#rv-caption').innerText();
                 if(!clientCaption.includes('4 PAGES')) throw new Error('Full four-page client report not loaded');
@@ -240,6 +249,46 @@ jobs:
               }
 
             }
+            if(path==='/' && width===1440){
+              for(let n=1;n<=5;n++){
+                await page.evaluate(stage=>{
+                  const el=document.querySelector('#features .wf-step[data-step="'+stage+'"]');
+                  const r=el.getBoundingClientRect();
+                  window.scrollTo({top:window.scrollY+r.top+r.height/2-window.innerHeight/2,behavior:'instant'});
+                },n);
+                await page.waitForFunction(stage=>document.querySelector('#features .wf-screen[data-step="'+stage+'"]')?.classList.contains('is-active'),n,{timeout:7000});
+                await page.waitForTimeout(320);
+                const frame=await page.locator('#features .wf-phone').boundingBox();
+                if(!frame||frame.y<0||frame.y+frame.height>height) throw new Error('Workflow phone clipped in stage '+n+': '+JSON.stringify(frame));
+                await page.screenshot({path:'qa-screenshots/wf-stage-0'+n+'-desktop.png',fullPage:false});
+              }
+              await page.locator('#features .wf-report [data-wf-type="internal"]').click();
+              if((await page.locator('#features .wf-report [data-wf-type="internal"]').getAttribute('aria-pressed'))!=='true')
+                throw new Error('Internal report switch is not functional');
+              await page.waitForFunction(()=>{const image=document.querySelector('#features .wf-report .wf-page.internal');return image?.complete&&image?.naturalWidth>1200;},{timeout:10000});
+              await page.waitForTimeout(350);
+              await page.evaluate(()=>{
+                const el=document.querySelector('#features .wf-step[data-step="5"]');
+                const rect=el.getBoundingClientRect();
+                window.scrollTo({top:window.scrollY+rect.top+rect.height/2-innerHeight/2,behavior:'instant'});
+              });
+              await page.waitForTimeout(250);
+              await page.screenshot({path:'qa-screenshots/wf-stage-05-internal-desktop.png',fullPage:false});
+            }
+            if(path==='/' && width===390){
+              for(let n=1;n<=5;n++){
+                await page.evaluate(stage=>{
+                  const el=document.querySelector('#features .wf-step[data-step="'+stage+'"]');
+                  const r=el.getBoundingClientRect();
+                  window.scrollTo({top:window.scrollY+r.top-20,behavior:'instant'});
+                },n);
+                await page.waitForTimeout(200);
+                await page.screenshot({path:'qa-screenshots/wf-stage-0'+n+'-mobile.png',fullPage:false});
+              }
+              await page.locator('#features .wf-mobile-report [data-wf-type="internal"]').click();
+              if((await page.locator('#features .wf-mobile-report [data-wf-type="internal"]').getAttribute('aria-pressed'))!=='true')
+                throw new Error('Mobile report switch is not functional');
+            }
             await page.close();
           }
           await browser.close();
@@ -250,7 +299,7 @@ jobs:
           python3 - <<'PY'
           from PIL import Image
           from pathlib import Path
-          for name in ("home-desktop", "home-mobile", "workflow-desktop"):
+          for name in ("home-desktop", "home-mobile", "home-desktop-1280", "home-mobile-390", "workflow-desktop"):
               src=Path("qa-screenshots") / f"{name}.png"
               im=Image.open(src).convert("RGB")
               im.thumbnail((1000,13000),Image.Resampling.LANCZOS)
@@ -263,8 +312,29 @@ jobs:
           git add -f qa-screenshots/
           git commit -m "Generated desktop/mobile visual QA snapshots" -- qa-screenshots/
           git push -f origin HEAD:refs/heads/website-visual-qa-snapshots
+      - name: Lighthouse mobile performance and accessibility
+        run: |
+          npx lighthouse http://127.0.0.1:8080/ --only-categories=performance,accessibility --chrome-flags="--headless --no-sandbox" --output=json --output-path=qa-screenshots/lighthouse.json --quiet
+          node --input-type=module <<'JS'
+          import { readFileSync } from 'node:fs';
+          const categories=JSON.parse(readFileSync('qa-screenshots/lighthouse.json','utf8')).categories;
+          const performance=Math.round(categories.performance.score*100);
+          const accessibility=Math.round(categories.accessibility.score*100);
+          const report=JSON.parse(readFileSync('qa-screenshots/lighthouse.json','utf8'));
+          console.log('Lighthouse mobile:',{performance,accessibility});
+          const keys=['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index','render-blocking-resources','unused-css-rules','unused-javascript','modern-image-formats','uses-optimized-images','uses-responsive-images','network-requests','total-byte-weight','font-display','lcp-discovery-insight','lcp-request-discovery','network-dependency-tree-insight','image-delivery-insight'];
+          for(const key of keys){
+            const audit=report.audits[key]; if(!audit) continue;
+            console.log('AUDIT',key,'score',audit.score,'value',audit.displayValue||audit.numericValue||'',
+              'wasted',audit.details?.overallSavingsMs||audit.details?.overallSavingsBytes||audit.details?.items?.slice(0,6).map(item=>({url:item.url,totalBytes:item.totalBytes,wastedBytes:item.wastedBytes,wastedMs:item.wastedMs})));
+          }
+          if(performance<85||accessibility<95) throw Error('Lighthouse thresholds unmet: performance>=85, accessibility>=95');
+          JS
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: website-visual-qa
-          path: qa-screenshots/*.png
+          path: |
+            qa-screenshots/*.png
+            qa-screenshots/lighthouse.json
           retention-days: 7

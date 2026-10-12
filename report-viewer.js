@@ -16,7 +16,7 @@
   const TURN_DURATION=480;
 
   let manifest=null,selected="client",index=0;
-  let visible=false,hovered=false,held=false,focused=false,turning=false;
+  let visible=false,hydrated=false,hovered=false,held=false,focused=false,turning=false;
   let timer=null,swapTimeout=null,liveImage=document.getElementById("rv-page");
   let requestId=0,swipeStart=null;
 
@@ -34,7 +34,7 @@
     if(allowAuto()&&!turning)timer=setTimeout(()=>goTo(index+1),FIRST_DELAY);
   }
   function preload(type,idx){
-    if(!manifest||!pages(type).length)return;
+    if(!visible||!manifest||!pages(type).length)return;
     const probe=new Image();
     probe.decoding="async";probe.src=pageUrl(type,(idx+pages(type).length)%pages(type).length);
   }
@@ -103,6 +103,7 @@
   }
   function selectReport(type){
     if(!manifest?.[type])return;
+    hydrated=true;
     stopTimer();
     requestId++;
     if(swapTimeout!==null){clearTimeout(swapTimeout);swapTimeout=null;}
@@ -169,7 +170,7 @@
   if("IntersectionObserver" in window){
     new IntersectionObserver(entries=>{
       visible=entries[0]?.isIntersecting||false;
-      if(visible){preload(selected,index+1);}
+      if(visible){if(manifest&&!hydrated)selectReport(selected);preload(selected,index+1);}
       schedule();
     },{threshold:0.05}).observe(root);
   }else visible=true;
@@ -181,7 +182,11 @@
         if(!data[type]||data[type].files.length!==data[type].pages||
            !data[type].imageInfo?.length)throw new Error("Incomplete "+type+" report pages");
       }
-      manifest=data;selectReport("client");frame.classList.add("rv-loaded");
+      manifest=data;
+      // Do not download report pages miles below the fold. Hydrate once visible.
+      if(visible)selectReport("client");
+      else{updateSelection();displayMeta();}
+      frame.classList.add("rv-loaded");
     })
     .catch(error=>{
       console.warn("Report preview could not initialise:",error.message);

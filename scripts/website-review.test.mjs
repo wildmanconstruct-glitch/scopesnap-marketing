@@ -2,11 +2,11 @@ import {readFileSync,existsSync} from "node:fs";
 import assert from "node:assert/strict";
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 const home=read("index.html"),css=read("brand-sync.css"),guide=read("how-it-works.html");
-for(const part of ['class="so-hero"','class="so-hero-grid"','class="so-photo-dimensions"','class="so-plan-tag"','class="so-origin"','class="so-steps"','class="so-voice-grid"','class="so-report-layout"','class="so-final"']) assert(home.includes(part),"Missing Site Set-Out component: "+part);
+for(const part of ['class="so-hero"','class="so-hero-grid"','class="so-photo-dimensions"','class="so-plan-tag"','class="so-origin"','class="wf-grid"','class="so-voice-grid"','class="so-report-layout"','class="so-final"']) assert(home.includes(part),"Missing Site Set-Out component: "+part);
 assert(home.includes('class="site-setout"'),"Homepage design variant");
 assert(css.includes("--ink:#0E0E0D")&&css.includes("--bone:#ECE8E0")&&css.includes("--cu:#C8843F"),"Site Set-Out design tokens");
-assert(css.includes("Archivo:wdth,wght")&&css.includes("JetBrains+Mono"),"Spec sheet fonts");
-assert(css.includes("scroll-snap-type:x mandatory"),"Swipe workflow on mobile");
+assert(home.includes("Archivo:wdth,wght")&&home.includes("JetBrains+Mono")&&!css.includes("@import url('https://fonts.googleapis.com"),"Fonts load from the head once, without duplicate CSS import");
+assert(read("workflow.css").includes(".wf-mobile-phone")&&!read("workflow.css").includes("scroll-snap-type:x mandatory"),"Workflow mobile stages are stacked, not swipe-based");
 assert(css.includes("prefers-reduced-motion"),"Reduced-motion support");
 assert(!home.includes('class="trust-bar"'),"Remove old trust icons");
 assert(!home.includes('class="ps-product-grid"'),"Remove AI-template product cards");
@@ -14,7 +14,7 @@ assert(!home.includes('class="hero-report-peek"'),"Never display full PDF in her
 assert(!home.includes('font-style:italic'),"No italic hero accent");
 assert(guide.includes("No drawings required."),"Plan scan remains optional without crowding the hero");
 for(const text of ["renovations","extensions","new builds","repairs and maintenance"])assert(home.toLowerCase().includes(text),"Supported job type "+text);
-for(const path of ["/images/demo/kitchen.jpg","/images/demo/exterior.jpg","/images/screen-hero.jpg","/images/screen-planscan.jpg","/images/screen-photo.jpg","/images/screen-voice.jpg","/images/screen-measure.jpg","/images/reports/client-01.webp"])assert((home+css).includes(path),"Missing asset URL "+path);
+for(const path of ["/images/perf/hero-kitchen.webp","/images/perf/final-exterior.webp","/images/perf/hero-phone.webp","/images/workflow/wf-01-start.webp","/images/workflow/wf-02-capture.webp","/images/workflow/wf-03-questions.webp","/images/workflow/wf-04-review.webp","/images/workflow/wf-05-report.webp","/images/workflow/wf-05-client-page.webp","/images/workflow/wf-05-internal-page.webp","/images/reports/client-01.webp"])assert((home+css).includes(path),"Missing asset URL "+path);
 assert(home.includes('id="rv"')&&home.includes('class="so-report-option"'),"Functional full report viewer");
 assert(home.includes("setBilling('monthly')")&&home.includes("setBilling('annual')"),"Monthly/annual prices");
 for(const id of ["solo-price","pro-price","biz-price","roiSlider","roiPlan","faq"])assert(home.includes('id="'+id+'"'),"Missing interactive control "+id);
@@ -35,8 +35,8 @@ for(const name of ["client","internal"])assert(!existsSync(new URL("../sample-"+
 assert(!home.includes('data-pdf=')&&!home.includes('id="so-pdf-link"')&&!home.includes('id="so-report-preview-link"'),"Marketing may only display in-page report previews");
 assert(!/sample-(?:client|internal)-report\.pdf/i.test(home+guide),"No publicly linked full report PDFs");
 assert(home.includes('id="rv-caption"')&&home.includes('so-report-view-only'),"Image-only report walkthrough and no PDF download");
-assert(home.includes('so-workflow-swipe'),"Mobile workflow explains swipe navigation");
-assert(css.includes('.so-step{')&&css.includes('flex:0 0 calc(100% - 23px)'),"Mobile workflow displays one readable step at a time");
+assert(!home.includes('so-workflow-swipe')&&home.includes('Five steps from job creation to completed reports'),"Five-stage workflow replaces old swipe strip");
+assert(read("workflow.css").includes('.wf-mobile-phone')&&read("workflow.css").includes('height:520px'),"Stacked mobile phone screenshots use readable 520px crop");
 assert(css.includes('.so-report-side{')&&css.includes('grid-template-columns:minmax(0,1fr) minmax(0,1fr)'),"Compact mobile report selector");
 assert(css.includes('width:185px;right:17px;bottom:-35px'),"Larger mobile hero phone with natural crop");
 assert(!home.includes('Open full client PDF')&&!home.includes('Open full internal PDF'),"No report download CTA");
@@ -51,7 +51,7 @@ for(const kind of ["client","internal"]){
  for(const name of item.files)assert(existsSync(new URL("../images/reports/"+name,import.meta.url)),"Missing real-exported "+name);
  assert(item.bytes<2_500_000,"Optimised report size cap "+kind);
 }
-assert(home.includes('report-viewer.js?v=20261011sidechoice2')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
+assert(home.includes('report-viewer.js?v=20261012deferred1')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
 assert(!viewerCss.includes('@keyframes rv-scroll')&&!viewer.includes('rv-set'),"No vertical report scroll or double-page spread");
 assert(viewerCss.includes('.rv-page.rv-coming')&&viewerCss.includes('translateX(9%)')&&viewer.includes('rv-arrived'),"Horizontal single-page transition implemented");
 assert(viewer.includes('FIRST_DELAY=5500')&&viewer.includes('setTimeout(()=>goTo(index+1)')&&viewer.includes('IntersectionObserver'),"Page auto-advance, remaining on selected report, pauses offscreen");
@@ -86,14 +86,14 @@ assert(!heroMarkup.includes('href="#reports"')&&!heroMarkup.includes('btn-ghost'
 assert(!heroMarkup.includes('Plans optional.'),"No plans afterthought in hero copy");
 assert(css.includes('.so-plan-tag{top:61%;left:59%;z-index:3}')&&css.includes('.so-plan-tag::before{width:38px}'),"Joinery tag is anchored below the window on cabinet fronts");
 assert(home.includes('class="so-phone so-hero-phone so-voice-capture-phone"'),"Hero phone shows voice recording screen");
-assert(home.includes('src="/images/screen-hero.jpg?v=20261011roomvoice1"'),"Hero uses genuine full Kitchen room app capture");
+assert(home.includes('src="/images/perf/hero-phone.webp?v=20261012fast1"'),"Hero uses genuine full Kitchen room app capture");
 assert(home.includes('2:37 remaining')&&home.includes('class="so-live-waveform"'),"Hero recording has a visible timer and live waveform");
 assert(home.includes('id="so-voice-clock"')&&home.includes('setInterval(update,1000)'),"Hero timer ticks instead of covering a second time");
 assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;top:49.1114%'),"Hero voice overlays match actual browser screenshot bounds");
 assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
 assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
-assert(home.includes('/images/screen-measure.jpg?v=20261011rev1'),"Workflow measure uses the camera overlay screenshot");
-assert(home.includes('brand-sync.css?v=20261011origin-slim1'),"Voice hero styles cache version");
+assert(!home.includes('/images/screen-measure.jpg?v=20261011rev1')&&home.includes('/images/workflow/wf-02-capture.webp'),"The old unaligned tape-measure graphic is not used in Workflow");
+assert(home.includes('brand-sync.css?v=20261012fast1'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('class="so-specbar"')&&!heroMarkup.includes('Mitchell Residence')&&!heroMarkup.includes('Scope ready ✓'),"Remove fictional job status strip below the hero but permit report previews to name the demo job");
@@ -101,7 +101,7 @@ assert(!home.includes('so-origin-index')&&!home.includes('so-origin-mark'),"Remo
 assert(home.includes('Tested on real site inspections and quoting jobs.'),"Keep direct builder proof");
 assert((home.match(/Built by builders, for builders\./g)||[]).length===1,"Builder proof appears once");
 assert(home.includes('class="so-origin-check"'),"Builder proof uses one understated gold check icon");
-assert(css.includes('.so-workflow .so-section-head{padding-top:70px}')&&css.includes('.so-workflow .so-section-head{padding-top:48px}'),"Bring Four Steps nearer to the hero");
+assert(css.includes('.so-workflow .so-section-head{padding-top:70px}')&&css.includes('.so-workflow .so-section-head{padding-top:48px}'),"Keep the workflow close to the builder credibility strip");
 
 assert(!home.includes('Wildheart Homes'),"Do not name the building company on marketing homepage");
 assert(home.includes('viewBox="0 0 1448 1086"'),"Measurement overlay must use the photo coordinates");
@@ -111,7 +111,7 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261011origin-slim1'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261012fast1'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
@@ -123,9 +123,18 @@ assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes
 for(const path of ["index.html","how-it-works.html","contact.html","billing.html","privacy.html","terms.html","delete-account.html","404.html"]){
  const page=read(path);
  for(const m of page.matchAll(/\/(?:images\/[\w./-]+|sample-[\w-]+\.pdf)[^"'\s<>]*/g)){
-  const expected=m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=07d15aeca1466479' : '?v=20261011rev1';
+  const expected=m[0].startsWith('/images/perf/') ? '?v=20261012fast1' : m[0].startsWith('/images/workflow/') ? '?v=9e78c595f210901ad87ecebd0e1e0a5feb3bf2aa' : m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=07d15aeca1466479' : '?v=20261011rev1';
   assert(m[0].includes(expected),"Old image/PDF URL in "+path+": "+m[0]);
  }
 }
 
 console.log("ScopeSnap Site Set-Out refinements, asset versions, pricing, accessible layout and SEO checks passed.");
+
+// Five-stage workflow remains isolated from Voice, Reports, Pricing and other sections.
+const workflow=home.slice(home.indexOf('<!-- WORKFLOW -->'),home.indexOf('<!-- VOICE -->'));
+assert((workflow.match(/class="wf-step(?: is-active)?"/g)||[]).length===5,"Five workflow stages in the homepage");
+assert(workflow.includes('Quick Create')&&workflow.includes('Full Setup')&&workflow.includes('Plans optional'),"Workflow explains both start paths and optional drawings");
+assert(workflow.includes('Room questions')&&workflow.includes('Scope Check')&&workflow.includes('Client Report')&&workflow.includes('Internal Report'),"Questions, AI review and both final reports are shown");
+assert(!/screen-(?:planscan|photo|voice|measure)\\.jpg/.test(workflow),"Workflow only uses new genuine app screenshots");
+assert(read('workflow.js').includes('IntersectionObserver')&&!read('workflow.js').includes('preventDefault'),"Natural-scrolling sticky phone workflow");
+for(const name of ['wf-01-start','wf-02-capture','wf-03-questions','wf-04-review','wf-05-report','wf-05-client-page','wf-05-internal-page'])assert(existsSync(new URL('../images/workflow/'+name+'.webp',import.meta.url)),"Missing real workflow capture: "+name);
