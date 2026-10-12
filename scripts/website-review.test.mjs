@@ -86,14 +86,14 @@ assert(!heroMarkup.includes('href="#reports"')&&!heroMarkup.includes('btn-ghost'
 assert(!heroMarkup.includes('Plans optional.'),"No plans afterthought in hero copy");
 assert(css.includes('.so-plan-tag{top:61%;left:59%;z-index:3}')&&css.includes('.so-plan-tag::before{width:38px}'),"Joinery tag is anchored below the window on cabinet fronts");
 assert(home.includes('class="so-phone so-hero-phone so-voice-capture-phone"'),"Hero phone shows voice recording screen");
-assert(home.includes('src="/images/perf/hero-phone.webp?v=20261012fast1"'),"Hero uses genuine full Kitchen room app capture");
+assert(home.includes('src="/images/perf/hero-phone.webp?v=20261012mobile1"'),"Hero uses genuine full Kitchen room app capture");
 assert(home.includes('2:37 remaining')&&home.includes('class="so-live-waveform"'),"Hero recording has a visible timer and live waveform");
 assert(home.includes('id="so-voice-clock"')&&home.includes('setInterval(update,1000)'),"Hero timer ticks instead of covering a second time");
 assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;top:49.1114%'),"Hero voice overlays match actual browser screenshot bounds");
 assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
 assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
 assert(!home.includes('/images/screen-measure.jpg?v=20261011rev1')&&home.includes('/images/workflow/wf-02-capture.webp'),"The old unaligned tape-measure graphic is not used in Workflow");
-assert(home.includes('brand-sync.css?v=20261012fast1'),"Voice hero styles cache version");
+assert(home.includes('brand-sync.css?v=20261012mobile1'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('class="so-specbar"')&&!heroMarkup.includes('Mitchell Residence')&&!heroMarkup.includes('Scope ready ✓'),"Remove fictional job status strip below the hero but permit report previews to name the demo job");
@@ -111,7 +111,7 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261012fast1'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261012mobile1'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
@@ -123,7 +123,7 @@ assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes
 for(const path of ["index.html","how-it-works.html","contact.html","billing.html","privacy.html","terms.html","delete-account.html","404.html"]){
  const page=read(path);
  for(const m of page.matchAll(/\/(?:images\/[\w./-]+|sample-[\w-]+\.pdf)[^"'\s<>]*/g)){
-  const expected=m[0].startsWith('/images/perf/') ? '?v=20261012fast1' : m[0].startsWith('/images/workflow/') ? '?v=2e8c0fb04cf240f87708143c89b7106df46071e8' : m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=07d15aeca1466479' : '?v=20261011rev1';
+  const expected=m[0].startsWith('/images/perf/hero-phone.webp') || m[0].startsWith('/images/perf/hero-kitchen-mobile.webp') ? '?v=20261012mobile1' : m[0].startsWith('/images/perf/') ? '?v=20261012fast1' : m[0].startsWith('/images/workflow/') ? '?v=2e8c0fb04cf240f87708143c89b7106df46071e8' : m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=07d15aeca1466479' : '?v=20261011rev1';
   assert(m[0].includes(expected),"Old image/PDF URL in "+path+": "+m[0]);
  }
 }
