@@ -1,0 +1,43 @@
+name: Workflow mobile performance probe
+on:
+  push:
+    branches: [workflow-5-stage]
+    paths:
+      - index.html
+      - brand-sync.css
+      - shared.css
+      - workflow.css
+      - report-viewer.js
+      - .github/workflows/workflow-performance-probe.yml
+permissions:
+  contents: read
+jobs:
+  performance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check website contract
+        run: node scripts/website-review.test.mjs
+      - name: Install Lighthouse
+        run: npm install --no-save lighthouse
+      - name: Run isolated mobile Lighthouse
+        run: |
+          python3 -m http.server 8080 > /tmp/scopesnap-perf-http.log 2>&1 &
+          sleep 2
+          npx lighthouse http://127.0.0.1:8080/ --only-categories=performance,accessibility --chrome-flags="--headless --no-sandbox" --output=json --output-path=/tmp/scopesnap-perf.json --quiet
+          node --input-type=module <<'JS'
+          import {readFileSync} from 'node:fs';
+          const report=JSON.parse(readFileSync('/tmp/scopesnap-perf.json','utf8'));
+          const p=Math.round(report.categories.performance.score*100),a=Math.round(report.categories.accessibility.score*100);
+          console.log('PERFORMANCE_PROBE',JSON.stringify({
+            performance:p, accessibility:a,
+            fcp:report.audits['first-contentful-paint']?.displayValue,
+            lcp:report.audits['largest-contentful-paint']?.displayValue,
+            tbt:report.audits['total-blocking-time']?.displayValue,
+            lcp_element:report.audits['largest-contentful-paint-element']?.details?.items?.[0]?.node?.snippet,
+            lcp_breakdown:report.audits['lcp-breakdown-insight']?.details?.items?.slice(0,2),
+            lcp_discovery:report.audits['lcp-discovery-insight']?.details?.items?.slice(0,3)
+          }));
+          if(p<85 || a<95)throw Error('Mobile threshold not yet met');
+          JS
