@@ -274,7 +274,7 @@
           <div class="plan-meta" id="subPlanMeta"></div>
         </div>
         <div class="billing-notice" style="border:none; background:none; padding:0;">
-          <p style="margin-bottom:20px;">Select <strong>Manage billing</strong> to upgrade or downgrade your Solo, Professional or Business plan, update your payment method, download invoices or cancel renewal securely through Stripe. Plan upgrades may be charged on a prorated basis immediately; reductions in subscription amount are scheduled for renewal. Manage additional seats, storage and job packs separately below. If your paid subscription ends, jobs, photos and uploaded files are retained for 30 days before scheduled deletion. Reactivate or request an export during that period.</p>
+          <p style="margin-bottom:20px;">Select <strong>Manage billing</strong> to upgrade or downgrade your Starter, Professional or Business plan, update your payment method, download invoices or cancel renewal securely through Stripe. Plan upgrades may be charged on a prorated basis immediately; reductions in subscription amount are scheduled for renewal. Manage additional seats, storage and job packs separately below. If your paid subscription ends, jobs, photos and uploaded files are retained for 30 days before scheduled deletion. Reactivate or request an export during that period.</p>
           <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
             <button class="btn-primary" id="portalBtn" style="justify-content:center;">
               <span id="portalBtnText">Manage billing</span>
@@ -347,15 +347,15 @@
         </div>
 
         <div class="pricing-grid">
-          <!-- SOLO -->
+          <!-- STARTER -->
           <div class="price-card">
-            <div class="price-tier">Solo</div>
+            <div class="price-tier">Starter</div>
             <div class="price-amount-row">
               <div class="price-amount" data-price-monthly="$59" data-price-annual="$708" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$59<span class="price-per">/mo + GST</span></div>
               <div class="price-annual-note">$708/year &mdash; no annual discount</div>
             </div>
-            <p class="price-desc">For individual builders. 1 seat, 10 jobs per month, 20 saved photos, 25 photo analyses (including 5 extra for retakes) and 10 voice recordings per job.</p>
-            <button class="price-btn price-btn-outline" data-plan="solo">Choose Solo</button>
+            <p class="price-desc">For individual builders. 1 seat, 8 jobs per month, 20 saved photos, 25 photo analyses (including 5 extra for retakes) and 10 voice recordings per job.</p>
+            <button class="price-btn price-btn-outline" data-plan="solo">Choose Starter</button>
           </div>
           <!-- PROFESSIONAL -->
           <div class="price-card price-featured">
@@ -365,7 +365,7 @@
               <div class="price-amount" data-price-monthly="$119" data-price-annual="$1,309" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$119<span class="price-per">/mo + GST</span></div>
               <div class="price-annual-note">$1,309/year &mdash; save 1 month</div>
             </div>
-            <p class="price-desc">For teams. 3 seats, 25 jobs per month, 40 saved photos, 50 photo analyses (including 10 extra for retakes) and 15 voice recordings per job.</p>
+            <p class="price-desc">For teams. 3 seats, 15 jobs per month, 40 saved photos, 50 photo analyses (including 10 extra for retakes) and 15 voice recordings per job.</p>
             <button class="price-btn price-btn-dark" data-plan="professional">Choose Professional</button>
           </div>
           <!-- BUSINESS -->
@@ -375,11 +375,11 @@
               <div class="price-amount" data-price-monthly="$249" data-price-annual="$2,739" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$249<span class="price-per">/mo + GST</span></div>
               <div class="price-annual-note">$2,739/year &mdash; save 1 month</div>
             </div>
-            <p class="price-desc">For larger operations. 8 seats, 50 jobs per month, 60 saved photos, 75 photo analyses (including 15 extra for retakes) and 20 voice recordings per job.</p>
+            <p class="price-desc">For larger operations. 8 seats, 30 jobs per month, 60 saved photos, 75 photo analyses (including 15 extra for retakes) and 20 voice recordings per job.</p>
             <button class="price-btn price-btn-outline" data-plan="business">Choose Business</button>
           </div>
         </div>
-        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Both reports plus two updates to each per job. Solo / Professional / Business include 10 / 25 / 50 Plan Scans monthly (one per job). Photo analyses: 250 / 1,250 / 3,750 per month respectively. Deleting a photo frees a photo slot but does not refund completed analyses. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>.<br>Need more seats than your plan includes? Subscribe first — you'll land back on this page, where you can choose extra seats monthly or annually (Professional $29/month or $348/year; Business $25/month or $300/year, per seat + GST).</p>
+        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Both reports plus two updates to each per job. Starter / Professional / Business include 8 / 15 / 30 Plan Scans monthly (one per job). Photo analyses: 200 / 750 / 2,250 per month respectively. Deleting a photo frees a photo slot but does not refund completed analyses. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>.<br>Need more seats than your plan includes? Subscribe first — you'll land back on this page, where you can choose extra seats monthly or annually (Professional $29/month or $348/year; Business $25/month or $300/year, per seat + GST).</p>
         <div class="billing-error" id="checkoutError"></div>
       </div>
 
@@ -432,7 +432,7 @@
     if (event === 'SIGNED_OUT') show('stateLogin');
   });
 
-  var PLAN_NAMES = { solo: 'Solo', professional: 'Professional', business: 'Business', enterprise: 'Enterprise' };
+  var PLAN_NAMES = { solo: 'Starter', professional: 'Professional', business: 'Business', enterprise: 'Enterprise' };
 
   function show(stateId) {
     document.getElementById('storageCard').style.display = 'none';

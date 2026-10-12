@@ -30,13 +30,13 @@ function calculator() {
 }
 
 for (const [jobs, seats, plan, cost, packs] of [
-  [10, 1, 'Solo', 59, 0], [11, 1, 'Professional', 119, 0],
-  [25, 1, 'Professional', 119, 0], [26, 1, 'Business', 249, 0],
-  [50, 1, 'Business', 249, 0], [51, 1, 'Business', 308, 1],
-  [60, 1, 'Business', 308, 1], [8, 3, 'Professional', 119, 0],
-  [9, 3, 'Business', 249, 0], [20, 3, 'Business', 308, 1],
-  [21, 3, 'Business', 367, 2], [50, 3, 'Business', 839, 10],
-  [51, 3, 'Enterprise', null, 0], [1, 8, 'Business', 249, 0],
+  [8, 1, 'Starter', 59, 0], [9, 1, 'Professional', 119, 0],
+  [15, 1, 'Professional', 119, 0], [16, 1, 'Business', 249, 0],
+  [30, 1, 'Business', 249, 0], [31, 1, 'Business', 308, 1],
+  [40, 1, 'Business', 308, 1], [5, 3, 'Professional', 119, 0],
+  [6, 3, 'Business', 249, 0], [20, 3, 'Business', 426, 3],
+  [21, 3, 'Business', 485, 4], [43, 3, 'Business', 839, 10],
+  [44, 3, 'Enterprise', null, 0], [1, 8, 'Business', 249, 0],
   [19, 8, 'Enterprise', null, 0], [1, 9, 'Enterprise', null, 0],
 ]) {
   test(`${jobs} jobs/person × ${seats} seats recommends ${plan} at ${cost ?? 'custom'} pricing`, () => {
@@ -59,12 +59,12 @@ for (const [jobs, seats, plan, cost, packs] of [
 test('break-even includes packs and resets when returning to a smaller plan', () => {
   const c = calculator();
   c.update(60, 1, 50);
-  assert.match(c.node('roiBreakeven').textContent, /across 4 jobs.*\$308\/month/);
+  assert.match(c.node('roiBreakeven').textContent, /across 5 jobs.*\$426\/month/);
   assert.equal(c.node('roiHrs').textContent, '90–120 hrs');
   c.update(60, 8);
   assert.equal(c.node('roiBreakeven').style.display, 'none');
-  c.update(10);
-  assert.equal(c.node('roiPlan').textContent, 'Solo');
+  c.update(8);
+  assert.equal(c.node('roiPlan').textContent, 'Starter');
   assert.equal(c.node('roiPlanLabel').innerHTML, 'Suggested plan');
   assert.equal(c.node('roiBreakeven').style.display, '');
   assert.match(c.node('roiBreakeven').textContent, /\$59\/month base plan/);
