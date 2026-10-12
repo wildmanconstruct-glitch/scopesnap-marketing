@@ -8,6 +8,7 @@ on:
       - shared.css
       - workflow.css
       - report-viewer.js
+      - scripts/website-review.test.mjs
       - .github/workflows/workflow-performance-probe.yml
 permissions:
   contents: read
