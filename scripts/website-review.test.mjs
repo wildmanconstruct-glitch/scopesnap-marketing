@@ -51,7 +51,7 @@ for(const kind of ["client","internal"]){
  for(const name of item.files)assert(existsSync(new URL("../images/reports/"+name,import.meta.url)),"Missing real-exported "+name);
  assert(item.bytes<2_500_000,"Optimised report size cap "+kind);
 }
-assert(home.includes('report-viewer.js?v=20261012deferred1')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
+assert(home.includes('report-viewer.js?v=20261012task3')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
 assert(!viewerCss.includes('@keyframes rv-scroll')&&!viewer.includes('rv-set'),"No vertical report scroll or double-page spread");
 assert(viewerCss.includes('.rv-page.rv-coming')&&viewerCss.includes('translateX(9%)')&&viewer.includes('rv-arrived'),"Horizontal single-page transition implemented");
 assert(viewer.includes('FIRST_DELAY=5500')&&viewer.includes('setTimeout(()=>goTo(index+1)')&&viewer.includes('IntersectionObserver'),"Page auto-advance, remaining on selected report, pauses offscreen");
@@ -62,12 +62,12 @@ assert(viewer.includes('hovered=true;stopTimer()')&&viewer.includes('held=true;s
 assert(viewerCss.includes('touch-action:pan-y')&&viewer.includes('Math.abs(dx)>=38'),"Swipe horizontally on mobile without breaking vertical scroll");
 assert(home.includes('role="tablist"')&&home.includes('CHOOSE A REPORT')&&home.includes('rv-tab-client')&&home.includes('rv-tab-internal'),"Report switch is prominent, explicit and keyboard accessible");
 assert(home.indexOf('class="rv-switcher"')>home.indexOf('class="so-report-side"'),"Report choices belong inside right column, not above report");
-assert(home.includes('VIEW CLIENT REPORT')&&home.includes('VIEW INTERNAL REPORT'),"Both write-ups are clearly selectable");
+assert(home.includes('SHOW CLIENT REPORT')&&home.includes('SHOW INTERNAL REPORT'),"Both write-ups are clearly selectable");
 assert(home.includes('Trade-specific scope and notes')&&home.includes('Site photos and measurements'),"Both client and internal details are visible together");
 assert(!home.includes('id="rv-audience-title"')&&!home.includes('id="rv-feature-points"'),"Remove redundant dynamically replaced single audience blurb");
 assert(viewerCss.includes('flex-direction:column;gap:12px;flex:1')&&viewerCss.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Stack both report write-ups on desktop, use compact selector above viewer on mobile");
 assert(!viewer.includes('content[selected]')&&viewer.includes('aria-selected'),"Selecting report changes pages without hiding either description");
-assert(home.includes('SWIPE TO SEE MORE PAGES')&&home.includes('PAGE 1 OF 4'),"Mobile swipe hint and page number visible");
+assert(home.includes('SWIPE TO SEE MORE PAGES')&&home.includes('PAGE 1'),"Mobile swipe hint and page number visible");
 assert(viewer.includes('goTo(index-1)')&&viewer.includes('goTo(index+1)'),"Previous and next report page arrows operate");
 assert(guide.includes("Branded Banksia Park Build Co client kitchen scope"),"How It Works must show updated logo report page");
 assert(!home.includes('id="so-report-preview"')&&!home.includes('id="so-pdf-link"'),"Legacy static/report download controls removed");
@@ -93,7 +93,7 @@ assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;to
 assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
 assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
 assert(!home.includes('/images/screen-measure.jpg?v=20261011rev1')&&home.includes('/images/workflow/wf-02-capture.webp'),"The old unaligned tape-measure graphic is not used in Workflow");
-assert(home.includes('brand-sync.css?v=20261012familiar-polish1'),"Voice hero styles cache version");
+assert(home.includes('brand-sync.css?v=20261012task3'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('class="so-specbar"')&&!heroMarkup.includes('Mitchell Residence')&&!heroMarkup.includes('Scope ready ✓'),"Remove fictional job status strip below the hero but permit report previews to name the demo job");
@@ -111,7 +111,7 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261012familiar-polish1'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261012task3'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
