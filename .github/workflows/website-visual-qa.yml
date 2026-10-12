@@ -1,7 +1,7 @@
 name: Website visual QA
 on:
   push:
-    branches: [main, workflow-5-stage, workflow-polish-92]
+    branches: [main, workflow-5-stage, workflow-polish-92, workflow-phone-align-preload]
     paths:
       - index.html
       - how-it-works.html
