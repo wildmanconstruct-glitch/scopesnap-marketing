@@ -194,6 +194,24 @@
   <svg class="so-origin-check" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 2.7 2.7L16 9.5"></path></svg>
  </div>
 </section>
+<!-- SOUND FAMILIAR -->
+<section class="so-light so-familiar" id="why" aria-labelledby="familiar-title">
+ <div class="wrap">
+  <header class="so-familiar-head">
+   <p class="so-mono so-familiar-eyebrow">SOUND FAMILIAR?</p>
+   <h2 class="so-display" id="familiar-title">THE SITE VISIT'S DONE.<br><span>THE SCOPE ISN'T.</span></h2>
+   <p class="so-familiar-intro">Every builder knows these. ScopeSnap is built to stop them.</p>
+  </header>
+  <div class="so-familiar-grid">
+   <article class="so-familiar-card"><h3>Notes on the back of a quote. Photos lost in your camera roll.</h3><div class="so-familiar-rule" aria-hidden="true"></div><p>Every photo, note and measurement saved to the right room, in one job.</p></article>
+   <article class="so-familiar-card"><h3>Back at the office: &quot;What was the width of that window?&quot;</h3><div class="so-familiar-rule" aria-hidden="true"></div><p>Measure on the spot, and check the photos and room notes instead of driving back.</p></article>
+   <article class="so-familiar-card"><h3>Left the tape in the ute.</h3><div class="so-familiar-rule" aria-hidden="true"></div><p>Get a quick camera estimate. Confirm the critical measurements later.</p></article>
+   <article class="so-familiar-card"><h3>Writing the scope at 9pm from memory.</h3><div class="so-familiar-rule" aria-hidden="true"></div><p>Talk it through on site. The scope is drafted before you&#39;re home.</p></article>
+   <article class="so-familiar-card"><h3>&quot;I thought that was included.&quot;</h3><div class="so-familiar-rule" aria-hidden="true"></div><p>What&#39;s by owner and what&#39;s still to confirm, written into the client report.</p></article>
+   <article class="so-familiar-card"><h3>The person pricing the job wasn&#39;t on site.</h3><div class="so-familiar-rule" aria-hidden="true"></div><p>Everyone works from the same photos, notes and internal report.</p></article>
+  </div>
+ </div>
+</section>
 <!-- WORKFLOW -->
 <section class="so-light so-workflow wf" id="features">
  <div class="wrap">
@@ -275,7 +293,7 @@
 <!-- VOICE -->
 <section class="so-voice" id="voice-demo">
  <div class="wrap">
-  <div class="so-section-head so-dark-head"><span class="so-mono">02 — Voice to scope</span><h2 class="so-display so-voice-title">You talk.<br><span>It writes.</span></h2><p>Capture the job without typing on site. Read, check and edit the generated scope before sharing.</p></div>
+  <div class="so-section-head so-dark-head"><span class="so-mono">02 — VOICE TO SCOPE</span><h2 class="so-display so-voice-title">You talk.<br><span>It writes.</span></h2><p>Capture the job without typing on site. Read, check and edit the generated scope before sharing.</p></div>
   <div class="so-voice-grid">
    <div class="so-voice-side"><div class="so-mono" style="color:#C4BFB6">● Recorded on site — Ensuite — 0:38</div><p class="so-voice-quote">“Righto, ensuite’s getting the full strip-out. Shower’s leaking behind the wall so we’re re-sheeting that, new waterproofing, wall-hung vanity, and the client wants matte black tapware throughout.”</p></div>
    <div class="so-voice-side"><div class="so-mono" style="color:#C4BFB6">ScopeSnap wrote — Check before sharing</div>
@@ -288,7 +306,7 @@
 <section class="so-reports" id="reports" aria-labelledby="so-report-title">
  <div class="wrap">
   <div class="so-section-head so-dark-head">
-   <span class="so-mono">03 — Output</span>
+   <span class="so-mono">03 — REPORTS</span>
    <h2 id="so-report-title" class="so-display">Reports worth<br>your name.</h2>
    <p>One site visit. Two clear reports — one for your client and one for your team. Explore every page below.</p>
   </div>
@@ -336,7 +354,7 @@
 
 <section class="section" id="pricing">
   <div class="wrap">
-    <div class="eyebrow">04 — Pricing</div><h2>Simple plans.<br>Cancel any time.</h2>
+    <div class="eyebrow">04 — PRICING</div><h2>Simple plans.<br>Cancel any time.</h2>
     <p class="section-sub">Try Starter free for 14 days with 5 jobs you create, plus a sample job to explore. No credit card required. After your trial, choose the plan that fits your team.</p>
     <div class="billing-toggle-wrap">
       <div class="billing-toggle">
@@ -479,13 +497,67 @@
     </div>
 
   </div>
+<!-- OPTIONAL TIME-SAVED ESTIMATE -->
+<section class="so-savings" id="savings"><div class="wrap">
+ <details class="so-savings-disclosure">
+  <summary><span class="so-savings-label so-mono"></span><strong>What could ScopeSnap save you?</strong><span class="so-savings-toggle" aria-hidden="true">+</span></summary>
+  <div class="so-savings-content"><!-- ROI CALCULATOR -->
+    <div class="roi-calc">
+      <div class="roi-head">
+        <h3>What could that time be worth?</h3>
+        <p class="roi-sub">Illustrative scenario using 1.5–2 hours saved per scope, not a measured result. Your actual savings will vary.</p>
+      </div>
+      <div class="roi-slider-row">
+        <label for="roiSlider" class="roi-slider-label">Jobs scoped per person per month: <span id="roiJobCount" class="roi-job-val">10</span></label>
+        <input type="range" class="roi-slider" id="roiSlider" min="1" max="60" value="10" aria-label="Jobs per month">
+      </div>
+      <div class="roi-team-row">
+        <span class="roi-team-label">Team size:</span>
+        <div class="roi-team-btns" role="group" aria-label="Team size">
+          <button class="roi-team-btn active" data-seats="1" onclick="setRoiTeam(this)">Just me</button>
+          <button class="roi-team-btn" data-seats="3" onclick="setRoiTeam(this)">2–3 people</button>
+          <button class="roi-team-btn" data-seats="8" onclick="setRoiTeam(this)">4–8 people</button>
+          <button class="roi-team-btn" data-seats="9" onclick="setRoiTeam(this)">9+ people</button>
+        </div>
+      </div>
+      <div class="roi-team-row">
+        <span class="roi-team-label">Your hourly rate:</span>
+        <div class="roi-team-btns" role="group" aria-label="Hourly rate">
+          <button class="roi-rate-btn" data-rate="50" onclick="setRoiRate(this)">$50/hr</button>
+          <button class="roi-rate-btn active" data-rate="75" onclick="setRoiRate(this)">$75/hr</button>
+          <button class="roi-rate-btn" data-rate="100" onclick="setRoiRate(this)">$100/hr</button>
+        </div>
+      </div>
+      <div class="roi-output">
+        <div class="roi-out-card">
+          <div class="roi-out-num" id="roiHrs">15–20 hrs</div>
+          <div class="roi-out-label">Hours back per month</div>
+        </div>
+        <div class="roi-out-card">
+          <div class="roi-out-num roi-money-num" id="roiMoney">$1,125–$1,500</div>
+          <div class="roi-out-label">Value of time saved</div>
+        </div>
+        <div class="roi-out-card roi-plan-card">
+          <div class="roi-out-num roi-plan-name" id="roiPlan">Starter</div>
+          <div class="roi-out-label" id="roiPlanLabel">Suggested plan</div>
+        </div>
+      </div>
+      <div class="roi-breakeven" id="roiBreakeven"></div>
+    </div>
+
+    </div>
+ </details>
+</div></section>
+
+
+
 </section>
 
 
 <!-- ── FAQ ── -->
 <section class="section" id="faq">
   <div class="wrap">
-    <div class="eyebrow">Frequently asked questions</div>
+    <div class="eyebrow so-mono">05 — FAQ</div>
     <h2>Common <em>questions.</em></h2>
     <div class="faq-list">
 
@@ -550,59 +622,6 @@
     </div>
   </div>
 </section>
-<!-- OPTIONAL TIME-SAVED ESTIMATE -->
-<section class="so-savings" id="savings"><div class="wrap">
- <details class="so-savings-disclosure">
-  <summary><span class="so-savings-label so-mono">05 — Estimate</span><strong>What could ScopeSnap save you?</strong><span class="so-savings-toggle" aria-hidden="true">+</span></summary>
-  <div class="so-savings-content"><!-- ROI CALCULATOR -->
-    <div class="roi-calc">
-      <div class="roi-head">
-        <h3>What could that time be worth?</h3>
-        <p class="roi-sub">Illustrative scenario using 1.5–2 hours saved per scope, not a measured result. Your actual savings will vary.</p>
-      </div>
-      <div class="roi-slider-row">
-        <label for="roiSlider" class="roi-slider-label">Jobs scoped per person per month: <span id="roiJobCount" class="roi-job-val">10</span></label>
-        <input type="range" class="roi-slider" id="roiSlider" min="1" max="60" value="10" aria-label="Jobs per month">
-      </div>
-      <div class="roi-team-row">
-        <span class="roi-team-label">Team size:</span>
-        <div class="roi-team-btns" role="group" aria-label="Team size">
-          <button class="roi-team-btn active" data-seats="1" onclick="setRoiTeam(this)">Just me</button>
-          <button class="roi-team-btn" data-seats="3" onclick="setRoiTeam(this)">2–3 people</button>
-          <button class="roi-team-btn" data-seats="8" onclick="setRoiTeam(this)">4–8 people</button>
-          <button class="roi-team-btn" data-seats="9" onclick="setRoiTeam(this)">9+ people</button>
-        </div>
-      </div>
-      <div class="roi-team-row">
-        <span class="roi-team-label">Your hourly rate:</span>
-        <div class="roi-team-btns" role="group" aria-label="Hourly rate">
-          <button class="roi-rate-btn" data-rate="50" onclick="setRoiRate(this)">$50/hr</button>
-          <button class="roi-rate-btn active" data-rate="75" onclick="setRoiRate(this)">$75/hr</button>
-          <button class="roi-rate-btn" data-rate="100" onclick="setRoiRate(this)">$100/hr</button>
-        </div>
-      </div>
-      <div class="roi-output">
-        <div class="roi-out-card">
-          <div class="roi-out-num" id="roiHrs">15–20 hrs</div>
-          <div class="roi-out-label">Hours back per month</div>
-        </div>
-        <div class="roi-out-card">
-          <div class="roi-out-num roi-money-num" id="roiMoney">$1,125–$1,500</div>
-          <div class="roi-out-label">Value of time saved</div>
-        </div>
-        <div class="roi-out-card roi-plan-card">
-          <div class="roi-out-num roi-plan-name" id="roiPlan">Starter</div>
-          <div class="roi-out-label" id="roiPlanLabel">Suggested plan</div>
-        </div>
-      </div>
-      <div class="roi-breakeven" id="roiBreakeven"></div>
-    </div>
-
-    </div>
- </details>
-</div></section>
-
-
 <!-- ── GET STARTED ── -->
 <section class="so-final" id="get-started"><div class="wrap"><p class="so-mono so-eyebrow">Next site visit</p><h2 class="so-display">Your next scope<br><span>starts on site.</span></h2><div class="so-actions"><a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start 14-day free trial <span aria-hidden="true">→</span></a><a href="/contact.html" class="btn-ghost">Talk to us</a></div></div></section>
 </main>
