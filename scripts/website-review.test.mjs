@@ -5,7 +5,7 @@ const home=read("index.html"),css=read("brand-sync.css"),guide=read("how-it-work
 for(const part of ['class="so-hero"','class="so-hero-grid"','class="so-photo-dimensions"','class="so-plan-tag"','class="so-origin"','class="wf-grid"','class="so-voice-grid"','class="so-report-layout"','class="so-final"']) assert(home.includes(part),"Missing Site Set-Out component: "+part);
 assert(home.includes('class="site-setout"'),"Homepage design variant");
 assert(css.includes("--ink:#0E0E0D")&&css.includes("--bone:#ECE8E0")&&css.includes("--cu:#C8843F"),"Site Set-Out design tokens");
-assert(css.includes("Archivo:wdth,wght")&&css.includes("JetBrains+Mono"),"Spec sheet fonts");
+assert(home.includes("Archivo:wdth,wght")&&home.includes("JetBrains+Mono")&&!css.includes("@import url('https://fonts.googleapis.com"),"Fonts load from the head once, without duplicate CSS import");
 assert(read("workflow.css").includes(".wf-mobile-phone")&&!read("workflow.css").includes("scroll-snap-type:x mandatory"),"Workflow mobile stages are stacked, not swipe-based");
 assert(css.includes("prefers-reduced-motion"),"Reduced-motion support");
 assert(!home.includes('class="trust-bar"'),"Remove old trust icons");
