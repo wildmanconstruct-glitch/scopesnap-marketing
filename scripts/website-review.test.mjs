@@ -145,10 +145,10 @@ assert(familiar.includes('SOUND FAMILIAR?')&&familiar.includes("THE SITE VISIT'S
 assert(familiar.includes('Every builder knows these. ScopeSnap is built to stop them.'),"Sound familiar intro");
 for(const [problem,fix] of [
   ['Notes on the back of a quote. Photos lost in your camera roll.','Every photo, note and measurement saved to the right room, in one job.'],
-  ['Back at the office: &quot;What was the width of that window?&quot;','Measure on the spot, and check the photos and room notes instead of driving back.'],
+  ['Back at the office: “What was the width of that window?”','Measure on the spot, and check the photos and room notes instead of driving back.'],
   ['Left the tape in the ute.','Get a quick camera estimate. Confirm the critical measurements later.'],
   ['Writing the scope at 9pm from memory.','Talk it through on site. The scope is drafted before you&#39;re home.'],
-  ['&quot;I thought that was included.&quot;','What&#39;s by owner and what&#39;s still to confirm, written into the client report.'],
+  ['“I thought that was included.”','What&#39;s by owner and what&#39;s still to confirm, written into the client report.'],
   ['The person pricing the job wasn&#39;t on site.','Everyone works from the same photos, notes and internal report.'],
 ])assert(familiar.includes(problem)&&familiar.includes(fix),'Missing familiar problem/fix: '+problem);
 assert((familiar.match(/class="so-familiar-card"/g)||[]).length===6,"Exactly six cards");
