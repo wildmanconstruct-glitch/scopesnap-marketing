@@ -138,3 +138,27 @@ assert(workflow.includes('Room questions')&&workflow.includes('Scope Check')&&wo
 assert(!/screen-(?:planscan|photo|voice|measure)\\.jpg/.test(workflow),"Workflow only uses new genuine app screenshots");
 assert(read('workflow.js').includes('IntersectionObserver')&&!read('workflow.js').includes('preventDefault'),"Natural-scrolling sticky phone workflow");
 for(const name of ['wf-01-start','wf-02-capture','wf-03-questions','wf-04-review','wf-05-report','wf-05-client-page','wf-05-internal-page'])assert(existsSync(new URL('../images/workflow/'+name+'.webp',import.meta.url)),"Missing real workflow capture: "+name);
+
+// Task 2: six exact problem/fix pairs and only five numbered homepage sections.
+const familiar=home.slice(home.indexOf('<section class="so-light so-familiar" id="why"'),home.indexOf('<!-- WORKFLOW -->'));
+assert(familiar.includes('SOUND FAMILIAR?')&&familiar.includes("THE SITE VISIT'S DONE.")&&familiar.includes("THE SCOPE ISN'T."),"Sound familiar headings");
+assert(familiar.includes('Every builder knows these. ScopeSnap is built to stop them.'),"Sound familiar intro");
+for(const [problem,fix] of [
+  ['Notes on the back of a quote. Photos lost in your camera roll.','Every photo, note and measurement saved to the right room, in one job.'],
+  ['Back at the office: &quot;What was the width of that window?&quot;','Measure on the spot, and check the photos and room notes instead of driving back.'],
+  ['Left the tape in the ute.','Get a quick camera estimate. Confirm the critical measurements later.'],
+  ['Writing the scope at 9pm from memory.','Talk it through on site. The scope is drafted before you&#39;re home.'],
+  ['&quot;I thought that was included.&quot;','What&#39;s by owner and what&#39;s still to confirm, written into the client report.'],
+  ['The person pricing the job wasn&#39;t on site.','Everyone works from the same photos, notes and internal report.'],
+])assert(familiar.includes(problem)&&familiar.includes(fix),'Missing familiar problem/fix: '+problem);
+assert((familiar.match(/class="so-familiar-card"/g)||[]).length===6,"Exactly six cards");
+assert(home.indexOf('id="why"')>home.indexOf('class="so-origin"')&&home.indexOf('id="why"')<home.indexOf('id="features"'),"Familiar follows proof strip and precedes workflow");
+const headlineSections=[
+  ['features','01 — WORKFLOW'],['voice-demo','02 — VOICE TO SCOPE'],
+  ['reports','03 — REPORTS'],['pricing','04 — PRICING'],['faq','05 — FAQ']
+];
+let previous=0;
+for(const [id,label] of headlineSections){const position=home.indexOf('id="'+id+'"');assert(position>previous&&home.slice(position,position+500).includes(label),'Wrong section numbering: '+label);previous=position;}
+assert(!home.includes('05 — Estimate')&&home.indexOf('id="savings"')>home.indexOf('id="pricing"')&&home.indexOf('id="savings"')<home.indexOf('id="faq"'),"Calculator belongs under Pricing, no extra numbered section");
+const familiarCss=read("brand-sync.css");
+assert(familiarCss.includes('#why .so-familiar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))')&&familiarCss.includes('#why .so-familiar-grid{grid-template-columns:1fr}'),"Three columns desktop, one mobile");
