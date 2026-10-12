@@ -33,7 +33,7 @@
   if('IntersectionObserver' in window){
     const preload=new IntersectionObserver(entries=>{
       if(entries.some(e=>e.isIntersecting)){loadDeferred();preload.disconnect();}
-    },{rootMargin:'800px 0px 800px 0px',threshold:0});
+    },{rootMargin:'0px 0px 0px 0px',threshold:0});
     preload.observe(root);
     const centerObserver=new IntersectionObserver(entries=>{
       const crossing=entries.filter(e=>e.isIntersecting);

@@ -193,7 +193,7 @@ body.site-setout .sticky-cta{display:none!important}
   body.site-setout .so-hero-photo{
     inset:auto 0 0;height:385px;
     background-image:linear-gradient(180deg,#0E0E0D 0%,rgba(14,14,13,.36) 32%,rgba(14,14,13,.05) 77%),
-       url('/images/perf/hero-kitchen.webp?v=20261012fast1');
+       url('/images/perf/hero-kitchen-mobile.webp?v=20261012mobile1');
     background-size:cover;background-position:50% 48%;filter:grayscale(.14) brightness(.84);
   }
   body.site-setout .so-hero .so-actions{max-width:340px;gap:8px}
