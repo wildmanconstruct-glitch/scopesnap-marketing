@@ -264,6 +264,14 @@ jobs:
               await page.locator('#features .wf-report [data-wf-type="internal"]').click();
               if((await page.locator('#features .wf-report [data-wf-type="internal"]').getAttribute('aria-pressed'))!=='true')
                 throw new Error('Internal report switch is not functional');
+              await page.waitForFunction(()=>{const image=document.querySelector('#features .wf-report .wf-page.internal');return image?.complete&&image?.naturalWidth>1200;},{timeout:10000});
+              await page.waitForTimeout(350);
+              await page.evaluate(()=>{
+                const el=document.querySelector('#features .wf-step[data-step="5"]');
+                const rect=el.getBoundingClientRect();
+                window.scrollTo({top:window.scrollY+rect.top+rect.height/2-innerHeight/2,behavior:'instant'});
+              });
+              await page.waitForTimeout(250);
               await page.screenshot({path:'qa-screenshots/wf-stage-05-internal-desktop.png',fullPage:false});
             }
             if(path==='/' && width===390){
