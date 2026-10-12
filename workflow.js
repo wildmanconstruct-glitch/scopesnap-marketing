@@ -6,8 +6,22 @@
   const screens=[...root.querySelectorAll('.wf-screen')];
   const report=root.querySelector('.wf-report');
   const controls=[...root.querySelectorAll('[data-wf-type]')];
+  const desktop=window.matchMedia('(min-width:1160px)').matches;
+  // Preload two desktop screens without requesting their hidden copies on mobile.
+  if(desktop){
+    screens.slice(0,2).forEach(img=>{
+      img.loading='eager';
+      img.fetchPriority='low';
+      if(img.dataset.wfSrc){
+        img.src=img.dataset.wfSrc;
+        img.removeAttribute('data-wf-src');
+      }
+    });
+  }
   const loadDeferred=()=>{
     root.querySelectorAll('img[data-wf-src]').forEach(img=>{
+      if(desktop && img.closest('.wf-mobile-phone,.wf-mobile-report'))return;
+      if(!desktop && (img.classList.contains('wf-screen') || img.closest('.wf-report')))return;
       img.src=img.dataset.wfSrc;
       img.removeAttribute('data-wf-src');
     });
@@ -34,7 +48,7 @@
     root.dataset.wfReady='true';
     root.dataset.activeStep=number;
     steps.forEach(el=>el.classList.toggle('is-active',el.dataset.step===number));
-    showScreen(number);
+    if(desktop)showScreen(number);
     const show=number==='5';
     report.classList.toggle('is-active',show);
     report.setAttribute('aria-hidden',String(!show));

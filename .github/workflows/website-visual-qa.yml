@@ -50,6 +50,10 @@ jobs:
           ]) {
             const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
             await page.goto('http://127.0.0.1:8080'+path,{waitUntil:'networkidle'});
+            if(path==='/' && width===390){
+              const hiddenDownloads=await page.locator('#features .wf-screen').evaluateAll(imgs=>imgs.filter(img=>img.hasAttribute('src')).length);
+              if(hiddenDownloads)throw new Error('Hidden desktop phone images must not download on mobile');
+            }
             await page.evaluate(() => { for(const img of document.images) img.loading='eager'; });
             await page.waitForTimeout(1800);
             if(path==='/'){
