@@ -314,3 +314,32 @@ body.site-setout .so-hero{min-height:820px}
  .so-origin-check{width:20px;height:20px;margin-left:0}
  .so-workflow .so-section-head{padding-top:48px}
 }
+
+/* Task 2 — Sound familiar: bone, copper and hairline editorial grid. */
+#why.so-familiar{background:var(--bone);color:var(--ink);padding:72px 0 82px}
+#why .so-familiar-head{display:grid;grid-template-columns:170px minmax(0,1fr);column-gap:34px;align-items:start;border-bottom:1px solid var(--line-l);padding-bottom:37px}
+#why .so-familiar-eyebrow{grid-row:1 / span 2;margin:10px 0 0;color:#55524C}
+#why .so-familiar-head h2{font-size:clamp(47px,5.3vw,76px);line-height:.91;letter-spacing:-.035em;margin:0;color:var(--ink)}
+#why .so-familiar-head h2 span{color:var(--cu)}
+#why .so-familiar-intro{grid-column:2;margin:23px 0 0;font-size:16px;line-height:1.55;color:#55524C}
+#why .so-familiar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-left:1px solid var(--line-l)}
+#why .so-familiar-card{min-width:0;min-height:206px;display:flex;flex-direction:column;padding:25px 27px 27px;border-right:1px solid var(--line-l);border-bottom:1px solid var(--line-l)}
+#why .so-familiar-card h3{font-family:var(--ff-b);font-size:20px;font-weight:750;line-height:1.35;letter-spacing:-.02em;text-transform:none;margin:0;color:var(--ink)}
+#why .so-familiar-rule{width:36px;height:1px;background:var(--cu);margin:18px 0 13px;flex:none}
+#why .so-familiar-card p{font-size:15px;line-height:1.55;color:var(--t-l2,#55524C);margin:0;font-weight:400}
+@media(max-width:800px){
+ #why.so-familiar{padding:60px 0 64px}
+ #why .so-familiar-head{grid-template-columns:1fr;gap:0;padding-bottom:27px}
+ #why .so-familiar-eyebrow{grid-row:auto;margin:0 0 18px}
+ #why .so-familiar-intro{grid-column:1;margin:16px 0 0}
+ #why .so-familiar-grid{grid-template-columns:1fr}
+ #why .so-familiar-card{min-height:0;padding:21px 20px 22px}
+ #why .so-familiar-card h3{font-size:18px}
+ #why .so-familiar-rule{margin:15px 0 11px}
+}
+@media(max-width:420px){
+ #why.so-familiar{padding:46px 0 55px}
+ #why .so-familiar-head h2{font-size:clamp(37px,10.8vw,48px)}
+ #why .so-familiar-intro{font-size:15px}
+ #why .so-familiar-card{padding:19px 17px 20px}
+}
