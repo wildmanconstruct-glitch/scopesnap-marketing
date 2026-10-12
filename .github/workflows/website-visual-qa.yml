@@ -1,7 +1,7 @@
 name: Website visual QA
 on:
   push:
-    branches: [main, workflow-5-stage, workflow-polish-92, workflow-phone-align-preload]
+    branches: [main, homepage-revision, workflow-5-stage, workflow-polish-92, workflow-phone-align-preload]
     paths:
       - index.html
       - how-it-works.html
@@ -92,8 +92,21 @@ jobs:
                  Math.abs(proof.proofTop-proof.heroBottom)>2||proof.proofHeight>95){
                 throw new Error('The builder proof should be one slim strip immediately below hero: '+JSON.stringify(proof));
               }
-              if(width>=900 && proof.stepsTop-proof.proofTop>200)
-                throw new Error('Workflow section should sit close to the hero: '+JSON.stringify(proof));
+              const familiar=await page.evaluate(()=>{
+                const origin=document.querySelector('.so-origin')?.getBoundingClientRect();
+                const section=document.querySelector('#why')?.getBoundingClientRect();
+                const workflow=document.querySelector('#features')?.getBoundingClientRect();
+                return {originBottom:origin?.bottom,whyTop:section?.top,whyBottom:section?.bottom,workflowTop:workflow?.top,
+                  cards:document.querySelectorAll('#why .so-familiar-card').length};
+              });
+              if(familiar.cards!==6 || Math.abs(familiar.whyTop-familiar.originBottom)>2 || Math.abs(familiar.workflowTop-familiar.whyBottom)>2)
+                throw new Error('Sound familiar must sit between proof strip and workflow: '+JSON.stringify(familiar));
+              if(width===1440 || width===390){
+                await page.locator('#why').screenshot({path:'qa-screenshots/sound-familiar-'+width+'x'+height+'.png'});
+                await page.locator('#why').scrollIntoViewIfNeeded();
+                await page.evaluate(()=>document.querySelector('#why').scrollIntoView({block:'start',behavior:'instant'}));
+                await page.screenshot({path:'qa-screenshots/sound-familiar-viewport-'+width+'x'+height+'.png',fullPage:false});
+              }
 
               if(geometry.scroll>geometry.viewport+2) throw new Error('Horizontal page overflow: '+JSON.stringify(geometry));
               if(!geometry.phone || geometry.phone>(width<=650?195:width<=800?206:255)) throw new Error('Hero phone should be slightly larger without taking over kitchen background: '+JSON.stringify(geometry));
