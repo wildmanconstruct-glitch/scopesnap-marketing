@@ -6,19 +6,49 @@
   const screens=[...root.querySelectorAll('.wf-screen')];
   const report=root.querySelector('.wf-report');
   const controls=[...root.querySelectorAll('[data-wf-type]')];
+  const desktop=window.matchMedia('(min-width:1160px)').matches;
+  // Preload two desktop screens without requesting their hidden copies on mobile.
+  if(desktop){
+    screens.slice(0,2).forEach(img=>{
+      img.loading='eager';
+      img.fetchPriority='low';
+      if(img.dataset.wfSrc){
+        img.src=img.dataset.wfSrc;
+        img.removeAttribute('data-wf-src');
+      }
+    });
+  }
   const loadDeferred=()=>{
     root.querySelectorAll('img[data-wf-src]').forEach(img=>{
+      if(desktop && img.closest('.wf-mobile-phone,.wf-mobile-report'))return;
+      if(!desktop && (img.classList.contains('wf-screen') || img.closest('.wf-report')))return;
       img.src=img.dataset.wfSrc;
       img.removeAttribute('data-wf-src');
     });
   };
   let active='1';
+  // Keep the last decoded screen visible when a new image is still loading.
+  function showScreen(number){
+    const image=screens.find(el=>el.dataset.step===number);
+    if(!image)return;
+    if(!image.getAttribute('src') && image.dataset.wfSrc){
+      image.src=image.dataset.wfSrc;
+      image.removeAttribute('data-wf-src');
+    }
+    const reveal=()=>{
+      if(active!==number)return;
+      screens.forEach(el=>el.classList.toggle('is-active',el===image));
+    };
+    if(image.complete&&image.naturalWidth>0)reveal();
+    else image.addEventListener('load',reveal,{once:true});
+  }
   function selectStep(number){
     if(number===active && root.dataset.wfReady==='true')return;
     active=number;
     root.dataset.wfReady='true';
+    root.dataset.activeStep=number;
     steps.forEach(el=>el.classList.toggle('is-active',el.dataset.step===number));
-    screens.forEach(el=>el.classList.toggle('is-active',el.dataset.step===number));
+    if(desktop)showScreen(number);
     const show=number==='5';
     report.classList.toggle('is-active',show);
     report.setAttribute('aria-hidden',String(!show));
@@ -33,7 +63,8 @@
   if('IntersectionObserver' in window){
     const preload=new IntersectionObserver(entries=>{
       if(entries.some(e=>e.isIntersecting)){loadDeferred();preload.disconnect();}
-    },{rootMargin:'0px 0px 0px 0px',threshold:0});
+    },{rootMargin:window.matchMedia('(min-width:1160px)').matches
+      ? '550px 0px 550px 0px' : '120px 0px 120px 0px',threshold:0});
     preload.observe(root);
     const centerObserver=new IntersectionObserver(entries=>{
       const crossing=entries.filter(e=>e.isIntersecting);

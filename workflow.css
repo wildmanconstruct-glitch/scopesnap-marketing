@@ -11,8 +11,9 @@
 #features .wf-step p{max-width:530px;color:#59564f;font-size:16px;line-height:1.65;margin:0 0 23px}
 #features .wf-chips{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
 #features .wf-chips li{font:500 10px/1.3 var(--ff-m);letter-spacing:.04em;border:1px solid var(--line-l);padding:9px 11px;color:#555047;white-space:nowrap}
-#features .wf-stage{height:min(780px,calc(100vh - 24px));position:sticky;top:12px;display:flex;align-items:center;min-width:0;isolation:isolate}
-#features .wf-phone{position:absolute;top:50%;left:0;transform:translateY(-50%);width:min(290px,calc((100vh - 50px) * .462));aspect-ratio:390/844;background:#070707;border:10px solid #070707;border-radius:38px;box-shadow:0 25px 65px rgba(14,12,9,.30),0 5px 15px rgba(14,12,9,.16);overflow:hidden;z-index:2;box-sizing:border-box}
+#features .wf-stage{--wf-phone-width:min(290px,calc((100vh - 50px) * .462));height:min(780px,calc(100vh - 24px));position:sticky;top:12px;display:flex;align-items:center;min-width:0;isolation:isolate}
+#features .wf-phone{position:absolute;top:50%;right:0;transform:translateY(-50%);width:var(--wf-phone-width);aspect-ratio:390/844;background:#F7F4EF;transition:right 560ms cubic-bezier(.2,.8,.2,1);border:10px solid #070707;border-radius:38px;box-shadow:0 25px 65px rgba(14,12,9,.30),0 5px 15px rgba(14,12,9,.16);overflow:hidden;z-index:2;box-sizing:border-box}
+#features.wf[data-active-step="5"] .wf-phone{right:calc(100% - var(--wf-phone-width))}
 #features .wf-screen{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity 250ms ease;border-radius:27px;pointer-events:none}
 #features .wf-screen.is-active{opacity:1;z-index:1}
 #features .wf-report{position:absolute;left:320px;top:50%;width:420px;opacity:0;transform:translate(20px,-50%);transition:opacity 400ms ease,transform 400ms ease;pointer-events:none;z-index:1;filter:drop-shadow(0 18px 27px rgba(14,12,9,.18))}
@@ -51,5 +52,5 @@
  #features .wf-chips li{font-size:9px;padding:8px}
 }
 @media(prefers-reduced-motion:reduce){
- #features .wf-screen,#features .wf-report,#features .wf-step,#features .wf-page{transition:none!important;animation:none!important}
+ #features .wf-screen,#features .wf-phone,#features .wf-report,#features .wf-step,#features .wf-page{transition:none!important;animation:none!important}
 }
