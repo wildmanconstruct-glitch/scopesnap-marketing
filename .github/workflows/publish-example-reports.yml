@@ -31,10 +31,19 @@ jobs:
           from pathlib import Path
           home=Path('index.html').read_text(encoding='utf-8')
           guide=Path('how-it-works.html').read_text(encoding='utf-8')
+          # Workflow now uses five screenshots from actual app components and
+          # the existing branded PDF-export pipeline, not the old four-card carousel.
           for name in ('screen-hero','screen-planscan','screen-voice','screen-measure','screen-photo'):
               p=Path(f'images/{name}.jpg')
               assert p.is_file() and p.stat().st_size > 30000, p
-              assert f'/images/{name}.jpg' in home, name
+          assert '/images/perf/hero-phone.webp' in home
+          assert Path('images/perf/hero-phone.webp').stat().st_size > 30000
+          for name in ('wf-01-start','wf-02-capture','wf-03-questions','wf-04-review','wf-05-report','wf-05-client-page','wf-05-internal-page'):
+              p=Path(f'images/workflow/{name}.webp')
+              assert p.is_file() and p.stat().st_size > 30000, p
+              assert f'/images/workflow/{name}.webp' in home, name
+          assert home.count('class="wf-step') == 5
+          assert 'Quick Create' in home and 'Full Setup' in home and 'Scope Check' in home
           for name in ('client','internal'):
               p=Path(f'sample-{name}-report.pdf')
               assert not p.exists(), f'Public downloadable report must not exist: {p}'
