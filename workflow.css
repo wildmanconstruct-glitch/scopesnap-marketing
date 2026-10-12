@@ -23,6 +23,10 @@
 #features .wf-toggle{display:grid;grid-template-columns:1fr;gap:5px;width:146px;margin:13px 0 0 auto}
 #features .wf-toggle button{background:var(--bone);color:var(--ink);border:1px solid #c8bfb3;padding:8px 10px;min-height:33px;border-radius:2px;text-align:center;white-space:nowrap;font:600 10px/1.2 var(--ff-b);cursor:pointer}
 #features .wf-toggle button[aria-pressed="true"]{background:var(--cu);border-color:var(--cu);color:#15130e}
+@media(min-width:1251px){
+ #features .wf-phone{left:-42px}
+ #features .wf-report{width:340px;right:-5px}
+}
 #features .wf-mobile-phone,#features .wf-mobile-report{display:none}
 @media(min-width:1024px) and (max-width:1250px){
  #features .wf-grid{gap:48px}
