@@ -43,7 +43,7 @@ assert(!home.includes('Open full client PDF')&&!home.includes('Open full interna
 const viewer=read("report-viewer.js"),viewerCss=read("report-viewer.css");
 const reportManifest=JSON.parse(read("images/reports/manifest.json"));
 assert(reportManifest.client.pages===4&&reportManifest.internal.pages===5,"Only approved 4-page client and 5-page internal reports");
-assert(reportManifest.version==="07d15aeca14664790b99ffc72f1481b453fd5b64","Marketing report source is the approved branded exporter commit");
+assert(reportManifest.version==="c87b1a019c573b5154a350a7f4870b2c51e37aac","Marketing report source is the approved branded exporter commit");
 assert(reportManifest.builderBrand?.name==="Banksia Park Build Co"&&reportManifest.builderBrand?.logoOnEveryPage===true,"Actual illustrated Banksia Park logo required on every PDF page");
 for(const kind of ["client","internal"]){
  const item=reportManifest[kind];
@@ -51,7 +51,7 @@ for(const kind of ["client","internal"]){
  for(const name of item.files)assert(existsSync(new URL("../images/reports/"+name,import.meta.url)),"Missing real-exported "+name);
  assert(item.bytes<2_500_000,"Optimised report size cap "+kind);
 }
-assert(home.includes('report-viewer.js?v=20261012deferred1')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
+assert(home.includes('report-viewer.js?v=20261012task3')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
 assert(!viewerCss.includes('@keyframes rv-scroll')&&!viewer.includes('rv-set'),"No vertical report scroll or double-page spread");
 assert(viewerCss.includes('.rv-page.rv-coming')&&viewerCss.includes('translateX(9%)')&&viewer.includes('rv-arrived'),"Horizontal single-page transition implemented");
 assert(viewer.includes('FIRST_DELAY=5500')&&viewer.includes('setTimeout(()=>goTo(index+1)')&&viewer.includes('IntersectionObserver'),"Page auto-advance, remaining on selected report, pauses offscreen");
@@ -62,12 +62,12 @@ assert(viewer.includes('hovered=true;stopTimer()')&&viewer.includes('held=true;s
 assert(viewerCss.includes('touch-action:pan-y')&&viewer.includes('Math.abs(dx)>=38'),"Swipe horizontally on mobile without breaking vertical scroll");
 assert(home.includes('role="tablist"')&&home.includes('CHOOSE A REPORT')&&home.includes('rv-tab-client')&&home.includes('rv-tab-internal'),"Report switch is prominent, explicit and keyboard accessible");
 assert(home.indexOf('class="rv-switcher"')>home.indexOf('class="so-report-side"'),"Report choices belong inside right column, not above report");
-assert(home.includes('VIEW CLIENT REPORT')&&home.includes('VIEW INTERNAL REPORT'),"Both write-ups are clearly selectable");
+assert(home.includes('SHOW CLIENT REPORT')&&home.includes('SHOW INTERNAL REPORT'),"Both write-ups are clearly selectable");
 assert(home.includes('Trade-specific scope and notes')&&home.includes('Site photos and measurements'),"Both client and internal details are visible together");
 assert(!home.includes('id="rv-audience-title"')&&!home.includes('id="rv-feature-points"'),"Remove redundant dynamically replaced single audience blurb");
 assert(viewerCss.includes('flex-direction:column;gap:12px;flex:1')&&viewerCss.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Stack both report write-ups on desktop, use compact selector above viewer on mobile");
 assert(!viewer.includes('content[selected]')&&viewer.includes('aria-selected'),"Selecting report changes pages without hiding either description");
-assert(home.includes('SWIPE TO SEE MORE PAGES')&&home.includes('PAGE 1 OF 4'),"Mobile swipe hint and page number visible");
+assert(home.includes('SWIPE TO SEE MORE PAGES')&&home.includes('PAGE 1'),"Mobile swipe hint and page number visible");
 assert(viewer.includes('goTo(index-1)')&&viewer.includes('goTo(index+1)'),"Previous and next report page arrows operate");
 assert(guide.includes("Branded Banksia Park Build Co client kitchen scope"),"How It Works must show updated logo report page");
 assert(!home.includes('id="so-report-preview"')&&!home.includes('id="so-pdf-link"'),"Legacy static/report download controls removed");
@@ -93,7 +93,7 @@ assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;to
 assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
 assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
 assert(!home.includes('/images/screen-measure.jpg?v=20261011rev1')&&home.includes('/images/workflow/wf-02-capture.webp'),"The old unaligned tape-measure graphic is not used in Workflow");
-assert(home.includes('brand-sync.css?v=20261012familiar-polish1'),"Voice hero styles cache version");
+assert(home.includes('brand-sync.css?v=20261012task3'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('class="so-specbar"')&&!heroMarkup.includes('Mitchell Residence')&&!heroMarkup.includes('Scope ready ✓'),"Remove fictional job status strip below the hero but permit report previews to name the demo job");
@@ -111,11 +111,11 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261012familiar-polish1'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261012task3'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
-assert(home.includes('/images/reports/client-01.webp?v=07d15aeca1466479'),"Use actual ScopeSnap-exported report images");
+assert(home.includes('/images/reports/client-01.webp?v=c87b1a019c573b51'),"Use actual ScopeSnap-exported report images");
 assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="pricing"')&&home.indexOf('id="savings"')<home.indexOf('id="faq"'),"Put optional calculator within Pricing");
 assert(home.includes('<details class="so-savings-disclosure">'),"Calculator should default closed");
 assert(css.includes('@media(min-width:960px)')&&css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Big phones in two desktop rows");
@@ -123,7 +123,7 @@ assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes
 for(const path of ["index.html","how-it-works.html","contact.html","billing.html","privacy.html","terms.html","delete-account.html","404.html"]){
  const page=read(path);
  for(const m of page.matchAll(/\/(?:images\/[\w./-]+|sample-[\w-]+\.pdf)[^"'\s<>]*/g)){
-  const expected=m[0].startsWith('/images/perf/hero-phone.webp') || m[0].startsWith('/images/perf/hero-kitchen-mobile.webp') ? '?v=20261012mobile1' : m[0].startsWith('/images/perf/') ? '?v=20261012fast1' : m[0].startsWith('/images/workflow/') ? '?v=2e8c0fb04cf240f87708143c89b7106df46071e8' : m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=07d15aeca1466479' : '?v=20261011rev1';
+  const expected=m[0].startsWith('/images/perf/hero-phone.webp') || m[0].startsWith('/images/perf/hero-kitchen-mobile.webp') ? '?v=20261012mobile1' : m[0].startsWith('/images/perf/') ? '?v=20261012fast1' : m[0].startsWith('/images/workflow/') ? '?v=2e8c0fb04cf240f87708143c89b7106df46071e8' : m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=c87b1a019c573b51' : '?v=20261011rev1';
   assert(m[0].includes(expected),"Old image/PDF URL in "+path+": "+m[0]);
  }
 }
@@ -145,10 +145,10 @@ assert(familiar.includes('SOUND FAMILIAR?')&&familiar.includes("THE SITE VISIT'S
 assert(familiar.includes('Every builder knows these. ScopeSnap is built to stop them.'),"Sound familiar intro");
 for(const [problem,fix] of [
   ['Notes on the back of a quote. Photos lost in your camera roll.','Every photo, note and measurement saved to the right room, in one job.'],
-  ['Back at the office: &quot;What was the width of that window?&quot;','Measure on the spot, and check the photos and room notes instead of driving back.'],
+  ['Back at the office: “What was the width of that window?”','Measure on the spot, and check the photos and room notes instead of driving back.'],
   ['Left the tape in the ute.','Get a quick camera estimate. Confirm the critical measurements later.'],
   ['Writing the scope at 9pm from memory.','Talk it through on site. The scope is drafted before you&#39;re home.'],
-  ['&quot;I thought that was included.&quot;','What&#39;s by owner and what&#39;s still to confirm, written into the client report.'],
+  ['“I thought that was included.”','What&#39;s by owner and what&#39;s still to confirm, written into the client report.'],
   ['The person pricing the job wasn&#39;t on site.','Everyone works from the same photos, notes and internal report.'],
 ])assert(familiar.includes(problem)&&familiar.includes(fix),'Missing familiar problem/fix: '+problem);
 assert((familiar.match(/class="so-familiar-card"/g)||[]).length===6,"Exactly six cards");
@@ -162,3 +162,22 @@ for(const [id,label] of headlineSections){const position=home.indexOf('id="'+id+
 assert(!home.includes('05 — Estimate')&&home.indexOf('id="savings"')>home.indexOf('id="pricing"')&&home.indexOf('id="savings"')<home.indexOf('id="faq"'),"Calculator belongs under Pricing, no extra numbered section");
 const familiarCss=read("brand-sync.css");
 assert(familiarCss.includes('#why .so-familiar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))')&&familiarCss.includes('#why .so-familiar-grid{grid-template-columns:1fr}'),"Three columns desktop, one mobile");
+
+/* Task 3: exact bathroom voice example, clear report-only toggle labels and no PDF links. */
+const voiceSection=home.slice(home.indexOf('<section class="so-voice" id="voice-demo"'),home.indexOf('<!-- APP-EXPORTED REPORT SHOWCASE'));
+for(const required of [
+'● RECORDED ON SITE — BATHROOM — 0:41',
+'"Righto, main bathroom\'s a full strip-out. Bath comes out, we\'re putting in a walk-in shower with a semi-frameless screen. New waterproofing, wall-hung vanity with a stone top, and the client wants brushed nickel tapware."',
+'Full strip-out of existing bathroom, including bath',
+'New walk-in shower with semi-frameless screen',
+'Waterproofing to wet areas',
+'Supply and install wall-hung vanity with stone top',
+'Brushed nickel tapware throughout'
+])assert(voiceSection.includes(required),'Task 3 voice copy: '+required);
+assert(!voiceSection.includes('ensuite'),'Voice section still mentions ensuite');
+const reportSection=home.slice(home.indexOf('<section class="so-reports" id="reports"'),home.indexOf('<!-- PRICING -->'));
+assert(!/\b(?:4|5) PAGES\b/.test(reportSection),'Report section must not advertise fixed page totals');
+assert(reportSection.includes('CLIENT REPORT · GENERATED BY SCOPESNAP')&&reportSection.includes('SHOW CLIENT REPORT')&&reportSection.includes('SHOW INTERNAL REPORT'),'Report preview labels and caption');
+assert(!/href\s*=\s*["'][^"']*\.pdf/i.test(home),'No linked PDFs on homepage');
+assert(viewer.includes('counter.textContent="PAGE "+(index+1)')&&viewer.includes('caption.textContent=selected.toUpperCase()+" REPORT · GENERATED BY SCOPESNAP"'),'No totals in dynamic captions or counters');
+assert(css.includes('#reports.so-reports{border-top:1px solid var(--line-d);margin-top:120px}'),'Voice/Reports separation');
