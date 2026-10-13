@@ -21,7 +21,7 @@ const pricing=section('<section class="section" id="pricing"','<!-- ── FAQ �
 for(const phrase of [
 'Every site visit costs you time, fuel and advertising. ScopeSnap makes sure it turns into a scope you can send.',
 'Try Starter free for 14 days. 5 jobs plus a sample job. No credit card.',
-'ALL PLANS: PHOTOS + AI · VOICE TO SCOPE · CLIENT &amp; INTERNAL REPORTS · ALL JOB TYPES',
+
 '8 jobs a month','15 jobs a month','30 jobs a month','EXTRA USERS $29/MO','EXTRA USERS $25/MO',
 '100 GB for $10/month','Full allowance details in our Terms →','SWIPE TO COMPARE PLANS',
 'data-plan-dot="Professional"','id="roiLogins"','max="3"','RECOMMENDED FOR YOU'
@@ -34,7 +34,7 @@ assert(!pricing.includes('data-roi-plan=')&&!pricing.includes('id="savings"'),'O
 for(const id of ['roiSlider','roiHours','roiRate','roiPlan','roiBreakeven','roiTrial','pricing-cards','pricing-calculator'])assert(pricing.includes('id="'+id+'"'),'Missing pricing widget '+id);
 assert(pricing.includes('min="1" max="60" step="1" value="8"'),'Visits slider 1–60');
 assert(pricing.includes('min="0.5" max="3" step="0.5" value="1.5"'),'Hours slider');
-assert(pricing.includes('min="40" max="150" step="5" value="75"'),'Rate slider');
+assert(pricing.includes('min="75" max="150" step="5" value="75"'),'Rate slider');
 assert(css.includes('scroll-snap-type:x mandatory')&&css.includes('#pricing .so-pricing-header{display:grid'),'Compact responsive pricing');
 const compare=pricing.match(/<details class="pricing-details" id="plan-comparison">([\s\S]*?)<\/details>/);
 assert(compare&&!compare[0].includes('id="plan-comparison" open'),'Comparison collapsed');
@@ -43,5 +43,5 @@ const ent=pricing.slice(pricing.indexOf('id="enterprise"'));
 assert(ent.includes('Need something larger? Unlimited users, onboarding and custom setup for multi-office builders.'));
 assert(ent.includes('href="/contact"')&&ent.includes('Talk to us →'),'Enterprise CTA');
 assert.equal((ent.match(/<a href=/g)||[]).length,1,'One Enterprise action');
-assert(!pricing.includes('Solo'),'No old user-facing plan names');
+assert(!pricing.includes('Solo')&&!pricing.includes('ALL PLANS:'),'No legacy names or redundant plan strip');
 console.log('Site Set-Out and Task 4E homepage regression checks passed.');
