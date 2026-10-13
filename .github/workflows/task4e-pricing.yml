@@ -1,0 +1,37 @@
+name: Task 4E pricing audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.html
+      - brand-sync.css
+      - scripts/task4e-qa.mjs
+      - .github/workflows/task4e-pricing.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pricing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/website-review.test.mjs
+      - run: node --test scripts/roi.test.mjs
+      - run: npm install --no-save playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - name: Measure and capture compact Pricing at three viewports
+        run: |
+          python3 -m http.server 8080 >/tmp/pricing4e-server.log 2>&1 &
+          sleep 2
+          node scripts/task4e-qa.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: task4e-screenshots-and-metrics
+          path: qa-task4e
+          if-no-files-found: warn
+          retention-days: 14
