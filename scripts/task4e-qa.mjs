@@ -42,6 +42,14 @@ for(const [width,height] of [[1440,900],[375,812],[390,844]]){
  });
  check(polish.rateMin==='75'&&polish.rateMax==='150','Hourly rate must be $75–$150');
  check(!polish.strip,'Redundant plan strip should be removed');
+
+ const subtitleClearance=await page.evaluate(()=>[...document.querySelectorAll('#pricing .price-card')].map(card=>{
+   const subtitle=card.querySelector('.price-desc').getBoundingClientRect();
+   const first=card.querySelector('.price-list li').getBoundingClientRect();
+   return Math.round(first.top-subtitle.bottom);
+ }));
+ check(subtitleClearance.every(gap=>gap>=0),'Subtitle overlaps first allowance: '+JSON.stringify(subtitleClearance));
+
  check(polish.rows.length===15&&polish.rows.every(row=>row.height>=row.lineHeight+8),'Plan allowance text must have breathing room and aligned dividers: '+JSON.stringify(polish.rows));
 
  let q=await state(page);check((await page.locator('#roiLogins').inputValue())==='1','Default grouped tier must be 2–3');check(q.plan==='Professional · $119/month'&&q.hours==='12 hrs'&&q.value==='$900/month'&&q.ratio.includes('7.6×')&&q.recommended.join()==='1','Calculator defaults '+JSON.stringify(q));
