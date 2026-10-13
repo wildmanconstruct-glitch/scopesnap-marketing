@@ -655,8 +655,12 @@ function toggleFaq(btn) {
   dots.forEach((dot,i)=>dot.addEventListener('click',()=>{userSwiped=true;currentSlide=i;updateDots();centerCard(i)}));
   recalc();
   if(matchMedia('(max-width:699px)').matches){
-    // Adjust only the carousel's own scroll position, never the document.
-    requestAnimationFrame(()=>centerCard(1,'instant'));
+    // Wait for the deferred brand stylesheet to switch from column to carousel.
+    // Only the card row moves; never scroll the document.
+    const openOnProfessional=()=>{if(!userSwiped)centerCard(1,'instant');};
+    requestAnimationFrame(openOnProfessional);
+    window.addEventListener('load',()=>setTimeout(openOnProfessional,150),{once:true});
+    document.fonts?.ready?.then(openOnProfessional);
   }
 })();
 
