@@ -276,7 +276,7 @@ jobs:
                 if((await page.locator('.so-report-option[aria-selected="true"]').getAttribute('data-name'))!=='client')
                   throw new Error('Auto advancing pages must not automatically change report type');
                 const defaults=await page.evaluate(()=>['roiHrs','roiMoney','roiPlan','roiBreakeven'].map(id=>document.getElementById(id)?.textContent));
-                if(defaults.join('|')!=='12 hrs|$900/month|$119/month|About 7.6× the plan cost.')throw new Error('Calculator defaults wrong: '+defaults);
+                if(defaults.join('|')!=='12 hrs|$900/month|Professional · $119/month|Your time back is worth about 7.6× the plan cost.')throw new Error('Calculator defaults wrong: '+defaults);
                 await page.locator('#roiHours').focus();
                 await page.keyboard.press('ArrowRight');
                 if((await page.locator('#roiHrs').textContent())!=='16 hrs')throw new Error('Hours slider keyboard update broken');
