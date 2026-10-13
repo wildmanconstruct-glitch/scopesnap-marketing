@@ -399,3 +399,11 @@ body.site-setout .so-hero{min-height:820px}
  #pricing .so-calc-result-label{margin-top:7px}
  #pricing .so-pricing-calc{margin-top:34px}
 }
+
+/* Task 4 QA polish: readable comparison headings on ink bars; square mobile rows. */
+#pricing .plan-table thead th{color:var(--bone)}
+@media(max-width:600px){
+ #pricing .plan-table tbody tr{border:1px solid var(--line-l);border-radius:0}
+ #pricing .plan-table tbody th:first-child{color:var(--bone)!important}
+ #pricing .plan-table td::before{color:#55524C}
+}
