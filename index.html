@@ -600,7 +600,7 @@ function toggleFaq(btn) {
   function centerCard(i,behavior='smooth'){
     if(!matchMedia('(max-width:699px)').matches||!cards[i])return;
     const card=cards[i];
-    carousel.scrollTo({left:card.offsetLeft-carousel.offsetLeft-(carousel.clientWidth-card.offsetWidth)/2,behavior});
+    carousel.scrollTo({left:carousel.scrollLeft+card.getBoundingClientRect().left-carousel.getBoundingClientRect().left-(carousel.clientWidth-card.offsetWidth)/2,behavior});
   }
   function updateDots(){
     dots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===currentSlide)));
@@ -612,7 +612,7 @@ function toggleFaq(btn) {
       card.classList.toggle('so-card-recommended',recommended);
       const tag=card.querySelector('.so-recommend-tag');if(tag)tag.hidden=!recommended;
     });
-    if(autoScroll&&userSwiped&&window.scrollY>document.getElementById('pricing-calculator').offsetTop+document.getElementById('pricing-calculator').offsetHeight) {
+    if(autoScroll&&document.getElementById('pricing-calculator').getBoundingClientRect().bottom<0) {
       centerCard(ranks[plan]);
     }
   }
