@@ -24,7 +24,7 @@ for(const phrase of [
 'ALL PLANS: PHOTOS + AI · VOICE TO SCOPE · CLIENT &amp; INTERNAL REPORTS · ALL JOB TYPES',
 '8 jobs a month','15 jobs a month','30 jobs a month','EXTRA USERS $29/MO','EXTRA USERS $25/MO',
 '100 GB for $10/month','Full allowance details in our Terms →','SWIPE TO COMPARE PLANS',
-'data-plan-dot="Professional"','data-roi-logins="2–3"','data-roi-logins="9+"','RECOMMENDED FOR YOU'
+'data-plan-dot="Professional"','id="roiLogins"','max="20"','RECOMMENDED FOR YOU'
 ])assert(pricing.includes(phrase),'Missing pricing fact '+phrase);
 const cardRows=[...pricing.matchAll(/<ul class="price-list">([\s\S]*?)<\/ul>/g)];
 assert.equal(cardRows.length,3);
