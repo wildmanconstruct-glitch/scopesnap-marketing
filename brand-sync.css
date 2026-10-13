@@ -540,3 +540,6 @@ body.site-setout .so-hero{min-height:820px}
 #pricing .pricing-grid .price-card .so-recommend-tag[hidden]{display:none!important}
 #pricing .so-calc-result:has(#roiPlan){border-top:3px solid var(--cu)}
 @media(max-width:699px){#pricing .so-calc-seat-tiers{font-size:10px}}
+
+/* Fit stronger recommendation tag without increasing the desktop card row. */
+@media(min-width:700px){#pricing .pricing-grid .price-list li{padding:7px 0}}
