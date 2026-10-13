@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 const html=await readFile(new URL('../index.html',import.meta.url),'utf8');
 const script=html.slice(html.indexOf('// Pricing calculator:'),html.indexOf('// Voice section tab toggle'));
 test('automatic calculator inputs and all required plan cutoffs',()=>{
-  for(const text of ['max="60"','id="roiLogins"','max="3"','roiHours','roiRate','roiBreakeven'])assert.ok(html.includes(text),text);
+  for(const text of ['max="60"','id="roiLogins"','max="3"','roiHours','roiRate','min="75" max="150" step="5" value="75"','roiBreakeven'])assert.ok(html.includes(text),text);
   for(const text of ["v<=8?'Starter'","v<=15?'Professional'","v<=130?'Business'","Math.ceil((v-30)/10)","seatStep!==3","prices[plan]+packs*59"])assert.ok(script.includes(text),text);
   assert.ok(!html.includes('data-roi-plan='));
   assert.ok(html.includes('Company site visits per month'));
