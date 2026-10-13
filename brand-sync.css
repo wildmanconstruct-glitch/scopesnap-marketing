@@ -525,3 +525,5 @@ body.site-setout .so-hero{min-height:820px}
  #pricing .pricing-grid .price-desc{margin:3px 0}
  #pricing .pricing-grid .price-btn{min-height:44px}
 }
+
+@media(min-width:700px){#pricing .pricing-grid .price-list{margin:0}}
