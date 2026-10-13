@@ -38,7 +38,7 @@ for(const [width,height] of [[1440,900],[375,812],[390,844]]){
  await setVisits(page,8);await selectLogins(page,2);q=await state(page);check(q.plan==='Business · $249/month'&&q.recommended.join()==='2','Logins decide '+JSON.stringify(q));
  await selectLogins(page,0);await setVisits(page,45);q=await state(page);check(q.plan.includes('2 packs')&&q.plan.includes('$367/month')&&q.recommended.join()==='2','Extra jobs '+JSON.stringify(q));
  if(width===390||width===1440)await page.locator('#pricing-calculator').screenshot({path:'qa-task4e/calculator-45-'+width+'.png'});
- await selectLogins(page,1);q=await state(page);check(q.extra.includes('extra users from $25/mo each'),'Extra user note '+JSON.stringify(q));
+ await selectLogins(page,3);q=await state(page);check(q.extra.includes('extra users from $25/mo each'),'Extra user note '+JSON.stringify(q));
  await setVisits(page,140);q=await state(page);check(q.plan.includes('Enterprise')&&q.ratio.includes('Talk to us')&&q.recommended.length===0,'Enterprise case '+JSON.stringify(q));
  if(width===390||width===1440)await page.locator('#pricing-calculator').screenshot({path:'qa-task4e/calculator-140-'+width+'.png'});
  await setVisits(page,8);await selectLogins(page,1);
