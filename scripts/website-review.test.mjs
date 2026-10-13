@@ -4,7 +4,7 @@ const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const home=read('index.html'),css=read('brand-sync.css'),workflow=read('workflow.css'),viewer=read('report-viewer.js');
 const section=(a,b)=>home.slice(home.indexOf(a),home.indexOf(b,home.indexOf(a)));
 for(const part of ['class="so-hero"','class="so-origin"','id="features"','id="why"','id="voice-demo"','id="reports"','id="pricing"','id="faq"'])assert(home.includes(part),'Missing section '+part);
-assert(home.includes('brand-sync.css?v=20261013seats1'),'Updated site CSS cache version');
+assert(home.includes('brand-sync.css?v=20261013fourstops1'),'Updated site CSS cache version');
 assert(css.includes('--ink:#0E0E0D')&&css.includes('--bone:#ECE8E0')&&css.includes('--cu:#C8843F'),'Existing design tokens unchanged');
 assert(workflow.includes('.wf-mobile-phone'),'Existing mobile workflow preserved');
 assert(!home.includes('href="/sample-client-report.pdf"')&&!home.includes('href="/sample-internal-report.pdf"'),'No published sample PDF links');
@@ -24,7 +24,7 @@ for(const phrase of [
 'ALL PLANS: PHOTOS + AI · VOICE TO SCOPE · CLIENT &amp; INTERNAL REPORTS · ALL JOB TYPES',
 '8 jobs a month','15 jobs a month','30 jobs a month','EXTRA USERS $29/MO','EXTRA USERS $25/MO',
 '100 GB for $10/month','Full allowance details in our Terms →','SWIPE TO COMPARE PLANS',
-'data-plan-dot="Professional"','id="roiLogins"','max="20"','RECOMMENDED FOR YOU'
+'data-plan-dot="Professional"','id="roiLogins"','max="3"','RECOMMENDED FOR YOU'
 ])assert(pricing.includes(phrase),'Missing pricing fact '+phrase);
 const cardRows=[...pricing.matchAll(/<ul class="price-list">([\s\S]*?)<\/ul>/g)];
 assert.equal(cardRows.length,3);
