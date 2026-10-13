@@ -58,7 +58,7 @@ jobs:
           manifest=loads(Path('images/reports/manifest.json').read_text(encoding='utf8'))
           assert manifest['client']['pages']==4 and manifest['internal']['pages']==5
           assert manifest['builderBrand']['name']=='Banksia Park Build Co' and manifest['builderBrand']['logoOnEveryPage']
-          assert manifest['version']=='07d15aeca14664790b99ffc72f1481b453fd5b64'
+          assert manifest['version']=='c87b1a019c573b5154a350a7f4870b2c51e37aac'
           for kind in ('client','internal'):
               files=manifest[kind]['files']
               assert len(files)==manifest[kind]['pages']
