@@ -530,3 +530,13 @@ body.site-setout .so-hero{min-height:820px}
 
 /* Force card slider to run horizontally; shared mobile stylesheet defaults to column. */
 @media(max-width:699px){#pricing .pricing-grid{flex-direction:row;align-items:stretch}}
+
+/* Pricing revision: four discrete included-seat tiers and clearer chosen plan. */
+#pricing .so-calc-seat-tiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:6px;font-size:10px;text-align:center;letter-spacing:.02em}
+#pricing .so-calc-seat-tiers span:first-child{text-align:left}
+#pricing .so-calc-seat-tiers span:last-child{text-align:right}
+#pricing .price-card.so-card-recommended{outline:3px solid var(--cu);outline-offset:-3px;position:relative;z-index:1}
+#pricing .pricing-grid .price-card.so-card-recommended .so-recommend-tag{display:block!important;background:var(--cu);color:var(--ink);font:700 10px/1.4 var(--ff-m);letter-spacing:.06em;padding:8px 10px;margin:0 0 10px;align-self:stretch;text-align:center}
+#pricing .pricing-grid .price-card .so-recommend-tag[hidden]{display:none!important}
+#pricing .so-calc-result:has(#roiPlan){border-top:3px solid var(--cu)}
+@media(max-width:699px){#pricing .so-calc-seat-tiers{font-size:10px}}
