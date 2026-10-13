@@ -6,7 +6,7 @@ const results=[];
 async function setVisits(page,value){
   await page.locator('#roiSlider').evaluate((el,n)=>{if(n>Number(el.max))el.max=String(n);el.value=String(n);el.dispatchEvent(new Event('input',{bubbles:true}));},value);
 }
-async function selectLogins(page,value){await page.locator('[data-roi-logins="'+value+'"]').click();}
+async function selectLogins(page,value){await page.locator('#roiLogins').evaluate((el,n)=>{el.value=String(n);el.dispatchEvent(new Event('input',{bubbles:true}));},value);}
 async function state(page){
  return page.evaluate(()=>({hours:document.getElementById('roiHrs').textContent,value:document.getElementById('roiMoney').textContent,plan:document.getElementById('roiPlan').textContent,ratio:document.getElementById('roiBreakeven').textContent,extra:document.getElementById('roiExtraUsers').hidden?'':document.getElementById('roiExtraUsers').textContent,recommended:[...document.querySelectorAll('#pricing .price-card')].map((c,i)=>c.classList.contains('so-card-recommended')?i:-1).filter(i=>i>=0)}));
 }
@@ -33,15 +33,15 @@ for(const [width,height] of [[1440,900],[375,812],[390,844]]){
   await page.locator('#pricing').screenshot({path:'qa-task4e/pricing-default-'+width+'.png'});
   await page.locator('#enterprise').screenshot({path:'qa-task4e/enterprise-'+width+'.png'});
  }
- await selectLogins(page,'1');q=await state(page);check(q.plan==='Starter · $59/month'&&q.ratio.includes('15.3×')&&q.recommended.join()==='0','Starter case '+JSON.stringify(q));
+ await selectLogins(page,1);q=await state(page);check(q.plan==='Starter · $59/month'&&q.ratio.includes('15.3×')&&q.recommended.join()==='0','Starter case '+JSON.stringify(q));
  await setVisits(page,20);q=await state(page);check(q.plan==='Business · $249/month'&&q.recommended.join()==='2','Visits decide '+JSON.stringify(q));
- await setVisits(page,8);await selectLogins(page,'4–8');q=await state(page);check(q.plan==='Business · $249/month'&&q.recommended.join()==='2','Logins decide '+JSON.stringify(q));
+ await setVisits(page,8);await selectLogins(page,8);q=await state(page);check(q.plan==='Business · $249/month'&&q.recommended.join()==='2','Logins decide '+JSON.stringify(q));
  await selectLogins(page,'1');await setVisits(page,45);q=await state(page);check(q.plan.includes('2 packs')&&q.plan.includes('$367/month')&&q.recommended.join()==='2','Extra jobs '+JSON.stringify(q));
  if(width===390||width===1440)await page.locator('#pricing-calculator').screenshot({path:'qa-task4e/calculator-45-'+width+'.png'});
- await selectLogins(page,'9+');q=await state(page);check(q.extra.includes('extra users from $25/mo each'),'Extra user note '+JSON.stringify(q));
+ await selectLogins(page,9);q=await state(page);check(q.extra.includes('extra users from $25/mo each'),'Extra user note '+JSON.stringify(q));
  await setVisits(page,140);q=await state(page);check(q.plan.includes('Enterprise')&&q.ratio.includes('Talk to us')&&q.recommended.length===0,'Enterprise case '+JSON.stringify(q));
  if(width===390||width===1440)await page.locator('#pricing-calculator').screenshot({path:'qa-task4e/calculator-140-'+width+'.png'});
- await setVisits(page,8);await selectLogins(page,'2–3');
+ await setVisits(page,8);await selectLogins(page,3);
  if(width===390||width===1440){
    await page.locator('#toggleAnnual').click();await page.locator('#pricing').screenshot({path:'qa-task4e/pricing-annual-'+width+'.png'});
    await page.locator('#toggleMonthly').click();
