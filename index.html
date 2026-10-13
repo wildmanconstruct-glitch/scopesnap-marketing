@@ -96,7 +96,7 @@
   <link rel="stylesheet" href="/premium-showcase.css?v=20261010setout2" media="print" onload="this.media='all'"/>
 
   <link rel="stylesheet" href="/brand-critical.css?v=20261012mobile1"/>
-  <link rel="stylesheet" href="/brand-sync.css?v=20261013pricing4" media="print" onload="this.media='all'"/>
+  <link rel="stylesheet" href="/brand-sync.css?v=20261013compact4e" media="print" onload="this.media='all'"/>
   <link rel="stylesheet" href="/report-viewer.css?v=20261011sidechoice2" media="print" onload="this.media='all'"/>
   <link rel="stylesheet" href="/workflow.css?v=workflow-natural-20261012" media="print" onload="this.media='all'"/>
   <script defer src="/report-viewer.js?v=20261012task3"></script>
@@ -354,18 +354,21 @@
 
 <section class="section" id="pricing">
   <div class="wrap">
-    <div class="eyebrow">04 — PRICING</div><h2>Simple plans.<br>Cancel any time.</h2>
-    <p class="section-sub">Every site visit costs you time, fuel and advertising. ScopeSnap makes sure it turns into a scope you can send.</p>
-    <p class="so-trial-intro">Try Starter free for 14 days. 5 jobs plus a sample job. No credit card.</p>
-    <div class="billing-toggle-wrap">
-      <div class="billing-toggle">
+    <header class="so-pricing-header">
+      <span class="eyebrow so-mono">04 — PRICING</span>
+      <h2>SIMPLE PLANS.<br>CANCEL ANY TIME.</h2>
+      <div class="so-pricing-intro"><p class="section-sub">Every site visit costs you time, fuel and advertising. ScopeSnap makes sure it turns into a scope you can send.</p><p class="so-trial-intro">Try Starter free for 14 days. 5 jobs plus a sample job. No credit card.</p></div>
+    </header>
+    <div class="so-pricing-toolbar">
+      <div class="billing-toggle-wrap"><div class="billing-toggle">
         <button class="billing-opt active" id="toggleMonthly" onclick="setBilling('monthly')">Monthly</button>
         <button class="billing-opt" id="toggleAnnual" onclick="setBilling('annual')">Annual <span class="billing-save">Pro &amp; Business save 1 month</span></button>
-      </div>
+      </div></div>
+      <p class="so-plan-chips so-mono">ALL PLANS: PHOTOS + AI · VOICE TO SCOPE · CLIENT &amp; INTERNAL REPORTS · ALL JOB TYPES</p>
     </div>
-    <p class="so-plan-chips so-mono">ALL PLANS: PHOTOS + AI · VOICE TO SCOPE · CLIENT &amp; INTERNAL REPORTS · ALL JOB TYPES</p>
-    <div class="pricing-grid">
+    <div class="so-pricing-card-wrap"><div class="pricing-grid" id="pricing-cards" aria-label="Choose a subscription plan">
       <div class="price-card fade-in">
+        <div class="so-recommend-tag so-mono" hidden>RECOMMENDED FOR YOU</div>
         <div class="price-tier">Starter</div>
         <div class="price-amount-row"><div class="price-amount" id="solo-price">$59<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="solo-sub" hidden></div></div>
         <p class="price-desc">For one person doing the site visits.</p>
@@ -374,6 +377,7 @@
       </div>
       <div class="price-card fade-in price-featured fade-in-delay-1">
         <div class="price-popular">Most popular</div>
+        <div class="so-recommend-tag so-mono" hidden>RECOMMENDED FOR YOU</div>
         <div class="price-tier">Professional</div>
         <div class="price-amount-row"><div class="price-amount" id="pro-price">$119<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="pro-sub" hidden></div></div>
         <p class="price-desc">For a small team on the road.</p>
@@ -382,6 +386,7 @@
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-dark" data-track="cta-start-trial">Start free trial</a>
       </div>
       <div class="price-card fade-in fade-in-delay-2">
+        <div class="so-recommend-tag so-mono" hidden>RECOMMENDED FOR YOU</div>
         <div class="price-tier">Business</div>
         <div class="price-amount-row"><div class="price-amount" id="biz-price">$249<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="biz-sub" hidden></div></div>
         <p class="price-desc">For larger teams with more jobs.</p>
@@ -390,22 +395,27 @@
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-outline" data-track="cta-start-trial">Start free trial</a>
       </div>
     </div>
+    <div class="so-pricing-dots" aria-label="Swipe between subscription plans"><button type="button" data-plan-dot="Starter" aria-label="View Starter plan" aria-current="false"></button><button type="button" data-plan-dot="Professional" aria-label="View Professional plan" aria-current="true"></button><button type="button" data-plan-dot="Business" aria-label="View Business plan" aria-current="false"></button></div>
+    <p class="so-pricing-swipe so-mono">SWIPE TO COMPARE PLANS</p></div>
+    <p class="pricing-footnote">All prices are AUD + GST. Every free trial starts on Starter. The plans above apply after your trial.</p>
     <section class="so-pricing-calc" id="pricing-calculator" aria-labelledby="roi-title">
       <div class="so-calc-intro"><h3 id="roi-title">WHAT'S YOUR TIME WORTH?</h3><p>Move the sliders to match how you work.</p></div>
-      <div class="so-calc-inputs">
-        <div class="so-calc-field"><label for="roiSlider">Site visits per month <output id="roiJobCount" for="roiSlider">8</output></label><input type="range" id="roiSlider" class="roi-slider" min="1" max="30" step="1" value="8" aria-valuetext="8 site visits per month"></div>
-        <div class="so-calc-field"><label for="roiHours">Hours saved per scope <output id="roiHoursValue" for="roiHours">1.5 hrs</output></label><input type="range" id="roiHours" class="roi-slider" min="0.5" max="3" step="0.5" value="1.5" aria-valuetext="1.5 hours saved per scope"></div>
-        <div class="so-calc-field"><label for="roiRate">Your hourly rate <output id="roiRateValue" for="roiRate">$75/hr</output></label><input type="range" id="roiRate" class="roi-slider" min="40" max="150" step="5" value="75" aria-valuetext="$75 per hour"></div>
-        <div class="so-calc-field so-calc-compare"><span class="so-calc-field-label" id="roiCompareLabel">Compare with plan</span><div class="so-calc-plan-options" role="group" aria-labelledby="roiCompareLabel"><button type="button" data-roi-plan="Starter" aria-pressed="false">Starter</button><button type="button" data-roi-plan="Professional" aria-pressed="true">Professional</button><button type="button" data-roi-plan="Business" aria-pressed="false">Business</button></div></div>
+      <div class="so-calc-body">
+        <div class="so-calc-inputs">
+          <div class="so-calc-field"><label for="roiSlider">Site visits per month <output id="roiJobCount" for="roiSlider">8</output></label><input type="range" id="roiSlider" class="roi-slider" min="1" max="60" step="1" value="8" aria-valuetext="8 site visits per month"></div>
+          <div class="so-calc-field so-calc-logins"><span class="so-calc-field-label" id="roiLoginsLabel">People who need a login</span><div class="so-calc-login-buttons" role="group" aria-labelledby="roiLoginsLabel"><button type="button" data-roi-logins="1" aria-pressed="false">1</button><button type="button" data-roi-logins="2–3" aria-pressed="true">2–3</button><button type="button" data-roi-logins="4–8" aria-pressed="false">4–8</button><button type="button" data-roi-logins="9+" aria-pressed="false">9+</button></div></div>
+          <div class="so-calc-field"><label for="roiHours">Hours saved per scope <output id="roiHoursValue" for="roiHours">1.5 hrs</output></label><input type="range" id="roiHours" class="roi-slider" min="0.5" max="3" step="0.5" value="1.5" aria-valuetext="1.5 hours saved per scope"></div>
+          <div class="so-calc-field"><label for="roiRate">Your hourly rate <output id="roiRateValue" for="roiRate">$75/hr</output></label><input type="range" id="roiRate" class="roi-slider" min="40" max="150" step="5" value="75" aria-valuetext="$75 per hour"></div>
+        </div>
+        <div class="so-calc-results" aria-live="polite" aria-atomic="true">
+          <div class="so-calc-result"><div class="so-calc-number" id="roiHrs">12 hrs</div><div class="so-mono so-calc-result-label">HOURS BACK A MONTH</div></div>
+          <div class="so-calc-result"><div class="so-calc-number" id="roiMoney">$900/month</div><div class="so-mono so-calc-result-label">VALUE OF YOUR TIME</div></div>
+          <div class="so-calc-result"><div class="so-calc-number" id="roiPlan">Professional · $119/month</div><div class="so-mono so-calc-result-label">RECOMMENDED PLAN</div><p class="so-calc-extra-users" id="roiExtraUsers" hidden>+ extra users from $25/mo each</p><a class="so-calc-trial" id="roiTrial" href="https://app.scopesnap.com.au/?signup=1" data-track="cta-start-trial">Start free trial</a></div>
+        </div>
+        <p class="so-calc-ratio" id="roiBreakeven" aria-live="polite">Your time back is worth about 7.6× the plan cost.</p>
+        <p class="so-calc-disclaimer">Illustrative only. Your actual time saved depends on how you work.</p>
       </div>
-      <div class="so-calc-results" aria-live="polite" aria-atomic="true">
-        <div class="so-calc-result"><div class="so-calc-number" id="roiHrs">12 hrs</div><div class="so-mono so-calc-result-label">HOURS BACK A MONTH</div></div>
-        <div class="so-calc-result"><div class="so-calc-number" id="roiMoney">$900/month</div><div class="so-mono so-calc-result-label">VALUE OF YOUR TIME</div></div>
-        <div class="so-calc-result"><div class="so-calc-number" id="roiPlan">$119/month</div><div class="so-mono so-calc-result-label">VS YOUR PLAN</div><p class="so-calc-ratio" id="roiBreakeven">About 7.6× the plan cost.</p></div>
-      </div>
-      <p class="so-calc-disclaimer">Illustrative only. Your actual time saved depends on how you work.</p>
     </section>
-    <p class="pricing-footnote">All prices are AUD + GST. Every free trial starts on Starter. The plans above apply after your trial.</p>
     <div class="pricing-details-group">
       <details class="pricing-details" id="plan-comparison"><summary>Compare plans</summary><div class="pricing-details-body">
         <div class="plan-table-wrap" role="region" aria-label="Plan allowance comparison"><table class="plan-table"><caption>Paid plan allowances, shared across your company</caption><thead><tr><th scope="col">Included allowance</th><th scope="col">Starter</th><th scope="col">Professional</th><th scope="col">Business</th></tr></thead><tbody>
@@ -423,23 +433,10 @@
       </div></details>
     </div>
     <!-- ENTERPRISE BAND -->
-    <div class="enterprise-band fade-in" id="enterprise">
-      <div class="ent-left">
-        <div class="ent-eyebrow">Enterprise</div>
-        <div class="ent-h">Need something<br>larger?</div>
-        <p class="ent-sub">For larger builders, multi-office operations, franchises and enterprise teams.</p>
-        <div class="ent-features">
-          <div class="ent-feature"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Unlimited users</div>
-          <div class="ent-feature"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Dedicated onboarding</div>
-          <div class="ent-feature"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Custom implementation</div>
-        </div>
-      </div>
-      <div class="ent-actions">
-        <a href="/contact" class="btn-ghost">Talk to us</a>
-        <p class="ent-note">We&#8217;ll get back to you within one business day.</p>
-      </div>
+    <div class="enterprise-band so-enterprise-compact" id="enterprise">
+      <div class="so-enterprise-message"><span class="ent-eyebrow">ENTERPRISE</span><p>Need something larger? Unlimited users, onboarding and custom setup for multi-office builders.</p></div>
+      <div class="ent-actions"><a href="/contact" class="btn-ghost">Talk to us →</a><p class="ent-note">We'll get back to you within one business day.</p></div>
     </div>
-
   </div>
 
 
@@ -588,16 +585,44 @@ function toggleFaq(btn) {
   }
 }
 
-// Pricing calculator: independent sliders and selected plan, no guessed job-to-seat mapping.
+// Pricing calculator: recommend the lowest plan meeting job and login limits.
 (function(){
   const visits=document.getElementById('roiSlider'),hours=document.getElementById('roiHours'),rate=document.getElementById('roiRate');
-  if(!visits||!hours||!rate)return;
+  const carousel=document.getElementById('pricing-cards');
+  if(!visits||!hours||!rate||!carousel)return;
   const prices={Starter:59,Professional:119,Business:249};
-  let chosen='Professional';
+  const cards=[...carousel.querySelectorAll('.price-card')],dots=[...document.querySelectorAll('[data-plan-dot]')];
+  const logins=[...document.querySelectorAll('[data-roi-logins]')];
+  const ranks={Starter:0,Professional:1,Business:2,Enterprise:3};
+  let seats='2–3',currentPlan='Professional',currentSlide=1,userSwiped=false;
   const money=n=>'$'+Math.round(n).toLocaleString('en-AU');
   const compact=n=>Number.isInteger(n)?String(n):n.toFixed(1);
+  function centerCard(i,behavior='smooth'){
+    if(!matchMedia('(max-width:699px)').matches||!cards[i])return;
+    const card=cards[i];
+    carousel.scrollTo({left:card.offsetLeft-carousel.offsetLeft-(carousel.clientWidth-card.offsetWidth)/2,behavior});
+  }
+  function updateDots(){
+    dots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===currentSlide)));
+  }
+  function syncCard(plan,autoScroll=false){
+    currentPlan=plan;
+    cards.forEach((card,i)=>{
+      const recommended=i===ranks[plan];
+      card.classList.toggle('so-card-recommended',recommended);
+      const tag=card.querySelector('.so-recommend-tag');if(tag)tag.hidden=!recommended;
+    });
+    if(autoScroll&&userSwiped&&window.scrollY>document.getElementById('pricing-calculator').offsetTop+document.getElementById('pricing-calculator').offsetHeight) {
+      centerCard(ranks[plan]);
+    }
+  }
   function recalc(){
-    const v=Number(visits.value),h=Number(hours.value),r=Number(rate.value),total=v*h,value=total*r,cost=prices[chosen];
+    const v=Number(visits.value),h=Number(hours.value),r=Number(rate.value),total=v*h,value=total*r;
+    const byVisits=v<=8?'Starter':v<=15?'Professional':v<=130?'Business':'Enterprise';
+    const bySeats=seats==='1'?'Starter':seats==='2–3'?'Professional':'Business';
+    const plan=ranks[byVisits]>=ranks[bySeats]?byVisits:bySeats;
+    const packs=plan==='Business'?Math.max(0,Math.min(10,Math.ceil((v-30)/10))):0;
+    const cost=plan==='Enterprise'?null:prices[plan]+packs*59;
     document.getElementById('roiJobCount').textContent=v;
     document.getElementById('roiHoursValue').textContent=compact(h)+' hrs';
     document.getElementById('roiRateValue').textContent='$'+r+'/hr';
@@ -606,16 +631,35 @@ function toggleFaq(btn) {
     rate.setAttribute('aria-valuetext','$'+r+' per hour');
     document.getElementById('roiHrs').textContent=compact(total)+' hrs';
     document.getElementById('roiMoney').textContent=money(value)+'/month';
-    document.getElementById('roiPlan').textContent='$'+cost+'/month';
-    document.getElementById('roiBreakeven').textContent='About '+(value/cost).toFixed(1)+'× the plan cost.';
+    const title=plan==='Enterprise'?'Enterprise · Talk to us':plan+(packs?' + '+packs+' '+(packs===1?'pack':'packs'):'')+' · $'+cost+'/month';
+    document.getElementById('roiPlan').textContent=title;
+    const extra=document.getElementById('roiExtraUsers');
+    extra.hidden=seats!=='9+'||plan==='Enterprise';
+    const trial=document.getElementById('roiTrial');
+    trial.textContent=plan==='Enterprise'?'Talk to us →':'Start free trial';
+    trial.href=plan==='Enterprise'?'/contact':'https://app.scopesnap.com.au/?signup=1';
+    document.getElementById('roiBreakeven').textContent=plan==='Enterprise'?'Talk to us about larger teams →':'Your time back is worth about '+(value/cost).toFixed(1)+'× the plan cost.';
+    syncCard(plan,true);
   }
   [visits,hours,rate].forEach(input=>input.addEventListener('input',recalc));
-  document.querySelectorAll('[data-roi-plan]').forEach(button=>button.addEventListener('click',()=>{
-    chosen=button.dataset.roiPlan;
-    document.querySelectorAll('[data-roi-plan]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn===button)));
+  logins.forEach(button=>button.addEventListener('click',()=>{
+    seats=button.dataset.roiLogins;
+    logins.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
     recalc();
   }));
+  carousel.addEventListener('scroll',()=>{
+    if(!matchMedia('(max-width:699px)').matches)return;
+    const middle=carousel.scrollLeft+carousel.clientWidth/2;
+    currentSlide=cards.reduce((best,card,i)=>Math.abs(card.offsetLeft-carousel.offsetLeft+card.offsetWidth/2-middle)<Math.abs(cards[best].offsetLeft-carousel.offsetLeft+cards[best].offsetWidth/2-middle)?i:best,0);
+    updateDots();
+  },{passive:true});
+  carousel.addEventListener('pointerdown',()=>{userSwiped=true},{passive:true});
+  dots.forEach((dot,i)=>dot.addEventListener('click',()=>{userSwiped=true;currentSlide=i;updateDots();centerCard(i)}));
   recalc();
+  if(matchMedia('(max-width:699px)').matches){
+    // Adjust only the carousel's own scroll position, never the document.
+    requestAnimationFrame(()=>centerCard(1,'instant'));
+  }
 })();
 
 // Voice section tab toggle (mobile)
