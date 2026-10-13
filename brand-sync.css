@@ -354,3 +354,56 @@ body.site-setout .so-hero{min-height:820px}
 
 /* Task 3: give the Voice and Reports dark sections a distinct handoff. */
 #reports.so-reports{border-top:1px solid var(--line-d);margin-top:120px}
+
+/* Task 4: pricing, comparison and on-page time calculator using existing site tokens. */
+#pricing .so-trial-intro{font-size:13px;line-height:1.5;color:#55524C;margin:10px 0 0}
+#pricing .so-plan-chips{color:#55524C;border-top:1px solid var(--line-l);border-bottom:1px solid var(--line-l);margin:24px 0 25px;padding:12px 0;line-height:1.6}
+#pricing .price-annual-note[hidden]{display:none!important}
+#pricing .price-annual-note{color:var(--cu);font-size:13px}
+#pricing .price-desc{min-height:0}
+#pricing .price-list{margin-top:18px}
+#pricing .price-list li{font-size:14px;line-height:1.55;min-height:0;padding:9px 0;border-bottom:1px solid var(--line-l)}
+#pricing .price-featured .price-list li{border-bottom-color:var(--line-d)}
+#pricing .so-extra-users{color:var(--cu);font-size:10px;margin:14px 0 6px}
+#pricing .so-pricing-calc{margin:48px 0 28px;padding:34px 0 27px;border-top:1px solid var(--line-l);border-bottom:1px solid var(--line-l)}
+#pricing .so-calc-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px}
+#pricing .so-calc-intro h3{font-size:clamp(38px,4.7vw,61px);line-height:.95;color:var(--ink);margin:0}
+#pricing .so-calc-intro p{font-size:15px;color:#55524C;margin:0}
+#pricing .so-calc-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:23px 32px}
+#pricing .so-calc-field{min-width:0}
+#pricing .so-calc-field label{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:14px;color:var(--ink);font-weight:600;line-height:1.4;margin:0 0 12px}
+#pricing .so-calc-field output{color:var(--cu);font:600 15px/1.4 var(--ff-m);white-space:nowrap}
+#pricing .so-calc-field .roi-slider{appearance:none;-webkit-appearance:none;display:block;width:100%;height:3px;border:0;border-radius:0;background:#A8A29A;cursor:pointer;accent-color:var(--cu);margin:20px 0 10px}
+#pricing .so-calc-field .roi-slider::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:2px solid var(--bone);border-radius:0;background:var(--cu);box-shadow:0 0 0 1px #875520}
+#pricing .so-calc-field .roi-slider::-moz-range-thumb{width:18px;height:18px;border:2px solid var(--bone);border-radius:0;background:var(--cu);box-shadow:0 0 0 1px #875520}
+#pricing .so-calc-field-label{display:block;font-weight:600;font-size:14px;margin-bottom:10px}
+#pricing .so-calc-plan-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+#pricing .so-calc-plan-options button{padding:11px 7px;min-height:40px;border:1px solid var(--line-l);border-radius:0;background:transparent;color:var(--ink);font-size:12px;cursor:pointer}
+#pricing .so-calc-plan-options button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bone)}
+#pricing .so-calc-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:33px;border-left:1px solid var(--line-l);border-top:1px solid var(--line-l)}
+#pricing .so-calc-result{padding:21px 18px 23px;border-right:1px solid var(--line-l);border-bottom:1px solid var(--line-l);min-width:0}
+#pricing .so-calc-number{font-family:var(--ff-h);font-stretch:68%;font-size:clamp(29px,3.6vw,51px);font-weight:800;letter-spacing:-.025em;line-height:1;color:var(--ink);overflow-wrap:anywhere}
+#pricing .so-calc-result-label{font-size:10px;line-height:1.5;color:#55524C;margin-top:14px}
+#pricing .so-calc-ratio{font-size:13px;line-height:1.5;color:#55524C;margin:12px 0 0}
+#pricing .so-calc-disclaimer{font-size:12px;color:#55524C;margin:18px 0 0}
+#pricing .pricing-details-group{margin-top:22px}
+#pricing .pricing-details-body p{font-size:14px;color:#55524C;line-height:1.55}
+#pricing .pricing-details-body a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:800px){#pricing .so-calc-intro{display:block}#pricing .so-calc-intro p{margin-top:10px}}
+@media(max-width:600px){
+ #pricing .so-plan-chips{font-size:10px}
+ #pricing .so-calc-inputs{grid-template-columns:1fr;gap:18px}
+ #pricing .so-calc-results{grid-template-columns:1fr}
+ #pricing .so-calc-result{padding:17px 18px}
+ #pricing .so-calc-number{font-size:43px}
+ #pricing .so-calc-result-label{margin-top:7px}
+ #pricing .so-pricing-calc{margin-top:34px}
+}
+
+/* Task 4 QA polish: readable comparison headings on ink bars; square mobile rows. */
+#pricing .plan-table thead th{color:var(--bone)}
+@media(max-width:600px){
+ #pricing .plan-table tbody tr{border:1px solid var(--line-l);border-radius:0}
+ #pricing .plan-table tbody th:first-child{color:var(--bone)!important}
+ #pricing .plan-table td::before{color:#55524C}
+}

@@ -18,7 +18,8 @@ for(const path of ["/images/perf/hero-kitchen.webp","/images/perf/final-exterior
 assert(home.includes('id="rv"')&&home.includes('class="so-report-option"'),"Functional full report viewer");
 assert(home.includes("setBilling('monthly')")&&home.includes("setBilling('annual')"),"Monthly/annual prices");
 for(const id of ["solo-price","pro-price","biz-price","roiSlider","roiPlan","faq"])assert(home.includes('id="'+id+'"'),"Missing interactive control "+id);
-for(const phrase of ["$59","$119","$249","$1,309","$2,739","50 GB company storage","200 GB company storage","10 voice recordings per job","15 voice recordings per job","20 voice recordings per job","100 GB for $10"])assert(home.includes(phrase),"Preserve pricing fact "+phrase);
+for(const phrase of ["$59","$119","$249","8 jobs a month","15 jobs a month","30 jobs a month","50 GB storage","200 GB storage","10 voice notes per job","15 voice notes per job","20 voice notes per job","100 GB for $10"])assert(home.includes(phrase),"Preserve pricing fact "+phrase);
+assert(home.includes("['solo',59,708,false]")&&home.includes("['pro',119,1309,true]")&&home.includes("['biz',249,2739,true]"),"Annual Stripe prices match");
 for(const question of ["Is the AI always right?","Does ScopeSnap price or quote the job?","Can I use my building company logo?"])assert(home.includes(question),"FAQ "+question);
 for(const p of ["contact","privacy","terms","billing"]) {
  const page=read(p+".html");
@@ -93,7 +94,7 @@ assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;to
 assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
 assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
 assert(!home.includes('/images/screen-measure.jpg?v=20261011rev1')&&home.includes('/images/workflow/wf-02-capture.webp'),"The old unaligned tape-measure graphic is not used in Workflow");
-assert(home.includes('brand-sync.css?v=20261012task3'),"Voice hero styles cache version");
+assert(home.includes('brand-sync.css?v=20261013pricing4'),"Voice hero styles cache version");
 
 assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
 assert(!home.includes('class="so-specbar"')&&!heroMarkup.includes('Mitchell Residence')&&!heroMarkup.includes('Scope ready ✓'),"Remove fictional job status strip below the hero but permit report previews to name the demo job");
@@ -111,13 +112,13 @@ assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No
 assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
 assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
 assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261012task3'),"Hero styling has refreshed cache version");
+assert(home.includes('brand-sync.css?v=20261013pricing4'),"Hero styling has refreshed cache version");
 assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
 assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
 assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
 assert(home.includes('/images/reports/client-01.webp?v=c87b1a019c573b51'),"Use actual ScopeSnap-exported report images");
-assert(home.includes('id="savings"')&&home.indexOf('id="savings"')>home.indexOf('id="pricing"')&&home.indexOf('id="savings"')<home.indexOf('id="faq"'),"Put optional calculator within Pricing");
-assert(home.includes('<details class="so-savings-disclosure">'),"Calculator should default closed");
+assert(!home.includes('id="savings"')&&home.includes('id="pricing-calculator"'),"Standalone savings section removed; calculator is directly in Pricing");
+assert(home.includes('id="roiHours"')&&home.includes('id="roiRate"')&&home.includes('data-roi-plan="Professional"'),"Visible calculator controls");
 assert(css.includes('@media(min-width:960px)')&&css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Big phones in two desktop rows");
 assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes('.so-savings .roi-money-num{color:var(--ink);'),"Estimator numbers no green");
 for(const path of ["index.html","how-it-works.html","contact.html","billing.html","privacy.html","terms.html","delete-account.html","404.html"]){
@@ -159,7 +160,7 @@ const headlineSections=[
 ];
 let previous=0;
 for(const [id,label] of headlineSections){const position=home.indexOf('id="'+id+'"');assert(position>previous&&home.slice(position,position+500).includes(label),'Wrong section numbering: '+label);previous=position;}
-assert(!home.includes('05 — Estimate')&&home.indexOf('id="savings"')>home.indexOf('id="pricing"')&&home.indexOf('id="savings"')<home.indexOf('id="faq"'),"Calculator belongs under Pricing, no extra numbered section");
+assert(!home.includes('05 — Estimate')&&home.indexOf('id="pricing-calculator"')>home.indexOf('class="pricing-grid"')&&home.indexOf('id="pricing-calculator"')<home.indexOf('id="plan-comparison"'),"Calculator sits directly beneath Pricing cards");
 const familiarCss=read("brand-sync.css");
 assert(familiarCss.includes('#why .so-familiar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))')&&familiarCss.includes('#why .so-familiar-grid{grid-template-columns:1fr}'),"Three columns desktop, one mobile");
 
@@ -181,3 +182,28 @@ assert(reportSection.includes('CLIENT REPORT · GENERATED BY SCOPESNAP')&&report
 assert(!/href\s*=\s*["'][^"']*\.pdf/i.test(home),'No linked PDFs on homepage');
 assert(viewer.includes('counter.textContent="PAGE "+(index+1)')&&viewer.includes('caption.textContent=selected.toUpperCase()+" REPORT · GENERATED BY SCOPESNAP"'),'No totals in dynamic captions or counters');
 assert(css.includes('#reports.so-reports{border-top:1px solid var(--line-d);margin-top:120px}'),'Voice/Reports separation');
+
+/* Task 4: strict content and plan limits regression checks. */
+const pricing=home.slice(home.indexOf('<section class="section" id="pricing">'),home.indexOf('<!-- ── FAQ ── -->'));
+assert(pricing.includes('Every site visit costs you time, fuel and advertising. ScopeSnap makes sure it turns into a scope you can send.'),"Why pricing copy");
+assert(pricing.includes('Try Starter free for 14 days. 5 jobs plus a sample job. No credit card.'),"Trial line");
+assert(pricing.includes('ALL PLANS: PHOTOS + AI · VOICE TO SCOPE · CLIENT &amp; INTERNAL REPORTS · ALL JOB TYPES'),"All plans chip row");
+const expected=[
+ ['Starter',['1 user','8 jobs a month','Up to 20 photos per job','10 voice notes per job','10 GB storage']],
+ ['Professional',['3 users included','15 jobs a month','Up to 40 photos per job','15 voice notes per job','50 GB storage']],
+ ['Business',['8 users included','30 jobs a month','Up to 60 photos per job','20 voice notes per job','200 GB storage']]
+];
+const cardMarkup=[...pricing.matchAll(/<div class="price-card\b[\s\S]*?<ul class="price-list">([\s\S]*?)<\/ul>/g)];
+assert.equal(cardMarkup.length,3,"Exactly three plan cards");
+for(let i=0;i<3;i++){const text=[...cardMarkup[i][1].matchAll(/<li>(.*?)<\/li>/g)].map(x=>x[1]);
+ assert.deepEqual(text,expected[i][1],"Exactly five features per plan: "+expected[i][0]);
+}
+assert(!pricing.includes('Solo')&&!pricing.includes('Extra jobs, users &amp; storage'),"No legacy plan or extra accordion");
+const compare=pricing.match(/<details class="pricing-details" id="plan-comparison">([\s\S]*?)<\/details>/);
+assert(compare&&(!/<details[^>]*open/.test(compare[0])),"Comparison accordion collapsed by default");
+assert.equal((compare[0].match(/<tr><th scope="row">/g)||[]).length,8,"Exactly eight comparison rows");
+assert(pricing.includes('Full allowance details in our Terms →'),"Terms link");
+assert(!pricing.includes('id="savings"')&&!pricing.includes('so-savings-disclosure'),"Calculator is always open, no old savings disclosure");
+assert(pricing.includes('EXTRA USERS $29/MO')&&pricing.includes('EXTRA USERS $25/MO'),"Stripe extra user prices");
+const ent=pricing.slice(pricing.indexOf('id="enterprise"'));
+assert((ent.match(/class="ent-feature"/g)||[]).length===3&&(ent.match(/<a href="/g)||[]).length===1&&ent.includes('>Talk to us</a>'),"Enterprise one CTA and three perks");

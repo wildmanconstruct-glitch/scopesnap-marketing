@@ -1,71 +1,45 @@
-import { readFile } from 'node:fs/promises';
-import { test } from 'node:test';
-import assert from 'node:assert/strict';
-import vm from 'node:vm';
+import { readFileSync } from "node:fs";
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import vm from "node:vm";
 
-// Exercise the published calculator, including its slider and team controls.
-const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
-const source = html.match(/\/\/ ROI calculator\n([\s\S]*?)\/\/ Voice section tab toggle/)[1];
-function calculator() {
-  const nodes = new Map();
-  function node(id) {
-    if (!nodes.has(id)) nodes.set(id, {
-      value: '10', textContent: '', innerHTML: '', style: {}, handlers: {},
-      addEventListener(event, fn) { this.handlers[event] = fn; },
-    });
-    return nodes.get(id);
-  }
-  const window = {};
-  vm.runInNewContext(source, { window, document: { getElementById: node, querySelectorAll: () => [] } });
-  return {
-    node,
-    update(jobs, seats = 1, rate = 75) {
-      node('roiSlider').value = String(jobs);
-      const button = dataset => ({ dataset, classList: { add() {} } });
-      window.setRoiTeam(button({ seats: String(seats) }));
-      window.setRoiRate(button({ rate: String(rate) }));
-      node('roiSlider').handlers.input();
-    },
-  };
-}
-
-for (const [jobs, seats, plan, cost, packs] of [
-  [8, 1, 'Starter', 59, 0], [9, 1, 'Professional', 119, 0],
-  [15, 1, 'Professional', 119, 0], [16, 1, 'Business', 249, 0],
-  [30, 1, 'Business', 249, 0], [31, 1, 'Business', 308, 1],
-  [40, 1, 'Business', 308, 1], [5, 3, 'Professional', 119, 0],
-  [6, 3, 'Business', 249, 0], [20, 3, 'Business', 426, 3],
-  [21, 3, 'Business', 485, 4], [43, 3, 'Business', 839, 10],
-  [44, 3, 'Enterprise', null, 0], [1, 8, 'Business', 249, 0],
-  [19, 8, 'Enterprise', null, 0], [1, 9, 'Enterprise', null, 0],
-]) {
-  test(`${jobs} jobs/person × ${seats} seats recommends ${plan} at ${cost ?? 'custom'} pricing`, () => {
-    const c = calculator(); c.update(jobs, seats);
-    assert.equal(c.node('roiPlan').textContent, plan);
-    if (cost === null) {
-      assert.equal(c.node('roiBreakeven').style.display, 'none');
-      assert.match(c.node('roiPlanLabel').innerHTML, /talk to us/);
-    } else {
-      assert.equal(c.node('roiBreakeven').style.display, '');
-      assert.ok(c.node('roiBreakeven').textContent.includes(`$${cost}/month`));
-      if (packs) {
-        assert.ok(c.node('roiPlanLabel').innerHTML.includes(`${packs} extra-job`));
-        assert.ok(c.node('roiBreakeven').textContent.includes(`${packs * 10} extra jobs/month`));
-      } else assert.equal(c.node('roiPlanLabel').innerHTML, 'Suggested plan');
-    }
+const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+const script=html.match(/\/\/ Pricing calculator:[^\n]*\n([\s\S]*?)\/\/ Voice section tab toggle/);
+assert(script,"Published pricing calculator script missing");
+function create(){
+ const controls=new Map();
+ const node=id=>{
+  if(!controls.has(id))controls.set(id,{
+   value:{roiSlider:"8",roiHours:"1.5",roiRate:"75"}[id]||"",textContent:"",attrs:{},handlers:{},
+   addEventListener(type,callback){this.handlers[type]=callback},
+   setAttribute(name,value){this.attrs[name]=value}
   });
+  return controls.get(id);
+ };
+ const buttons=["Starter","Professional","Business"].map(plan=>({dataset:{roiPlan:plan},attrs:{},handlers:{},
+  addEventListener(type,fn){this.handlers[type]=fn},setAttribute(name,val){this.attrs[name]=val}}));
+ vm.runInNewContext(script[1],{document:{getElementById:node,querySelectorAll:()=>buttons}});
+ return{node,buttons,slide(id,value){const el=node(id);el.value=String(value);el.handlers.input()},choose(name){buttons.find(x=>x.dataset.roiPlan===name).handlers.click()}};
 }
-
-test('break-even includes packs and resets when returning to a smaller plan', () => {
-  const c = calculator();
-  c.update(60, 1, 50);
-  assert.match(c.node('roiBreakeven').textContent, /across 5 jobs.*\$426\/month/);
-  assert.equal(c.node('roiHrs').textContent, '90–120 hrs');
-  c.update(60, 8);
-  assert.equal(c.node('roiBreakeven').style.display, 'none');
-  c.update(8);
-  assert.equal(c.node('roiPlan').textContent, 'Starter');
-  assert.equal(c.node('roiPlanLabel').innerHTML, 'Suggested plan');
-  assert.equal(c.node('roiBreakeven').style.display, '');
-  assert.match(c.node('roiBreakeven').textContent, /\$59\/month base plan/);
+test("default is 8 visits x 1.5h x $75, compared with Professional",()=>{
+ const c=create();
+ assert.equal(c.node("roiHrs").textContent,"12 hrs");
+ assert.equal(c.node("roiMoney").textContent,"$900/month");
+ assert.equal(c.node("roiPlan").textContent,"$119/month");
+ assert.equal(c.node("roiBreakeven").textContent,"About 7.6× the plan cost.");
+});
+test("every slider recalculates, including decimal hours and accessible text",()=>{
+ const c=create();c.slide("roiSlider",10);
+ assert.equal(c.node("roiHrs").textContent,"15 hrs");
+ c.slide("roiHours",2.5);assert.equal(c.node("roiHrs").textContent,"25 hrs");
+ c.slide("roiRate",100);assert.equal(c.node("roiMoney").textContent,"$2,500/month");
+ assert.equal(c.node("roiSlider").attrs["aria-valuetext"],"10 site visits per month");
+ assert.equal(c.node("roiHours").attrs["aria-valuetext"],"2.5 hours saved per scope");
+ assert.equal(c.node("roiRate").attrs["aria-valuetext"],"$100 per hour");
+});
+test("three comparison buttons update price and value ratio",()=>{
+ const c=create();c.choose("Starter");assert.equal(c.node("roiPlan").textContent,"$59/month");
+ assert.equal(c.node("roiBreakeven").textContent,"About 15.3× the plan cost.");
+ c.choose("Business");assert.equal(c.node("roiPlan").textContent,"$249/month");
+ assert.equal(c.buttons.filter(x=>x.attrs["aria-pressed"]==="true").length,1);
 });
