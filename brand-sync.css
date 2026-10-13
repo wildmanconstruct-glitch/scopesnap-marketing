@@ -594,3 +594,9 @@ body.site-setout .so-hero{min-height:820px}
   #pricing .so-calc-field input.roi-slider::-webkit-slider-thumb,
   #pricing .so-calc-field input.roi-slider::-moz-range-thumb{transition:none}
 }
+
+/* Prevent inherited zero flex-basis from collapsing subtitles into first allowance row. */
+#pricing .pricing-grid .price-desc{
+  flex:none!important;height:auto!important;min-height:0!important;
+  margin:8px 0 9px!important;line-height:1.5;position:relative;
+}
