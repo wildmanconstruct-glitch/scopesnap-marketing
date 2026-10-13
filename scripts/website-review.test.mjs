@@ -4,7 +4,7 @@ const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const home=read('index.html'),css=read('brand-sync.css'),workflow=read('workflow.css'),viewer=read('report-viewer.js');
 const section=(a,b)=>home.slice(home.indexOf(a),home.indexOf(b,home.indexOf(a)));
 for(const part of ['class="so-hero"','class="so-origin"','id="features"','id="why"','id="voice-demo"','id="reports"','id="pricing"','id="faq"'])assert(home.includes(part),'Missing section '+part);
-assert(home.includes('brand-sync.css?v=20261013compact4e'),'Updated site CSS cache version');
+assert(home.includes('brand-sync.css?v=20261013seats1'),'Updated site CSS cache version');
 assert(css.includes('--ink:#0E0E0D')&&css.includes('--bone:#ECE8E0')&&css.includes('--cu:#C8843F'),'Existing design tokens unchanged');
 assert(workflow.includes('.wf-mobile-phone'),'Existing mobile workflow preserved');
 assert(!home.includes('href="/sample-client-report.pdf"')&&!home.includes('href="/sample-internal-report.pdf"'),'No published sample PDF links');
