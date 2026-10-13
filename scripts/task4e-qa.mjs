@@ -28,6 +28,22 @@ for(const [width,height] of [[1440,900],[375,812],[390,844]]){
  check(metrics.calculator<=(width===1440?340:700),'Calculator too tall '+width+': '+metrics.calculator);
  check(metrics.enterprise<=(width===1440?140:260),'Enterprise too tall '+width+': '+metrics.enterprise);
  check(metrics.document===metrics.viewport,'Horizontal page overflow '+width+': '+JSON.stringify(metrics));
+
+ const polish=await page.evaluate(()=>{
+   const rate=document.getElementById('roiRate'),thumb=getComputedStyle(rate,'::-webkit-slider-thumb');
+   const cards=[...document.querySelectorAll('#pricing .price-card')];
+   const allowanceRows=cards.flatMap(card=>[...card.querySelectorAll('.price-list li')].map(li=>({
+     height:li.getBoundingClientRect().height,
+     fontSize:parseFloat(getComputedStyle(li).fontSize),
+     lineHeight:parseFloat(getComputedStyle(li).lineHeight)
+   })));
+   return {rateMin:rate.min,rateMax:rate.max,strip:!!document.querySelector('#pricing .so-plan-chips'),
+     thumbRadius:thumb.borderRadius,rows:allowanceRows};
+ });
+ check(polish.rateMin==='75'&&polish.rateMax==='150','Hourly rate must be $75–$150');
+ check(!polish.strip,'Redundant plan strip should be removed');
+ check(polish.rows.length===15&&polish.rows.every(row=>row.height>=row.lineHeight+8),'Plan allowance text must have breathing room and aligned dividers: '+JSON.stringify(polish.rows));
+
  let q=await state(page);check((await page.locator('#roiLogins').inputValue())==='1','Default grouped tier must be 2–3');check(q.plan==='Professional · $119/month'&&q.hours==='12 hrs'&&q.value==='$900/month'&&q.ratio.includes('7.6×')&&q.recommended.join()==='1','Calculator defaults '+JSON.stringify(q));
  if(width===390||width===1440){
   await page.locator('#pricing').screenshot({path:'qa-task4e/pricing-default-'+width+'.png'});
