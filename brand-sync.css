@@ -407,3 +407,100 @@ body.site-setout .so-hero{min-height:820px}
  #pricing .plan-table tbody th:first-child{color:var(--bone)!important}
  #pricing .plan-table td::before{color:#55524C}
 }
+
+/* Task 4E: scoped compact pricing layout, unchanged site palette. */
+#pricing.section{padding:48px 0 45px}
+#pricing .so-pricing-header{display:grid;grid-template-columns:170px minmax(0,1fr) minmax(250px,.72fr);align-items:start;gap:22px;border-bottom:1px solid var(--line-l);padding:0 0 15px}
+#pricing .so-pricing-header>.eyebrow{margin:6px 0 0;font-size:11px}
+#pricing .so-pricing-header h2{font-size:clamp(40px,4.4vw,64px);margin:0;line-height:.92}
+#pricing .so-pricing-intro .section-sub{font-size:15px;line-height:1.45;margin:0;max-width:none}
+#pricing .so-pricing-intro .so-trial-intro{font-size:12px;line-height:1.4;margin:9px 0 0}
+#pricing .so-pricing-toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 0}
+#pricing .so-pricing-toolbar .billing-toggle-wrap{margin:0;flex:none}
+#pricing .so-pricing-toolbar .so-plan-chips{margin:0;padding:0;border:0;text-align:right;font-size:10px;line-height:1.5}
+#pricing .pricing-grid .price-card{padding:28px 28px;min-height:0}
+#pricing .pricing-grid .price-list{margin:13px 0}
+#pricing .pricing-grid .price-list li{padding:9px 0}
+#pricing .pricing-grid .price-desc{margin:8px 0}
+#pricing .pricing-grid .so-recommend-tag{font-size:10px;color:var(--cu);margin-bottom:7px}
+#pricing .pricing-grid .so-recommend-tag[hidden]{display:none}
+#pricing .price-card.so-card-recommended{outline:2px solid var(--cu);outline-offset:-2px}
+#pricing .pricing-footnote{font-size:11px;line-height:1.4;margin:10px 0 0}
+#pricing .so-pricing-dots,#pricing .so-pricing-swipe{display:none}
+#pricing .so-pricing-calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:16px 32px;margin:18px 0 0;padding:20px 0 16px}
+#pricing .so-calc-intro{display:block;margin:0}
+#pricing .so-calc-intro h3{font-size:clamp(30px,3.4vw,47px);line-height:.93}
+#pricing .so-calc-intro p{font-size:13px;margin:10px 0 0}
+#pricing .so-calc-body{min-width:0}
+#pricing .so-calc-inputs{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 20px}
+#pricing .so-calc-field label{font-size:12px;margin-bottom:4px}
+#pricing .so-calc-field output{font-size:12px}
+#pricing .so-calc-field .roi-slider{margin:13px 0 6px}
+#pricing .so-calc-field-label{font-size:12px;margin-bottom:5px}
+#pricing .so-calc-login-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+#pricing .so-calc-login-buttons button{background:transparent;border:1px solid var(--line-l);border-radius:0;color:var(--ink);font-size:12px;min-height:34px;cursor:pointer}
+#pricing .so-calc-login-buttons button[aria-pressed=true]{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+#pricing .so-calc-results{grid-template-columns:repeat(3,minmax(0,1fr));margin:14px 0 0}
+#pricing .so-calc-result{padding:10px 10px 9px}
+#pricing .so-calc-number{font-size:clamp(22px,2.1vw,31px);line-height:1.08;overflow-wrap:anywhere}
+#pricing .so-calc-result-label{font-size:9px;margin-top:6px}
+#pricing #roiPlan{font-size:clamp(17px,1.45vw,22px)}
+#pricing .so-calc-extra-users{font-size:11px;line-height:1.35;color:#55524C;margin:5px 0}
+#pricing .so-calc-extra-users[hidden]{display:none}
+#pricing .so-calc-trial{display:inline-block;color:var(--ink);border-bottom:1px solid var(--cu);font-size:11px;font-weight:700;text-decoration:none;margin:5px 0 0;padding:0 0 2px}
+#pricing .so-calc-ratio{font-size:12px;margin:10px 0 0}
+#pricing .so-calc-disclaimer{font-size:11px;margin:4px 0 0}
+#pricing .pricing-details-group{margin-top:0}
+#pricing .pricing-details summary{padding-top:15px;padding-bottom:15px}
+#pricing .so-enterprise-compact{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:0;margin:16px 0 0;padding:17px 24px}
+#pricing .so-enterprise-message{display:flex;align-items:center;gap:20px;min-width:0}
+#pricing .so-enterprise-message .ent-eyebrow{flex:none;margin:0}
+#pricing .so-enterprise-message p{font-size:14px;line-height:1.4;color:var(--bone);margin:0}
+#pricing .so-enterprise-compact .ent-actions{padding:0;margin:0;display:flex;flex-direction:column;gap:5px;align-items:center;flex:none}
+#pricing .so-enterprise-compact .btn-ghost{min-height:42px;padding:8px 19px;white-space:nowrap}
+#pricing .so-enterprise-compact .ent-note{font-size:10px;max-width:170px;line-height:1.3;margin:0;text-align:center}
+@media(max-width:1000px){#pricing .so-pricing-header{grid-template-columns:130px minmax(0,1fr) minmax(190px,.8fr);gap:15px}}
+@media(max-width:699px){
+ #pricing.section{padding:34px 0 36px}
+ #pricing .so-pricing-header{grid-template-columns:1fr;gap:7px;padding-bottom:12px}
+ #pricing .so-pricing-header>.eyebrow{margin:0 0 3px}
+ #pricing .so-pricing-header h2{font-size:clamp(38px,10vw,52px)}
+ #pricing .so-pricing-intro .section-sub{font-size:13px}
+ #pricing .so-pricing-intro .so-trial-intro{font-size:11px;margin-top:6px}
+ #pricing .so-pricing-toolbar{display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:9px 0}
+ #pricing .so-pricing-toolbar .so-plan-chips{text-align:left;font-size:9px}
+ #pricing .so-pricing-card-wrap{margin-right:-20px}
+ #pricing .pricing-grid{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-inline:contain;border:0;scroll-padding-inline:8%;padding:2px 8% 3px 0}
+ #pricing .pricing-grid::-webkit-scrollbar{display:none}
+ #pricing .pricing-grid .price-card{display:flex;flex-direction:column;scroll-snap-align:center;flex:0 0 84%;width:84%;min-width:0;max-width:none;padding:20px 20px;min-height:0;border:1px solid var(--line-l);border-radius:0}
+ #pricing .pricing-grid .price-featured{border-color:var(--ink)}
+ #pricing .pricing-grid .price-list{margin:7px 0 9px}
+ #pricing .pricing-grid .price-list li{padding:6px 0;font-size:13px}
+ #pricing .pricing-grid .price-desc{font-size:13px;margin:7px 0}
+ #pricing .pricing-grid .price-amount{font-size:clamp(40px,11vw,54px)}
+ #pricing .pricing-grid .so-extra-users{margin:7px 0 3px}
+ #pricing .pricing-grid .price-btn{min-height:40px;padding:8px 15px;margin-top:auto}
+ #pricing .so-pricing-dots{display:flex;justify-content:center;gap:9px;margin:9px 20px 3px 0}
+ #pricing .so-pricing-dots button{height:8px;width:8px;padding:0;border:1px solid var(--cu);border-radius:0;background:transparent;cursor:pointer}
+ #pricing .so-pricing-dots button[aria-current=true]{background:var(--cu)}
+ #pricing .so-pricing-swipe{display:block;color:#55524C;text-align:center;font-size:9px;margin:0 20px 0 0}
+ #pricing .pricing-footnote{font-size:10px;margin:10px 0 0}
+ #pricing .so-pricing-calc{grid-template-columns:1fr;margin:12px 0 0;padding:13px 0 12px;gap:12px}
+ #pricing .so-calc-intro h3{font-size:34px}
+ #pricing .so-calc-intro p{font-size:12px;margin:6px 0 0}
+ #pricing .so-calc-inputs{grid-template-columns:1fr;gap:12px}
+ #pricing .so-calc-field label{margin:0 0 3px}
+ #pricing .so-calc-field .roi-slider{margin:11px 0 5px}
+ #pricing .so-calc-results{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:13px}
+ #pricing .so-calc-result{padding:9px 6px}
+ #pricing .so-calc-number{font-size:clamp(17px,5vw,24px)}
+ #pricing #roiPlan{font-size:14px}
+ #pricing .so-calc-result-label{font-size:8px;letter-spacing:0}
+ #pricing .so-calc-trial{font-size:10px}
+ #pricing .so-calc-extra-users{font-size:10px}
+ #pricing .so-enterprise-compact{padding:15px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+ #pricing .so-enterprise-message{display:block}
+ #pricing .so-enterprise-message p{font-size:13px;margin:5px 0 0}
+ #pricing .so-enterprise-compact .ent-actions{align-items:flex-start;gap:4px}
+ #pricing .so-enterprise-compact .ent-note{text-align:left;max-width:none}
+}
