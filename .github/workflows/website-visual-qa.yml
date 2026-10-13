@@ -31,6 +31,7 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/website-review.test.mjs
+      - run: node --test scripts/roi.test.mjs
       - run: npm install --no-save playwright lighthouse
       - run: npx playwright install --with-deps chromium
       - name: Capture desktop and mobile pages
