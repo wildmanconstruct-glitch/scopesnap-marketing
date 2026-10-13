@@ -527,3 +527,6 @@ body.site-setout .so-hero{min-height:820px}
 }
 
 @media(min-width:700px){#pricing .pricing-grid .price-list{margin:0}}
+
+/* Force card slider to run horizontally; shared mobile stylesheet defaults to column. */
+@media(max-width:699px){#pricing .pricing-grid{flex-direction:row;align-items:stretch}}
