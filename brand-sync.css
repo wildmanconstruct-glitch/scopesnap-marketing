@@ -549,7 +549,7 @@ body.site-setout .so-hero{min-height:820px}
 #pricing .pricing-grid .price-list{display:block;padding:0;list-style:none}
 #pricing .pricing-grid .price-list li{
   display:block;position:relative;box-sizing:border-box;height:auto;min-height:0;
-  padding:10px 0 11px;margin:0;border-bottom:1px solid var(--line-l);
+  padding:6px 0 8px;margin:0;border-bottom:1px solid var(--line-l);
   font-size:14px;line-height:1.45;white-space:normal;overflow-wrap:normal;
 }
 #pricing .pricing-grid .price-list li:last-child{border-bottom:0}
