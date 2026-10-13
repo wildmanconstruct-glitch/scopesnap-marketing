@@ -96,7 +96,7 @@
   <link rel="stylesheet" href="/premium-showcase.css?v=20261010setout2" media="print" onload="this.media='all'"/>
 
   <link rel="stylesheet" href="/brand-critical.css?v=20261012mobile1"/>
-  <link rel="stylesheet" href="/brand-sync.css?v=20261013compact4e" media="print" onload="this.media='all'"/>
+  <link rel="stylesheet" href="/brand-sync.css?v=20261013seats1" media="print" onload="this.media='all'"/>
   <link rel="stylesheet" href="/report-viewer.css?v=20261011sidechoice2" media="print" onload="this.media='all'"/>
   <link rel="stylesheet" href="/workflow.css?v=workflow-natural-20261012" media="print" onload="this.media='all'"/>
   <script defer src="/report-viewer.js?v=20261012task3"></script>
@@ -403,7 +403,7 @@
       <div class="so-calc-body">
         <div class="so-calc-inputs">
           <div class="so-calc-field"><label for="roiSlider">Site visits per month <output id="roiJobCount" for="roiSlider">8</output></label><input type="range" id="roiSlider" class="roi-slider" min="1" max="60" step="1" value="8" aria-valuetext="8 site visits per month"></div>
-          <div class="so-calc-field so-calc-logins"><span class="so-calc-field-label" id="roiLoginsLabel">People who need a login</span><div class="so-calc-login-buttons" role="group" aria-labelledby="roiLoginsLabel"><button type="button" data-roi-logins="1" aria-pressed="false">1</button><button type="button" data-roi-logins="2–3" aria-pressed="true">2–3</button><button type="button" data-roi-logins="4–8" aria-pressed="false">4–8</button><button type="button" data-roi-logins="9+" aria-pressed="false">9+</button></div></div>
+          <div class="so-calc-field so-calc-logins"><label for="roiLogins">People who need a login <output id="roiLoginsValue" for="roiLogins">3 people</output></label><input type="range" id="roiLogins" class="roi-slider" min="1" max="20" step="1" value="3" aria-valuetext="3 people need a login"><div class="so-calc-seat-tiers so-mono"><span>1 · STARTER</span><span>2–3 · PROFESSIONAL</span><span>4–8 · BUSINESS</span><span>9+ · EXTRA USERS</span></div></div>
           <div class="so-calc-field"><label for="roiHours">Hours saved per scope <output id="roiHoursValue" for="roiHours">1.5 hrs</output></label><input type="range" id="roiHours" class="roi-slider" min="0.5" max="3" step="0.5" value="1.5" aria-valuetext="1.5 hours saved per scope"></div>
           <div class="so-calc-field"><label for="roiRate">Your hourly rate <output id="roiRateValue" for="roiRate">$75/hr</output></label><input type="range" id="roiRate" class="roi-slider" min="40" max="150" step="5" value="75" aria-valuetext="$75 per hour"></div>
         </div>
@@ -587,14 +587,14 @@ function toggleFaq(btn) {
 
 // Pricing calculator: recommend the lowest plan meeting job and login limits.
 (function(){
-  const visits=document.getElementById('roiSlider'),hours=document.getElementById('roiHours'),rate=document.getElementById('roiRate');
+  const visits=document.getElementById('roiSlider'),hours=document.getElementById('roiHours'),rate=document.getElementById('roiRate'),seatSlider=document.getElementById('roiLogins');
   const carousel=document.getElementById('pricing-cards');
   if(!visits||!hours||!rate||!carousel)return;
   const prices={Starter:59,Professional:119,Business:249};
   const cards=[...carousel.querySelectorAll('.price-card')],dots=[...document.querySelectorAll('[data-plan-dot]')];
-  const logins=[...document.querySelectorAll('[data-roi-logins]')];
+  
   const ranks={Starter:0,Professional:1,Business:2,Enterprise:3};
-  let seats='2–3',currentPlan='Professional',currentSlide=1,userSwiped=false;
+  let currentPlan='Professional',currentSlide=1,userSwiped=false;
   const money=n=>'$'+Math.round(n).toLocaleString('en-AU');
   const compact=n=>Number.isInteger(n)?String(n):n.toFixed(1);
   function centerCard(i,behavior='smooth'){
@@ -619,7 +619,8 @@ function toggleFaq(btn) {
   function recalc(){
     const v=Number(visits.value),h=Number(hours.value),r=Number(rate.value),total=v*h,value=total*r;
     const byVisits=v<=8?'Starter':v<=15?'Professional':v<=130?'Business':'Enterprise';
-    const bySeats=seats==='1'?'Starter':seats==='2–3'?'Professional':'Business';
+    const users=Number(seatSlider.value);
+    const bySeats=users===1?'Starter':users<=3?'Professional':'Business';
     const plan=ranks[byVisits]>=ranks[bySeats]?byVisits:bySeats;
     const packs=plan==='Business'?Math.max(0,Math.min(10,Math.ceil((v-30)/10))):0;
     const cost=plan==='Enterprise'?null:prices[plan]+packs*59;
@@ -634,19 +635,16 @@ function toggleFaq(btn) {
     const title=plan==='Enterprise'?'Enterprise · Talk to us':plan+(packs?' + '+packs+' '+(packs===1?'pack':'packs'):'')+' · $'+cost+'/month';
     document.getElementById('roiPlan').textContent=title;
     const extra=document.getElementById('roiExtraUsers');
-    extra.hidden=seats!=='9+'||plan==='Enterprise';
+    extra.hidden=users<=8||plan==='Enterprise';
+    document.getElementById('roiLoginsValue').textContent=users+' '+(users===1?'person':'people');
+    seatSlider.setAttribute('aria-valuetext',users+' '+(users===1?'person needs':'people need')+' a login');
     const trial=document.getElementById('roiTrial');
     trial.textContent=plan==='Enterprise'?'Talk to us →':'Start free trial';
     trial.href=plan==='Enterprise'?'/contact':'https://app.scopesnap.com.au/?signup=1';
     document.getElementById('roiBreakeven').textContent=plan==='Enterprise'?'Talk to us about larger teams →':'Your time back is worth about '+(value/cost).toFixed(1)+'× the plan cost.';
     syncCard(plan,true);
   }
-  [visits,hours,rate].forEach(input=>input.addEventListener('input',recalc));
-  logins.forEach(button=>button.addEventListener('click',()=>{
-    seats=button.dataset.roiLogins;
-    logins.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
-    recalc();
-  }));
+  [visits,seatSlider,hours,rate].forEach(input=>input.addEventListener('input',recalc));
   carousel.addEventListener('scroll',()=>{
     if(!matchMedia('(max-width:699px)').matches)return;
     const middle=carousel.scrollLeft+carousel.clientWidth/2;
