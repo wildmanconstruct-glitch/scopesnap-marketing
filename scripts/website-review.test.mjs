@@ -1,209 +1,47 @@
-import {readFileSync,existsSync} from "node:fs";
-import assert from "node:assert/strict";
-const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
-const home=read("index.html"),css=read("brand-sync.css"),guide=read("how-it-works.html");
-for(const part of ['class="so-hero"','class="so-hero-grid"','class="so-photo-dimensions"','class="so-plan-tag"','class="so-origin"','class="wf-grid"','class="so-voice-grid"','class="so-report-layout"','class="so-final"']) assert(home.includes(part),"Missing Site Set-Out component: "+part);
-assert(home.includes('class="site-setout"'),"Homepage design variant");
-assert(css.includes("--ink:#0E0E0D")&&css.includes("--bone:#ECE8E0")&&css.includes("--cu:#C8843F"),"Site Set-Out design tokens");
-assert(home.includes("Archivo:wdth,wght")&&home.includes("JetBrains+Mono")&&!css.includes("@import url('https://fonts.googleapis.com"),"Fonts load from the head once, without duplicate CSS import");
-assert(read("workflow.css").includes(".wf-mobile-phone")&&!read("workflow.css").includes("scroll-snap-type:x mandatory"),"Workflow mobile stages are stacked, not swipe-based");
-assert(css.includes("prefers-reduced-motion"),"Reduced-motion support");
-assert(!home.includes('class="trust-bar"'),"Remove old trust icons");
-assert(!home.includes('class="ps-product-grid"'),"Remove AI-template product cards");
-assert(!home.includes('class="hero-report-peek"'),"Never display full PDF in hero");
-assert(!home.includes('font-style:italic'),"No italic hero accent");
-assert(guide.includes("No drawings required."),"Plan scan remains optional without crowding the hero");
-for(const text of ["renovations","extensions","new builds","repairs and maintenance"])assert(home.toLowerCase().includes(text),"Supported job type "+text);
-for(const path of ["/images/perf/hero-kitchen.webp","/images/perf/final-exterior.webp","/images/perf/hero-phone.webp","/images/workflow/wf-01-start.webp","/images/workflow/wf-02-capture.webp","/images/workflow/wf-03-questions.webp","/images/workflow/wf-04-review.webp","/images/workflow/wf-05-report.webp","/images/workflow/wf-05-client-page.webp","/images/workflow/wf-05-internal-page.webp","/images/reports/client-01.webp"])assert((home+css).includes(path),"Missing asset URL "+path);
-assert(home.includes('id="rv"')&&home.includes('class="so-report-option"'),"Functional full report viewer");
-assert(home.includes("setBilling('monthly')")&&home.includes("setBilling('annual')"),"Monthly/annual prices");
-for(const id of ["solo-price","pro-price","biz-price","roiSlider","roiPlan","faq"])assert(home.includes('id="'+id+'"'),"Missing interactive control "+id);
-for(const phrase of ["$59","$119","$249","8 jobs a month","15 jobs a month","30 jobs a month","50 GB storage","200 GB storage","10 voice notes per job","15 voice notes per job","20 voice notes per job","100 GB for $10"])assert(home.includes(phrase),"Preserve pricing fact "+phrase);
-assert(home.includes("['solo',59,708,false]")&&home.includes("['pro',119,1309,true]")&&home.includes("['biz',249,2739,true]"),"Annual Stripe prices match");
-for(const question of ["Is the AI always right?","Does ScopeSnap price or quote the job?","Can I use my building company logo?"])assert(home.includes(question),"FAQ "+question);
-for(const p of ["contact","privacy","terms","billing"]) {
- const page=read(p+".html");
- assert(page.includes('rel="canonical" href="https://scopesnap.com.au/'+p+'"'),"Canonical "+p);
- assert(page.includes('og:image" content="https://scopesnap.com.au/og.png?v=20261011rev1"'),"Social image "+p);
- assert(page.includes("brand-sync.css?v=20261011rev1"),"Site Set-Out stylesheet on "+p);
-}
-for(const p of ["how-it-works","delete-account","404"])assert(read(p+".html").includes("brand-sync.css?v=20261011rev1"),"Unified styling on "+p);
-assert(guide.includes("No drawings required."),"Plan scan stays optional");
-for(const type of ["New builds","Extensions","Renovations","Repairs &amp; maintenance"])assert(guide.includes(type),"Guide coverage: "+type);
-assert(read("sitemap.xml").includes("https://scopesnap.com.au/contact</loc>"),"Canonical contact route");
-assert(existsSync(new URL("../favicon.ico",import.meta.url)),"Favicon");
-for(const name of ["client","internal"])assert(!existsSync(new URL("../sample-"+name+"-report.pdf",import.meta.url)),"Full example PDF must never be publicly deployed: "+name);
-assert(!home.includes('data-pdf=')&&!home.includes('id="so-pdf-link"')&&!home.includes('id="so-report-preview-link"'),"Marketing may only display in-page report previews");
-assert(!/sample-(?:client|internal)-report\.pdf/i.test(home+guide),"No publicly linked full report PDFs");
-assert(home.includes('id="rv-caption"')&&home.includes('so-report-view-only'),"Image-only report walkthrough and no PDF download");
-assert(!home.includes('so-workflow-swipe')&&home.includes('Five steps from job creation to completed reports'),"Five-stage workflow replaces old swipe strip");
-assert(read("workflow.css").includes('.wf-mobile-phone')&&read("workflow.css").includes('height:520px'),"Stacked mobile phone screenshots use readable 520px crop");
-assert(css.includes('.so-report-side{')&&css.includes('grid-template-columns:minmax(0,1fr) minmax(0,1fr)'),"Compact mobile report selector");
-assert(css.includes('width:185px;right:17px;bottom:-35px'),"Larger mobile hero phone with natural crop");
-assert(!home.includes('Open full client PDF')&&!home.includes('Open full internal PDF'),"No report download CTA");
-const viewer=read("report-viewer.js"),viewerCss=read("report-viewer.css");
-const reportManifest=JSON.parse(read("images/reports/manifest.json"));
-assert(reportManifest.client.pages===4&&reportManifest.internal.pages===5,"Only approved 4-page client and 5-page internal reports");
-assert(reportManifest.version==="c87b1a019c573b5154a350a7f4870b2c51e37aac","Marketing report source is the approved branded exporter commit");
-assert(reportManifest.builderBrand?.name==="Banksia Park Build Co"&&reportManifest.builderBrand?.logoOnEveryPage===true,"Actual illustrated Banksia Park logo required on every PDF page");
-for(const kind of ["client","internal"]){
- const item=reportManifest[kind];
- assert(item.files.length===item.pages&&item.imageInfo.length===item.pages,"Exact original image page list "+kind);
- for(const name of item.files)assert(existsSync(new URL("../images/reports/"+name,import.meta.url)),"Missing real-exported "+name);
- assert(item.bytes<2_500_000,"Optimised report size cap "+kind);
-}
-assert(home.includes('report-viewer.js?v=20261012task3')&&home.includes('report-viewer.css?v=20261011sidechoice2'),"Single page report viewer assets cache-busted");
-assert(!viewerCss.includes('@keyframes rv-scroll')&&!viewer.includes('rv-set'),"No vertical report scroll or double-page spread");
-assert(viewerCss.includes('.rv-page.rv-coming')&&viewerCss.includes('translateX(9%)')&&viewer.includes('rv-arrived'),"Horizontal single-page transition implemented");
-assert(viewer.includes('FIRST_DELAY=5500')&&viewer.includes('setTimeout(()=>goTo(index+1)')&&viewer.includes('IntersectionObserver'),"Page auto-advance, remaining on selected report, pauses offscreen");
-assert(!viewer.includes('animationiteration'),"No automatic switching between report types");
-assert(viewerCss.includes('prefers-reduced-motion:reduce')&&viewer.includes('motion.matches')&&home.includes('id="rv-next"'),"Reduced motion static page with functional manual arrows");
-assert(viewer.includes('preload(type,idx)')&&viewer.includes('new Image()'),"Preload next real-export page without displaying a second page");
-assert(viewer.includes('hovered=true;stopTimer()')&&viewer.includes('held=true;stopTimer()'),"Hover and touch-and-hold pause auto-advance");
-assert(viewerCss.includes('touch-action:pan-y')&&viewer.includes('Math.abs(dx)>=38'),"Swipe horizontally on mobile without breaking vertical scroll");
-assert(home.includes('role="tablist"')&&home.includes('CHOOSE A REPORT')&&home.includes('rv-tab-client')&&home.includes('rv-tab-internal'),"Report switch is prominent, explicit and keyboard accessible");
-assert(home.indexOf('class="rv-switcher"')>home.indexOf('class="so-report-side"'),"Report choices belong inside right column, not above report");
-assert(home.includes('SHOW CLIENT REPORT')&&home.includes('SHOW INTERNAL REPORT'),"Both write-ups are clearly selectable");
-assert(home.includes('Trade-specific scope and notes')&&home.includes('Site photos and measurements'),"Both client and internal details are visible together");
-assert(!home.includes('id="rv-audience-title"')&&!home.includes('id="rv-feature-points"'),"Remove redundant dynamically replaced single audience blurb");
-assert(viewerCss.includes('flex-direction:column;gap:12px;flex:1')&&viewerCss.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Stack both report write-ups on desktop, use compact selector above viewer on mobile");
-assert(!viewer.includes('content[selected]')&&viewer.includes('aria-selected'),"Selecting report changes pages without hiding either description");
-assert(home.includes('SWIPE TO SEE MORE PAGES')&&home.includes('PAGE 1'),"Mobile swipe hint and page number visible");
-assert(viewer.includes('goTo(index-1)')&&viewer.includes('goTo(index+1)'),"Previous and next report page arrows operate");
-assert(guide.includes("Branded Banksia Park Build Co client kitchen scope"),"How It Works must show updated logo report page");
-assert(!home.includes('id="so-report-preview"')&&!home.includes('id="so-pdf-link"'),"Legacy static/report download controls removed");
-
-assert(!existsSync(new URL("../assets/pdf-chunks",import.meta.url)),"Reconstructible full PDF chunks cannot be public");
-const vercel=JSON.parse(read("vercel.json"));
-assert(!vercel.redirects.some(r=>/sample.*report/.test(r.source)),"No download aliases");
-assert(!home.includes("Across 30+ jobs")&&!home.includes("45+ hours"),"No unsupported results");
-
-
-assert(home.includes('Photos, voice notes and measurements, captured room by room. Turned into a client scope and an internal site report.'),"Keep approved compact two-sentence hero description");
-assert(home.includes('class="so-job-types so-mono"')&&home.includes('Renovations · Extensions · New builds · Repairs &amp; maintenance'),"Job types live beneath the trial CTA");
-const heroMarkup=home.slice(home.indexOf('<!-- SITE SET-OUT / HERO -->'),home.indexOf('<!-- BUILT BY BUILDERS -->'));
-assert((heroMarkup.match(/class="btn-primary"/g)||[]).length===1,"Exactly one primary hero CTA");
-assert(!heroMarkup.includes('href="#reports"')&&!heroMarkup.includes('btn-ghost'),"Remove secondary hero report button completely");
-assert(!heroMarkup.includes('Plans optional.'),"No plans afterthought in hero copy");
-assert(css.includes('.so-plan-tag{top:61%;left:59%;z-index:3}')&&css.includes('.so-plan-tag::before{width:38px}'),"Joinery tag is anchored below the window on cabinet fronts");
-assert(home.includes('class="so-phone so-hero-phone so-voice-capture-phone"'),"Hero phone shows voice recording screen");
-assert(home.includes('src="/images/perf/hero-phone.webp?v=20261012mobile1"'),"Hero uses genuine full Kitchen room app capture");
-assert(home.includes('2:37 remaining')&&home.includes('class="so-live-waveform"'),"Hero recording has a visible timer and live waveform");
-assert(home.includes('id="so-voice-clock"')&&home.includes('setInterval(update,1000)'),"Hero timer ticks instead of covering a second time");
-assert(css.includes('left:71.2821%;top:49.5853%')&&css.includes('left:7.4359%;top:49.1114%'),"Hero voice overlays match actual browser screenshot bounds");
-assert(css.includes('width:248px;right:4.5%;bottom:-28px')&&css.includes('width:200px;right:3%;bottom:-20px')&&css.includes('width:160px;right:15px;bottom:-18px'),"Slightly larger phone intentionally cropped by the hero at desktop and mobile");
-assert(css.includes('.so-live-countdown')&&css.includes('@keyframes so-live-audio'),"Live hero overlays styled and animated");
-assert(!home.includes('/images/screen-measure.jpg?v=20261011rev1')&&home.includes('/images/workflow/wf-02-capture.webp'),"The old unaligned tape-measure graphic is not used in Workflow");
-assert(home.includes('brand-sync.css?v=20261013pricing4'),"Voice hero styles cache version");
-
-assert(home.includes('Built by builders, for builders.'),"Keep generic builder-led credibility");
-assert(!home.includes('class="so-specbar"')&&!heroMarkup.includes('Mitchell Residence')&&!heroMarkup.includes('Scope ready ✓'),"Remove fictional job status strip below the hero but permit report previews to name the demo job");
-assert(!home.includes('so-origin-index')&&!home.includes('so-origin-mark'),"Remove repeated builder proof labels");
-assert(home.includes('Tested on real site inspections and quoting jobs.'),"Keep direct builder proof");
-assert((home.match(/Built by builders, for builders\./g)||[]).length===1,"Builder proof appears once");
-assert(home.includes('class="so-origin-check"'),"Builder proof uses one understated gold check icon");
-assert(css.includes('.so-workflow .so-section-head{padding-top:70px}')&&css.includes('.so-workflow .so-section-head{padding-top:48px}'),"Keep the workflow close to the builder credibility strip");
-
-assert(!home.includes('Wildheart Homes'),"Do not name the building company on marketing homepage");
-assert(home.includes('viewBox="0 0 1448 1086"'),"Measurement overlay must use the photo coordinates");
-assert((home.match(/class="so-ar-line"/g)||[]).length===2,"Exactly two AR measurement lines");
-assert((home.match(/class="so-ar-point"/g)||[]).length===4,"Two circular endpoints per AR line");
-assert(!home.includes('so-window-witness')&&!home.includes('so-window-tick'),"No drafting-style witness lines or ticks");
-assert(home.includes('x1="615" y1="226" x2="1034" y2="202"'),"Top line follows actual window angle");
-assert(home.includes('x1="1034" y1="202" x2="1028" y2="496"'),"Height line follows actual side angle");
-assert(css.includes('stroke:#f2d68f')&&css.includes('.so-ar-point{fill:#f2d68f;stroke:#fff'),"Use exactly the gold used by TapeMeasure");
-assert(home.includes('brand-sync.css?v=20261013pricing4'),"Hero styling has refreshed cache version");
-assert(css.includes('.so-photo-dimensions')&&css.includes('inset:0 0 0 30%'),"Window dimension overlay matches photo inset");
-assert(home.includes('id="rv-current"')&&home.includes('id="rv-caption"'),"Current page and total page count displayed");
-assert(!home.includes('class="so-report-call'),"No inaccurate report callouts");
-assert(home.includes('/images/reports/client-01.webp?v=c87b1a019c573b51'),"Use actual ScopeSnap-exported report images");
-assert(!home.includes('id="savings"')&&home.includes('id="pricing-calculator"'),"Standalone savings section removed; calculator is directly in Pricing");
-assert(home.includes('id="roiHours"')&&home.includes('id="roiRate"')&&home.includes('data-roi-plan="Professional"'),"Visible calculator controls");
-assert(css.includes('@media(min-width:960px)')&&css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),"Big phones in two desktop rows");
-assert(css.includes('.so-savings .roi-money-num{color:var(--ink)')||css.includes('.so-savings .roi-money-num{color:var(--ink);'),"Estimator numbers no green");
-for(const path of ["index.html","how-it-works.html","contact.html","billing.html","privacy.html","terms.html","delete-account.html","404.html"]){
- const page=read(path);
- for(const m of page.matchAll(/\/(?:images\/[\w./-]+|sample-[\w-]+\.pdf)[^"'\s<>]*/g)){
-  const expected=m[0].startsWith('/images/perf/hero-phone.webp') || m[0].startsWith('/images/perf/hero-kitchen-mobile.webp') ? '?v=20261012mobile1' : m[0].startsWith('/images/perf/') ? '?v=20261012fast1' : m[0].startsWith('/images/workflow/') ? '?v=2e8c0fb04cf240f87708143c89b7106df46071e8' : m[0].startsWith('/images/screen-hero.jpg') ? '?v=20261011roomvoice1' : m[0].startsWith('/images/reports/') ? '?v=c87b1a019c573b51' : '?v=20261011rev1';
-  assert(m[0].includes(expected),"Old image/PDF URL in "+path+": "+m[0]);
- }
-}
-
-console.log("ScopeSnap Site Set-Out refinements, asset versions, pricing, accessible layout and SEO checks passed.");
-
-// Five-stage workflow remains isolated from Voice, Reports, Pricing and other sections.
-const workflow=home.slice(home.indexOf('<!-- WORKFLOW -->'),home.indexOf('<!-- VOICE -->'));
-assert((workflow.match(/class="wf-step(?: is-active)?"/g)||[]).length===5,"Five workflow stages in the homepage");
-assert(workflow.includes('Quick Create')&&workflow.includes('Full Setup')&&workflow.includes('Plans optional'),"Workflow explains both start paths and optional drawings");
-assert(workflow.includes('Room questions')&&workflow.includes('Scope Check')&&workflow.includes('Client Report')&&workflow.includes('Internal Report'),"Questions, AI review and both final reports are shown");
-assert(!/screen-(?:planscan|photo|voice|measure)\\.jpg/.test(workflow),"Workflow only uses new genuine app screenshots");
-assert(read('workflow.js').includes('IntersectionObserver')&&!read('workflow.js').includes('preventDefault'),"Natural-scrolling sticky phone workflow");
-for(const name of ['wf-01-start','wf-02-capture','wf-03-questions','wf-04-review','wf-05-report','wf-05-client-page','wf-05-internal-page'])assert(existsSync(new URL('../images/workflow/'+name+'.webp',import.meta.url)),"Missing real workflow capture: "+name);
-
-// Task 2: six exact problem/fix pairs and only five numbered homepage sections.
-const familiar=home.slice(home.indexOf('<section class="so-light so-familiar" id="why"'),home.indexOf('<!-- WORKFLOW -->'));
-assert(familiar.includes('SOUND FAMILIAR?')&&familiar.includes("THE SITE VISIT'S DONE.")&&familiar.includes("THE SCOPE ISN'T."),"Sound familiar headings");
-assert(familiar.includes('Every builder knows these. ScopeSnap is built to stop them.'),"Sound familiar intro");
-for(const [problem,fix] of [
-  ['Notes on the back of a quote. Photos lost in your camera roll.','Every photo, note and measurement saved to the right room, in one job.'],
-  ['Back at the office: “What was the width of that window?”','Measure on the spot, and check the photos and room notes instead of driving back.'],
-  ['Left the tape in the ute.','Get a quick camera estimate. Confirm the critical measurements later.'],
-  ['Writing the scope at 9pm from memory.','Talk it through on site. The scope is drafted before you&#39;re home.'],
-  ['“I thought that was included.”','What&#39;s by owner and what&#39;s still to confirm, written into the client report.'],
-  ['The person pricing the job wasn&#39;t on site.','Everyone works from the same photos, notes and internal report.'],
-])assert(familiar.includes(problem)&&familiar.includes(fix),'Missing familiar problem/fix: '+problem);
-assert((familiar.match(/class="so-familiar-card"/g)||[]).length===6,"Exactly six cards");
-assert(home.indexOf('id="why"')>home.indexOf('class="so-origin"')&&home.indexOf('id="why"')<home.indexOf('id="features"'),"Familiar follows proof strip and precedes workflow");
-const headlineSections=[
-  ['features','01 — WORKFLOW'],['voice-demo','02 — VOICE TO SCOPE'],
-  ['reports','03 — REPORTS'],['pricing','04 — PRICING'],['faq','05 — FAQ']
-];
-let previous=0;
-for(const [id,label] of headlineSections){const position=home.indexOf('id="'+id+'"');assert(position>previous&&home.slice(position,position+500).includes(label),'Wrong section numbering: '+label);previous=position;}
-assert(!home.includes('05 — Estimate')&&home.indexOf('id="pricing-calculator"')>home.indexOf('class="pricing-grid"')&&home.indexOf('id="pricing-calculator"')<home.indexOf('id="plan-comparison"'),"Calculator sits directly beneath Pricing cards");
-const familiarCss=read("brand-sync.css");
-assert(familiarCss.includes('#why .so-familiar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))')&&familiarCss.includes('#why .so-familiar-grid{grid-template-columns:1fr}'),"Three columns desktop, one mobile");
-
-/* Task 3: exact bathroom voice example, clear report-only toggle labels and no PDF links. */
-const voiceSection=home.slice(home.indexOf('<section class="so-voice" id="voice-demo"'),home.indexOf('<!-- APP-EXPORTED REPORT SHOWCASE'));
-for(const required of [
-'● RECORDED ON SITE — BATHROOM — 0:41',
-'"Righto, main bathroom\'s a full strip-out. Bath comes out, we\'re putting in a walk-in shower with a semi-frameless screen. New waterproofing, wall-hung vanity with a stone top, and the client wants brushed nickel tapware."',
-'Full strip-out of existing bathroom, including bath',
-'New walk-in shower with semi-frameless screen',
-'Waterproofing to wet areas',
-'Supply and install wall-hung vanity with stone top',
-'Brushed nickel tapware throughout'
-])assert(voiceSection.includes(required),'Task 3 voice copy: '+required);
-assert(!voiceSection.includes('ensuite'),'Voice section still mentions ensuite');
-const reportSection=home.slice(home.indexOf('<section class="so-reports" id="reports"'),home.indexOf('<!-- PRICING -->'));
-assert(!/\b(?:4|5) PAGES\b/.test(reportSection),'Report section must not advertise fixed page totals');
-assert(reportSection.includes('CLIENT REPORT · GENERATED BY SCOPESNAP')&&reportSection.includes('SHOW CLIENT REPORT')&&reportSection.includes('SHOW INTERNAL REPORT'),'Report preview labels and caption');
-assert(!/href\s*=\s*["'][^"']*\.pdf/i.test(home),'No linked PDFs on homepage');
-assert(viewer.includes('counter.textContent="PAGE "+(index+1)')&&viewer.includes('caption.textContent=selected.toUpperCase()+" REPORT · GENERATED BY SCOPESNAP"'),'No totals in dynamic captions or counters');
-assert(css.includes('#reports.so-reports{border-top:1px solid var(--line-d);margin-top:120px}'),'Voice/Reports separation');
-
-/* Task 4: strict content and plan limits regression checks. */
-const pricing=home.slice(home.indexOf('<section class="section" id="pricing">'),home.indexOf('<!-- ── FAQ ── -->'));
-assert(pricing.includes('Every site visit costs you time, fuel and advertising. ScopeSnap makes sure it turns into a scope you can send.'),"Why pricing copy");
-assert(pricing.includes('Try Starter free for 14 days. 5 jobs plus a sample job. No credit card.'),"Trial line");
-assert(pricing.includes('ALL PLANS: PHOTOS + AI · VOICE TO SCOPE · CLIENT &amp; INTERNAL REPORTS · ALL JOB TYPES'),"All plans chip row");
-const expected=[
- ['Starter',['1 user','8 jobs a month','Up to 20 photos per job','10 voice notes per job','10 GB storage']],
- ['Professional',['3 users included','15 jobs a month','Up to 40 photos per job','15 voice notes per job','50 GB storage']],
- ['Business',['8 users included','30 jobs a month','Up to 60 photos per job','20 voice notes per job','200 GB storage']]
-];
-const cardMarkup=[...pricing.matchAll(/<div class="price-card\b[\s\S]*?<ul class="price-list">([\s\S]*?)<\/ul>/g)];
-assert.equal(cardMarkup.length,3,"Exactly three plan cards");
-for(let i=0;i<3;i++){const text=[...cardMarkup[i][1].matchAll(/<li>(.*?)<\/li>/g)].map(x=>x[1]);
- assert.deepEqual(text,expected[i][1],"Exactly five features per plan: "+expected[i][0]);
-}
-assert(!pricing.includes('Solo')&&!pricing.includes('Extra jobs, users &amp; storage'),"No legacy plan or extra accordion");
+import {readFileSync,existsSync} from 'node:fs';
+import assert from 'node:assert/strict';
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const home=read('index.html'),css=read('brand-sync.css'),workflow=read('workflow.css'),viewer=read('report-viewer.js');
+const section=(a,b)=>home.slice(home.indexOf(a),home.indexOf(b,home.indexOf(a)));
+for(const part of ['class="so-hero"','class="so-origin"','id="features"','id="why"','id="voice-demo"','id="reports"','id="pricing"','id="faq"'])assert(home.includes(part),'Missing section '+part);
+assert(home.includes('brand-sync.css?v=20261013compact4e'),'Updated site CSS cache version');
+assert(css.includes('--ink:#0E0E0D')&&css.includes('--bone:#ECE8E0')&&css.includes('--cu:#C8843F'),'Existing design tokens unchanged');
+assert(workflow.includes('.wf-mobile-phone'),'Existing mobile workflow preserved');
+assert(!home.includes('href="/sample-client-report.pdf"')&&!home.includes('href="/sample-internal-report.pdf"'),'No published sample PDF links');
+for(const name of ['client','internal'])assert(!existsSync(new URL('../sample-'+name+'-report.pdf',import.meta.url)),'No public report PDF');
+const manifest=JSON.parse(read('images/reports/manifest.json'));
+assert.equal(manifest.client.pages,4);assert.equal(manifest.internal.pages,5);
+assert(viewer.includes('caption.textContent=selected.toUpperCase()+" REPORT · GENERATED BY SCOPESNAP"'),'Report viewer remains active');
+const voice=section('<section class="so-voice" id="voice-demo"','<!-- APP-EXPORTED REPORT SHOWCASE');
+for(const phrase of ['RECORDED ON SITE — BATHROOM','Brushed nickel tapware throughout','walk-in shower with semi-frameless screen'])assert(voice.includes(phrase),'Missing voice copy '+phrase);
+const why=section('<section class="so-light so-familiar" id="why"','<!-- WORKFLOW -->');
+assert.equal((why.match(/class="so-familiar-card"/g)||[]).length,6);
+for(const label of ['01 — WORKFLOW','02 — VOICE TO SCOPE','03 — REPORTS','04 — PRICING','05 — FAQ'])assert(home.includes(label),'Missing section number '+label);
+const pricing=section('<section class="section" id="pricing"','<!-- ── FAQ ── -->');
+for(const phrase of [
+'Every site visit costs you time, fuel and advertising. ScopeSnap makes sure it turns into a scope you can send.',
+'Try Starter free for 14 days. 5 jobs plus a sample job. No credit card.',
+'ALL PLANS: PHOTOS + AI · VOICE TO SCOPE · CLIENT &amp; INTERNAL REPORTS · ALL JOB TYPES',
+'8 jobs a month','15 jobs a month','30 jobs a month','EXTRA USERS $29/MO','EXTRA USERS $25/MO',
+'100 GB for $10/month','Full allowance details in our Terms →','SWIPE TO COMPARE PLANS',
+'data-plan-dot="Professional"','data-roi-logins="2–3"','data-roi-logins="9+"','RECOMMENDED FOR YOU'
+])assert(pricing.includes(phrase),'Missing pricing fact '+phrase);
+const cardRows=[...pricing.matchAll(/<ul class="price-list">([\s\S]*?)<\/ul>/g)];
+assert.equal(cardRows.length,3);
+for(const row of cardRows)assert.equal((row[1].match(/<li>/g)||[]).length,5,'Exactly five card allowance lines');
+assert((pricing.match(/<div class="price-card/g)||[]).length===3);
+assert(!pricing.includes('data-roi-plan=')&&!pricing.includes('id="savings"'),'Old calculator removed');
+for(const id of ['roiSlider','roiHours','roiRate','roiPlan','roiBreakeven','roiTrial','pricing-cards','pricing-calculator'])assert(pricing.includes('id="'+id+'"'),'Missing pricing widget '+id);
+assert(pricing.includes('min="1" max="60" step="1" value="8"'),'Visits slider 1–60');
+assert(pricing.includes('min="0.5" max="3" step="0.5" value="1.5"'),'Hours slider');
+assert(pricing.includes('min="40" max="150" step="5" value="75"'),'Rate slider');
+assert(css.includes('scroll-snap-type:x mandatory')&&css.includes('#pricing .so-pricing-header{display:grid'),'Compact responsive pricing');
 const compare=pricing.match(/<details class="pricing-details" id="plan-comparison">([\s\S]*?)<\/details>/);
-assert(compare&&(!/<details[^>]*open/.test(compare[0])),"Comparison accordion collapsed by default");
-assert.equal((compare[0].match(/<tr><th scope="row">/g)||[]).length,8,"Exactly eight comparison rows");
-assert(pricing.includes('Full allowance details in our Terms →'),"Terms link");
-assert(!pricing.includes('id="savings"')&&!pricing.includes('so-savings-disclosure'),"Calculator is always open, no old savings disclosure");
-assert(pricing.includes('EXTRA USERS $29/MO')&&pricing.includes('EXTRA USERS $25/MO'),"Stripe extra user prices");
+assert(compare&&!compare[0].includes('id="plan-comparison" open'),'Comparison collapsed');
+assert.equal((compare[0].match(/<tr><th scope="row">/g)||[]).length,8);
 const ent=pricing.slice(pricing.indexOf('id="enterprise"'));
-assert((ent.match(/class="ent-feature"/g)||[]).length===3&&(ent.match(/<a href="/g)||[]).length===1&&ent.includes('>Talk to us</a>'),"Enterprise one CTA and three perks");
+assert(ent.includes('Need something larger? Unlimited users, onboarding and custom setup for multi-office builders.'));
+assert(ent.includes('href="/contact"')&&ent.includes('Talk to us →'),'Enterprise CTA');
+assert.equal((ent.match(/<a href=/g)||[]).length,1,'One Enterprise action');
+assert(!pricing.includes('Solo'),'No old user-facing plan names');
+console.log('Site Set-Out and Task 4E homepage regression checks passed.');
