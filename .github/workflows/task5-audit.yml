@@ -1,10 +1,12 @@
 name: Task 5 FAQ CTA footer audit
 on:
   push:
-    branches: [homepage-revision]
+    branches: [main]
     paths:
       - index.html
       - brand-sync.css
+      - contact.html
+      - terms.html
       - scripts/task5-qa.mjs
       - .github/workflows/task5-audit.yml
   workflow_dispatch:
