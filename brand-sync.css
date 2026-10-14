@@ -650,3 +650,6 @@ footer .so-footer-details a:hover{color:var(--bone);text-decoration:underline}
  #get-started .so-final-assurance{font-size:10px;letter-spacing:.09em;white-space:normal}
  #faq .faq-a{font-size:14px;line-height:1.55}
 }
+
+/* Task 5B: cap FAQ answer reading measure, leave questions and dividers full width. */
+#faq .faq-a p{max-width:720px;margin:0}
