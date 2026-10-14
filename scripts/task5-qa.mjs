@@ -28,7 +28,6 @@ for(const [width,height] of [[1440,900],[390,844],[375,812]]){
    if(width===1440 && info.lines>3.15)throw Error('FAQ answer exceeds three lines: '+questions[i]+' '+JSON.stringify(info));
  }
  await faq.locator('.faq-q').nth(3).click();
- await faq.locator('.faq-q').nth(3).click();
  await page.waitForTimeout(370);
  const intro=page.locator('#get-started .so-final-assurance');
  const cta=await intro.evaluate(el=>{
