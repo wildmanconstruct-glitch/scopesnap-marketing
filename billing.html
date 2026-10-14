@@ -825,7 +825,7 @@
         errEl.textContent = 'Your session has expired. Please sign in again.';
         show('stateLogin');
       } else {
-        errEl.textContent = 'Billing portal is unavailable. Email hello@scopesnap.com.au for help with payment details, invoices or cancellation.';
+        errEl.textContent = 'Billing portal is unavailable. Email support@scopesnap.com.au for help with payment details, invoices or cancellation.';
       }
     } catch (_) {
       errEl.textContent = 'Network error. Check your connection and try again.';
@@ -850,7 +850,7 @@
       box.textContent = r.state === 'purged' ? 'Your previous job data has been deleted after the 30-day retention period.' :
         r.state === 'purging' ? 'Scheduled job-data cleanup is in progress. Please contact support if you need help.' :
         'Your paid access has ended. Jobs, photos and uploaded files are scheduled for deletion after ' + fmtDate(r.purge_after) +
-        '. Reactivate before that date to keep them, or email hello@scopesnap.com.au promptly to request an export. Your login account is separate.';
+        '. Reactivate before that date to keep them, or email support@scopesnap.com.au promptly to request an export. Your login account is separate.';
       box.style.display = 'block';
     } catch (_) { /* Billing remains usable when the notice cannot be loaded. */ }
   }
