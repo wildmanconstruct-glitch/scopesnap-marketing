@@ -34,7 +34,7 @@ assert(!pricing.includes('data-roi-plan=')&&!pricing.includes('id="savings"'),'O
 for(const id of ['roiSlider','roiHours','roiRate','roiPlan','roiBreakeven','roiTrial','pricing-cards','pricing-calculator'])assert(pricing.includes('id="'+id+'"'),'Missing pricing widget '+id);
 assert(pricing.includes('min="1" max="60" step="1" value="8"'),'Visits slider 1–60');
 assert(pricing.includes('min="0.5" max="3" step="0.5" value="1.5"'),'Hours slider');
-assert(pricing.includes('min="75" max="150" step="5" value="75"'),'Rate slider');
+assert(pricing.includes('min="40" max="150" step="5" value="75"'),'Rate slider');
 assert(css.includes('scroll-snap-type:x mandatory')&&css.includes('#pricing .so-pricing-header{display:grid'),'Compact responsive pricing');
 const compare=pricing.match(/<details class="pricing-details" id="plan-comparison">([\s\S]*?)<\/details>/);
 assert(compare&&!compare[0].includes('id="plan-comparison" open'),'Comparison collapsed');
