@@ -4,7 +4,7 @@ const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const home=read('index.html'),css=read('brand-sync.css'),workflow=read('workflow.css'),viewer=read('report-viewer.js');
 const section=(a,b)=>home.slice(home.indexOf(a),home.indexOf(b,home.indexOf(a)));
 for(const part of ['class="so-hero"','class="so-origin"','id="features"','id="why"','id="voice-demo"','id="reports"','id="pricing"','id="faq"'])assert(home.includes(part),'Missing section '+part);
-assert(home.includes('brand-sync.css?v=20261013fourstops1'),'Updated site CSS cache version');
+assert(home.includes('brand-sync.css?v=20261014task5'),'Updated site CSS cache version');
 assert(css.includes('--ink:#0E0E0D')&&css.includes('--bone:#ECE8E0')&&css.includes('--cu:#C8843F'),'Existing design tokens unchanged');
 assert(workflow.includes('.wf-mobile-phone'),'Existing mobile workflow preserved');
 assert(!home.includes('href="/sample-client-report.pdf"')&&!home.includes('href="/sample-internal-report.pdf"'),'No published sample PDF links');
@@ -45,3 +45,18 @@ assert(ent.includes('href="/contact"')&&ent.includes('Talk to us →'),'Enterpri
 assert.equal((ent.match(/<a href=/g)||[]).length,1,'One Enterprise action');
 assert(!pricing.includes('Solo')&&!pricing.includes('ALL PLANS:'),'No legacy names or redundant plan strip');
 console.log('Site Set-Out and Task 4E homepage regression checks passed.');
+
+/* Task 5: exact FAQ, final action and verified footer facts. */
+const faq=section('<section class="section" id="faq"','<!-- ── GET STARTED ── -->');
+assert(faq.includes('05 — FAQ')&&faq.includes('Can my whole team use it?'),"Task 5 FAQ label and team question");
+const titles=[...faq.matchAll(/<button class="faq-q"/g)];
+assert.equal(titles.length,9,"Nine FAQ questions");
+assert(faq.indexOf('Can my whole team use it?')>faq.indexOf('Can I use my building company logo?')&&faq.indexOf('Can my whole team use it?')<faq.indexOf('Does it work with no signal on site?'),"Team FAQ is fourth");
+assert(faq.includes('Yes. Starter includes 1 user, Professional 3 and Business 8, and you can add extra users. Most teams only need logins for the people doing site visits and sales. Everyone else gets the finished PDF reports.'),"Team FAQ exact copy");
+assert(faq.includes('Starter includes 10 GB, Professional 50 GB and Business 200 GB, shared across your company. Need more? Add 100 GB for $10/month + GST.'),"Storage FAQ exact copy");
+assert(!/\\bSolo\\b/.test(faq),"No legacy plan name in FAQ");
+const closing=section('<section class="so-final" id="get-started"','</main>');
+assert(closing.includes('14 DAYS FREE · NO CREDIT CARD · CANCEL ANY TIME'),"CTA guarantee");
+const footer=home.slice(home.indexOf('<footer>'),home.indexOf('</footer>')+9);
+for(const value of ['ScopeSnap Pty Ltd · ABN 84 698 607 868','href="mailto:hello@scopesnap.com.au"','Adelaide Hills, South Australia'])assert(footer.includes(value),"Footer: "+value);
+assert(footer.includes('href="#features">Features')&&footer.includes('href="/how-it-works">How it works'),"Keep distinct Features and How it works links");
