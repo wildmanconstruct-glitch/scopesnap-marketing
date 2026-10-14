@@ -1,13 +1,14 @@
 name: Task 5 FAQ CTA footer audit
 on:
   push:
-    branches: [main]
+    branches: [homepage-revision]
     paths:
       - index.html
       - brand-sync.css
       - contact.html
       - terms.html
       - scripts/task5-qa.mjs
+      - scripts/task6-audit.mjs
       - .github/workflows/task5-audit.yml
   workflow_dispatch:
 permissions:
@@ -29,10 +30,13 @@ jobs:
           python3 -m http.server 8080 >/tmp/scopesnap-task5.log 2>&1 &
           sleep 2
           node scripts/task5-qa.mjs
+          node scripts/task6-audit.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: task5-screenshots
-          path: qa-task5
+          name: task6-review
+          path: |
+            qa-task5
+            qa-task6
           retention-days: 14
           if-no-files-found: warn
