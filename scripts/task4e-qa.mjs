@@ -40,8 +40,36 @@ for(const [width,height] of [[1440,900],[375,812],[390,844]]){
    return {rateMin:rate.min,rateMax:rate.max,strip:!!document.querySelector('#pricing .so-plan-chips'),
      thumbRadius:thumb.borderRadius,rows:allowanceRows};
  });
- check(polish.rateMin==='75'&&polish.rateMax==='150','Hourly rate must be $75–$150');
+ check(polish.rateMin==='40'&&polish.rateMax==='150','Hourly rate must be $40–$150');
  check(!polish.strip,'Redundant plan strip should be removed');
+
+ const task4f=await page.evaluate(()=>{
+   const intro=document.querySelector('#pricing .section-sub');
+   const label=document.querySelector('#roiPlan + .so-calc-result-label');
+   const seat=document.getElementById('roiLogins'),rect=seat.getBoundingClientRect();
+   const markers=[...document.querySelectorAll('#pricing .so-calc-seat-tiers span')].map(x=>x.getBoundingClientRect());
+   const off=markers.map((m,i)=>Math.abs(m.left+m.width/2-(rect.left+11+(rect.width-22)*i/3)));
+   const badge=document.querySelector('#pricing .so-card-recommended .so-recommend-tag');
+   const tagStyle=getComputedStyle(badge);
+   const badBoneSubs=[...document.querySelectorAll('.section-sub')].filter(el=>{
+     const section=el.closest('section');return section&&getComputedStyle(section).backgroundColor==='rgb(236, 232, 224)'&&getComputedStyle(el).color==='rgb(179, 176, 169)';
+   }).length;
+   return{introColor:getComputedStyle(intro).color,otherBadBoneSubs:badBoneSubs,labelWidth:label.scrollWidth,labelBox:label.clientWidth,offsets:off,badgePosition:tagStyle.position,badgeHeight:badge.getBoundingClientRect().height};
+ });
+ check(task4f.introColor==='rgb(85, 82, 76)'&&task4f.otherBadBoneSubs===0,'Bone-section intro contrast: '+JSON.stringify(task4f));
+ check(task4f.labelWidth<=task4f.labelBox+1,'Recommended plan arrow wraps: '+JSON.stringify(task4f));
+ check(task4f.offsets.every(n=>n<=2),'Seat slider labels must align with thumb stops: '+JSON.stringify(task4f.offsets));
+ check(task4f.badgePosition==='absolute'&&Math.abs(task4f.badgeHeight-24)<2,'Recommended badge should float above card, not move its content');
+ if(width===1440){
+   const priceTop=[];
+   for(const step of [0,1,2]){
+     await selectLogins(page,step);
+     priceTop.push(await page.locator('#pricing .price-amount').evaluateAll(els=>els.map(el=>el.getBoundingClientRect().top)));
+   }
+   for(const tops of priceTop)check(Math.max(...tops)-Math.min(...tops)<=1,'Prices shift when recommended card changes: '+JSON.stringify(priceTop));
+   await selectLogins(page,1);
+ }
+
 
  const subtitleClearance=await page.evaluate(()=>[...document.querySelectorAll('#pricing .price-card')].map(card=>{
    const subtitle=card.querySelector('.price-desc').getBoundingClientRect();
@@ -51,6 +79,13 @@ for(const [width,height] of [[1440,900],[375,812],[390,844]]){
  check(subtitleClearance.every(gap=>gap>=0),'Subtitle overlaps first allowance: '+JSON.stringify(subtitleClearance));
 
  check(polish.rows.length===15&&polish.rows.every(row=>row.height>=row.lineHeight+8),'Plan allowance text must have breathing room and aligned dividers: '+JSON.stringify(polish.rows));
+
+ if(width===1440||width===390){
+   const oldRate=await page.locator('#roiRate').inputValue();
+   await page.locator('#roiRate').evaluate(el=>{el.value='40';el.dispatchEvent(new Event('input',{bubbles:true}))});
+   check((await state(page)).value==='$480/month','At $40/hour and 12 hours saved value is $480');
+   await page.locator('#roiRate').evaluate((el,n)=>{el.value=n;el.dispatchEvent(new Event('input',{bubbles:true}))},oldRate);
+ }
 
  let q=await state(page);check((await page.locator('#roiLogins').inputValue())==='1','Default grouped tier must be 2–3');check(q.plan==='Professional · $119/month'&&q.hours==='12 hrs'&&q.value==='$900/month'&&q.ratio.includes('7.6×')&&q.recommended.join()==='1','Calculator defaults '+JSON.stringify(q));
  if(width===390||width===1440){
