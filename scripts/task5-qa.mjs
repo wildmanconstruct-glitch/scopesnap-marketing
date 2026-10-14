@@ -17,15 +17,14 @@ for(const [width,height] of [[1440,900],[390,844],[375,812]]){
  for(let i=0;i<questions.length;i++){
    await faq.locator('.faq-q').nth(i).click();
    await page.waitForTimeout(370);
-   const info=await faq.locator('.faq-a').nth(i).evaluate(el=>{
+   const info=await faq.locator('.faq-a p').nth(i).evaluate(el=>{
      const css=getComputedStyle(el);
-     const height=el.getBoundingClientRect().height;
-     const lineHeight=parseFloat(css.lineHeight);
-     const textHeight=height-parseFloat(css.paddingTop)-parseFloat(css.paddingBottom);
-     return {text:el.innerText,lines:Math.round(textHeight/lineHeight*100)/100,fontSize:css.fontSize,height};
+     const box=el.getBoundingClientRect();
+     return {text:el.innerText,lines:box.height/parseFloat(css.lineHeight),width:box.width};
    });
    checks.push(info);
-   if(width===1440 && info.lines>3.15)throw Error('FAQ answer exceeds three lines: '+questions[i]+' '+JSON.stringify(info));
+   if(info.width>720.5)throw Error('FAQ answer exceeds 720px: '+questions[i]+' '+JSON.stringify(info));
+   if(info.lines>(width===1440?4.1:7.1))throw Error('FAQ answer too long: '+questions[i]+' '+JSON.stringify(info));
  }
  await faq.locator('.faq-q').nth(3).click();
  await page.waitForTimeout(370);
@@ -44,6 +43,10 @@ for(const [width,height] of [[1440,900],[390,844],[375,812]]){
     if(new URL(link.href).hostname!=='app.scopesnap.com.au')throw Error('Unexpected external footer link: '+link.href);
     continue;
   }
+  if(link.href.startsWith('/#')){
+    const id=link.href.slice(2);if(!await page.locator('#'+id).count())throw Error('Missing homepage section '+id);
+    continue;
+  }
   if(link.href.startsWith('#')){
     if(!await page.locator(link.href).count())throw Error('Broken footer anchor '+link.href);
     continue;
@@ -54,6 +57,21 @@ for(const [width,height] of [[1440,900],[390,844],[375,812]]){
   const response=await page.request.get('http://127.0.0.1:8080/'+(route==='/'?'index.html':route.slice(1)+(route.includes('.')?'':'.html')));
   if(response.status()!==200)throw Error('Footer link returned '+response.status()+': '+link.href);
  }
+
+ for(const secondary of ['/contact.html','/terms.html']){
+   await page.goto('http://127.0.0.1:8080'+secondary,{waitUntil:'domcontentloaded'});
+   for(const [title,hash] of [['Features','#features'],['Pricing','#pricing']]){
+     const link=page.locator('footer a').filter({hasText:title});
+     if(await link.count()!==1)throw Error(secondary+' footer missing '+title);
+     await link.click();
+     await page.waitForURL('**/'+hash);
+     if(new URL(page.url()).hash!==hash)throw Error(secondary+' navigation to '+hash+' failed');
+     if(!await page.locator(hash).count())throw Error('Missing landing section '+hash);
+     await page.goto('http://127.0.0.1:8080'+secondary,{waitUntil:'domcontentloaded'});
+   }
+ }
+ await page.goto('http://127.0.0.1:8080/',{waitUntil:'domcontentloaded'});
+
  const pageWidth=await page.evaluate(()=>document.documentElement.scrollWidth);
  if(pageWidth>width+2)throw Error('Horizontal page overflow '+width+' / '+pageWidth);
  if(width!==375){
