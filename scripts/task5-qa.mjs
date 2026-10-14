@@ -10,7 +10,7 @@ for(const [width,height] of [[1440,900],[390,844],[375,812]]){
  await page.goto('http://127.0.0.1:8080/',{waitUntil:'networkidle'});
  const faq=page.locator('#faq');
  const items=faq.locator('.faq-item');
- if(await items.count()!==9)throw Error('Exactly nine FAQ entries required');
+ if(await items.count()!==10)throw Error('Exactly ten FAQ entries required');
  const questions=await faq.locator('.faq-q').allTextContents();
  if(!questions[3].includes('Can my whole team use it?'))throw Error('New team question must be fourth');
  const checks=[];
