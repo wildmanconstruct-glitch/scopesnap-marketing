@@ -95,3 +95,7 @@ body:not(.site-setout) :is(.contact-form-wrap,.login-card) :is(input,textarea)::
   .terms-table th,.terms-table td{padding:7px 4px;white-space:normal}
   .terms-table td{text-align:center}
 }
+
+/* 6. Voice → Reports: the hairline separates the two dark sections; the extra
+   120px gap from brand-sync made it look like dead space. */
+#reports.so-reports{margin-top:0}
