@@ -1,7 +1,7 @@
-name: Task 5 FAQ CTA footer audit
+name: Task 6 final website audit
 on:
   push:
-    branches: [homepage-revision]
+    branches: [main, homepage-revision]
     paths:
       - index.html
       - brand-sync.css
@@ -10,6 +10,7 @@ on:
       - terms.html
       - scripts/task5-qa.mjs
       - scripts/task6-audit.mjs
+      - scripts/gzip-qa-server.mjs
       - .github/workflows/task5-audit.yml
   workflow_dispatch:
 permissions:
