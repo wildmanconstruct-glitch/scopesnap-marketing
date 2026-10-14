@@ -1,13 +1,16 @@
-name: Task 5 FAQ CTA footer audit
+name: Task 6 final website audit
 on:
   push:
-    branches: [main]
+    branches: [main, homepage-revision]
     paths:
       - index.html
       - brand-sync.css
+      - brand-critical.css
       - contact.html
       - terms.html
       - scripts/task5-qa.mjs
+      - scripts/task6-audit.mjs
+      - scripts/gzip-qa-server.mjs
       - .github/workflows/task5-audit.yml
   workflow_dispatch:
 permissions:
@@ -22,17 +25,24 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/website-review.test.mjs
-      - run: npm install --no-save playwright@1.56.1
+      - run: npm install --no-save playwright@1.56.1 lighthouse
       - run: npx playwright install --with-deps chromium
       - name: FAQ, CTA and footer screenshots and link QA
         run: |
-          python3 -m http.server 8080 >/tmp/scopesnap-task5.log 2>&1 &
+          node scripts/gzip-qa-server.mjs >/tmp/scopesnap-task5.log 2>&1 &
           sleep 2
           node scripts/task5-qa.mjs
+          node scripts/task6-audit.mjs
+      - name: Lighthouse mobile performance and accessibility
+        run: |
+          npx lighthouse http://127.0.0.1:8080/ --only-categories=performance,accessibility --chrome-flags="--headless --no-sandbox" --output=json --output-path=qa-task6/lighthouse.json --quiet
+          node -e "const c=require('./qa-task6/lighthouse.json').categories;const p=Math.round(c.performance.score*100),a=Math.round(c.accessibility.score*100);console.log('TASK6_LIGHTHOUSE',p,a);if(p<85||a<95)process.exit(1)"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: task5-screenshots
-          path: qa-task5
+          name: task6-review
+          path: |
+            qa-task5
+            qa-task6
           retention-days: 14
           if-no-files-found: warn
