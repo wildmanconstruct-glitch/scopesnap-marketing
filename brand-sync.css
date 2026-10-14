@@ -639,3 +639,14 @@ body.site-setout .so-hero{min-height:820px}
   background:transparent;border:0;z-index:2;
 }
 @media(max-width:699px){#pricing .pricing-grid .price-popular{left:20px}}
+
+/* Task 5: FAQ readability, final CTA assurance, verified company footer details. */
+#faq .faq-a{font-size:14px;line-height:1.55}
+#get-started .so-final-assurance{color:var(--bone);font-size:11px;letter-spacing:.12em;margin:21px 0 0;line-height:1.7;max-width:100%}
+footer .so-footer-details{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-top:13px}
+footer .so-footer-details p,footer .so-footer-details a{font:400 12px/1.5 var(--ff-b);color:#C2BFB7;margin:0;text-decoration:none}
+footer .so-footer-details a:hover{color:var(--bone);text-decoration:underline}
+@media(max-width:600px){
+ #get-started .so-final-assurance{font-size:10px;letter-spacing:.09em;white-space:normal}
+ #faq .faq-a{font-size:14px;line-height:1.55}
+}

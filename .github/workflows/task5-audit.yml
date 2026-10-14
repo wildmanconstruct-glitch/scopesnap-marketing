@@ -1,0 +1,36 @@
+name: Task 5 FAQ CTA footer audit
+on:
+  push:
+    branches: [homepage-revision]
+    paths:
+      - index.html
+      - brand-sync.css
+      - scripts/task5-qa.mjs
+      - .github/workflows/task5-audit.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/website-review.test.mjs
+      - run: npm install --no-save playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - name: FAQ, CTA and footer screenshots and link QA
+        run: |
+          python3 -m http.server 8080 >/tmp/scopesnap-task5.log 2>&1 &
+          sleep 2
+          node scripts/task5-qa.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: task5-screenshots
+          path: qa-task5
+          retention-days: 14
+          if-no-files-found: warn
