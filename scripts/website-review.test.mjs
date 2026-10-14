@@ -59,4 +59,11 @@ const closing=section('<section class="so-final" id="get-started"','</main>');
 assert(closing.includes('14 DAYS FREE · NO CREDIT CARD · CANCEL ANY TIME'),"CTA guarantee");
 const footer=home.slice(home.indexOf('<footer>'),home.indexOf('</footer>')+9);
 for(const value of ['ScopeSnap Pty Ltd · ABN 84 698 607 868','href="mailto:hello@scopesnap.com.au"','Adelaide Hills, South Australia'])assert(footer.includes(value),"Footer: "+value);
-assert(footer.includes('href="#features">Features')&&footer.includes('href="/how-it-works">How it works'),"Keep distinct Features and How it works links");
+assert(footer.includes('href="/#features">Features')&&footer.includes('href="/how-it-works">How it works'),"Keep distinct Features and How it works links");
+
+/* Task 5B — FAQ measure, export answer and homepage footer destinations. */
+assert(faq.includes("Yes. An admin can export your jobs as CSV from Company Settings, and any job's room-by-room scope as CSV from its report. Download PDF reports and photos separately. Export before your subscription ends."),"Exact short CSV export answer");
+assert(!footer.includes('Built for Australian builders.'),"Remove duplicated footer slogan");
+assert(footer.includes('href="/#pricing">Pricing'),"Footer pricing points to homepage");
+assert(css.includes('#faq .faq-a p{max-width:720px;margin:0}'),"FAQ paragraphs capped at 720px");
+for(const p of ["contact","terms"]){const page=read(p+".html");assert(page.includes('href="/#features"')&&page.includes('href="/#pricing"'),"Secondary footer anchors "+p)}
