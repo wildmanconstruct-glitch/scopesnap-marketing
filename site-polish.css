@@ -69,3 +69,16 @@
   .so-reports .rv-page-count{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 }
 @media(min-width:651px){.so-reports .rv-dots,.so-reports .rv-swipe-hint.ss-hint{display:none}}
+
+/* 4. Light cards on dark subpages (contact page, billing sign-in).
+   brand-sync turns these cards bone but left their text light, so headings,
+   labels and help text were near-invisible. Dark text on the bone cards. */
+body:not(.site-setout) :is(.contact-info,.contact-form-wrap,.login-card) :is(h2,h3,h4){color:var(--ink)!important}
+body:not(.site-setout) :is(.contact-info,.contact-form-wrap,.login-card) :is(p,li,label,span,div){color:#4A463F!important}
+body:not(.site-setout) :is(.contact-info,.contact-form-wrap,.login-card) a{color:#86521B!important}
+body:not(.site-setout) :is(.contact-info,.contact-form-wrap,.login-card) .req{color:#86521B!important}
+body:not(.site-setout) :is(.contact-info,.contact-form-wrap,.login-card) button,
+body:not(.site-setout) :is(.contact-info,.contact-form-wrap,.login-card) button *{color:var(--ink)!important}
+body:not(.site-setout) :is(.contact-form-wrap,.login-card) .form-error{color:#A3341F!important}
+body:not(.site-setout) .login-card :is(input,textarea,select){background:#F8F7F3!important;color:var(--ink)!important;border:1px solid #CFC9BE!important}
+body:not(.site-setout) :is(.contact-form-wrap,.login-card) :is(input,textarea)::placeholder{color:#77736B!important}
