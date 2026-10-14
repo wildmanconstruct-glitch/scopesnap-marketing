@@ -30,3 +30,42 @@
 #features .wf-toggle button{font-size:11px!important}
 /* The plan label must not overflow its column at 11px */
 #pricing #roiPlan + .so-calc-result-label{white-space:normal!important}
+
+/* 3. SWIPE STANDARD (locked 14 Oct 2026). Every swipe section on phones uses:
+      - cards at 84% width so the next one peeks in, snapping to centre
+      - square dots underneath (copper outline, current one filled, 44px tap target)
+      - one mono hint line: "SWIPE TO ..." in capitals, 11px
+   Used by: pricing cards, workflow steps, report pages. Don't invent new swipe styles. */
+.ss-dots,.ss-hint{display:none}
+@media(max-width:699px){
+  .ss-dots{display:flex;justify-content:center;gap:0;margin:6px 0 0}
+  .ss-dots button{width:44px;height:44px;padding:0;border:0;background:transparent;position:relative;cursor:pointer}
+  .ss-dots button::after{content:"";position:absolute;inset:18px;border:1px solid var(--cu)}
+  .ss-dots button[aria-current="true"]::after{background:var(--cu)}
+  .ss-dots button:focus-visible{outline:2px solid var(--cu);outline-offset:-6px}
+  .ss-hint{display:block;margin:0;text-align:center;font:500 11px/1.4 var(--ff-m);letter-spacing:.12em;text-transform:uppercase;color:#55524C}
+
+  /* Workflow: five step cards */
+  #features .wf-steps{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-inline:contain;scroll-padding-inline:8%;padding:2px 8% 3px 0;align-items:stretch}
+  #features .wf-steps::-webkit-scrollbar{display:none}
+  #features .wf-step{flex:0 0 84%;width:84%;min-width:0;scroll-snap-align:center;justify-content:flex-start;border:1px solid var(--line-l);padding:18px 16px 20px!important}
+  #features .wf-step:first-child{border-top:1px solid var(--line-l)}
+  #features .wf-step h3{font-size:36px!important;margin-bottom:10px}
+  #features .wf-step p{margin-bottom:12px}
+  #features .wf-mobile-phone{width:200px;height:340px;margin:16px auto 0!important;border-width:8px;border-radius:28px}
+  #features .wf-mobile-shot{border-radius:20px}
+  #features .wf-step[data-step="5"] .wf-mobile-phone{display:none}
+  #features .wf-mobile-report{width:100%;margin:16px 0 0}
+  #features .wf-dots{margin-top:8px}
+
+  /* Pricing already follows the standard; keep its hint the same size */
+  #pricing .so-pricing-swipe{font-size:11px}
+}
+/* Report pages: dots replace the arrows and page counter on phones */
+@media(max-width:650px){
+  .so-reports .rv-dots{display:flex}
+  .so-reports .rv-swipe-hint{display:block;color:#C5BCAE}
+  .so-reports .rv-controls button{display:none}
+  .so-reports .rv-page-count{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+}
+@media(min-width:651px){.so-reports .rv-dots,.so-reports .rv-swipe-hint.ss-hint{display:none}}

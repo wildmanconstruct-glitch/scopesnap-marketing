@@ -13,6 +13,8 @@ on:
       - report-viewer.js
       - workflow.css
       - workflow.js
+      - swipe.js
+      - site-polish.css
       - images/workflow/**
       - scripts/website-review.test.mjs
       - images/reports/**
@@ -200,9 +202,9 @@ jobs:
                   mobileReportButtons:document.querySelectorAll('#features .wf-mobile-report [data-wf-type]').length,
                   oldSwipe:document.querySelectorAll('#features .so-steps,#features .so-workflow-swipe').length
                 }));
-                if(layout.stages!==5||layout.mobileFrame==='none'||layout.frameWidth<250||
+                if(layout.stages!==5||layout.mobileFrame==='none'||layout.frameWidth<190||
                    layout.mobileReportButtons!==2||layout.oldSwipe)
-                  throw new Error('Five real-screen workflow stages must stack on mobile: '+JSON.stringify(layout));
+                  throw new Error('Five real-screen workflow stages must be on mobile (swipe cards): '+JSON.stringify(layout));
                 const tabs=await page.locator('.so-report-option').count();
                 if(tabs!==2)throw new Error('Expected exactly two compact report preview tabs');
                 const swipeHint=await page.locator('.rv-swipe-hint').isVisible();
@@ -216,7 +218,8 @@ jobs:
                 await page.waitForFunction(()=>document.querySelector('#rv-current')?.textContent==='PAGE 2');
                 if(!await page.locator('#rv #rv-page').getAttribute('src')?.then(src=>src.includes('client-02.webp')))
                   throw new Error('Mobile swipe must actually change to the next genuine report page');
-                await page.locator('#rv-prev').click();
+                // Swipe standard: square dots replace the arrows on phones.
+                await page.locator('#rv-dots button').first().click();
                 await page.waitForFunction(()=>document.querySelector('#rv-current')?.textContent==='PAGE 1');
                 await page.emulateMedia({reducedMotion:'no-preference'});
               }
