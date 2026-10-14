@@ -28,7 +28,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: FAQ, CTA and footer screenshots and link QA
         run: |
-          python3 -m http.server 8080 >/tmp/scopesnap-task5.log 2>&1 &
+          node scripts/gzip-qa-server.mjs >/tmp/scopesnap-task5.log 2>&1 &
           sleep 2
           node scripts/task5-qa.mjs
           node scripts/task6-audit.mjs
