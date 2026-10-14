@@ -71,6 +71,8 @@ for(const [width,height] of [[1440,900],[390,844],[375,812]]){
    }
  }
  await page.goto('http://127.0.0.1:8080/',{waitUntil:'domcontentloaded'});
+ await page.locator('#faq .faq-q').nth(8).click();
+ await page.waitForTimeout(380);
 
  const pageWidth=await page.evaluate(()=>document.documentElement.scrollWidth);
  if(pageWidth>width+2)throw Error('Horizontal page overflow '+width+' / '+pageWidth);
