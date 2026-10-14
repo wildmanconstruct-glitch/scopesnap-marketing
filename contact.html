@@ -83,6 +83,10 @@
               <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a>
             </div>
             <div class="contact-item">
+              <span aria-hidden="true">✉</span>
+              <a href="mailto:support@scopesnap.com.au">support@scopesnap.com.au</a>
+            </div>
+            <div class="contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               <span>Adelaide Hills, South Australia</span>
             </div>
@@ -253,7 +257,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
       document.getElementById('cFormSuccess').style.display = 'block';
     } else {
       if (res.status === 429) {
-        errorEl.textContent = 'Too many messages. Please try later or email hello@scopesnap.com.au.';
+        errorEl.textContent = 'Too many messages. Please try later or email ' + (subject === 'support' ? 'support@scopesnap.com.au' : 'hello@scopesnap.com.au') + '.';
         submitBtn.disabled = false;
         submitText.textContent = 'Send message';
         return;
@@ -263,7 +267,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
   } catch (_) {
     submitBtn.disabled = false;
     submitText.textContent = 'Send message';
-    errorEl.textContent = 'We could not confirm your message was sent. Your text is still here. You can try again or email hello@scopesnap.com.au using the link on this page.';
+    errorEl.textContent = 'We could not confirm your message was sent. Your text is still here. You can try again or email ' + (subject === 'support' ? 'support@scopesnap.com.au' : 'hello@scopesnap.com.au') + '.';
   }
 });
 </script>
