@@ -99,3 +99,15 @@ body:not(.site-setout) :is(.contact-form-wrap,.login-card) :is(input,textarea)::
 /* 6. Voice → Reports: the hairline separates the two dark sections; the extra
    120px gap from brand-sync made it look like dead space. */
 #reports.so-reports{margin-top:0}
+
+/* 7. Workflow step labels: copper darkened slightly to pass 4.5:1 on bone */
+#features .wf-step.is-active .wf-label,#features .wf-label{color:#86521B}
+@media(min-width:1160px){#features .wf-step:not(.is-active) .wf-label{color:#625d55}}
+
+/* 8. Small copper/grey text on the light sections: darker so it passes 4.5:1.
+   Large copper headlines keep the brand copper. */
+#pricing .billing-save,
+#pricing .price-card:not(.price-featured) .so-extra-users,
+#pricing #roiJobCount,#pricing #roiLoginsValue,#pricing #roiHoursValue,#pricing #roiRateValue,
+#faq .eyebrow.so-mono{color:#86521B!important}
+#pricing #plan-comparison caption{color:#4A463F!important}
