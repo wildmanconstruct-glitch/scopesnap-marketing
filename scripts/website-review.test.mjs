@@ -67,3 +67,11 @@ assert(!footer.includes('Built for Australian builders.'),"Remove duplicated foo
 assert(footer.includes('href="/#pricing">Pricing'),"Footer pricing points to homepage");
 assert(css.includes('#faq .faq-a p{max-width:720px;margin:0}'),"FAQ paragraphs capped at 720px");
 for(const p of ["contact","terms"]){const page=read(p+".html");assert(page.includes('href="/#features"')&&page.includes('href="/#pricing"'),"Secondary footer anchors "+p)}
+
+// How it works must show the exact same five-step workflow as the homepage.
+{
+  const hiw=read('how-it-works.html');
+  const grab=html=>{const s=html.indexOf('<section class="so-light so-workflow wf" id="features">');assert(s>=0,'Workflow section missing');return html.slice(s,html.indexOf('</section>',s));};
+  assert.equal(grab(hiw),grab(home),'How it works workflow has drifted from the homepage workflow; copy #features from index.html');
+  console.log('How it works workflow matches the homepage.');
+}
