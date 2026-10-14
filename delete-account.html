@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=JetBrains+Mono:wght@400;500&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/shared.css?v=12"/>
+  <link rel="stylesheet" href="/shared.css?v=17"/>
   <style>
     .deletion-request { border-left: 3px solid var(--gold); padding: 4px 0 4px 20px; margin-bottom: 28px; }
     .inner-content .deletion-button { color: #080500; white-space: normal; text-align: center; }
@@ -29,29 +29,47 @@
     .inner-content ol { padding-left: 20px; margin-bottom: 14px; }
     .inner-content ol li { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 8px; }
   </style>
-  <link rel="stylesheet" href="/brand-sync.css?v=20261011rev1"/>
+  <link rel="stylesheet" href="/brand-sync.css?v=20261014task5b"/>
+  <link rel="stylesheet" href="/site-polish.css?v=20261014t7"/>
 </head>
 <body>
 
 <nav id="nav">
   <div class="wrap nav-inner">
-    <a href="/" class="logo">
+    <a href="/" class="logo" aria-label="ScopeSnap home">
       <div class="logo-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="36" height="36">
-          <path d="M80,14 A66,66 0 0,1 137.2,47 Q125,68 94,95 L100,73 Q93,31 80,14 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
-          <path d="M137.2,47 A66,66 0 0,1 137.2,113 Q112,112 72,98 L94,95 Q125,68 137.2,47 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
-          <path d="M137.2,113 A66,66 0 0,1 80,146 Q67,125 58,84 L72,98 Q112,112 137.2,113 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
-          <path d="M80,146 A66,66 0 0,1 22.8,113 Q35,92 66,65 L58,84 Q67,125 80,146 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
-          <path d="M22.8,113 A66,66 0 0,1 22.8,47 Q48,48 84,62 L66,65 Q35,92 22.8,113 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
-          <path d="M22.8,47 A66,66 0 0,1 80,14 Q93,35 100,73 L84,62 Q48,48 22.8,47 Z" fill="none" stroke="#D4B483" stroke-width="4" stroke-linejoin="round"/>
-          <circle cx="80" cy="80" r="66" fill="none" stroke="#D4B483" stroke-width="4"/>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="32" height="32">
+          <path d="M80,14 A66,66 0 0,1 137.2,47 Q125,68 94,95 L100,73 Q93,31 80,14 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M137.2,47 A66,66 0 0,1 137.2,113 Q112,112 72,98 L94,95 Q125,68 137.2,47 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M137.2,113 A66,66 0 0,1 80,146 Q67,125 58,84 L72,98 Q112,112 137.2,113 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M80,146 A66,66 0 0,1 22.8,113 Q35,92 66,65 L58,84 Q67,125 80,146 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M22.8,113 A66,66 0 0,1 22.8,47 Q48,48 84,62 L66,65 Q35,92 22.8,113 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M22.8,47 A66,66 0 0,1 80,14 Q93,35 100,73 L84,62 Q48,48 22.8,47 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="80" cy="80" r="66" fill="none" stroke="#C49A3C" stroke-width="5"/>
         </svg>
       </div>
-      <div><div class="logo-name">ScopeSnap</div><div class="logo-sub">AI site capture</div></div>
+      <div class="logo-name">ScopeSnap</div>
     </a>
-    <a href="/" class="btn-ghost" style="font-size:13px; padding:8px 18px;">← Back to home</a>
+    <ul class="nav-links" role="navigation">
+      <li><a href="/how-it-works">How it works</a></li>
+      <li><a href="/#reports">Reports</a></li><li><a href="/#pricing">Pricing</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="https://app.scopesnap.com.au/">Log in</a></li>
+    </ul>
+    <a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary nav-cta" data-track="cta-start-trial">Start free trial <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <button class="menu-btn" id="menuBtn" aria-controls="mobileMenu" aria-label="Open menu" aria-expanded="false">
+      <svg id="menuIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu" role="navigation">
+  <a href="/how-it-works">How it works</a>
+  <a href="/#reports">Reports</a>
+  <a href="/#pricing">Pricing</a>
+  <a href="/contact">Contact</a>
+  <a href="https://app.scopesnap.com.au/">Log in</a>
+  <a href="https://app.scopesnap.com.au/?signup=1" class="mobile-cta" data-track="cta-start-trial">Start free trial &#8594;</a>
+</div>
 
 <main>
   <section class="inner-hero">
@@ -118,14 +136,47 @@
 </main>
 
 <footer>
-  <div class="wrap footer-bottom">
-    <span>© <span id="year"></span> ScopeSnap Pty Ltd. All rights reserved.</span>
-    <div style="display:flex;flex-wrap:wrap;gap:20px;">
-      <a href="/privacy.html" style="color:var(--dim);text-decoration:none;font-size:12px;">Privacy</a>
-      <a href="/terms.html" style="color:var(--dim);text-decoration:none;font-size:12px;">Terms</a>
-      <a href="/delete-account" style="color:var(--dim);text-decoration:none;font-size:12px;" aria-current="page">Account deletion</a>
-      <a href="/contact.html" style="color:var(--dim);text-decoration:none;font-size:12px;">Contact</a>
+  <div class="wrap footer-inner">
+    <div class="footer-left">
+      <a href="/" class="footer-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="26" height="26">
+          <path d="M80,14 A66,66 0 0,1 137.2,47 Q125,68 94,95 L100,73 Q93,31 80,14 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M137.2,47 A66,66 0 0,1 137.2,113 Q112,112 72,98 L94,95 Q125,68 137.2,47 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M137.2,113 A66,66 0 0,1 80,146 Q67,125 58,84 L72,98 Q112,112 137.2,113 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M80,146 A66,66 0 0,1 22.8,113 Q35,92 66,65 L58,84 Q67,125 80,146 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M22.8,113 A66,66 0 0,1 22.8,47 Q48,48 84,62 L66,65 Q35,92 22.8,113 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M22.8,47 A66,66 0 0,1 80,14 Q93,35 100,73 L84,62 Q48,48 22.8,47 Z" fill="none" stroke="#C49A3C" stroke-width="5" stroke-linejoin="round"/>
+          <circle cx="80" cy="80" r="66" fill="none" stroke="#C49A3C" stroke-width="5"/>
+        </svg>
+        <span>ScopeSnap</span>
+      </a>
+      <p class="footer-tagline">Site scoping app for Australian builders.</p>
+      <div class="so-footer-details">
+        <p>ScopeSnap Pty Ltd · ABN 84 698 607 868</p>
+        <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a>
+        <p>Adelaide Hills, South Australia</p>
+      </div>
     </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">Product</div>
+        <a href="/#features">Features</a>
+        <a href="/how-it-works">How it works</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/billing">Billing</a>
+        <a href="https://app.scopesnap.com.au/?signup=1">Sign up</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy policy</a>
+      <a href="/delete-account">Account deletion</a>
+        <a href="/terms">Terms of service</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>&#169; <span id="year"></span> ScopeSnap Pty Ltd. All rights reserved.</span>
   </div>
 </footer>
 <script src="/shared.js?v=12"></script>

@@ -14,6 +14,8 @@ const footer = `<footer><div class="wrap footer-bottom"><span>ScopeSnap Pty Ltd 
 // legal text in one place while avoiding marketing/purchase navigation.
 function appPage(source, slug) {
   let html = source.replace(/<nav id="nav">[\s\S]*?<\/nav>/, nav)
+    // The public mobile menu links to marketing and sign-up pages; native pages drop it.
+    .replace(/\s*<div class="mobile-menu" id="mobileMenu"[\s\S]*?<\/div>/, "")
     .replace(/<footer>[\s\S]*?<\/footer>/, footer)
     .replace(/<link rel="canonical"[^>]*>/g, "")
     .replace(/<meta name="robots"[^>]*>/g, "")

@@ -1,0 +1,32 @@
+/* Task 7 polish (14 Oct 2026). Loaded last on every page.
+   1. Sample-job note visible on phones.
+   2. No visible text under 11px (the hero phone mock-up countdown excepted). */
+
+/* 1. Sample-job note: visible on every screen size */
+.so-reports .so-report-note{display:block;font-size:13px;line-height:1.45}
+.so-reports .so-report-view-only{display:block;font-size:11px;line-height:1.5}
+@media(max-width:650px){
+  .so-reports .so-report-note,.so-reports .so-report-view-only{display:block}
+  .so-reports .so-report-note{margin:12px 0 0}
+}
+
+/* 2. 11px minimum. !important because the source rules are spread across
+   brand-sync, report-viewer and media queries with higher specificity. */
+.so-job-types,
+.price-popular,
+.so-recommend-tag,
+.so-calc-result-label,
+.so-calc-seat-tiers span,
+.billing-save,
+.so-extra-users,
+.ent-note,
+.rv-caption,
+.rv-switcher-label,
+.rv-switcher-label span,
+.rv-switch-mark,
+.rv-switch-mark>span,
+.rv-switch-action,
+#features .wf-chips li,
+#features .wf-toggle button{font-size:11px!important}
+/* The plan label must not overflow its column at 11px */
+#pricing #roiPlan + .so-calc-result-label{white-space:normal!important}
