@@ -82,3 +82,16 @@ body:not(.site-setout) :is(.contact-info,.contact-form-wrap,.login-card) button 
 body:not(.site-setout) :is(.contact-form-wrap,.login-card) .form-error{color:#A3341F!important}
 body:not(.site-setout) .login-card :is(input,textarea,select){background:#F8F7F3!important;color:var(--ink)!important;border:1px solid #CFC9BE!important}
 body:not(.site-setout) :is(.contact-form-wrap,.login-card) :is(input,textarea)::placeholder{color:#77736B!important}
+
+/* 5. Terms: plan allowances table */
+.terms-table-wrap{overflow-x:auto;margin:0 0 18px}
+.terms-table{width:100%;border-collapse:collapse;font-size:14px;color:var(--ink)}
+.terms-table caption{text-align:left;font:500 11px/1.5 var(--ff-m);letter-spacing:.08em;text-transform:uppercase;color:#4A463F;padding:0 0 8px}
+.terms-table th,.terms-table td{padding:8px 10px;border-bottom:1px solid #D6D0C5;text-align:left;white-space:nowrap}
+.terms-table thead th{font-weight:700;border-bottom:1px solid #8C867B}
+.terms-table tbody th{font-weight:500}
+@media(max-width:520px){
+  .terms-table{font-size:12px}
+  .terms-table th,.terms-table td{padding:7px 4px;white-space:normal}
+  .terms-table td{text-align:center}
+}
