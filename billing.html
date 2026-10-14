@@ -928,8 +928,14 @@
     return data;
   }
   async function setupStorageCard(c) {
-    document.getElementById('storageCard').style.display = 'block';
-    var canBuy = Boolean(c.stripe_subscription_id) && c.subscription_status === 'active' && !c.cancel_at_period_end;
+    var card = document.getElementById('storageCard');
+    // Trial / unsubscribed accounts cannot buy extra storage. Keep this card
+    // for active paid subscribers, including those cancelling renewal, so
+    // existing add-ons remain manageable until their paid period ends.
+    var hasPaidPlan = Boolean(c.stripe_subscription_id) && c.subscription_status === 'active';
+    card.style.display = hasPaidPlan ? 'block' : 'none';
+    if (!hasPaidPlan) return;
+    var canBuy = !c.cancel_at_period_end;
     document.getElementById('storageEligibility').textContent = canBuy ? '' :
       !c.stripe_subscription_id ? 'An active paid plan is required to purchase extra storage. Choose a plan above to subscribe.' :
       'An active paid plan with renewal enabled is required to purchase extra storage.';
