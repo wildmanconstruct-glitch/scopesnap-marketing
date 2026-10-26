@@ -13,6 +13,9 @@ const footer = `<footer><div class="wrap footer-bottom"><span>ScopeSnap Pty Ltd 
 // The native pages use the public policy bodies on every deployment, keeping
 // legal text in one place while avoiding marketing/purchase navigation.
 function appPage(source, slug) {
+  if (slug === "terms") {
+    source = source.replace(/<section id="founding-offer-terms">[\s\S]*?<\/section>\s*/, "");
+  }
   let html = source.replace(/<nav id="nav">[\s\S]*?<\/nav>/, nav)
     // The public mobile menu links to marketing and sign-up pages; native pages drop it.
     .replace(/\s*<div class="mobile-menu" id="mobileMenu"[\s\S]*?<\/div>/, "")
@@ -26,6 +29,7 @@ function appPage(source, slug) {
       const route = url.pathname.replace(/^\/app\//, "/").replace(/\.html$/, "").replace(/\/$/, "").slice(1);
       return routes.includes(route) ? `href="/app/${route}${hash}"` : match;
     });
+  if (/FOUNDING20|Founding 20|founding discount|50% off/i.test(html)) throw new Error(`Offer leaked into native-facing ${slug}`);
   // Fail the build if a future policy edit adds a ScopeSnap purchase route.
   for (const [, href] of html.matchAll(/<a\b[^>]*href="([^"]+)"/g)) {
     const url = new URL(href.replace(/&amp;/g, "&"), "https://scopesnap.com.au");
