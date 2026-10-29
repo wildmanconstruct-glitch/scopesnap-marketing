@@ -319,13 +319,13 @@
 
       <div class="seats-card" id="extraJobsCard" style="display:none;">
         <div class="seats-head">Business extra jobs</div>
-        <p class="seats-desc">10 extra jobs for <strong>$59/month + GST</strong> per pack, with the same Business AI allowances per job and 10 extra Plan Scans per month. No automatic overage charges.</p>
+        <p class="seats-desc">10 extra jobs for <strong>$59/month + tax</strong> per pack, with the same Business AI allowances per job and 10 extra Plan Scans per month. No automatic overage charges.</p>
         <p class="seats-desc">Billed separately each month, including on annual Business plans. Renews until cancelled. Increases are charged for the remaining add-on billing period. Job and AI allowances reset on the first of each month (UTC); unused allowance does not roll over. Per-job limits still apply. To reduce packs, cancel renewal and choose fewer after expiry.</p>
         <p class="seats-desc" id="extraJobsStatus" role="status"></p>
         <div class="seats-controls"><label for="extraJobsQty">Packs of 10 jobs</label><input id="extraJobsQty" type="number" min="1" max="10" value="1" step="1"/>
         <button class="btn-primary" id="extraJobsBuy" disabled>Continue to checkout</button>
         <button class="btn-primary" id="extraJobsCancel" style="display:none;">Cancel extra jobs renewal</button></div>
-        <p id="extraJobsTotal" class="seats-desc">$59/month + GST · 10 extra jobs</p>
+        <p id="extraJobsTotal" class="seats-desc">$59/month + tax · 10 extra jobs</p>
         <p id="extraJobsMessage" role="status" class="seats-desc"></p>
         <p class="seats-desc"><a href="https://app.scopesnap.com.au/billing">View all usage in the app</a></p>
       </div>
@@ -353,7 +353,7 @@
           <div class="price-card">
             <div class="price-tier">Starter</div>
             <div class="price-amount-row">
-              <div class="price-amount" data-price-monthly="$59" data-price-annual="$708" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$59<span class="price-per">/mo + GST</span></div>
+              <div class="price-amount" data-price-monthly="$59" data-price-annual="$708" data-per-monthly="/mo + tax" data-per-annual="/yr + tax">$59<span class="price-per">/mo + tax</span></div>
               <div class="price-annual-note">$708/year &mdash; no annual discount</div>
             </div>
             <p class="price-desc">For one person doing the site visits. 1 seat, 8 jobs per month, 20 saved photos, 25 photo analyses (including 5 extra for retakes) and 10 voice recordings per job.</p>
@@ -364,7 +364,7 @@
             <div class="price-popular">Most popular</div>
             <div class="price-tier">Professional</div>
             <div class="price-amount-row">
-              <div class="price-amount" data-price-monthly="$119" data-price-annual="$1,309" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$119<span class="price-per">/mo + GST</span></div>
+              <div class="price-amount" data-price-monthly="$119" data-price-annual="$1,309" data-per-monthly="/mo + tax" data-per-annual="/yr + tax">$119<span class="price-per">/mo + tax</span></div>
               <div class="price-annual-note">$1,309/year &mdash; save 1 month</div>
             </div>
             <p class="price-desc">For a small team on the road. 3 seats, 15 jobs per month, 40 saved photos, 50 photo analyses (including 10 extra for retakes) and 15 voice recordings per job.</p>
@@ -374,14 +374,14 @@
           <div class="price-card">
             <div class="price-tier">Business</div>
             <div class="price-amount-row">
-              <div class="price-amount" data-price-monthly="$249" data-price-annual="$2,739" data-per-monthly="/mo + GST" data-per-annual="/yr + GST">$249<span class="price-per">/mo + GST</span></div>
+              <div class="price-amount" data-price-monthly="$249" data-price-annual="$2,739" data-per-monthly="/mo + tax" data-per-annual="/yr + tax">$249<span class="price-per">/mo + tax</span></div>
               <div class="price-annual-note">$2,739/year &mdash; save 1 month</div>
             </div>
             <p class="price-desc">For larger teams with more jobs. 8 seats, 30 jobs per month, 60 saved photos, 75 photo analyses (including 15 extra for retakes) and 20 voice recordings per job.</p>
             <button class="price-btn price-btn-outline" data-plan="business">Choose Business</button>
           </div>
         </div>
-        <p class="pricing-note">All prices in Australian dollars, excluding GST. GST is added at checkout. Paid plans renew automatically each month or year until you cancel. Cancel online any time from this page. Both reports plus two updates to each per job. Starter / Professional / Business include 8 / 15 / 30 Plan Scans monthly (one per job). Photo analyses: 200 / 750 / 2,250 per month respectively. Deleting a photo frees a photo slot but does not refund completed analyses. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>.<br>Need more seats than your plan includes? Subscribe first. You'll land back on this page, where you can choose extra seats monthly or annually (Professional $29/month or $348/year; Business $25/month or $300/year, per seat + GST).</p>
+        <p class="pricing-note">All prices in Australian dollars, and exclude applicable taxes. Australian GST is added when applicable; taxes for New Zealand customers depend on customer and tax status. Paid plans renew automatically each month or year until you cancel. Cancel online any time from this page. Both reports plus two updates to each per job. Starter / Professional / Business include 8 / 15 / 30 Plan Scans monthly (one per job). Photo analyses: 200 / 750 / 2,250 per month respectively. Deleting a photo frees a photo slot but does not refund completed analyses. Full plan details on the <a href="/#pricing" style="color:var(--gold);">pricing page</a>.<br>Need more seats than your plan includes? Subscribe first. You'll land back on this page, where you can choose extra seats monthly or annually (Professional $29/month or $348/year; Business $25/month or $300/year, per seat + tax).</p>
         <div class="billing-error" id="checkoutError"></div>
       </div>
 
@@ -389,7 +389,7 @@
           <div class="seats-head">Company storage</div>
           <p class="seats-desc" id="storageUsage" aria-live="polite">Loading storage…</p>
           <div style="font-size:22px;font-weight:700;color:var(--gold);margin-bottom:8px;">Extra 100 GB</div>
-          <p style="font-size:26px;font-weight:700;margin-bottom:20px;">A$10<span style="font-size:14px;font-weight:400;color:var(--muted);"> / month + GST</span></p>
+          <p style="font-size:26px;font-weight:700;margin-bottom:20px;">A$10<span style="font-size:14px;font-weight:400;color:var(--muted);"> / month + tax</span></p>
           <p class="seats-desc">Billed separately every month, including on an annual main plan. Renews until cancelled using Cancel extra storage below. Existing files are not automatically deleted when you reach your allowance.</p>
           <p class="seats-desc" id="storageEligibility" role="status"></p>
           <button class="btn-primary" id="storageBuyBtn" disabled>Continue to storage checkout</button>
@@ -417,7 +417,7 @@
         </svg>
         <span>ScopeSnap</span>
       </a>
-      <p class="footer-tagline">Site scoping app for Australian builders.</p>
+      <p class="footer-tagline">Site scoping app for Australian and New Zealand builders.</p>
       <div class="so-footer-details">
         <p>ScopeSnap Pty Ltd · ABN 84 698 607 868</p>
         <a href="mailto:hello@scopesnap.com.au">hello@scopesnap.com.au</a>
@@ -653,8 +653,8 @@
 
   // ---- Additional seats (Professional & Business only) ----
   var SEAT_INFO = {
-    professional: { included: 3, price: '$29/month + GST each' },
-    business: { included: 8, price: '$25/month + GST each' },
+    professional: { included: 3, price: '$29/month + tax each' },
+    business: { included: 8, price: '$25/month + tax each' },
   };
 
   function setupSeatsCard(company) {
@@ -666,7 +666,7 @@
     var current = Math.max(0, Number(company.additional_seats) || 0);
     document.getElementById('seatQty').value = current;
     document.getElementById('seatsDesc').textContent =
-      'Your plan includes ' + info.included + ' seats. These existing seats are ' + (company.billing_interval === 'year' ? (planKey === 'professional' ? '$348/year + GST each' : '$300/year + GST each') : info.price) +
+      'Your plan includes ' + info.included + ' seats. These existing seats are ' + (company.billing_interval === 'year' ? (planKey === 'professional' ? '$348/year + tax each' : '$300/year + tax each') : info.price) +
       '. You currently have ' + current + ' existing additional seat' + (current === 1 ? '' : 's') + '. New seats can be purchased separately above with monthly or annual billing.';
     document.getElementById('seatError').textContent = '';
     document.getElementById('seatSuccess').textContent = '';
@@ -731,7 +731,7 @@
     if (interval === 'year') rate *= 12;
     var quantity = Number(document.getElementById('monthlySeatQty').value);
     var valid = Number.isSafeInteger(quantity) && quantity >= 0 && quantity <= 100;
-    document.getElementById('monthlySeatTotal').textContent = valid ? '$' + (rate * quantity) + '/' + interval + ' + GST (' + quantity + ' × $' + rate + ').' : 'Enter a whole number from 0 to 100.';
+    document.getElementById('monthlySeatTotal').textContent = valid ? '$' + (rate * quantity) + '/' + interval + ' + tax (' + quantity + ' × $' + rate + ').' : 'Enter a whole number from 0 to 100.';
     var btn = document.getElementById('monthlySeatSaveBtn');
     btn.disabled = !monthlySeatStatus || !valid || (!monthlySeatStatus.exists && quantity === 0);
     btn.textContent = monthlySeatStatus && monthlySeatStatus.exists ? (quantity === 0 ? 'Cancel seat renewal' : 'Update extra seats') : 'Continue to checkout';
@@ -772,7 +772,7 @@
     var interval = document.getElementById('seatBillingInterval').value || 'month';
     if (quantity > 0 && monthlySeatStatus && monthlySeatStatus.exists && interval !== (monthlySeatStatus.interval || 'month')) {
       var total = (monthlySeatCompany.subscription_plan === 'business' ? 25 : 29) * quantity * (interval === 'year' ? 12 : 1);
-      if (!window.confirm('Change extra seats to $' + total + '/' + interval + ' + GST? A new billing period starts now. Stripe applies credit for unused paid time and charges any amount due now. Your main plan is unchanged.')) return;
+      if (!window.confirm('Change extra seats to $' + total + '/' + interval + ' + tax? A new billing period starts now. Stripe applies credit for unused paid time and charges any amount due now. Your main plan is unchanged.')) return;
     }
     btn.disabled = true;
     btn.textContent = 'Updating…';
@@ -870,7 +870,7 @@
   }
   function extraJobsTotal() {
     var quantity = Number(document.getElementById('extraJobsQty').value);
-    document.getElementById('extraJobsTotal').textContent = '$' + quantity * 59 + '/month + GST · ' + quantity * 10 + ' extra jobs';
+    document.getElementById('extraJobsTotal').textContent = '$' + quantity * 59 + '/month + tax · ' + quantity * 10 + ' extra jobs';
   }
   async function setupExtraJobs(company) {
     if (company.subscription_plan !== 'business') return;
@@ -893,7 +893,7 @@
   document.getElementById('extraJobsBuy').addEventListener('click', async function() {
     var quantity = Number(document.getElementById('extraJobsQty').value);
     if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) { document.getElementById('extraJobsMessage').textContent = 'Choose 1–10 packs.'; return; }
-    if (extraJobsState && extraJobsState.exists && !window.confirm('Set extra jobs to ' + quantity * 10 + ' for $' + quantity * 59 + '/month + GST? Increases are charged now for the remaining add-on billing period.')) return;
+    if (extraJobsState && extraJobsState.exists && !window.confirm('Set extra jobs to ' + quantity * 10 + ' for $' + quantity * 59 + '/month + tax? Increases are charged now for the remaining add-on billing period.')) return;
     this.disabled = true;
     document.getElementById('extraJobsMessage').textContent = '';
     try {
