@@ -103,6 +103,26 @@
   <script defer src="/workflow.js?v=workflow-align-20261012b"></script>
   <link rel="stylesheet" href="/site-polish.css?v=20261014aa"/>
   <script defer src="/swipe.js?v=20261014swipe"></script>
+
+  <meta name="apple-itunes-app" content="app-id=6825007163"/>
+  <style>
+    /* Official artwork from Apple and Google, without custom recreation. */
+    .ss-store-links{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px}
+    .ss-store-links a{display:inline-flex;align-items:center;line-height:0;outline-offset:4px;transition:opacity .18s}
+    .ss-store-links a:hover{opacity:.78}
+    .ss-store-links img{display:block;width:auto;height:40px;max-width:100%}
+    .ss-store-links .ss-play-badge img{height:58px;margin:-9px -9px}
+    .so-final .ss-store-links{justify-content:center;margin-top:20px}
+    .ss-android-download{position:fixed;z-index:600;bottom:calc(12px + env(safe-area-inset-bottom,0px));left:12px;right:12px;max-width:460px;margin-inline:auto;padding:10px 12px;display:none;align-items:center;gap:10px;border:1px solid rgba(196,154,60,.45);border-radius:12px;background:#1c1b19;color:#fff;box-shadow:0 8px 28px rgba(0,0,0,.36)}
+    .ss-android-download.is-visible{display:flex}
+    .ss-android-download-text{flex:1;min-width:0}
+    .ss-android-download-text strong{display:block;font-size:13px;line-height:1.3}
+    .ss-android-download-text span{display:block;font-size:11px;opacity:.75;line-height:1.4}
+    .ss-android-download-cta{background:#c49a3c;color:#141310;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;padding:10px 12px;border-radius:6px}
+    .ss-android-download-close{background:none;color:#fff;border:0;font-size:23px;cursor:pointer;min-width:32px;min-height:42px}
+    @media(max-width:700px){.ss-store-links{justify-content:center;gap:8px}.ss-store-links img{height:36px}.ss-store-links .ss-play-badge img{height:52px;margin:-8px}}
+    @media(prefers-reduced-motion:reduce){.ss-store-links a{transition:none}}
+  </style>
 </head>
 <body class="site-setout">
 
@@ -170,6 +190,10 @@
   <h1 id="site-title" class="so-display">Walk the site.<br><span>Leave with the scope.</span></h1>
   <p class="so-lead">Photos, voice notes and measurements, captured room by room. Turned into a client scope and an internal site report.</p>
   <div class="so-actions"><a class="btn-primary" href="https://app.scopesnap.com.au/?signup=1" data-track="cta-start-trial">Start 14-day free trial <span aria-hidden="true">→</span></a></div>
+  <div class="ss-store-links" aria-label="Download the ScopeSnap mobile app">
+    <a href="https://apps.apple.com/au/app/scopesnap/id6825007163" target="_blank" rel="noopener noreferrer" data-track="download-app-store" aria-label="Download ScopeSnap on the App Store"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" width="120" height="40" loading="lazy"></a>
+    <a class="ss-play-badge" href="https://play.google.com/store/apps/details?id=com.au.scopesnap.app" target="_blank" rel="noopener noreferrer" data-track="download-google-play" aria-label="Get ScopeSnap on Google Play"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" width="155" height="60" loading="lazy"></a>
+  </div>
   <p class="so-job-types so-mono">New builds · Extensions · Granny flats · Renovations</p>
  </div>
  <div class="so-phone so-hero-phone so-voice-capture-phone">
@@ -532,7 +556,11 @@
   </div>
 </section>
 <!-- ── GET STARTED ── -->
-<section class="so-final" id="get-started"><div class="wrap"><p class="so-mono so-eyebrow">Next site visit</p><h2 class="so-display">Your next scope<br><span>starts on site.</span></h2><div class="so-actions"><a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start 14-day free trial <span aria-hidden="true">→</span></a><a href="/contact.html" class="btn-ghost">Talk to us</a></div><p class="so-mono so-final-assurance">14 DAYS FREE · NO CREDIT CARD · CANCEL ANY TIME</p></div></section>
+<section class="so-final" id="get-started"><div class="wrap"><p class="so-mono so-eyebrow">Next site visit</p><h2 class="so-display">Your next scope<br><span>starts on site.</span></h2><div class="so-actions"><a href="https://app.scopesnap.com.au/?signup=1" class="btn-primary" data-track="cta-start-trial">Start 14-day free trial <span aria-hidden="true">→</span></a><a href="/contact.html" class="btn-ghost">Talk to us</a></div>
+  <div class="ss-store-links" aria-label="Download the ScopeSnap mobile app">
+    <a href="https://apps.apple.com/au/app/scopesnap/id6825007163" target="_blank" rel="noopener noreferrer" data-track="download-app-store" aria-label="Download ScopeSnap on the App Store"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" width="120" height="40" loading="lazy"></a>
+    <a class="ss-play-badge" href="https://play.google.com/store/apps/details?id=com.au.scopesnap.app" target="_blank" rel="noopener noreferrer" data-track="download-google-play" aria-label="Get ScopeSnap on Google Play"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" width="155" height="60" loading="lazy"></a>
+  </div><p class="so-mono so-final-assurance">14 DAYS FREE · NO CREDIT CARD · CANCEL ANY TIME</p></div></section>
 </main>
 
 <!-- &#9472;&#9472; FOOTER &#9472;&#9472; -->
@@ -771,6 +799,39 @@ function setBilling(mode) {
   clock.textContent=Math.floor(remaining/60)+':'+String(remaining%60).padStart(2,'0')+' remaining';
  }
  update();setInterval(update,1000);
+})();
+</script>
+
+<!-- Android-only sticky download prompt. No duplicate floating prompt in iOS Safari. -->
+<div class="ss-android-download" id="ss-android-download" role="region" aria-label="Download ScopeSnap for Android">
+  <div class="ss-android-download-text"><strong>ScopeSnap for Android</strong><span>Site scoping, ready on your phone</span></div>
+  <a class="ss-android-download-cta" href="https://play.google.com/store/apps/details?id=com.au.scopesnap.app" data-track="download-google-play">Get the app</a>
+  <button class="ss-android-download-close" type="button" aria-label="Dismiss download prompt">×</button>
+</div>
+<script>
+(function(){
+  'use strict';
+  if(!/Android/i.test(navigator.userAgent || ''))return;
+  var bar=document.getElementById('ss-android-download');
+  var hero=document.querySelector('.so-hero');
+  var final=document.getElementById('get-started');
+  if(!bar||!hero)return;
+  try{if(sessionStorage.getItem('ss-play-bar-dismissed')==='1')return;}catch(e){}
+  var dismissed=false;
+  function refresh(){
+    var pastHero=hero.getBoundingClientRect().bottom<0;
+    var nearFinal=final && final.getBoundingClientRect().top<=window.innerHeight;
+    var shouldShow=!dismissed&&pastHero&&!nearFinal;
+    bar.classList.toggle('is-visible',Boolean(shouldShow));
+  }
+  bar.querySelector('button').addEventListener('click',function(){
+    dismissed=true;
+    bar.classList.remove('is-visible');
+    try{sessionStorage.setItem('ss-play-bar-dismissed','1');}catch(e){}
+  });
+  window.addEventListener('scroll',refresh,{passive:true});
+  window.addEventListener('resize',refresh,{passive:true});
+  refresh();
 })();
 </script>
 </body>
