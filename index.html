@@ -653,7 +653,7 @@ function toggleFaq(btn) {
   const cards=[...carousel.querySelectorAll('.price-card')],dots=[...document.querySelectorAll('[data-plan-dot]')];
   
   const ranks={Starter:0,Professional:1,Business:2,Enterprise:3};
-  let currentPlan='Professional',currentSlide=1,userSwiped=false;
+  let currentPlan='Professional',currentSlide=1,userSwiped=false,userAdjustedCalculator=false;
   const money=n=>'$'+Math.round(n).toLocaleString('en-AU');
   const compact=n=>Number.isInteger(n)?String(n):n.toFixed(1);
   function centerCard(i,behavior='smooth'){
@@ -667,7 +667,7 @@ function toggleFaq(btn) {
   function syncCard(plan,autoScroll=false){
     currentPlan=plan;
     cards.forEach((card,i)=>{
-      const recommended=i===ranks[plan];
+      const recommended=userAdjustedCalculator&&i===ranks[plan];
       card.classList.toggle('so-card-recommended',recommended);
       const tag=card.querySelector('.so-recommend-tag');if(tag)tag.hidden=!recommended;
     });
@@ -704,7 +704,7 @@ function toggleFaq(btn) {
     document.getElementById('roiBreakeven').textContent=plan==='Enterprise'?'Talk to us about larger teams →':'Your time back is worth about '+(value/cost).toFixed(1)+'× the plan cost.';
     syncCard(plan,true);
   }
-  [visits,seatSlider,hours,rate].forEach(input=>input.addEventListener('input',recalc));
+  [visits,seatSlider,hours,rate].forEach(input=>input.addEventListener('input',()=>{userAdjustedCalculator=true;recalc();}));
   carousel.addEventListener('scroll',()=>{
     if(!matchMedia('(max-width:699px)').matches)return;
     const middle=carousel.scrollLeft+carousel.clientWidth/2;
