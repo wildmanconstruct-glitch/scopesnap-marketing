@@ -401,7 +401,7 @@
       <div class="price-card fade-in">
         <div class="so-recommend-tag so-mono" hidden>RECOMMENDED FOR YOU</div>
         <div class="price-tier">Starter</div>
-        <div class="price-amount-row"><div class="price-amount" id="solo-price">$59<span class="price-per">/mo + tax</span></div><div class="price-annual-note" id="solo-sub" hidden></div></div>
+        <div class="price-amount-row"><div class="price-amount" id="solo-price">$59<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="solo-sub" hidden></div></div>
         <p class="price-desc">For one person doing the site visits.</p>
         <ul class="price-list"><li>1 user</li><li>8 jobs a month</li><li>Up to 20 photos per job</li><li>10 voice notes per job</li><li>10 GB storage</li></ul>
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-outline" data-track="cta-start-trial">Start free trial</a>
@@ -410,7 +410,7 @@
         <div class="price-popular">Most popular</div>
         <div class="so-recommend-tag so-mono" hidden>RECOMMENDED FOR YOU</div>
         <div class="price-tier">Professional</div>
-        <div class="price-amount-row"><div class="price-amount" id="pro-price">$119<span class="price-per">/mo + tax</span></div><div class="price-annual-note" id="pro-sub" hidden></div></div>
+        <div class="price-amount-row"><div class="price-amount" id="pro-price">$119<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="pro-sub" hidden></div></div>
         <p class="price-desc">For a small team on the road.</p>
         <ul class="price-list"><li>3 users included</li><li>15 jobs a month</li><li>Up to 40 photos per job</li><li>15 voice notes per job</li><li>50 GB storage</li></ul>
         <p class="so-extra-users so-mono">EXTRA USERS $29/MO</p>
@@ -419,7 +419,7 @@
       <div class="price-card fade-in fade-in-delay-2">
         <div class="so-recommend-tag so-mono" hidden>RECOMMENDED FOR YOU</div>
         <div class="price-tier">Business</div>
-        <div class="price-amount-row"><div class="price-amount" id="biz-price">$249<span class="price-per">/mo + tax</span></div><div class="price-annual-note" id="biz-sub" hidden></div></div>
+        <div class="price-amount-row"><div class="price-amount" id="biz-price">$249<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="biz-sub" hidden></div></div>
         <p class="price-desc">For larger teams with more jobs.</p>
         <ul class="price-list"><li>8 users included</li><li>30 jobs a month</li><li>Up to 60 photos per job</li><li>20 voice notes per job</li><li>200 GB storage</li></ul>
         <p class="so-extra-users so-mono">EXTRA USERS $25/MO</p>
@@ -428,7 +428,7 @@
     </div>
     <div class="so-pricing-dots ss-dots" aria-label="Swipe between subscription plans"><button type="button" data-plan-dot="Starter" aria-label="View Starter plan" aria-current="false"></button><button type="button" data-plan-dot="Professional" aria-label="View Professional plan" aria-current="true"></button><button type="button" data-plan-dot="Business" aria-label="View Business plan" aria-current="false"></button></div>
     <p class="so-pricing-swipe ss-hint so-mono">SWIPE TO COMPARE PLANS</p></div>
-    <p class="pricing-footnote">All prices are in Australian dollars (AUD) and exclude applicable taxes. Australian GST is added when applicable; taxes for New Zealand customers depend on customer and tax status. Every free trial starts on Starter. The plans above apply after your trial. Paid plans renew automatically each month or year until you cancel. Cancel online any time.</p>
+    <p class="pricing-footnote">All prices are in Australian dollars (AUD) and exclude applicable taxes. Australian GST is added when applicable; taxes for New Zealand customers depend on customer and tax status. Your free trial includes 5 jobs plus a sample job, with Starter features. After your trial, Starter includes 8 jobs a month. When your 14-day trial ends, your account pauses. Your jobs, photos and reports stay saved. Choose a plan any time to pick up where you left off. The plans above apply after your trial. Paid plans renew automatically each month or year until you cancel. Cancel online any time.</p>
     <section class="so-pricing-calc" id="pricing-calculator" aria-labelledby="roi-title">
       <div class="so-calc-intro"><h3 id="roi-title">WHAT'S YOUR TIME WORTH?</h3><p>Move the sliders to match how you work.</p></div>
       <div class="so-calc-body">
@@ -483,6 +483,13 @@
     <h2>Common <em>questions.</em></h2>
     <div class="faq-list">
 
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">What happens when my free trial ends?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-a"><p>When your 14-day trial ends, your account pauses. Your jobs, photos and reports stay saved. Choose a plan any time to pick up where you left off.</p></div>
+      </div>
+      
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">Is the AI always right?
           <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -543,7 +550,7 @@
           How much photo storage is included?
           <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </button>
-        <div class="faq-a"><p>Starter includes 10 GB, Professional 50 GB and Business 200 GB, shared across your company. Need more? Add 100 GB for $10/month + tax.</p></div>
+        <div class="faq-a"><p>Starter includes 10 GB, Professional 50 GB and Business 200 GB, shared across your company. Need more? Add 100 GB for $10/month + GST.</p></div>
       </div>
 
       <div class="faq-item">
@@ -646,7 +653,7 @@ function toggleFaq(btn) {
   const cards=[...carousel.querySelectorAll('.price-card')],dots=[...document.querySelectorAll('[data-plan-dot]')];
   
   const ranks={Starter:0,Professional:1,Business:2,Enterprise:3};
-  let currentPlan='Professional',currentSlide=1,userSwiped=false;
+  let currentPlan='Professional',currentSlide=1,userSwiped=false,userAdjustedCalculator=false;
   const money=n=>'$'+Math.round(n).toLocaleString('en-AU');
   const compact=n=>Number.isInteger(n)?String(n):n.toFixed(1);
   function centerCard(i,behavior='smooth'){
@@ -660,7 +667,7 @@ function toggleFaq(btn) {
   function syncCard(plan,autoScroll=false){
     currentPlan=plan;
     cards.forEach((card,i)=>{
-      const recommended=i===ranks[plan];
+      const recommended=userAdjustedCalculator&&i===ranks[plan];
       card.classList.toggle('so-card-recommended',recommended);
       const tag=card.querySelector('.so-recommend-tag');if(tag)tag.hidden=!recommended;
     });
@@ -697,7 +704,7 @@ function toggleFaq(btn) {
     document.getElementById('roiBreakeven').textContent=plan==='Enterprise'?'Talk to us about larger teams →':'Your time back is worth about '+(value/cost).toFixed(1)+'× the plan cost.';
     syncCard(plan,true);
   }
-  [visits,seatSlider,hours,rate].forEach(input=>input.addEventListener('input',recalc));
+  [visits,seatSlider,hours,rate].forEach(input=>input.addEventListener('input',()=>{userAdjustedCalculator=true;recalc();}));
   carousel.addEventListener('scroll',()=>{
     if(!matchMedia('(max-width:699px)').matches)return;
     const middle=carousel.scrollLeft+carousel.clientWidth/2;
@@ -777,7 +784,7 @@ function setBilling(mode) {
   document.getElementById('toggleAnnual').setAttribute('aria-pressed',String(annual));
   for(const [id,month,year,save] of [['solo',59,708,false],['pro',119,1309,true],['biz',249,2739,true]]) {
     const price=document.getElementById(id+'-price'),note=document.getElementById(id+'-sub');
-    price.innerHTML=annual?'$'+year.toLocaleString('en-AU')+'<span class="price-per">/year + tax</span>':'$'+month+'<span class="price-per">/mo + tax</span>';
+    price.innerHTML=annual?'$'+year.toLocaleString('en-AU')+'<span class="price-per">/year + GST</span>':'$'+month+'<span class="price-per">/mo + GST</span>';
     note.hidden=!annual;
     note.textContent=annual&&save?'save 1 month':'';
   }
