@@ -401,7 +401,7 @@
       <div class="price-card fade-in">
         <div class="so-recommend-tag so-mono" hidden>RECOMMENDED FOR YOU</div>
         <div class="price-tier">Starter</div>
-        <div class="price-amount-row"><div class="price-amount" id="solo-price">$59<span class="price-per">/mo + tax</span></div><div class="price-annual-note" id="solo-sub" hidden></div></div>
+        <div class="price-amount-row"><div class="price-amount" id="solo-price">$59<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="solo-sub" hidden></div></div>
         <p class="price-desc">For one person doing the site visits.</p>
         <ul class="price-list"><li>1 user</li><li>8 jobs a month</li><li>Up to 20 photos per job</li><li>10 voice notes per job</li><li>10 GB storage</li></ul>
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-outline" data-track="cta-start-trial">Start free trial</a>
@@ -410,7 +410,7 @@
         <div class="price-popular">Most popular</div>
         <div class="so-recommend-tag so-mono" hidden>RECOMMENDED FOR YOU</div>
         <div class="price-tier">Professional</div>
-        <div class="price-amount-row"><div class="price-amount" id="pro-price">$119<span class="price-per">/mo + tax</span></div><div class="price-annual-note" id="pro-sub" hidden></div></div>
+        <div class="price-amount-row"><div class="price-amount" id="pro-price">$119<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="pro-sub" hidden></div></div>
         <p class="price-desc">For a small team on the road.</p>
         <ul class="price-list"><li>3 users included</li><li>15 jobs a month</li><li>Up to 40 photos per job</li><li>15 voice notes per job</li><li>50 GB storage</li></ul>
         <p class="so-extra-users so-mono">EXTRA USERS $29/MO</p>
@@ -419,7 +419,7 @@
       <div class="price-card fade-in fade-in-delay-2">
         <div class="so-recommend-tag so-mono" hidden>RECOMMENDED FOR YOU</div>
         <div class="price-tier">Business</div>
-        <div class="price-amount-row"><div class="price-amount" id="biz-price">$249<span class="price-per">/mo + tax</span></div><div class="price-annual-note" id="biz-sub" hidden></div></div>
+        <div class="price-amount-row"><div class="price-amount" id="biz-price">$249<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="biz-sub" hidden></div></div>
         <p class="price-desc">For larger teams with more jobs.</p>
         <ul class="price-list"><li>8 users included</li><li>30 jobs a month</li><li>Up to 60 photos per job</li><li>20 voice notes per job</li><li>200 GB storage</li></ul>
         <p class="so-extra-users so-mono">EXTRA USERS $25/MO</p>
@@ -784,7 +784,7 @@ function setBilling(mode) {
   document.getElementById('toggleAnnual').setAttribute('aria-pressed',String(annual));
   for(const [id,month,year,save] of [['solo',59,708,false],['pro',119,1309,true],['biz',249,2739,true]]) {
     const price=document.getElementById(id+'-price'),note=document.getElementById(id+'-sub');
-    price.innerHTML=annual?'$'+year.toLocaleString('en-AU')+'<span class="price-per">/year + tax</span>':'$'+month+'<span class="price-per">/mo + tax</span>';
+    price.innerHTML=annual?'$'+year.toLocaleString('en-AU')+'<span class="price-per">/year + GST</span>':'$'+month+'<span class="price-per">/mo + GST</span>';
     note.hidden=!annual;
     note.textContent=annual&&save?'save 1 month':'';
   }
