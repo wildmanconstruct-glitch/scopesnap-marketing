@@ -403,7 +403,7 @@
         <div class="price-tier">Starter</div>
         <div class="price-amount-row"><div class="price-amount" id="solo-price">$59<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="solo-sub" hidden></div></div>
         <p class="price-desc">For one person doing the site visits.</p>
-        <ul class="price-list"><li>1 user</li><li>8 jobs a month</li><li>Up to 20 photos per job</li><li>10 voice notes per job</li><li>10 GB storage</li></ul>
+        <ul class="price-list"><li>1 user</li><li>8 jobs a month</li><li>Up to 20 photos per job</li><li>10 GB storage</li></ul>
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-outline" data-track="cta-start-trial">Start free trial</a>
       </div>
       <div class="price-card fade-in price-featured fade-in-delay-1">
@@ -412,8 +412,7 @@
         <div class="price-tier">Professional</div>
         <div class="price-amount-row"><div class="price-amount" id="pro-price">$119<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="pro-sub" hidden></div></div>
         <p class="price-desc">For a small team on the road.</p>
-        <ul class="price-list"><li>3 users included</li><li>15 jobs a month</li><li>Up to 40 photos per job</li><li>15 voice notes per job</li><li>50 GB storage</li></ul>
-        <p class="so-extra-users so-mono">EXTRA USERS $29/MO</p>
+        <ul class="price-list"><li>3 users included</li><li>15 jobs a month</li><li>Up to 40 photos per job</li><li>50 GB storage</li></ul>
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-dark" data-track="cta-start-trial">Start free trial</a>
       </div>
       <div class="price-card fade-in fade-in-delay-2">
@@ -421,13 +420,42 @@
         <div class="price-tier">Business</div>
         <div class="price-amount-row"><div class="price-amount" id="biz-price">$249<span class="price-per">/mo + GST</span></div><div class="price-annual-note" id="biz-sub" hidden></div></div>
         <p class="price-desc">For larger teams with more jobs.</p>
-        <ul class="price-list"><li>8 users included</li><li>30 jobs a month</li><li>Up to 60 photos per job</li><li>20 voice notes per job</li><li>200 GB storage</li></ul>
-        <p class="so-extra-users so-mono">EXTRA USERS $25/MO</p>
+        <ul class="price-list"><li>8 users included</li><li>30 jobs a month</li><li>Up to 60 photos per job</li><li>200 GB storage</li></ul>
         <a href="https://app.scopesnap.com.au/?signup=1" class="price-btn price-btn-outline" data-track="cta-start-trial">Start free trial</a>
       </div>
     </div>
     <div class="so-pricing-dots ss-dots" aria-label="Swipe between subscription plans"><button type="button" data-plan-dot="Starter" aria-label="View Starter plan" aria-current="false"></button><button type="button" data-plan-dot="Professional" aria-label="View Professional plan" aria-current="true"></button><button type="button" data-plan-dot="Business" aria-label="View Business plan" aria-current="false"></button></div>
     <p class="so-pricing-swipe ss-hint so-mono">SWIPE TO COMPARE PLANS</p></div>
+    <div class="pricing-details-group">
+      <details class="pricing-details" id="plan-comparison" open><summary>Compare plans in detail</summary><div class="pricing-details-body">
+        <div class="plan-table-wrap" role="region" aria-label="Plan allowance comparison"><table class="plan-table"><caption>Paid plan allowances, shared across your company</caption><thead><tr><th scope="col">Included allowance</th><th scope="col">Starter</th><th scope="col">Professional</th><th scope="col">Business</th></tr></thead><tbody>
+        <tr><th scope="row">Users included</th><td data-plan="Starter">1</td><td data-plan="Professional">3</td><td data-plan="Business">8</td></tr>
+        <tr><th scope="row">Extra users</th><td data-plan="Starter">—</td><td data-plan="Professional">$29/mo</td><td data-plan="Business">$25/mo</td></tr>
+        <tr><th scope="row">Jobs per month</th><td data-plan="Starter">8</td><td data-plan="Professional">15</td><td data-plan="Business">30</td></tr>
+        <tr><th scope="row">Photos per job</th><td data-plan="Starter">20</td><td data-plan="Professional">40</td><td data-plan="Business">60</td></tr>
+        <tr><th scope="row">AI photo analyses per job</th><td data-plan="Starter">25</td><td data-plan="Professional">50</td><td data-plan="Business">75</td></tr>
+        <tr><th scope="row">AI photo analyses per month</th><td data-plan="Starter">200</td><td data-plan="Professional">750</td><td data-plan="Business">2,250</td></tr>
+        <tr><th scope="row">Voice notes per job</th><td data-plan="Starter">10</td><td data-plan="Professional">15</td><td data-plan="Business">20</td></tr>
+        <tr><th scope="row">Storage</th><td data-plan="Starter">10 GB</td><td data-plan="Professional">50 GB</td><td data-plan="Business">200 GB</td></tr>
+        <tr><th scope="row">Client and internal reports</th><td data-plan="Starter">Both + 2 updates each</td><td data-plan="Professional">Both + 2 updates each</td><td data-plan="Business">Both + 2 updates each</td></tr>
+        <tr><th scope="row">Plan Scans per month</th><td data-plan="Starter">8</td><td data-plan="Professional">15</td><td data-plan="Business">30</td></tr>
+        </tbody></table></div>
+        <p>Business: add 10 jobs for $59/month per pack. Extra storage: 100 GB for $10/month. Prices are in AUD and exclude any applicable tax.</p>
+        <p><a href="/terms">Full allowance details in our Terms →</a></p>
+      </div></details>
+    </div>
+    <script>
+    // Full detail on desktop; collapsible on phones.
+    (function(){
+      var detail=document.getElementById('plan-comparison');
+      var mobile=window.matchMedia('(max-width: 700px)');
+      if(!detail)return;
+      function layout(event){detail.open=!event.matches;}
+      layout(mobile);
+      if(mobile.addEventListener)mobile.addEventListener('change',layout);
+      else mobile.addListener(layout);
+    })();
+    </script>
     <p class="pricing-footnote">All prices are in Australian dollars (AUD) and exclude applicable taxes. Australian GST is added when applicable; taxes for New Zealand customers depend on customer and tax status. Your free trial includes 5 jobs plus a sample job, with Starter features. After your trial, Starter includes 8 jobs a month. When your 14-day trial ends, your account pauses. Your jobs, photos and reports stay saved. Choose a plan any time to pick up where you left off. The plans above apply after your trial. Paid plans renew automatically each month or year until you cancel. Cancel online any time.</p>
     <section class="so-pricing-calc" id="pricing-calculator" aria-labelledby="roi-title">
       <div class="so-calc-intro"><h3 id="roi-title">WHAT'S YOUR TIME WORTH?</h3><p>Move the sliders to match how you work.</p></div>
@@ -447,22 +475,6 @@
         <p class="so-calc-disclaimer">Illustrative only. Your actual time saved depends on how you work.</p>
       </div>
     </section>
-    <div class="pricing-details-group">
-      <details class="pricing-details" id="plan-comparison"><summary>Compare plans</summary><div class="pricing-details-body">
-        <div class="plan-table-wrap" role="region" aria-label="Plan allowance comparison"><table class="plan-table"><caption>Paid plan allowances, shared across your company</caption><thead><tr><th scope="col">Included allowance</th><th scope="col">Starter</th><th scope="col">Professional</th><th scope="col">Business</th></tr></thead><tbody>
-        <tr><th scope="row">Users included</th><td data-plan="Starter">1</td><td data-plan="Professional">3</td><td data-plan="Business">8</td></tr>
-        <tr><th scope="row">Extra users</th><td data-plan="Starter">—</td><td data-plan="Professional">$29/mo</td><td data-plan="Business">$25/mo</td></tr>
-        <tr><th scope="row">Jobs per month</th><td data-plan="Starter">8</td><td data-plan="Professional">15</td><td data-plan="Business">30</td></tr>
-        <tr><th scope="row">Photos per job</th><td data-plan="Starter">20</td><td data-plan="Professional">40</td><td data-plan="Business">60</td></tr>
-        <tr><th scope="row">AI photo analyses per job</th><td data-plan="Starter">25</td><td data-plan="Professional">50</td><td data-plan="Business">75</td></tr>
-        <tr><th scope="row">Voice notes per job</th><td data-plan="Starter">10</td><td data-plan="Professional">15</td><td data-plan="Business">20</td></tr>
-        <tr><th scope="row">Storage</th><td data-plan="Starter">10 GB</td><td data-plan="Professional">50 GB</td><td data-plan="Business">200 GB</td></tr>
-        <tr><th scope="row">Plan Scans per month</th><td data-plan="Starter">8</td><td data-plan="Professional">15</td><td data-plan="Business">30</td></tr>
-        </tbody></table></div>
-        <p>Business: add 10 jobs for $59/month per pack. Extra storage: 100 GB for $10/month. Prices are in AUD and exclude any applicable tax.</p>
-        <p><a href="/terms">Full allowance details in our Terms →</a></p>
-      </div></details>
-    </div>
     <!-- ENTERPRISE BAND -->
     <div class="enterprise-band so-enterprise-compact" id="enterprise">
       <div class="so-enterprise-message"><span class="ent-eyebrow">ENTERPRISE</span><p>Need something larger? Unlimited users, onboarding and custom setup for multi-office builders.</p></div>
