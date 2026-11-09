@@ -68,7 +68,17 @@
   .so-reports .rv-controls button{display:none}
   .so-reports .rv-page-count{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 }
-@media(min-width:651px){.so-reports .rv-dots,.so-reports .rv-swipe-hint.ss-hint{display:none}}
+/* Desktop: show both the existing page-turn arrows and clickable page dots.
+   Mobile keeps its standard square-dot/swipe presentation. */
+@media(min-width:651px){
+  .so-reports .rv-controls button{display:grid}
+  .so-reports .rv-dots{display:flex;justify-content:center;flex-wrap:wrap;gap:0;margin:9px 0 0}
+  .so-reports .rv-dots button{position:relative;width:30px;height:34px;flex:none;padding:0;border:0;background:transparent;cursor:pointer}
+  .so-reports .rv-dots button::after{content:"";position:absolute;inset:13px 11px;border:1px solid var(--cu)}
+  .so-reports .rv-dots button[aria-current="true"]::after{background:var(--cu)}
+  .so-reports .rv-dots button:focus-visible{outline:2px solid var(--cu);outline-offset:-2px}
+  .so-reports .rv-swipe-hint.ss-hint{display:none}
+}
 
 /* 4. Light cards on dark subpages (contact page, billing sign-in).
    brand-sync turns these cards bone but left their text light, so headings,
