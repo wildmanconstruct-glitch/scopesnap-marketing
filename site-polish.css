@@ -209,7 +209,7 @@ body:not(.site-setout) :is(.contact-form-wrap,.login-card) :is(input,textarea)::
   display:grid;place-items:center;box-sizing:border-box;
   width:13.8cqw;height:13.8cqw;border-radius:50%;
   background:var(--red,#B44334);color:#fff;
-  box-shadow:0 0 0 5px rgba(180,67,52,.13);
+  box-shadow:0 0 0 1.28cqw rgba(180,67,52,.13);
 }
 .so-hero-screen .so-live-card .so-live-stop::before{
   content:"";display:block;width:4.1cqw;height:4.1cqw;
