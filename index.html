@@ -205,15 +205,25 @@
        clock are drawn over their intentionally blank screenshot slots. -->
   <span class="so-hero-screen">
    <img src="/images/perf/hero-phone.webp?v=20261127-130" width="1170" height="2532" alt="Actual ScopeSnap Kitchen room screen: three kitchen photos with AI descriptions, live Voice Scope recording, Open Tape Measure, Site Questions and Additional Notes" fetchpriority="low">
-   <span class="so-live-waveform" aria-hidden="true">
-    <i style="--wave-h:34%"></i><i style="--wave-h:64%"></i><i style="--wave-h:86%"></i>
-    <i style="--wave-h:54%"></i><i style="--wave-h:74%"></i><i style="--wave-h:48%"></i>
-    <i style="--wave-h:70%"></i><i style="--wave-h:93%"></i><i style="--wave-h:50%"></i>
-    <i style="--wave-h:82%"></i><i style="--wave-h:47%"></i><i style="--wave-h:68%"></i>
+   <span class="so-live-card" aria-hidden="true">
+    <span class="so-live-mic">
+     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/></svg>
+    </span>
+    <span class="so-live-body">
+     <span class="so-live-heading"><span>Voice Scope</span><span class="so-live-ai">✦ AI</span></span>
+     <span class="so-live-status">Recording: tap Stop when finished</span>
+     <span class="so-live-audio">
+      <span class="so-live-waveform">
+       <i style="--wave-h:34%"></i><i style="--wave-h:64%"></i><i style="--wave-h:86%"></i>
+       <i style="--wave-h:54%"></i><i style="--wave-h:74%"></i><i style="--wave-h:48%"></i>
+       <i style="--wave-h:70%"></i><i style="--wave-h:93%"></i><i style="--wave-h:50%"></i>
+       <i style="--wave-h:82%"></i><i style="--wave-h:47%"></i><i style="--wave-h:68%"></i>
+      </span>
+      <span class="so-live-countdown" id="so-voice-clock">2:37 remaining</span>
+     </span>
+    </span>
+    <span class="so-live-stop"></span>
    </span>
-   <span class="so-live-status" aria-hidden="true">Recording — tap Stop when finished</span>
-    <span class="so-live-countdown" id="so-voice-clock" aria-hidden="true">2:37 remaining</span>
-    <span class="so-live-stop" aria-hidden="true"></span>
   </span>
  </div>
 </section>
