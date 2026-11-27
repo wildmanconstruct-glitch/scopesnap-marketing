@@ -146,29 +146,37 @@ body:not(.site-setout) :is(.contact-form-wrap,.login-card) :is(input,textarea)::
   .so-phone.so-hero-phone .so-hero-screen>img{border-radius:21px}
 }
 
-/* Hero Voice Scope recording overlay, measured against the 1170 x 2532
-   screenshot. The Voice Scope card occupies y 39.1%-47.1% (AR Tape starts
-   at 48.5%); the mic/stop button is centred at x 87%, y 43.1%. */
+/* Hero Voice Scope recording state on the 1170x2532 screen image.
+   Card: x 3.9%-96.1%, y 39.1%-47.1%; AR Tape begins at y 48.5%.
+   Stop button centre: x 87%, y 43.1%; every size is screen-relative. */
+.so-hero-screen .so-live-status{
+  position:absolute;left:7%;top:41.7%;width:65%;height:1.1%;
+  z-index:2;pointer-events:none;white-space:nowrap;
+  color:#77716e;font:400 2.5cqw/1.1 Arial,sans-serif;
+}
 .so-hero-screen .so-live-waveform{
-  left:7.5%;top:42.1%;width:18%;height:2%;
+  left:7%;top:43.85%;width:19%;height:1.65%;
   gap:.32cqw;overflow:hidden;
 }
 .so-hero-screen .so-live-countdown{
-  left:29%;top:42.1%;width:43%;height:2%;
-  justify-content:center;white-space:nowrap;
-  color:#574d43;font-size:3.0769cqw;
+  left:30%;top:44.1%;width:43%;height:1.1%;
+  display:flex;align-items:center;justify-content:flex-start;
+  color:#77716e;font:400 2.5cqw/1.1 Arial,sans-serif;
+  letter-spacing:0;white-space:nowrap;
 }
 .so-hero-screen .so-live-stop{
-  position:absolute;left:87%;top:43.1%;
-  transform:translate(-50%,-50%);
-  width:7%;aspect-ratio:1;border-radius:50%;
-  background:#9269af;display:flex;align-items:center;justify-content:center;
+  position:absolute;left:87%;top:43.1%;transform:translate(-50%,-50%);
+  width:12.5cqw;height:12.5cqw;box-sizing:border-box;
+  border-radius:50%;background:#9269af;
+  display:flex;align-items:center;justify-content:center;
   z-index:2;pointer-events:none;
 }
 .so-hero-screen .so-live-stop::before{
   content:"";display:block;width:34%;aspect-ratio:1;
   border-radius:18%;background:#fff;
 }
+/* Override the global phone-site 11px minimum for text inside a scaled
+   screenshot; cqw keeps overlays the same relative size as the app UI. */
 @media(max-width:699px){
-  .so-hero-screen .so-live-countdown{font-size:3.0769cqw!important}
+  .so-hero .so-hero-screen .so-live-countdown{font-size:2.5cqw!important}
 }
