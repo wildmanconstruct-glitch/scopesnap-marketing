@@ -52,8 +52,8 @@
   #features .wf-step:first-child{border-top:1px solid var(--line-l)}
   #features .wf-step h3{font-size:36px!important;margin-bottom:10px}
   #features .wf-step p{margin-bottom:12px}
-  #features .wf-mobile-phone{width:200px;height:340px;margin:16px auto 0!important;border-width:8px;border-radius:28px}
-  #features .wf-mobile-shot{border-radius:20px}
+  #features .wf-mobile-phone{width:200px;height:auto;margin:16px auto 0!important;border-width:7px;border-color:#111;border-radius:32px}
+  #features .wf-mobile-shot{border-radius:26px}
   #features .wf-step[data-step="5"] .wf-mobile-phone{display:none}
   #features .wf-mobile-report{width:100%;margin:16px 0 0}
   #features .wf-dots{margin-top:8px}
@@ -121,3 +121,27 @@ body:not(.site-setout) :is(.contact-form-wrap,.login-card) :is(input,textarea)::
 #pricing #roiJobCount,#pricing #roiLoginsValue,#pricing #roiHoursValue,#pricing #roiRateValue,
 #faq .eyebrow.so-mono{color:#86521B!important}
 #pricing #plan-comparison caption{color:#4A463F!important}
+
+/* 1.2.2 phone frames: rounded iPhone silhouette, no duplicated notch/status bar.
+   The screenshots include their own status bar and Dynamic Island. */
+.so-phone.so-hero-phone{
+  background:#111;border:9px solid #111;border-radius:40px;
+  box-shadow:0 28px 60px rgba(0,0,0,.45),0 6px 18px rgba(0,0,0,.22);
+}
+.so-phone.so-hero-phone .so-hero-screen{overflow:hidden;border-radius:30px;aspect-ratio:1170/2532}
+.so-phone.so-hero-phone .so-hero-screen>img{display:block;width:100%;height:100%;aspect-ratio:1170/2532;object-fit:cover;border-radius:30px}
+@media(max-width:800px){
+  .so-phone.so-hero-phone{border-width:7px;border-radius:32px}
+  .so-phone.so-hero-phone .so-hero-screen,
+  .so-phone.so-hero-phone .so-hero-screen>img{border-radius:25px}
+}
+@media(max-width:650px){
+  body.site-setout .so-phone.so-hero-phone{border-width:6px;border-radius:30px}
+  body.site-setout .so-phone.so-hero-phone .so-hero-screen,
+  body.site-setout .so-phone.so-hero-phone .so-hero-screen>img{border-radius:24px}
+}
+@media(max-width:600px){
+  .so-phone.so-hero-phone{border-width:6px;border-radius:26px}
+  .so-phone.so-hero-phone .so-hero-screen,
+  .so-phone.so-hero-phone .so-hero-screen>img{border-radius:21px}
+}
